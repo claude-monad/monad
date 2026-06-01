@@ -44,8 +44,18 @@ Promoted from client-only to server on 2026-06-01. Live config at
 ## claudebox revival procedure (pending — depends on the windesk diagnosis job)
 
 `claudebox` is unreachable on Tailscale (relay only, rx 0). Diagnosis is delegated to
-**`windesk`**, which shares claudebox's LAN (see `jobs/claudebox-diagnose.hcl`). Once
-claudebox is reachable again:
+**`windesk`**, which shares claudebox's LAN (see `jobs/claudebox-diagnose.hcl`; results land
+in the Nomad variable `claudebox-diag/last` and `logs/claudebox-diag/`).
+
+**Diagnosis 2026-06-01 (from windesk):** claudebox is **powered on and LAN-reachable**
+(`claudebox.local` = `192.168.51.19`, pings UP), but **Tailscale is down on it**
+(peer `Online=False`, last seen 19:51Z) and **nothing is listening** on ssh(22) or
+nomad(4646/4647) — even on the LAN. So it cannot be revived purely remotely yet (no open
+service to connect to, and it's off the tailnet). Likely root cause: `claudebox-server.sh`
+derives its Nomad config from the Tailscale IP, so when Tailscale drops the keepalive cron
+can't bring Nomad back (chicken-and-egg). **Next action needs out-of-band/console access to
+claudebox to run `tailscale up`**; after that, follow the steps below. Once claudebox is
+reachable again:
 
 1. **Stop any old standalone server** and **clear stale Raft state.** claudebox formerly ran
    as `bootstrap_expect=1` (sole server). Its old Raft data in `~/nomad/data` names itself

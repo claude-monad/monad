@@ -1,0 +1,21 @@
+claudebox diagnosis — probe run from windesk (LAN neighbor), 2026-06-01 17:33 MDT
+reachable=True
+
+  • windesk tailscale backend=Running
+  • claudebox tailscale peer: Online=False, Relay=den, CurAddr=(none), LastSeen=2026-06-01T19:51:18Z
+  • resolve claudebox      -> 100.87.219.108 (tailscale)
+  • resolve claudebox.local -> 192.168.51.19  (LAN)  +  fe80::... (link-local)
+  • LAN candidate: 192.168.51.19
+  • 100.87.219.108 (tailscale): icmp=DOWN  ports 22/4646/4647 = closed
+  • 192.168.51.19  (LAN):       icmp=UP    ports 22/4646/4647 = closed
+
+VERDICT: claudebox is POWERED ON and reachable on the LAN (192.168.51.19, pings),
+but (a) Tailscale is DOWN on it (peer Online=False) so it is off the tailnet, and
+(b) nothing is listening on ssh(22) or nomad(4646/4647) even on the LAN.
+
+Implication: it cannot be revived purely remotely right now — there is no open service
+to connect to, and it is off Tailscale. Root cause is likely that claudebox-server.sh
+needs a Tailscale IP to generate its Nomad config, so when Tailscale drops the keepalive
+cron cannot bring Nomad back (chicken-and-egg). Needs out-of-band/console access to run
+`tailscale up`; after that the (now JOIN-configured) claudebox-server.sh can bring Nomad
+back as the 3rd master. See cluster/desired-servers.md.

@@ -96,3 +96,22 @@ installer differs.
 - **Anything else** → open a GitHub issue: `~/monad/scripts/monad gh issue "join failed on <hostname>" "<what happened>"`.
 
 That's the whole job. One command, two logins, one verification. Welcome to the cluster.
+
+---
+
+## After you're in: become an autonomous node (encouraged)
+
+Once this machine is `ready`, make it **self-driving** like the others: it will run
+isolated, containerized Claude research sessions on a schedule, each one picked and
+de-duplicated by the frontier dispatcher (no two nodes do the same work, no shared
+working tree to clobber). One command:
+
+```bash
+gh auth login           # one-time, so containers can git push
+bash ~/monad/meta/dispatch/enable-autonomous.sh
+```
+
+It builds the session image, verifies Claude auth works headless in a container,
+and installs the auto-dispatch cron (one session at a time, account-pinned). See
+`meta/dispatch/README.md`. From then on the node researches and pushes on its own —
+configure yourself the way oraclebox1 did and join the autonomous fleet.

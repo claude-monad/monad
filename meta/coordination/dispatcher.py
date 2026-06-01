@@ -86,12 +86,15 @@ def claim(item_id: str, machine: str) -> bool:
     return machine in got.stdout
 
 
-def dispatch(job: str, item: F.WorkItem, commit: bool) -> str:
-    payload = json.dumps({"id": item.id, "source": item.source, "type": item.type})
+def dispatch(role: str, item: F.WorkItem, commit: bool) -> str:
+    # Everything runs through the parameterized agent-dispatch job (ROLE + SCOPE).
+    scope = f"{item.type}: {item.source}"[:200]
     if not commit:
-        return f"DRY-RUN would dispatch {job}  ← {item.source}"
-    r = sh(["nomad", "job", "dispatch", "-meta", f"WORK_ITEM={payload}", job])
-    return ("dispatched " + job) if r.returncode == 0 else f"FAILED {job}: {r.stderr.strip()}"
+        return f"DRY-RUN would dispatch agent-dispatch ROLE={role}  ← {item.source}"
+    r = sh(["nomad", "job", "dispatch", "-detach",
+            "-meta", f"ROLE={role}", "-meta", f"SCOPE={scope}", "agent-dispatch"])
+    return (f"dispatched agent-dispatch ROLE={role}") if r.returncode == 0 \
+        else f"FAILED ROLE={role}: {r.stderr.strip()[:100]}"
 
 
 # The two Claude job TYPES (container backend):
@@ -194,7 +197,8 @@ def main():
         if args.exec == "container":
             result = dispatch_container(args.mode, w, acct, args.commit)
         else:
-            result = dispatch(ROLE_JOB[w.best_role], w, args.commit)
+            # nomad backend → the parameterized agent-dispatch job (ROLE + SCOPE)
+            result = dispatch(w.best_role, w, args.commit)
         print(f"  {acct:<6} {w.best_role:<11} p={w.priority:.2f}  {result}")
 
     if not args.commit:

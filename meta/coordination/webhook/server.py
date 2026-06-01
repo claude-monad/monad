@@ -72,6 +72,11 @@ def run(cmd, **kw):
     return subprocess.run(cmd, capture_output=True, text=True, **kw)
 
 
+# task_type -> ROLE for the parameterized agent-dispatch job.
+TASK_ROLE = {"formalize": "formalizer", "review": "reviewer",
+             "math": "researcher", "compute": "compute"}
+
+
 def execute(action: R.Action):
     """Hybrid: emit a durable task AND (if a job is named) dispatch immediately."""
     if DRY_RUN:
@@ -79,11 +84,14 @@ def execute(action: R.Action):
         return
     # 1) durable task (pull-loop safety net)
     run(["bash", TASK_SH, "emit", action.task_type, action.repo, action.scope])
-    # 2) immediate push
-    if action.job:
+    # 2) immediate push via the parameterized agent-dispatch job
+    role = TASK_ROLE.get(action.task_type) if action.job else None
+    if role:
         r = run(["nomad", "job", "dispatch", "-detach",
-                 "-meta", f"SCOPE={action.scope[:200]}", action.job])
-        log("dispatch", action.job, "->", "ok" if r.returncode == 0 else r.stderr.strip()[:120])
+                 "-meta", f"ROLE={role}", "-meta", f"SCOPE={action.scope[:200]}",
+                 "agent-dispatch"])
+        log("dispatch agent-dispatch ROLE=" + role, "->",
+            "ok" if r.returncode == 0 else r.stderr.strip()[:120])
 
 
 class Handler(BaseHTTPRequestHandler):

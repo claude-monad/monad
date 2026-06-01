@@ -113,11 +113,9 @@ job "claudebox-diagnose" {
           # Primary: a Nomad variable the control plane can read centrally with
           #   `nomad var get -item=report claudebox-diag/last`
           # (raw_exec stdout is not captured on Windows, and windesk often can't push git).
-          $text = $report -join "`n"
+          $text = ($report -join " || ")
           try {
-            $tmp = Join-Path $env:NOMAD_TASK_DIR "report.txt"; if (-not $env:NOMAD_TASK_DIR) { $tmp = "local/report.txt" }
-            $text | Out-File -FilePath $tmp -Encoding utf8
-            & nomad var put -force "claudebox-diag/last" "stamp=$stamp" "node=$env:COMPUTERNAME" "report=@$tmp" 2>&1 | Out-Null
+            & nomad var put -force "claudebox-diag/last" "stamp=$stamp" "node=$env:COMPUTERNAME" "lines=$($report.Count)" "report=$text" 2>&1 | Out-Null
           } catch {}
           # Secondary (best-effort): commit into the repo for GitOps history.
           try {

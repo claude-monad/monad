@@ -8,5 +8,15 @@
     "updated": 1774537765.662797,
     "updated_by": "claudebox",
     "value": "tournament theory H(T) counting"
+  },
+  "work:co-CASE-burnside-formula-bug": {
+    "updated": 1780342801.982511,
+    "updated_by": "claudebox",
+    "value": "nomad-max-3"
+  },
+  "work:op-math-264": {
+    "updated": 1780342801.868657,
+    "updated_by": "claudebox",
+    "value": "nomad-max-1"
   }
 }

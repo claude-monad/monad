@@ -88,7 +88,7 @@ if [ -d "$MONAD_DIR/.git" ]; then
     cd "$MONAD_DIR" && git pull --quiet origin main 2>/dev/null || true
 else
     mkdir -p "$(dirname "$MONAD_DIR")"
-    git clone https://github.com/claude-monad/monad.git "$MONAD_DIR"
+    git clone https://github.com/eliott-monad/monad.git "$MONAD_DIR"
     ok "Cloned to $MONAD_DIR"
 fi
 

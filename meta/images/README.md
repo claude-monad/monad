@@ -6,8 +6,8 @@ root CLAUDE.md → Account Architecture); only the *builds agents invoke* run in
 
 | Image | Registry tag | Used by |
 |-------|--------------|---------|
-| `lean-toolchain/` | `ghcr.io/claude-monad/lean-toolchain` | formalizer (`lake build`) |
-| `compute/` | `ghcr.io/claude-monad/compute` | math-quick-compute (python scripts) |
+| `lean-toolchain/` | `ghcr.io/eliott-monad/lean-toolchain` | formalizer (`lake build`) |
+| `compute/` | `ghcr.io/eliott-monad/compute` | math-quick-compute (python scripts) |
 
 ## Build & publish
 
@@ -16,14 +16,14 @@ under `meta/images/**`, because the operator/bootstrap host has no Docker. To bu
 a node that does:
 
 ```bash
-docker build -t ghcr.io/claude-monad/lean-toolchain meta/images/lean-toolchain
-docker build -t ghcr.io/claude-monad/compute        meta/images/compute
+docker build -t ghcr.io/eliott-monad/lean-toolchain meta/images/lean-toolchain
+docker build -t ghcr.io/eliott-monad/compute        meta/images/compute
 ```
 
 ## Version pins
 
 `lean-toolchain` pins `LEAN_VERSION` / `MATHLIB_REV` via build args. Keep them in lockstep
-with `claude-monad/math-lean` (`lean-toolchain` + `lakefile.toml`). Bumping there → bump the
+with `eliott-monad/math-lean` (`lean-toolchain` + `lakefile.toml`). Bumping there → bump the
 build args here → CI republishes the image.
 
 ## Use from an agent

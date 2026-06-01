@@ -3,7 +3,7 @@
 # Tailscale Funnel endpoint, with the shared HMAC secret. Run ONCE the funnel is live.
 # Idempotent: deletes any prior hook to the same URL first.
 #
-# Repos we have admin on: claude-monad/monad, claude-monad/math-lean, claude-monad/math.
+# Repos we have admin on: eliott-monad/monad, eliott-monad/math-lean, claude-monad/math.
 # The UPSTREAM eliottcassidy2000/math needs its owner to add the same webhook (we lack
 # admin there) — see README.
 set -euo pipefail
@@ -17,7 +17,7 @@ import json, subprocess, sys, tempfile, os
 url, secret = sys.argv[1], sys.argv[2]
 body = {"name": "web", "active": True, "events": ["push", "pull_request"],
         "config": {"url": url, "content_type": "json", "secret": secret, "insecure_ssl": "0"}}
-for repo in ["claude-monad/monad", "claude-monad/math-lean", "claude-monad/math"]:
+for repo in ["eliott-monad/monad", "eliott-monad/math-lean", "claude-monad/math"]:
     ex = subprocess.run(["gh", "api", f"repos/{repo}/hooks", "--jq",
                          f'.[] | select(.config.url=="{url}") | .id'],
                         capture_output=True, text=True)

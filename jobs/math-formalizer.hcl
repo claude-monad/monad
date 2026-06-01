@@ -27,7 +27,7 @@ job "math-formalizer" {
       }
 
       env {
-        LEAN_REPO_URL    = "https://github.com/claude-monad/math-lean.git"
+        LEAN_REPO_URL    = "https://github.com/eliott-monad/math-lean.git"
         MATH_REPO_URL    = "https://github.com/eliottcassidy2000/math.git"
         GIT_AUTHOR_NAME  = "monad-formalizer"
         GIT_AUTHOR_EMAIL = "monad@cluster.local"

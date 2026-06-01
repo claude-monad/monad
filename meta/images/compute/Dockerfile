@@ -1,5 +1,5 @@
 # Compute image — reproducible Python scientific stack for math-quick-compute agents.
-# Published by .github/workflows/images.yml to ghcr.io/claude-monad/compute.
+# Published by .github/workflows/images.yml to ghcr.io/eliott-monad/compute.
 #
 # Mirrors the libraries the compute agent already uses in eliottcassidy2000/math so that
 # `./run_and_save.sh script.py` produces identical results on every node.

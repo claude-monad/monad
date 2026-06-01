@@ -24,7 +24,7 @@ from dataclasses import dataclass, asdict
 
 REPOS = {
     "math": "https://github.com/eliottcassidy2000/math.git",
-    "math-lean": "https://github.com/claude-monad/math-lean.git",
+    "math-lean": "https://github.com/eliott-monad/math-lean.git",
 }
 
 # (relative path in repo, item type, best role) for line/file-scanned sources.

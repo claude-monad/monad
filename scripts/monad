@@ -583,16 +583,16 @@ cmd_gh() {
             local title="${1:-}"
             local body="${2:-}"
             [ -z "$title" ] && { err "Usage: monad gh issue <title> [body]"; return 1; }
-            gh issue create --title "$title" --body "${body:-}" --repo claude-monad/monad
+            gh issue create --title "$title" --body "${body:-}" --repo eliott-monad/monad
             ;;
         pr)
             local title="${1:-}"
             local body="${2:-}"
             [ -z "$title" ] && { err "Usage: monad gh pr <title> [body]"; return 1; }
-            gh pr create --title "$title" --body "${body:-}" --repo claude-monad/monad
+            gh pr create --title "$title" --body "${body:-}" --repo eliott-monad/monad
             ;;
         issues)
-            gh issue list --repo claude-monad/monad
+            gh issue list --repo eliott-monad/monad
             ;;
         *)
             err "Unknown gh subcommand: $subcmd"
@@ -746,7 +746,7 @@ cmd_pulse() {
     echo "── Open Issues ────────────────────────────────────────────────"
     if command -v gh &>/dev/null; then
         local issues
-        issues=$(gh issue list --repo claude-monad/monad --limit 5 --state open 2>/dev/null)
+        issues=$(gh issue list --repo eliott-monad/monad --limit 5 --state open 2>/dev/null)
         if [ -n "$issues" ]; then
             echo "$issues" | while read -r line; do echo "  $line"; done
         else

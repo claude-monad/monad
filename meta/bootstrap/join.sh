@@ -2,7 +2,7 @@
 # join.sh — turn a fresh computer into a monad cluster node in one command.
 #
 # Usage:
-#   curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/meta/bootstrap/join.sh \
+#   curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/meta/bootstrap/join.sh \
 #     | bash -s -- <server-tailscale-ip> <claude-account> [role]
 #
 #   <server-tailscale-ip>  Nomad server to join (default: 100.87.219.108 = claudebox)
@@ -17,8 +17,8 @@ set -euo pipefail
 SERVER_IP="${1:-100.87.219.108}"
 CLAUDE_ACCOUNT="${2:-pro}"
 ROLE="${3:-client}"
-REPO_URL="https://github.com/claude-monad/monad.git"
-RAW_BASE="https://raw.githubusercontent.com/claude-monad/monad/main"
+REPO_URL="https://github.com/eliott-monad/monad.git"
+RAW_BASE="https://raw.githubusercontent.com/eliott-monad/monad/main"
 
 log()  { printf '\033[0;36m[join]\033[0m %s\n' "$*"; }
 warn() { printf '\033[0;33m[join]\033[0m %s\n' "$*" >&2; }

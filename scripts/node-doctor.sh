@@ -359,7 +359,7 @@ Manual intervention required. Check the node and resolve the issues above.
             if gh issue create \
                 --title "node-doctor: $NODE_NAME — ${#ISSUES[@]} unresolved issues" \
                 --body "$ISSUE_BODY" \
-                --repo claude-monad/monad \
+                --repo eliott-monad/monad \
                 --label "node-health" 2>/dev/null; then
                 emit_event "node-doctor" "github-issue" "ok" "$NODE_NAME: ${#ISSUES[@]} issues"
             else

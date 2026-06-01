@@ -7,7 +7,7 @@
 #   role: formalizer | researcher | compute | reviewer | dispatch | echo
 #
 # Notes:
-#   * formalizer pushes to claude-monad/math-lean (we own it) — fully autonomous here.
+#   * formalizer pushes to eliott-monad/math-lean (we own it) — fully autonomous here.
 #   * researcher/compute/reviewer target upstream eliottcassidy2000/math, which claudebox
 #     cannot push to (403); those sessions must use the fork+PR flow (the prompt handles it).
 #   * echo is a harmless plumbing test.

@@ -12,8 +12,8 @@ things this directory provides:
 ```
 meta/
 ├── images/          Containerized toolchains (hybrid execution model)
-│   ├── lean-toolchain/   elan + Lean + warm Mathlib cache  → ghcr.io/claude-monad/lean-toolchain
-│   └── compute/          python scientific stack           → ghcr.io/claude-monad/compute
+│   ├── lean-toolchain/   elan + Lean + warm Mathlib cache  → ghcr.io/eliott-monad/lean-toolchain
+│   └── compute/          python scientific stack           → ghcr.io/eliott-monad/compute
 ├── bootstrap/       Turn a fresh computer into a cluster node in one command
 │   ├── join.sh
 │   └── install-toolchains.sh
@@ -44,7 +44,7 @@ host (native claude, account-pinned)
 ## How a new computer joins
 
 ```bash
-curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/meta/bootstrap/join.sh \
+curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/meta/bootstrap/join.sh \
   | bash -s -- <server-tailscale-ip> <claude-account>
 ```
 

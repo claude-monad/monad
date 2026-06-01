@@ -181,7 +181,7 @@ powered by Claude Code instances running as Nomad batch jobs.
 
 ### The Lean Formalization Repo
 
-- **Repo**: `claude-monad/math-lean` — Lean 4 + Mathlib, **formal verification only**.
+- **Repo**: `eliott-monad/math-lean` — Lean 4 + Mathlib, **formal verification only**.
 - **Purpose**: turn *novel* results from the informal math repo into machine-checked,
   sorry-free Lean proofs. Its `sync-candidates.sh` pulls targets from `eliottcassidy2000/math`
   into `candidates/`; the `math-formalizer` agent formalizes them.
@@ -197,7 +197,7 @@ powered by Claude Code instances running as Nomad batch jobs.
 | `math-researcher` | Every 6h | Max account 1 node | Deep research — proves theorems, explores connections, writes up results. Day-of-week rotation covers the full research frontier. |
 | `math-quick-compute` | Every 2h | Max account 2 node | Pure computation — runs scripts, extends sequences, generates data. No theorizing, just crunch numbers. |
 | `math-reviewer` | Daily 3 AM | Max account 3 node | Quality control — verifies results against MISTAKES.md, opens court cases for dubious claims, synthesizes daily progress, coordinates other agents. |
-| `math-formalizer` | Every 4h | Pro account node | Formalization — turns informally-proved results into sorry-free Lean 4 proofs in `claude-monad/math-lean`. Closes the loop: a failed formalization becomes a court case. |
+| `math-formalizer` | Every 4h | Pro account node | Formalization — turns informally-proved results into sorry-free Lean 4 proofs in `eliott-monad/math-lean`. Closes the loop: a failed formalization becomes a court case. |
 
 The agents use the math repo's built-in coordination:
 - **Session letters** via `agents/processor.py --send` — structured handoff between sessions
@@ -339,7 +339,7 @@ noise while ensuring every problem is git-tracked and visible to the cluster.
 
 ### Linux
 ```bash
-curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/scripts/setup-node.sh \
+curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/scripts/setup-node.sh \
   | sudo bash -s -- client 100.87.219.108
 ```
 

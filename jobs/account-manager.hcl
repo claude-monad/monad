@@ -34,7 +34,7 @@ for p in /home/bigo/Documents/monad /home/e/monad /root/monad; do
 done
 if [ -z "$SCRIPT" ]; then
   mkdir -p /tmp/monad-am
-  curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/scripts/account-manager.py -o /tmp/monad-am/account-manager.py
+  curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/scripts/account-manager.py -o /tmp/monad-am/account-manager.py
   SCRIPT="/tmp/monad-am/account-manager.py"
 fi
 exec python3 "$SCRIPT"

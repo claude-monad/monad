@@ -10,7 +10,7 @@ cluster" or "add this machine"?** → **[JOIN.md](./JOIN.md) is your instruction
 you exactly what to run. The short version, for macOS/Linux:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/meta/bootstrap/join.sh \
+curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/meta/bootstrap/join.sh \
   | bash -s -- 100.87.219.108 <max-1|max-2|max-3|pro>
 ```
 
@@ -22,7 +22,7 @@ hands it work — you don't pre-clone anything. Full details in [JOIN.md](./JOIN
 
 **Add a new node (low-level, single step):**
 ```bash
-curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/scripts/setup-node.sh | sudo bash -s -- client 100.87.219.108
+curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/scripts/setup-node.sh | sudo bash -s -- client 100.87.219.108
 ```
 For a full new machine, prefer the one-command `meta/bootstrap/join.sh` above — it wraps this
 plus Tailscale, toolchains, account tagging, and the node-doctor cron.

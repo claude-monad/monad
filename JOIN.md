@@ -15,7 +15,7 @@ logins, and verify the node is live.
 On macOS or Linux, run this (it is idempotent — safe to re-run):
 
 ```bash
-curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/meta/bootstrap/join.sh \
+curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/meta/bootstrap/join.sh \
   | bash -s -- <SERVER_IP> <CLAUDE_ACCOUNT>
 ```
 
@@ -27,7 +27,7 @@ curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/meta/bootstra
 
 Example with defaults:
 ```bash
-curl -sL https://raw.githubusercontent.com/claude-monad/monad/main/meta/bootstrap/join.sh \
+curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/meta/bootstrap/join.sh \
   | bash -s -- 100.87.219.108 pro
 ```
 
@@ -62,9 +62,9 @@ The cluster is multi-repo. You only clone `monad` (the bootstrap does this for y
 
 | Repo | What it is | Who clones it |
 |------|-----------|---------------|
-| [`claude-monad/monad`](https://github.com/claude-monad/monad) | this repo — cluster config, CLI, bootstrap | `join.sh` → `~/monad` |
+| [`eliott-monad/monad`](https://github.com/eliott-monad/monad) | this repo — cluster config, CLI, bootstrap | `join.sh` → `~/monad` |
 | [`eliottcassidy2000/math`](https://github.com/eliottcassidy2000/math) | informal math research (the work) | research/compute jobs, on dispatch |
-| [`claude-monad/math-lean`](https://github.com/claude-monad/math-lean) | Lean formalizations of novel results | the formalizer job, on dispatch |
+| [`eliott-monad/math-lean`](https://github.com/eliott-monad/math-lean) | Lean formalizations of novel results | the formalizer job, on dispatch |
 
 So: get the machine onto the cluster, and the cluster hands it the right repo when it hands
 it work. If you want to understand the system first, read this repo's `CLAUDE.md` (the cluster

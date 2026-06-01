@@ -21,8 +21,8 @@ KIND="${1:?usage: run-in-toolchain.sh <lean|compute|image-ref> [command...]}"
 shift || true
 
 case "$KIND" in
-  lean)    IMAGE="ghcr.io/claude-monad/lean-toolchain:latest" ;;
-  compute) IMAGE="ghcr.io/claude-monad/compute:latest" ;;
+  lean)    IMAGE="ghcr.io/eliott-monad/lean-toolchain:latest" ;;
+  compute) IMAGE="ghcr.io/eliott-monad/compute:latest" ;;
   *)       IMAGE="$KIND" ;;
 esac
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # formalizer-session.sh — launcher for the Lean formalizer agent.
 #
-# Mirrors math-session.sh, but clones the Lean formalization repo (claude-monad/math-lean)
+# Mirrors math-session.sh, but clones the Lean formalization repo (eliott-monad/math-lean)
 # instead of the informal math repo, and runs the formalizer prompt. The agent pulls its own
 # candidates from the informal repo via the repo's sync-candidates.sh.
 #
@@ -12,7 +12,7 @@ CLONE_DEPTH="${1:-0}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROMPT_FILE="$SCRIPT_DIR/prompts/formalizer.md"
-LEAN_REPO="${LEAN_REPO_URL:-https://github.com/claude-monad/math-lean.git}"
+LEAN_REPO="${LEAN_REPO_URL:-https://github.com/eliott-monad/math-lean.git}"
 
 WORK_DIR="/tmp/math-lean-formalizer-$$"
 trap "rm -rf $WORK_DIR" EXIT

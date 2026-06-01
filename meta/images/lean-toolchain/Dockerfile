@@ -1,9 +1,9 @@
 # Lean toolchain image — reproducible Lean 4 + Mathlib builds for formalizer agents.
-# Published by .github/workflows/images.yml to ghcr.io/claude-monad/lean-toolchain.
+# Published by .github/workflows/images.yml to ghcr.io/eliott-monad/lean-toolchain.
 #
 # The image ships elan + the pinned Lean toolchain and warms the Mathlib build cache so
 # agent builds are fast and identical on every node. Bump LEAN/MATHLIB in lockstep with
-# claude-monad/math-lean (lean-toolchain + lakefile.toml).
+# eliott-monad/math-lean (lean-toolchain + lakefile.toml).
 FROM ubuntu:24.04
 
 ARG LEAN_VERSION=v4.30.0

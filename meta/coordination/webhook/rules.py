@@ -44,8 +44,8 @@ class Rule:
 # "logic across the sources": events in one repo kick off work routed to another.
 MATH = "eliottcassidy2000/math"
 MATH_FORK = "claude-monad/math"
-LEAN = "claude-monad/math-lean"
-MONAD = "claude-monad/monad"
+LEAN = "eliott-monad/math-lean"
+MONAD = "eliott-monad/monad"
 
 RULES = [
     # New/updated hypothesis or canon theorem in the math repo → formalize it in Lean.

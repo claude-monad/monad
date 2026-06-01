@@ -10,7 +10,7 @@ It composes with mechanisms that already exist (rather than replacing them):
 - its `02-court/` dispute system,
 - `00-navigation/` (OPEN-QUESTIONS, SESSION-LOG, TANGENTS, hypotheses),
 - the cluster-memory key-value store (`scripts/cluster-memory.sh`),
-- `claude-monad/math-lean`'s `candidates/` formalization queue.
+- `eliott-monad/math-lean`'s `candidates/` formalization queue.
 
 ## The work item
 
@@ -79,7 +79,7 @@ down. Tasks live as one JSON file per task under `meta/coordination/tasks/`:
   "id": "t-<short>",
   "type": "math | merge | push | formalize | review | compute",
   "scope": "one-line: exactly the small thing to do",
-  "repo": "eliottcassidy2000/math | claude-monad/math-lean | claude-monad/monad",
+  "repo": "eliottcassidy2000/math | eliott-monad/math-lean | eliott-monad/monad",
   "payload": { "branch": "...", "files": ["..."], "note": "..." },
   "status": "open | claimed | done | blocked",
   "owner": null,

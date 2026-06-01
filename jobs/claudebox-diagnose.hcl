@@ -91,7 +91,7 @@ job "claudebox-diagnose" {
             R "  icmp: $(if ($ping) {'UP'} else {'no reply'})"
             foreach ($p in @(22, 4646, 4647, 4648)) {
               $tc = Test-NetConnection -ComputerName $t -Port $p -WarningAction SilentlyContinue
-              R "  tcp/$p: $(if ($tc.TcpTestSucceeded) {'OPEN'} else {'closed/filtered'})"
+              R "  tcp/${p}: $(if ($tc.TcpTestSucceeded) {'OPEN'} else {'closed/filtered'})"
             }
           }
 

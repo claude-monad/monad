@@ -16,7 +16,10 @@ if [ ! -d "$REPO_DIR/.git" ]; then
     fi
 fi
 
-NOMAD_ADDR="${NOMAD_ADDR:-http://100.87.219.108:4646}"
+# Default to the live Nomad server (v1410-1 leader). Was claudebox (100.87.219.108),
+# which is offline — that made every monad nomad/deploy command hang. Override with
+# NOMAD_ADDR=... for a different server (e.g. local oraclebox1 http://100.125.210.126:4646).
+NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
 export NOMAD_ADDR
 
 RED='\033[0;31m'

@@ -40,5 +40,6 @@ exec sudo docker run --rm $DETACH \
   -v "$CLAUDE_JSON":/home/ubuntu/.claude.json \
   -e GH_TOKEN="$TOKEN" \
   -e MACHINE_ID="$MACHINE_ID" \
+  -e CLAUDE_TIMEOUT="${CLAUDE_TIMEOUT:-2700}" \
   -e PROMPT="$PROMPT" \
   "$IMAGE"

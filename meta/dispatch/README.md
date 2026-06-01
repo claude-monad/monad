@@ -9,6 +9,17 @@ Each container clones the repo fresh, so concurrent sessions never touch the sam
 working tree. Auth comes from the host at runtime: the host's `~/.claude` OAuth is
 mounted, and a GitHub token (`gh auth token`) is injected for `git push`.
 
+## Two job types
+
+| Type | Prompt | Warm-up | Timeout | When |
+|------|--------|---------|---------|------|
+| **explorer** (default, bread & butter) | `scripts/prompts/explorer.md` | full | 60 min | deep, long-lived sessions that ponder and hunt hidden connections; the continuous background loop |
+| **targeted** (lightweight) | `scripts/prompts/targeted.md` | none (reads only MISTAKES.md) | 20 min | fast, surgical progress on ONE specific question |
+
+Pick with `--mode {explorer,targeted}` on the dispatcher, `MONAD_MODE`/arg on
+`auto-dispatch.sh`, or fire a targeted session at a literal question with
+`ask.sh "<question>"`.
+
 ## Pieces
 
 | File | What |

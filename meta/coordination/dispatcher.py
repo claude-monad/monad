@@ -94,33 +94,41 @@ def dispatch(job: str, item: F.WorkItem, commit: bool) -> str:
     return ("dispatched " + job) if r.returncode == 0 else f"FAILED {job}: {r.stderr.strip()}"
 
 
-def _role_prompt(role: str, item: F.WorkItem) -> str:
-    """Load the role's prompt template and append the dispatched work item."""
-    pf = os.path.join(_HERE, "..", "..", "scripts", "prompts", ROLE_PROMPT.get(role, "researcher.md"))
+# The two Claude job TYPES (container backend):
+#   targeted  — lightweight, no warm-up, one specific question, fast (~20 min cap)
+#   explorer  — deep, full warm-up, long pondering for hidden connections (~60 min)
+MODE_PROMPT  = {"targeted": "targeted.md", "explorer": "explorer.md"}
+MODE_TIMEOUT = {"targeted": "1200", "explorer": "3600"}  # CLAUDE_TIMEOUT seconds
+
+
+def _mode_prompt(mode: str, item: F.WorkItem) -> str:
+    """Load the job-type prompt template and append the dispatched frontier item
+    (the prompt files end with their own focus/seed header)."""
+    pf = os.path.join(_HERE, "..", "..", "scripts", "prompts", MODE_PROMPT.get(mode, "explorer.md"))
     base = open(pf, encoding="utf-8").read() if os.path.isfile(pf) else ""
-    return (base + "\n\n## Dispatched focus (from the frontier dispatcher)\n"
-            f"This session was auto-dispatched. Prioritise this frontier item:\n"
-            f"  source: {item.source}\n  type:   {item.type}\n  id:     {item.id}\n"
-            "Do the full startup, then advance THIS item; close out normally.\n")
+    return (base + f"\n  source: {item.source}\n  type:   {item.type}\n  id:     {item.id}\n")
 
 
-def dispatch_container(role: str, item: F.WorkItem, account: str, commit: bool) -> str:
-    """Launch a containerized Claude session on THIS host (detached) instead of a
-    Nomad job. One container per account at a time (serialized on the shared
-    credentials). Honours the same claim() dedup as the Nomad path."""
+def dispatch_container(mode: str, item: F.WorkItem, account: str, commit: bool) -> str:
+    """Launch a containerized Claude session on THIS host (detached). `mode` is the
+    job type (targeted|explorer): it picks the prompt and the wall-clock timeout.
+    One container per account at a time (serialized on the shared credentials);
+    honours the same claim() dedup as the Nomad path."""
     launcher = os.path.join(_HERE, "..", "dispatch", "run-container-session.sh")
     if not os.path.isfile(launcher):
         return f"FAILED container: launcher missing ({launcher})"
-    machine = f"container-{account}-{int(time.time())}"
+    machine = f"container-{account}-{mode}-{int(time.time())}"
     if not commit:
-        return f"DRY-RUN would launch container {machine} ({role}) ← {item.source}"
+        return f"DRY-RUN would launch {mode} container {machine} ← {item.source}"
     # don't stack a second session on the same account's credentials
     ps = sh(["bash", "-c", "sudo docker ps --format '{{.Names}}' 2>/dev/null"])
     if f"session-container-{account}" in ps.stdout:
         return f"skip: a {account} container is already running"
-    prompt = _role_prompt(role, item)
-    r = sh(["bash", launcher, machine, prompt, "--detach"])
-    return f"launched container {machine}" if r.returncode == 0 \
+    prompt = _mode_prompt(mode, item)
+    env = dict(os.environ, CLAUDE_TIMEOUT=MODE_TIMEOUT.get(mode, "2700"))
+    r = subprocess.run(["bash", launcher, machine, prompt, "--detach"],
+                       capture_output=True, text=True, env=env)
+    return f"launched {mode} container {machine}" if r.returncode == 0 \
         else f"FAILED container {machine}: {(r.stderr or r.stdout).strip()[:200]}"
 
 
@@ -156,6 +164,10 @@ def main():
     ap.add_argument("--account", default=None,
                     help="restrict dispatch to this Claude account only (the account "
                          "this host is logged into; required for --exec container)")
+    ap.add_argument("--mode", choices=["targeted", "explorer"], default="explorer",
+                    help="container job type: 'explorer' (deep, full warm-up, long; "
+                         "default/bread-and-butter) or 'targeted' (lightweight, no "
+                         "warm-up, one question, fast)")
     ap.add_argument("--cache-dir", default=os.path.join(tempfile.gettempdir(), "monad-frontier"))
     ap.add_argument("--max-dispatch", type=int, default=4)
     args = ap.parse_args()
@@ -173,13 +185,14 @@ def main():
     if not assignments:
         print("[dispatch] no eligible assignments this cycle."); return
 
-    mode = "COMMIT" if args.commit else "DRY-RUN"
-    print(f"[dispatch] {mode} via {args.exec}: {len(assignments)} assignment(s)")
+    runmode = "COMMIT" if args.commit else "DRY-RUN"
+    jobtype = f" ({args.mode})" if args.exec == "container" else ""
+    print(f"[dispatch] {runmode} via {args.exec}{jobtype}: {len(assignments)} assignment(s)")
     for acct, w in assignments:
         if args.commit and not claim(w.id, f"{args.exec}-{acct}"):
             print(f"  {acct:<6} skip {w.id} (claimed elsewhere)"); continue
         if args.exec == "container":
-            result = dispatch_container(w.best_role, w, acct, args.commit)
+            result = dispatch_container(args.mode, w, acct, args.commit)
         else:
             result = dispatch(ROLE_JOB[w.best_role], w, args.commit)
         print(f"  {acct:<6} {w.best_role:<11} p={w.priority:.2f}  {result}")

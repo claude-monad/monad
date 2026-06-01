@@ -7,11 +7,15 @@
 #   Account is detected from the Nomad client config (meta.claude_account), else
 #   $MONAD_ACCOUNT, else "pro".
 #
-# Cron example (every 15 min):
+# Job type (mode): arg $1 or $MONAD_MODE, default "explorer" (deep, bread-and-
+# butter). Use "targeted" for fast, single-question sessions.
+#
+# Cron example (deep explorer every 15 min):
 #   */15 * * * * /home/ubuntu/monad/meta/dispatch/auto-dispatch.sh >> /tmp/auto-dispatch.log 2>&1
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+MODE="${1:-${MONAD_MODE:-explorer}}"
 ACCOUNT="${MONAD_ACCOUNT:-}"
 if [ -z "$ACCOUNT" ]; then
   ACCOUNT="$(grep -oP 'claude_account\s*=\s*"\K[^"]+' /etc/nomad.d/nomad.hcl 2>/dev/null | head -1)"
@@ -30,6 +34,6 @@ if ! sudo docker image inspect "${MONAD_SESSION_IMAGE:-monad-claude-session}" >/
 fi
 [ -f "$HOME/.claude/.credentials.json" ] || { echo "[auto-dispatch] no Claude login on host"; exit 1; }
 
-echo "[auto-dispatch] $(date -Is): dispatching one container for account '${ACCOUNT}'"
+echo "[auto-dispatch] $(date -Is): dispatching one '${MODE}' container for account '${ACCOUNT}'"
 cd "$HERE/../coordination"
-exec python3 dispatcher.py --exec container --commit --account "$ACCOUNT" --max-dispatch 1
+exec python3 dispatcher.py --exec container --commit --account "$ACCOUNT" --mode "$MODE" --max-dispatch 1

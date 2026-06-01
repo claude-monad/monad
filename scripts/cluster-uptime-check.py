@@ -30,8 +30,19 @@ def get_nomad_nodes():
     except Exception:
         return {}
 
-def ping_node(ip):
-    """Tailscale ping a node, return (reachable, latency_ms)."""
+def local_ips():
+    """This machine's own Tailscale IP(s). A node cannot tailscale-ping itself, so
+    the node running this check must count itself reachable or it undercounts."""
+    out, rc = run(["tailscale", "ip", "-4"])
+    if rc != 0:
+        return set()
+    return {l.strip() for l in out.splitlines() if l.strip()}
+
+def ping_node(ip, selfset=frozenset()):
+    """Tailscale ping a node, return (reachable, latency_ms). The local node is
+    counted reachable directly (Tailscale cannot ping the host it runs on)."""
+    if ip in selfset:
+        return True, "0ms (self)"
     out, rc = run(["tailscale", "ping", "--c", "1", "--timeout", "5s", ip])
     if "pong" in out:
         import re
@@ -49,10 +60,11 @@ def main():
     timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     nomad_nodes = get_nomad_nodes()
 
+    selfset = local_ips()
     results = []
     ts_up = 0
     for name, ip in KNOWN_NODES.items():
-        reachable, latency = ping_node(ip)
+        reachable, latency = ping_node(ip, selfset)
         if reachable:
             ts_up += 1
         nomad_status = nomad_nodes.get(ip, "not-registered")

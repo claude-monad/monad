@@ -9,13 +9,23 @@
 #   dispatch.sh "run the latest computation" --account max-2 --wait
 #   dispatch.sh "explore the math frontier" --wait --timeout 3600
 #
-# Dispatches a parameterized claude-task Nomad job. With --wait, polls until
-# the task completes and prints the result.
+# Two dispatch modes:
+#   --node <name>: SSH to that node and run claude directly (targeted)
+#   (no --node):   Nomad dispatch, any eligible node picks it up
+#
+# With --wait, polls until the task completes and prints the result.
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
 export NOMAD_ADDR
+
+# Node SSH map — add new nodes here
+declare -A NODE_SSH=(
+  [bigo-server]="bigo@100.78.218.70"
+  [v1410-1]="root@100.75.75.39"
+  [oraclebox1]="ubuntu@100.125.210.126"
+)
 
 PROMPT=""
 TARGET_NODE=""
@@ -52,24 +62,49 @@ echo "[dispatch] prompt: ${PROMPT:0:80}..."
 [ -n "$TARGET_NODE" ] && echo "[dispatch] target node: $TARGET_NODE"
 [ -n "$TARGET_ACCOUNT" ] && echo "[dispatch] target account: $TARGET_ACCOUNT"
 
-# Build dispatch command
+# ── Targeted dispatch via SSH ──────────────────────────────────────────────────
+if [ -n "$TARGET_NODE" ]; then
+  SSH_TARGET="${NODE_SSH[$TARGET_NODE]:-}"
+  if [ -z "$SSH_TARGET" ]; then
+    echo "[dispatch] ERROR: unknown node '$TARGET_NODE'. Known: ${!NODE_SSH[*]}"
+    exit 1
+  fi
+  echo "[dispatch] SSH dispatch → $SSH_TARGET"
+  RESULT_FILE="/tmp/claude-task-results/$TASK_ID.out"
+  ssh -o ConnectTimeout=10 "$SSH_TARGET" "
+    mkdir -p /tmp/claude-task-results
+    echo '[claude-task] starting on \$(hostname)'
+    # Find a non-root user with claude if needed
+    if [ \"\$(id -u)\" = \"0\" ]; then
+      for u in bigo ubuntu e eliott; do
+        if id \"\$u\" &>/dev/null && su - \"\$u\" -c 'which claude' &>/dev/null; then
+          su - \"\$u\" -c \"timeout $TIMEOUT claude --print --dangerously-skip-permissions '$PROMPT'\" > /tmp/claude-task-results/$TASK_ID.out 2>&1
+          break
+        fi
+      done
+    else
+      timeout $TIMEOUT claude --print --dangerously-skip-permissions '$PROMPT' > /tmp/claude-task-results/$TASK_ID.out 2>&1
+    fi
+    echo '[claude-task] done'
+    cat /tmp/claude-task-results/$TASK_ID.out
+  " 2>&1
+  exit $?
+fi
+
+# ── Untargeted dispatch via Nomad ──────────────────────────────────────────────
 DISPATCH_ARGS=(-meta "prompt=$PROMPT" -meta "timeout=$TIMEOUT" -meta "task_id=$TASK_ID")
-[ -n "$TARGET_NODE" ] && DISPATCH_ARGS+=(-meta "target_node=$TARGET_NODE")
 [ -n "$TARGET_ACCOUNT" ] && DISPATCH_ARGS+=(-meta "target_account=$TARGET_ACCOUNT")
 
-# Dispatch
 OUTPUT=$(nomad job dispatch "${DISPATCH_ARGS[@]}" claude-task 2>&1)
 echo "$OUTPUT"
 
 DISPATCH_ID=$(echo "$OUTPUT" | grep -oP 'Dispatched Job ID\s*=\s*\K\S+' || true)
-ALLOC_ID=$(echo "$OUTPUT" | grep -oP 'Allocation ID\s*=\s*\K\S+' || true)
-
 if [ -z "$DISPATCH_ID" ]; then
   echo "[dispatch] ERROR: dispatch failed"
   exit 1
 fi
 
-echo "[dispatch] dispatched: job=$DISPATCH_ID alloc=$ALLOC_ID"
+echo "[dispatch] dispatched: job=$DISPATCH_ID"
 
 if [ "$WAIT" = true ]; then
   echo "[dispatch] waiting for completion..."

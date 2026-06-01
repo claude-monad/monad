@@ -107,21 +107,28 @@ job "claudebox-diagnose" {
             R "Likely powered off / off the LAN / Tailscale down. Needs physical or out-of-band check."
           }
 
-          # --- 6. Persist report into the repo (best-effort GitOps) ---
+          R "=== diagnosis complete ==="
+
+          # --- 6. Publish the report through reliable channels ---
+          # Primary: a Nomad variable the control plane can read centrally with
+          #   `nomad var get -item=report claudebox-diag/last`
+          # (raw_exec stdout is not captured on Windows, and windesk often can't push git).
+          $text = $report -join "`n"
           try {
-            $dir = Join-Path $REPO "logs/claudebox-diag"
-            New-Item -ItemType Directory -Force -Path $dir | Out-Null
-            $out = Join-Path $dir "$stamp-windesk.txt"
-            $report -join "`n" | Out-File -FilePath $out -Encoding utf8
-            R "report written: $out"
+            $tmp = Join-Path $env:NOMAD_TASK_DIR "report.txt"; if (-not $env:NOMAD_TASK_DIR) { $tmp = "local/report.txt" }
+            $text | Out-File -FilePath $tmp -Encoding utf8
+            & nomad var put -force "claudebox-diag/last" "stamp=$stamp" "node=$env:COMPUTERNAME" "report=@$tmp" 2>&1 | Out-Null
+          } catch {}
+          # Secondary (best-effort): commit into the repo for GitOps history.
+          try {
+            $dir = Join-Path $REPO "logs/claudebox-diag"; New-Item -ItemType Directory -Force -Path $dir | Out-Null
+            $text | Out-File -FilePath (Join-Path $dir "$stamp-windesk.txt") -Encoding utf8
             Push-Location $REPO
             & git add "logs/claudebox-diag/$stamp-windesk.txt" 2>$null
             & git -c user.name="windesk" -c user.email="windesk@monad" commit -m "claudebox-diagnose: report from windesk $stamp" 2>$null
             & git pull --ff-only 2>$null; & git push 2>$null
             Pop-Location
-          } catch { R "WARN: could not persist/commit report: $_" }
-
-          R "=== diagnosis complete ==="
+          } catch {}
         SCRIPT
       }
 
@@ -132,6 +139,7 @@ job "claudebox-diagnose" {
 
       env {
         MONAD_REPO_DIR = "C:/Users/Eliott/monad"
+        NOMAD_ADDR     = "http://100.75.75.39:4646"
       }
 
       resources {

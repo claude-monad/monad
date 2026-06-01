@@ -77,3 +77,42 @@ This is a **GitOps cluster** — all coordination happens through this repo:
 - `monad-sync` pulls every 5 minutes — changes propagate automatically
 
 No Slack, no email, no out-of-band coordination. If you need to tell other nodes something, commit it.
+
+---
+
+## The Cluster Conductor (deployed 2026-06-01, oraclebox1)
+
+The owner's directive: **stop querying Claude directly on individual machines.** A
+single always-on Claude — the **conductor** — now runs the cluster, reachable two ways
+(one brain): a **Tailscale text gateway** (`POST http://100.125.210.126:8200/ask`) and a
+**remote-control session** in the Claude app (`cluster-conductor` at claude.ai/code,
+desktop + phone). It lives in a container on oraclebox1 (`--restart unless-stopped`).
+See `conductor/README.md` and `conductor/CONDUCTOR.md`.
+
+**One-account caveat:** the cluster shares one Claude account; the conductor is its
+primary consumer. Heavy concurrent Claude sessions (the autonomous math fleet, or a
+human session) contend on the shared credential and can stall conductor calls. Operate
+the conductor as the sole live consumer, or stagger the other jobs. Robust fix (queued):
+a single warm `--input-format stream-json` backend behind both doors.
+
+## Per-machine tasks (each node works toward full connectivity + uptime)
+
+Measured continuously by the `cluster-uptime` Nomad periodic job →
+`logs/cluster-uptime-summary.json`. Latest (2026-06-01): **4/6 reachable, 3/6 ready**.
+
+- **oraclebox1** (me, server+voter): host the conductor; keep the gateway + RC session
+  up; watch the uptime summary; drive convergence to the 3-master set.
+- **v1410-1** (server, leader): keep the Nomad server + `cluster-uptime` job running;
+  help returning nodes rejoin; stay a Raft voter.
+- **windesk** (client, ready): stay a healthy client; run the `claudebox-diagnose` work
+  to help revive claudebox; keep node-doctor cron alive.
+- **claudebox** (OFFLINE — was the original server): **revive** — bring Tailscale +
+  Nomad back, rejoin as the 3rd Raft voter (see `cluster/desired-servers.md`). Highest-
+  impact item: it restores FailureTolerance=1.
+- **eliotts-mac-mini** (reachable on Tailscale, not a Nomad client): **join** as a Nomad
+  client (`meta/bootstrap/join.sh 100.75.75.39 <account>`); then it counts toward
+  cluster %.
+
+Each machine: keep Tailscale authenticated, keep the Nomad agent pointed at a live
+server, pull `monad` regularly, and if you see another node down, log it (commit) so the
+conductor and the fleet can act. Connectivity is a shared, continuously-measured goal.

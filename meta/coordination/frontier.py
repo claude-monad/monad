@@ -118,8 +118,38 @@ def build_frontier(cache_dir: str) -> list[WorkItem]:
     for repo, rel, itype, role in DIR_SOURCES:
         if paths.get(repo):
             scan_dir_source(paths[repo], repo, rel, itype, role, items)
+    scan_local_tasks(items)
     items.sort(key=lambda w: w.priority, reverse=True)
     return items
+
+
+# Emitted tasks from the git-backed queue (meta/coordination/tasks/) — see PROTOCOL.md.
+# These are self-chaining work: a session emits the next task instead of doing it inline.
+TASK_ROLE = {"math": "researcher", "compute": "compute", "formalize": "formalizer",
+             "review": "reviewer", "merge": "reviewer", "push": "reviewer"}
+
+
+def scan_local_tasks(items):
+    here = os.path.dirname(os.path.abspath(__file__))
+    tdir = os.path.join(here, "tasks")
+    if not os.path.isdir(tdir):
+        return
+    for name in sorted(os.listdir(tdir)):
+        if not (name.startswith("t-") and name.endswith(".json")):
+            continue
+        try:
+            with open(os.path.join(tdir, name)) as f:
+                t = json.load(f)
+        except Exception:
+            continue
+        if t.get("status") != "open":
+            continue
+        # emitted tasks carry chain pressure → prioritized above stale questions
+        items.append(WorkItem(
+            id=t["id"], type=t.get("type", "task"),
+            source=f"tasks/{name}: {t.get('scope', '')}",
+            priority=0.75, best_role=TASK_ROLE.get(t.get("type"), "researcher"),
+        ))
 
 
 def main():

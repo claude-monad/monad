@@ -49,6 +49,49 @@ assigns them. Shape:
 5. **report** — on finishing, the agent marks the item done (cluster-memory), logs to
    SESSION-LOG, and releases its claim.
 
+## Session model: small, interactive, self-chaining
+
+Cluster sessions are **small and scoped** — one task each, not long monolithic runs. A session
+does its one piece and then **kicks off the next**: instead of doing everything inline, it
+**emits follow-up tasks** that other small sessions pick up. Work begets tasks begets work.
+When in doubt, do less and hand off.
+
+The canonical pipeline the user wants:
+
+```
+do math LOCALLY in a repo (small scope)
+   → as results land, EMIT tasks: "merge branch X", "push result Y to GitHub", "formalize Z"
+        → a merge/push session runs, merges + pushes, and may emit its own follow-ups
+             → a review/formalize session runs, …
+```
+
+So a research session never has to also be a git-plumbing session: it produces the math and
+emits a `merge`/`push` task; a separate tiny session executes that. Each step is cheap,
+reviewable, and triggers the next.
+
+## The task queue (git-backed)
+
+Emitting a task is just a commit, so the queue is durable, auditable, and survives Nomad being
+down. Tasks live as one JSON file per task under `meta/coordination/tasks/`:
+
+```json
+{
+  "id": "t-<short>",
+  "type": "math | merge | push | formalize | review | compute",
+  "scope": "one-line: exactly the small thing to do",
+  "repo": "eliottcassidy2000/math | claude-monad/math-lean | claude-monad/monad",
+  "payload": { "branch": "...", "files": ["..."], "note": "..." },
+  "status": "open | claimed | done | blocked",
+  "owner": null,
+  "parent": "<task id that emitted this, or null>"
+}
+```
+
+Use `meta/coordination/task.sh` (emit / claim / done / list) so a session can drop the next
+task in one line. `frontier.py` includes open tasks alongside the other work sources, so the
+dispatcher routes them to small sessions of the right role. A `done` task that emitted children
+leaves a visible chain (`parent` links) — the audit trail of who kicked off whom.
+
 ## The loop (what the dispatcher runs)
 
 ```

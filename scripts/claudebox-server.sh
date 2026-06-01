@@ -50,12 +50,23 @@ advertise {
   rpc  = "$ip:4647"
   serf = "$ip:4648"
 }
+# claudebox is the 3rd member of the master set (v1410-1, oraclebox1, claudebox).
+# It JOINS the existing cluster — bootstrap_expect is intentionally absent so a revived
+# claudebox never forms its own single-node Raft. NOTE: if this node previously ran as a
+# standalone server (bootstrap_expect=1), its old Raft state in \$DATA must be cleared
+# before rejoining, or it will refuse to join the v1410-1-led cluster. See
+# cluster/desired-servers.md for the revival procedure.
 server {
-  enabled          = true
-  bootstrap_expect = 1
+  enabled = true
+  server_join {
+    retry_join     = ["100.75.75.39", "100.125.210.126"]
+    retry_interval = "15s"
+    retry_max      = 0
+  }
 }
 client {
   enabled = true
+  servers = ["100.75.75.39:4647", "100.125.210.126:4647"]
   meta {
     claude_account = "pro"
     role           = "server"

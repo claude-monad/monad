@@ -6,8 +6,13 @@ Claude agents are the primary operators. Git is the source of truth.
 The cluster's mission is **autonomous pure mathematics research**.
 
 ## Architecture
-- **Bootstrap server**: `claudebox` (100.87.219.108) — Nomad server + client (replaced the
-  long-offline `bigo-server`; kept alive by `scripts/claudebox-server.sh` via user cron)
+- **Repo / org**: source of truth is **`eliott-monad/monad`** (the old `claude-monad/monad`
+  was transferred here and now redirects). All future cluster work happens in the
+  `eliott-monad` org; other repos (e.g. `claude-monad/math`) migrate there over time.
+- **Nomad servers (masters)**: the target master set is **`v1410-1`, `oraclebox1`, `claudebox`**
+  (3-voter Raft). As of 2026-06-01: `v1410-1` (100.75.75.39) is the live leader and
+  `oraclebox1` (100.125.210.126) is a voter; `claudebox` rejoins as the 3rd once revived.
+  See `cluster/desired-servers.md` for the declarative target + convergence procedure.
 - **Worker nodes**: Join via Tailscale, run as Nomad clients
 - **GitOps**: `monad-sync` pulls git every 5 min, drift-detects changed jobs, canary-checks deploys
 - **Service discovery**: Nomad native (no Consul)
@@ -316,22 +321,23 @@ noise while ensuring every problem is git-tracked and visible to the cluster.
 
 | Node | IP | OS | Role | Capabilities |
 |------|----|----|------|-------------|
-| `claudebox` | 100.87.219.108 | Linux | **server + client** | raw_exec, native Claude — the live control plane |
+| `v1410-1` | 100.75.75.39 | Linux | **server (leader) + client** | the live control plane; Raft leader |
+| `oraclebox1` | 100.125.210.126 | Linux | **server (voter) + client** | hosts the `cluster-conductor` (holds Claude creds); raw_exec, docker |
+| `windesk` | 100.94.210.54 | Windows | client | native Claude Code, PowerShell/raw_exec; on claudebox's LAN |
 
-> **Control plane note (2026-06-01):** `bigo-server` (100.78.218.70) has been offline ~66
-> days, which is why new nodes could not join. `claudebox` now hosts the Nomad server+client
-> (non-root user process, kept alive by `scripts/claudebox-server.sh` + user cron). All join
-> paths point at `100.87.219.108`. When `bigo-server` returns it can rejoin as a plain client.
+> **Control plane note (updated 2026-06-01):** the Nomad server moved off the long-offline
+> `bigo-server` → `claudebox` → and now lives on **`v1410-1`** (Raft leader), with `oraclebox1`
+> promoted to a 2nd voter. Target is a 3-voter set adding `claudebox` once it is revived
+> (`claudebox` is currently offline on Tailscale). See `cluster/desired-servers.md`. Join paths
+> in older docs may still point at `100.87.219.108`; the live server RPC is `100.75.75.39:4647`.
 
 ### Offline / not-yet-joined (potential nodes — join with `meta/bootstrap/join.sh`)
 
 | Node | IP | OS | Last Seen | Notes |
 |------|----|----|-----------|-------|
-| `oraclebox1` | 100.125.210.126 | Linux | live (idle) | reachable now — good next node to join |
-| `v1410-1` | 100.75.75.39 | Linux | live (idle) | reachable now — good next node to join |
+| `claudebox` | 100.87.219.108 | Linux | offline (Tailscale relay only) | **intended 3rd master**; diagnosis delegated to windesk via `jobs/claudebox-diagnose.hcl` |
 | `bigo-server` | 100.78.218.70 | Linux | 66d ago | former server; rejoin as client when back |
 | `death-star` | 100.96.31.66 | Linux | 66d ago | former max-2 compute node |
-| `windesk` | 100.94.210.54 | Windows | recent | native Claude Code |
 | `eliotts-mac-mini` | 100.113.252.45 | macOS | 71d ago | Mac Mini |
 | `pi0`, `pi1` | various | Linux | months | Raspberry Pis |
 

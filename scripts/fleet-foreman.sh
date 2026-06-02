@@ -43,19 +43,41 @@ active_builders() {
 }
 
 # Count project statuses across fleet/projects/*.md -> sets globals B_TODO B_BUILDING ...
+front_value() {
+  local key="$1" f="$2"
+  sed -n "s/^${key}:[[:space:]]*//p" "$f" | head -n 1 | sed 's/^"//; s/"$//' | tr -d '\r'
+}
+
+append_csv() {
+  local var="$1" value="$2" cur
+  cur="${!var:-}"
+  if [ -z "$cur" ]; then
+    printf -v "$var" '%s' "$value"
+  else
+    printf -v "$var" '%s,%s' "$cur" "$value"
+  fi
+}
+
 backlog_counts() {
   B_TODO=0; B_CLAIMED=0; B_BUILDING=0; B_REVIEW=0; B_DONE=0; B_BLOCKED=0
-  local f s
+  B_ACTIVE_PROJECTS=""; B_BLOCKED_PROJECTS=""
+  local f slug s owner updated entry
   for f in "$PROJECTS_DIR"/*.md; do
     [ -e "$f" ] || continue
-    s="$(awk -F': *' '/^status:/{print $2; exit}' "$f" | tr -d '[:space:]')"
+    slug="$(basename "$f" .md)"
+    s="$(front_value status "$f" | tr -d '[:space:]')"
+    owner="$(front_value owner "$f")"
+    updated="$(front_value updated "$f")"
+    [ -n "$owner" ] || owner="none"
+    [ -n "$updated" ] || updated="unknown"
+    entry="${slug}:${s}:${owner}:${updated}"
     case "$s" in
       todo)     B_TODO=$((B_TODO+1)) ;;
-      claimed)  B_CLAIMED=$((B_CLAIMED+1)) ;;
-      building) B_BUILDING=$((B_BUILDING+1)) ;;
-      review)   B_REVIEW=$((B_REVIEW+1)) ;;
+      claimed)  B_CLAIMED=$((B_CLAIMED+1)); append_csv B_ACTIVE_PROJECTS "$entry" ;;
+      building) B_BUILDING=$((B_BUILDING+1)); append_csv B_ACTIVE_PROJECTS "$entry" ;;
+      review)   B_REVIEW=$((B_REVIEW+1)); append_csv B_ACTIVE_PROJECTS "$entry" ;;
       done)     B_DONE=$((B_DONE+1)) ;;
-      blocked)  B_BLOCKED=$((B_BLOCKED+1)) ;;
+      blocked)  B_BLOCKED=$((B_BLOCKED+1)); append_csv B_BLOCKED_PROJECTS "$entry" ;;
     esac
   done
 }
@@ -68,7 +90,7 @@ ensure() {
   nomad job status fleet-builder >/dev/null 2>&1 || nomad job run "$REPO_DIR/jobs/fleet-builder.hcl" >/dev/null 2>&1
 
   backlog_counts
-  local backlog="todo=$B_TODO building=$B_BUILDING blocked=$B_BLOCKED done=$B_DONE"
+  local backlog="todo=$B_TODO claimed=$B_CLAIMED building=$B_BUILDING review=$B_REVIEW blocked=$B_BLOCKED done=$B_DONE"
 
   local have; have="$(active_builders)"
   log "builders running: ${have}/${N} | backlog: $backlog"
@@ -97,7 +119,10 @@ ensure() {
   nomad var put -force fleet/status \
     running="$now" target="$want" dispatched_this_cycle="$dispatched" \
     backlog_todo="$B_TODO" backlog_building="$B_BUILDING" \
+    backlog_claimed="$B_CLAIMED" backlog_review="$B_REVIEW" \
     backlog_blocked="$B_BLOCKED" backlog_done="$B_DONE" \
+    active_projects="${B_ACTIVE_PROJECTS:-none}" \
+    blocked_projects="${B_BLOCKED_PROJECTS:-none}" \
     updated="$(date -u +%Y-%m-%dT%H:%M:%SZ)" >/dev/null 2>&1 || true
 
   event "foreman-cycle" "ok" "builders=$now/$want dispatched=$dispatched | $backlog"

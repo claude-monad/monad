@@ -1,8 +1,8 @@
 ---
 slug: bigo-server-registry-trust
-status: todo
-owner: ""
-updated: 2026-06-02T21:25:00Z
+status: building
+owner: agent-builder-3-211218
+updated: 2026-06-02T21:30:00Z
 priority: 6
 ---
 # bigo-server must trust the shared insecure registry

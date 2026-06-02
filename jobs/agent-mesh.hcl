@@ -20,22 +20,15 @@ job "agent-mesh" {
     meta_optional = ["agent_name", "prompt", "engine", "timeout"]
   }
 
-  # Runs on any Linux docker node that has Claude credentials. The image is now a multi-arch
-  # manifest (amd64+arm64) in the shared registry, so amd64 nodes (bigo-server, v1410-1) can
-  # run mesh agents too — no longer pinned to oraclebox1. The volume mounts below assume the
-  # standard /home/ubuntu engine-cred layout; has_claude keeps briefed dispatches on a node
-  # where Claude is actually logged in.
+  # Pinned to oraclebox1 — NOT for arch reasons anymore (the image is now a multi-arch
+  # amd64+arm64 manifest, verified to pull+run on amd64), but because the volume mounts below
+  # hard-code the /home/ubuntu engine-cred layout, which today only oraclebox1 has. Generalizing
+  # this briefed job to amd64 nodes (bigo-server, v1410-1) needs a node-portable cred path
+  # (their Claude creds live outside /home/ubuntu) — tracked as a follow-up. The amd64 image is
+  # already proven via jobs/agent-mesh-verify.hcl (an idle peer with no cred mounts).
   constraint {
-    attribute = "${attr.kernel.name}"
-    value     = "linux"
-  }
-  constraint {
-    attribute = "${attr.driver.docker}"
-    value     = "1"
-  }
-  constraint {
-    attribute = "${meta.has_claude}"
-    value     = "true"
+    attribute = "${node.unique.name}"
+    value     = "oraclebox1"
   }
 
   group "agent" {

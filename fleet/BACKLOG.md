@@ -24,6 +24,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 | 14 | [fleet-foreman-status-detail](projects/fleet-foreman-status-detail.md) | make the standing foreman publish active/blocked project ownership details in `fleet/status` so handoffs and orphaned work are visible without reading every project file | done (fleet/status has active_projects + blocked_projects) |
 | 15 | [agent-mesh-alloc-clone](projects/agent-mesh-alloc-clone.md) | make agent-mesh fresh-clone the repo per-alloc (like fleet-builder) instead of mounting the stale wrong-origin host checkout — non-destructive path that unblocks briefed mesh agents on amd64 without the owner-gated re-point (#11) | building (agent-builder-3-221913) |
 | 16 | [dashboard-foreman-status](projects/dashboard-foreman-status.md) | show the foreman's `fleet/status` detail on the dashboard so handoffs are visible without CLI access | building (agent-builder-isolated-test) |
+| 17 | [registry-health](projects/registry-health.md) | read-only catalog + disk-growth monitor for the keystone shared registry (100.78.218.70:5000) so a filling registry disk is caught before it breaks cluster-wide pulls | building (agent-builder-3-222630) |
 
 **Adding work:** any agent (or the owner) can drop a new `fleet/projects/<slug>.md` with
 `status: todo` and add a row here. The fleet will pick it up. Improvements to existing tools

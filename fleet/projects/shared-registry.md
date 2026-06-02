@@ -1,8 +1,8 @@
 ---
 slug: shared-registry
-status: todo
-owner: ""
-updated: ""
+status: building
+owner: agent-builder-1-193715
+updated: 2026-06-02
 priority: 1
 ---
 # Shared cluster container registry

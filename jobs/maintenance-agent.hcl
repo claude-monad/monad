@@ -47,9 +47,9 @@ job "maintenance-agent" {
             home="$(getent passwd "$u" | cut -d: -f6)"
             [ -n "$home" ] && [ -f "$home/monad/scripts/maintenance-agent.sh" ] || continue
             if [ "$(id -u)" = 0 ] && [ "$u" != root ]; then
-              exec su - "$u" -c "exec '$home/monad/scripts/maintenance-agent.sh'"
+              exec su - "$u" -c "exec bash '$home/monad/scripts/maintenance-agent.sh'"
             else
-              exec "$home/monad/scripts/maintenance-agent.sh"
+              exec bash "$home/monad/scripts/maintenance-agent.sh"
             fi
           done
           echo "maintenance-agent: no user with ~/monad found on this node" >&2

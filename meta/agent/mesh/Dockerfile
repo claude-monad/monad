@@ -24,9 +24,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git python3 curl ca-certificates jq \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
-COPY --from=node /usr/local/bin/npm /usr/local/bin/npm
-COPY --from=node /usr/local/bin/npx /usr/local/bin/npx
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -sf ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -sf ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && node --version \
+    && npm --version
 # Match the 'ubuntu' user to the HOST's uid/gid so mounted creds (mode 600) are readable
 # and the in-image claude install lands in a home the runtime user owns. Default 1001
 # (oraclebox1's ubuntu); override with --build-arg AGENT_UID=/AGENT_GID= for other hosts.
@@ -41,7 +43,7 @@ COPY agent-msg.sh   /usr/local/bin/agent-msg
 COPY entrypoint.sh  /usr/local/bin/agent-entrypoint
 RUN chmod +x /usr/local/bin/tsnet-sidecar /usr/local/bin/agent-msg /usr/local/bin/agent-entrypoint
 # Codex CLI (global, available to all users)
-RUN npm install -g @openai/codex || true
+RUN npm install -g @openai/codex
 USER ubuntu
 WORKDIR /home/ubuntu
 RUN curl -fsSL https://claude.ai/install.sh | bash || true

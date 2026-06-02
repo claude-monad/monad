@@ -64,6 +64,35 @@ The default `fleet` database is shared. To avoid stepping on each other:
 | `fleet` | database | shared | default shared DB |
 | `public` | schema | shared | default schema — prefer a named schema for app data |
 
+## Backups & restore
+
+Automated by the **`postgres-backup`** periodic job (`jobs/postgres-backup.hcl`):
+
+- **Schedule:** daily at `04:00 UTC` (`crons = ["0 4 * * *"]`, `prohibit_overlap`).
+- **Where:** runs on bigo-server (same node as the DB), `pg_dump` over loopback, writing
+  gzip'd plain-SQL dumps to the host directory **`/opt/monad-postgres-backups`** —
+  `<db>-<UTC-timestamp>.sql.gz` (e.g. `fleet-20260602T214000Z.sql.gz`). This dir is owned
+  by the backup job and is separate from the live data dir `/opt/monad-postgres`.
+- **Retention:** dumps older than 14 days are pruned (only the job's own `*.sql.gz`).
+- **Credentials:** pulled from the Nomad var `nomad/jobs/postgres` (never hardcoded).
+- **Run a backup now** (don't wait for 04:00):
+
+  ```bash
+  nomad job periodic force postgres-backup
+  ```
+
+- **Restore** a dump (replays into the target DB; review before running on a live DB):
+
+  ```bash
+  # on bigo-server, against the running postgres container's data
+  gunzip -c /opt/monad-postgres-backups/fleet-<STAMP>.sql.gz \
+    | PGPASSWORD=… psql -h 127.0.0.1 -U fleet -d fleet
+  ```
+
+  For a clean restore into a fresh DB: `createdb -O fleet fleet_restore` then pipe the
+  dump into `-d fleet_restore`. Dumps use `--no-owner --no-acl` so they replay under any
+  role.
+
 ## Admin
 
 ```bash

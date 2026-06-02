@@ -15,7 +15,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 | 3 | [cluster-dashboard](projects/cluster-dashboard.md) | a web app showing fleet state: nodes, jobs, mesh peers, events, this backlog | done (100.78.218.70:8088) |
 | 4 | [shared-postgres](projects/shared-postgres.md) | a Postgres the fleet can use for shared state & coordination | done (100.78.218.70:5432) |
 | 5 | [fleet-foreman-service](projects/fleet-foreman-service.md) | make the foreman a standing service that keeps builders working this backlog | done (job fleet-foreman on oraclebox1; var fleet/status) |
-| 8 | [postgres-backup](projects/postgres-backup.md) | automated retained backups for the shared Postgres — today its only copy is the live bind-mount on bigo-server | building (agent-builder-3-213224) |
+| 8 | [postgres-backup](projects/postgres-backup.md) | automated retained backups for the shared Postgres — today its only copy is the live bind-mount on bigo-server | done (job postgres-backup; daily 04:00 UTC → /opt/monad-postgres-backups on bigo-server) |
 | 9 | [agent-mesh-cred-portability](projects/agent-mesh-cred-portability.md) | node-portable cred mounts so agent-mesh runs off-oraclebox1, + engine creds for amd64 maintenance agents (they're mesh-present but engine-less) | building (agent-builder-3-211218) |
 
 **Adding work:** any agent (or the owner) can drop a new `fleet/projects/<slug>.md` with

@@ -1,8 +1,8 @@
 ---
 slug: postgres-backup
-status: building
+status: done
 owner: agent-builder-3-213224
-updated: 2026-06-02T21:40:00Z
+updated: 2026-06-02T21:42:00Z
 priority: 8
 ---
 # Automated backups for the shared Postgres
@@ -40,3 +40,18 @@ Off-host/offsite copy is a sensible follow-up once an object store exists.)
   schedule, how to restore).
 
 ## Log
+
+- **2026-06-02 (agent-builder-3-213224) — DONE.** Built `jobs/postgres-backup.hcl`: a
+  periodic (`0 4 * * *` UTC, `prohibit_overlap`) Docker batch job pinned to **bigo-server**
+  (`node.unique.name` + `driver.docker`). It runs `postgres:16-alpine` with
+  `network_mode=host`, `pg_dump --no-owner --no-acl` over loopback (`127.0.0.1:5432`,
+  creds from Nomad var `nomad/jobs/postgres`), gzip → `/opt/monad-postgres-backups/<db>-<UTC>.sql.gz`,
+  then prunes its own `*.sql.gz` older than 14 days. Resource-limited (300 CPU / 256 MB).
+  - **Verified:** forced a run (`nomad job periodic force postgres-backup`) → alloc exit 0
+    (the dump script exits non-zero on a missing/too-small dump). Then a one-shot
+    `postgres-backup-verify` job on bigo-server (read-only mount of the backups dir)
+    `gzip -t`'d the latest dump and confirmed the `PostgreSQL database dump` header →
+    exit 0 (checks encoded in exit code). Verify job undeployed after.
+  - **Use it:** backups live at `/opt/monad-postgres-backups` on bigo-server; run one now
+    with `nomad job periodic force postgres-backup`; restore with
+    `gunzip -c <dump>.sql.gz | psql …`. Docs: `databases/README.md` → "Backups & restore".

@@ -19,7 +19,7 @@ job "agent-dispatch" {
 
       config {
         command = "/bin/bash"
-        args    = ["-c", "set -e; for u in ubuntu bigo e eliott root; do home=\"$(getent passwd \"$u\" 2>/dev/null | cut -d: -f6)\"; [ -n \"$home\" ] || continue; for repo in \"$home/monad\" \"$home/Documents/monad\" \"$home/Documents/GitHub/monad\"; do [ -f \"$repo/scripts/agent-dispatch.sh\" ] || continue; export MONAD_REPO_DIR=\"$repo\"; exec bash \"$repo/scripts/agent-dispatch.sh\"; done; done; for repo in /alloc/data/monad /local/monad \"$HOME/monad\"; do [ -f \"$repo/scripts/agent-dispatch.sh\" ] || continue; export MONAD_REPO_DIR=\"$repo\"; exec bash \"$repo/scripts/agent-dispatch.sh\"; done; echo 'agent-dispatch: no monad checkout found on this node' >&2; exit 1"]
+        args    = ["-c", "set -e; ROLE=$NOMAD_META_ROLE; SCOPE=$NOMAD_META_SCOPE; for u in ubuntu bigo e eliott; do home=$(getent passwd $u 2>/dev/null | cut -d: -f6); [ -n \"$home\" ] || continue; for repo in $home/monad $home/Documents/monad $home/Documents/GitHub/monad; do [ -f $repo/scripts/agent-dispatch.sh ] || continue; if [ $(id -u) = 0 ]; then exec su - $u -c \"NOMAD_META_ROLE=$ROLE NOMAD_META_SCOPE=$SCOPE MONAD_REPO_DIR=$repo exec bash $repo/scripts/agent-dispatch.sh\"; else export MONAD_REPO_DIR=$repo; exec bash $repo/scripts/agent-dispatch.sh; fi; done; done; for repo in /alloc/data/monad /local/monad; do [ -f $repo/scripts/agent-dispatch.sh ] || continue; export MONAD_REPO_DIR=$repo; exec bash $repo/scripts/agent-dispatch.sh; done; echo 'agent-dispatch: no monad checkout found' >&2; exit 1"]
       }
 
       env {

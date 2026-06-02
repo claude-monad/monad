@@ -188,6 +188,16 @@ check_engines() {
     fi
 }
 
+# Check 8: trust the shared cluster registry (so docker can pull tailnet images)
+check_registry_trust() {
+    # Self-setup: ensure docker trusts the shared registry (jobs/registry.hcl) as an
+    # insecure registry. Idempotent — only restarts docker when the address was
+    # missing. Non-fatal by design; nodes without docker just skip.
+    if [ -x "$REPO_DIR/scripts/ensure-registry-trust.sh" ]; then
+        "$REPO_DIR/scripts/ensure-registry-trust.sh" 2>&1 | sed 's/^/    /' || true
+    fi
+}
+
 # ─── Metrics & trend analysis ─────────────────────────────────────────────────
 
 record_metric() {
@@ -254,6 +264,7 @@ check_git
 check_disk
 check_memory
 check_engines
+check_registry_trust
 
 # ─── Write report ────────────────────────────────────────────────────────────
 

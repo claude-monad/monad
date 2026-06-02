@@ -1,0 +1,10 @@
+{
+  "id": "t-0006",
+  "type": "infra",
+  "scope": "bigo-server maintenance-agent is BROKEN: its hcl wrapper scans users ubuntu/bigo/e/eliott/root for ~/monad and finds none ('no user with ~/monad found on this node' in alloc logs) so it never drains its queue or runs ensure-engines. PREREQUISITE to codex: provision the monad repo on bigo-server (git clone into one of those users' homes), then its agent self-sets-up and drains the already-queued codex-setup task. Codex task is waiting in monad/maintenance/bigo-server/queue/",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -83,13 +83,21 @@ $SUDO mkdir -p /etc/docker
 $SUDO cp "$TMP" "$DAEMON_JSON"
 rm -f "$TMP"
 
-# --- restart docker to pick up the change -------------------------------------
+# --- reload docker to pick up the change --------------------------------------
+# `insecure-registries` is a live-reloadable daemon option, so we send SIGHUP
+# (systemctl reload / kill -HUP) instead of a full restart. This applies the trust
+# WITHOUT bouncing running containers — critical on nodes hosting mesh agents whose
+# jobs don't auto-restart.
 if have systemctl; then
-  log "restarting docker (systemctl)…"
-  $SUDO systemctl restart docker 2>/dev/null \
-    || warn "docker restart failed — run '$SUDO systemctl restart docker' manually"
+  log "reloading docker (SIGHUP, no container restart)…"
+  $SUDO systemctl reload docker 2>/dev/null \
+    || warn "docker reload failed — run '$SUDO systemctl reload docker' manually"
+elif have pidof; then
+  log "reloading docker (kill -HUP dockerd)…"
+  $SUDO kill -HUP "$(pidof dockerd)" 2>/dev/null \
+    || warn "could not signal dockerd — reload it manually to apply: $ADDR"
 else
-  warn "no systemctl — restart docker manually to apply: $ADDR"
+  warn "no systemctl/pidof — reload docker manually to apply: $ADDR"
 fi
 
 log "done — $ADDR is now a trusted insecure registry"

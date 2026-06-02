@@ -18,3 +18,11 @@
 {"ts":"2026-06-02T19:44:34Z","node":"oraclebox1","source":"secrets","action":"set","result":"ok","detail":"infra/registry"}
 {"ts":"2026-06-02T19:44:35Z","node":"oraclebox1","source":"deploy","action":"agent-mesh-image-build","result":"ok","detail":"deployed (no git changes)"}
 {"ts":"2026-06-02T19:45:00Z","node":"oraclebox1","source":"deploy","action":"agent-mesh-image-build","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T19:46:22Z","node":"oraclebox1","source":"deploy","action":"agent-mesh-image-build","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T19:47:54Z","node":"oraclebox1","source":"deploy","action":"agent-mesh-image-build","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T19:49:06Z","node":"oraclebox1","source":"deploy","action":"registry-verify","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T19:51:45Z","node":"oraclebox1","source":"deploy","action":"registry-seed-agent-image","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T19:53:10Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-02T19:54:47Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-02T19:59:02Z","node":"oraclebox1","source":"deploy","action":"agent-mesh","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T20:00:03Z","node":"agent-builder-1-193715","source":"fleet","action":"shared-registry-done","result":"ok","detail":"registry:2 live at 100.78.218.70:5000 (bigo-server, var infra/registry); node trust via scripts/ensure-registry-trust.sh in node-doctor (SIGHUP reload); cross-node pull verified; agent-mesh.hcl+build-image.sh use it"}

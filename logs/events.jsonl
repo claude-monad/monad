@@ -33,3 +33,8 @@
 {"ts":"2026-06-02T20:15:11Z","node":"oraclebox1","source":"deploy","action":"postgres","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-02T20:15:41Z","node":"oraclebox1","source":"deploy","action":"postgres-verify","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-02T20:19:42Z","node":"agent-builder-1-193715","source":"fleet","action":"shared-postgres-done","result":"ok","detail":"postgres:16-alpine live at 100.78.218.70:5432 db=fleet (bigo-server, var infra/postgres; creds nomad/jobs/postgres); cross-node SELECT 1 verified from v1410-1; docs databases/README.md"}
+{"ts":"2026-06-02T20:25:35Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-02T20:25:51Z","node":"oraclebox1","source":"deploy","action":"fleet-foreman","result":"ok","detail":"deployed (no git changes)"}
+{"ts":"2026-06-02T20:25:59Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=0/3 dispatched=0 | todo=0 building=2 blocked=0 done=3"}
+{"ts":"2026-06-02T20:27:43Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-02T20:28:45Z","node":"oraclebox1","source":"deploy","action":"agent-mesh-image-build","result":"ok","detail":"deployed (no git changes)"}

@@ -31,9 +31,15 @@ event() { # action result detail
     "$ts" "$NODE" "$1" "$2" "${3//\"/\'}" >> "$EVENTS" 2>/dev/null || true
 }
 
-running_builders() {
-  nomad job status fleet-builder 2>/dev/null \
-    | sed -n '/Allocations/,$p' | awk '$6=="running"{c++} END{print c+0}'
+# Count "active" builders = dispatched children that are Pending OR Running. fleet-builder is
+# a parameterized job, so its `job status` shows a Parameterized Job Summary (Pending Running
+# Dead), not a unified Allocations table. We count Pending+Running so builders that are queued
+# waiting for capacity still count toward N — otherwise the foreman piles up pending children
+# that all place at once when capacity frees (over-shooting N).
+active_builders() {
+  nomad job status fleet-builder 2>/dev/null | awk '
+    /Parameterized Job Summary/ { getline; getline; print $1 + $2; found=1; exit }
+    END { if (!found) print 0 }'
 }
 
 # Count project statuses across fleet/projects/*.md -> sets globals B_TODO B_BUILDING ...
@@ -64,7 +70,7 @@ ensure() {
   backlog_counts
   local backlog="todo=$B_TODO building=$B_BUILDING blocked=$B_BLOCKED done=$B_DONE"
 
-  local have; have="$(running_builders)"
+  local have; have="$(active_builders)"
   log "builders running: ${have}/${N} | backlog: $backlog"
 
   # Only top up if there is open work (todo/building/blocked); don't burn quota when the
@@ -76,7 +82,9 @@ ensure() {
   for i in $(seq $((have+1)) "$want"); do
     engine=$([ $((i % 2)) -eq 0 ] && echo codex || echo claude)
     name="agent-builder-$i-$(date +%H%M%S)"
-    if nomad job dispatch -meta "agent_name=$name" -meta "engine=$engine" fleet-builder >/dev/null 2>&1; then
+    # -detach: register the child and return immediately (don't block monitoring placement;
+    # a capacity-blocked child just stays Pending and is counted by active_builders next cycle).
+    if nomad job dispatch -detach -meta "agent_name=$name" -meta "engine=$engine" fleet-builder >/dev/null 2>&1; then
       log "dispatched builder $name (engine=$engine)"; dispatched=$((dispatched+1))
     else
       log "dispatch failed for $name"
@@ -84,7 +92,7 @@ ensure() {
     sleep 3
   done
 
-  local now; now="$(running_builders)"
+  local now; now="$(active_builders)"
   # record fleet status (machine-readable, one place to look)
   nomad var put -force fleet/status \
     running="$now" target="$want" dispatched_this_cycle="$dispatched" \

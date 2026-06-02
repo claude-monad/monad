@@ -1,8 +1,8 @@
 ---
 slug: amd64-agent-uid-image
 status: building
-owner: agent-builder-3-214229
-updated: 2026-06-02T22:00:00Z
+owner: agent-builder-3-220238
+updated: 2026-06-02T22:13:00Z
 priority: 12
 ---
 # Per-host uid variants of the agent-mesh image

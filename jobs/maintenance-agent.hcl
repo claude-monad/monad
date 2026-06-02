@@ -87,8 +87,12 @@ job "maintenance-agent" {
         NOMAD_ADDR     = "http://100.75.75.39:4646"
       }
 
+      # Mostly an idle poller (60s sleep loop); LLM self-passes burst above this
+      # reservation since raw_exec doesn't hard-cap CPU. Kept modest so the standing
+      # agent always fits on busy nodes (e.g. oraclebox1 also runs conductor/foreman/
+      # dashboard/postgres/registry + transient fleet-builders).
       resources {
-        cpu    = 300
+        cpu    = 200
         memory = 512
       }
 

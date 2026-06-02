@@ -20,17 +20,24 @@ job "agent-mesh" {
     meta_optional = ["agent_name", "prompt", "engine", "timeout"]
   }
 
-  # Runs on any node whose engine-cred home is wired via the dynamic node meta `agent_home`
-  # (the dir that holds .claude/.claude.json/.codex and a monad checkout for that node's
-  # logged-in user). The volume sources below are derived from it, so this briefed job is no
-  # longer pinned to oraclebox1's /home/ubuntu layout. Set per node with:
+  # Cred mounts are now node-portable: their sources derive from the dynamic node meta
+  # `agent_home` (the dir holding .claude/.claude.json/.codex + a monad checkout for that
+  # node's logged-in user), set per node with:
   #   nomad node meta apply -node-id <id> agent_home=<path>
-  # Current wiring: oraclebox1=/home/ubuntu, V1410-1=/home/e, bigo-server=/home/bigo.
-  # The is_set gate keeps the job off any node where creds aren't wired yet. (The multi-arch
-  # image is proven on amd64 via jobs/agent-mesh-verify.hcl.)
+  # Wired: oraclebox1=/home/ubuntu, V1410-1=/home/e, bigo-server=/home/bigo.
+  #
+  # Placement is gated on `agent_mesh_ready=true` (set only on oraclebox1 today) rather than the
+  # old node-name pin. Two blockers keep briefed agents off the amd64 nodes for now (the mesh
+  # sidecar itself works there — verified an agent join the tailnet on V1410-1):
+  #   1. their $agent_home/monad checkouts are STALE (missing meta/agent/run-agent.sh) → the
+  #      /work mount overlays outdated code (exit 127). They need a fast-forward.
+  #   2. this image runs ubuntu as uid 1001 (oraclebox1); V1410-1's user `e` is uid 1000, so
+  #      mode-600 creds aren't readable — needs a per-host image build (Dockerfile AGENT_UID).
+  # Flip a node on once fixed: nomad node meta apply -node-id <id> agent_mesh_ready=true.
+  # Tracked in fleet/projects/agent-mesh-cred-portability.md.
   constraint {
-    attribute = "${meta.agent_home}"
-    operator  = "is_set"
+    attribute = "${meta.agent_mesh_ready}"
+    value     = "true"
   }
 
   group "agent" {

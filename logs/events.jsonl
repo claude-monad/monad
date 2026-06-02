@@ -53,3 +53,9 @@
 {"ts":"2026-06-02T21:06:18Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
 {"ts":"2026-06-02T21:06:18Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex mesh=1"}
 {"ts":"2026-06-02T21:12:21Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=2 | todo=0 building=1 blocked=0 done=4"}
+{"ts":"2026-06-02T21:17:04Z","node":"oraclebox1","source":"deploy","action":"agent-mesh","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T21:22:23Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=0 | todo=0 building=1 blocked=0 done=4"}
+{"ts":"2026-06-02T21:24:07Z","node":"oraclebox1","source":"deploy","action":"agent-mesh","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T21:24:10Z","node":"oraclebox1","source":"deploy","action":"agent-mesh-verify","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T21:24:35Z","node":"oraclebox1","source":"undeploy","action":"agent-mesh-verify","result":"ok","detail":"stopped and removed"}
+{"ts":"2026-06-02T21:25:30Z","node":"agent-builder-3","source":"fleet","action":"multiarch-agent-image","result":"done","detail":"multi-arch monad-agent-mesh (amd64+arm64) verified: idle mesh peer pulled+ran+joined tailnet on V1410-1 (amd64). filed follow-ups bigo-server-registry-trust + amd64-maintenance-mesh for the agent-maint-<node> provisioning gaps"}

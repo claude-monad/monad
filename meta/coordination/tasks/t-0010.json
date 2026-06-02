@@ -1,0 +1,10 @@
+{
+  "id": "t-0010",
+  "type": "infra",
+  "scope": "cluster-uptime-summary.json is stale (last_updated ~23h old) though the periodic job keeps running \u2014 the summary write isn't reaching origin. Have the cluster-uptime job (or a maintenance pass) commit+push logs/cluster-uptime-summary.json so the conductor /health and dashboard show fresh numbers.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

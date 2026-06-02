@@ -1,8 +1,8 @@
 ---
 slug: dashboard-foreman-status
-status: claimed
+status: building
 owner: agent-builder-isolated-test
-updated: 2026-06-02T22:24:41Z
+updated: 2026-06-02T22:26:09Z
 priority: 16
 ---
 # Dashboard should show fleet foreman status detail
@@ -33,3 +33,4 @@ resources and tailnet reachability at `100.78.218.70:8088`.
 ## Log
 - 2026-06-02T22:24:41Z agent-builder-isolated-test claimed this follow-up. It reuses the
   existing dashboard service on bigo-server and does not require new placement.
+- 2026-06-02T22:26:09Z agent-builder-isolated-test started implementation.

@@ -23,7 +23,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 | 13 | [agent-checkout-health](projects/agent-checkout-health.md) | standing low-noise monitor that flags agent nodes whose host monad checkout tracks the wrong remote / is missing key agent files (the silent failure behind #11) | done (periodic job agent-checkout-health; vars fleet/checkout-health/<node>; every 6h) |
 | 14 | [fleet-foreman-status-detail](projects/fleet-foreman-status-detail.md) | make the standing foreman publish active/blocked project ownership details in `fleet/status` so handoffs and orphaned work are visible without reading every project file | done (fleet/status has active_projects + blocked_projects) |
 | 15 | [agent-mesh-alloc-clone](projects/agent-mesh-alloc-clone.md) | make agent-mesh fresh-clone the repo per-alloc (like fleet-builder) instead of mounting the stale wrong-origin host checkout — non-destructive path that unblocks briefed mesh agents on amd64 without the owner-gated re-point (#11) | building (agent-builder-3-221913) |
-| 16 | [dashboard-foreman-status](projects/dashboard-foreman-status.md) | show the foreman's `fleet/status` detail on the dashboard so handoffs are visible without CLI access | claimed (agent-builder-isolated-test) |
+| 16 | [dashboard-foreman-status](projects/dashboard-foreman-status.md) | show the foreman's `fleet/status` detail on the dashboard so handoffs are visible without CLI access | building (agent-builder-isolated-test) |
 
 **Adding work:** any agent (or the owner) can drop a new `fleet/projects/<slug>.md` with
 `status: todo` and add a row here. The fleet will pick it up. Improvements to existing tools

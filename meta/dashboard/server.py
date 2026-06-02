@@ -7,6 +7,7 @@ Single-file, stdlib-only HTTP server. Shows:
   - mesh peers (best-effort, from `tailscale status --json`: hosts named agent-*)
   - the last ~50 cluster events (logs/events.jsonl), with a Server-Sent Events stream
   - the fleet backlog (fleet/BACKLOG.md rows + each project's live status)
+  - fleet foreman status (Nomad var fleet/status)
 
 Data sources: the Nomad HTTP API ($NOMAD_ADDR) and this git repo (which a background
 thread `git pull`s every REFRESH_SECS so committed state — events, backlog — stays fresh).
@@ -186,6 +187,48 @@ def project_status(slug):
     return f"{st} ({ow})" if st and ow else st
 
 
+def _project_entries(value):
+    if not value or value == "none":
+        return []
+    out = []
+    for raw in value.split(","):
+        parts = raw.split(":", 3)
+        if len(parts) == 4:
+            out.append({
+                "slug": parts[0],
+                "status": parts[1],
+                "owner": parts[2],
+                "updated": parts[3],
+            })
+        elif raw:
+            out.append({"slug": raw, "status": "?", "owner": "?", "updated": ""})
+    return out
+
+
+def foreman_status():
+    data = _nomad("/v1/var/fleet/status") or {}
+    items = data.get("Items") or {}
+    if not items:
+        return {"available": False, "active_projects": [], "blocked_projects": []}
+    return {
+        "available": True,
+        "running": items.get("running", "?"),
+        "target": items.get("target", "?"),
+        "dispatched_this_cycle": items.get("dispatched_this_cycle", "0"),
+        "updated": items.get("updated", ""),
+        "backlog": {
+            "todo": items.get("backlog_todo", "0"),
+            "claimed": items.get("backlog_claimed", "0"),
+            "building": items.get("backlog_building", "0"),
+            "review": items.get("backlog_review", "0"),
+            "blocked": items.get("backlog_blocked", "0"),
+            "done": items.get("backlog_done", "0"),
+        },
+        "active_projects": _project_entries(items.get("active_projects", "")),
+        "blocked_projects": _project_entries(items.get("blocked_projects", "")),
+    }
+
+
 def state():
     return {
         "generated": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
@@ -195,6 +238,7 @@ def state():
         "peers": mesh_peers(),
         "events": events(),
         "backlog": backlog(),
+        "foreman_status": foreman_status(),
     }
 
 
@@ -204,6 +248,7 @@ def state():
 _cache = {
     "generated": "warming…", "nomad_addr": NOMAD_ADDR,
     "nodes": [], "jobs": [], "peers": [], "events": [], "backlog": [],
+    "foreman_status": {"available": False, "active_projects": [], "blocked_projects": []},
 }
 _cache_lock = threading.Lock()
 STATE_SECS = int(os.environ.get("STATE_SECS", "10"))
@@ -285,6 +330,22 @@ function renderEvents(events){
  if(el)el.innerHTML=evs;
  return evs;
 }
+function projectRows(rows){
+ if(!rows||!rows.length)return '<p class="muted" style="padding:8px 14px">none</p>';
+ return tbl(['project','status','owner','updated'],rows.map(p=>
+   `<tr><td><code>${esc(p.slug)}</code></td><td>${statusPill(p.status)}</td><td>${esc(p.owner)}</td><td class="muted">${esc((p.updated||'').replace('T',' ').replace('Z',''))}</td></tr>`));
+}
+function renderForeman(f){
+ if(!f||!f.available)return '<p class="muted" style="padding:12px 14px">fleet/status unavailable</p>';
+ const b=f.backlog||{};
+ const buildersText=`${esc(f.running)}/${esc(f.target)}`;
+ const buildersClass=String(f.running)===String(f.target)?'ok':'warn';
+ const top=tbl(['builders','target','dispatched','updated'],[
+   `<tr><td>${pill(buildersText,buildersClass)}</td><td>${esc(f.target)}</td><td>${esc(f.dispatched_this_cycle)}</td><td class="muted">${esc((f.updated||'').replace('T',' ').replace('Z',''))}</td></tr>`]);
+ const counts=tbl(['todo','claimed','building','review','blocked','done'],[
+   `<tr><td>${esc(b.todo)}</td><td>${esc(b.claimed)}</td><td>${esc(b.building)}</td><td>${esc(b.review)}</td><td>${esc(b.blocked)}</td><td>${esc(b.done)}</td></tr>`]);
+ return `${top}${counts}<h2>Active projects</h2>${projectRows(f.active_projects)}<h2>Blocked projects</h2>${projectRows(f.blocked_projects)}`;
+}
 function connectEvents(){
  if(eventStreamStarted||!window.EventSource)return;
  eventStreamStarted=true;
@@ -308,6 +369,7 @@ async function load(){
  document.getElementById('app').innerHTML=
    `<section><h2>Nodes</h2>${nodes}</section>`+
    `<section><h2>Mesh peers</h2>${peers}</section>`+
+   `<section class="full"><h2>Fleet foreman</h2>${renderForeman(s.foreman_status)}</section>`+
    `<section class="full"><h2>Backlog</h2>${back}</section>`+
    `<section><h2>Jobs</h2>${jobs}</section>`+
    `<section class="full"><h2>Recent events</h2><div id="events-body">${renderEvents(s.events)}</div></section>`;

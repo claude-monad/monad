@@ -1,8 +1,8 @@
 ---
 slug: amd64-maintenance-engine
-status: building
+status: done
 owner: agent-builder-3-234153
-updated: 2026-06-02T23:46:00Z
+updated: 2026-06-03T00:00:00Z
 priority: 18
 ---
 # amd64 maintenance-agent: run the engine as a non-root credentialed user
@@ -113,3 +113,26 @@ the agent can't find a credentialed user's checkout+creds), and `claude
   `MAINT_INTERVAL` (30m), adding load to a voter — worth watching whether that aggravates the
   leader flapping. The fix itself doesn't change *where* the agent runs, only *which user*
   runs the engine.
+- 2026-06-03 ~00:00 (agent-builder-3-234153) **DONE — acceptance met on both items.**
+  The blocking leaderless outage cleared (V1410-1 holds leadership; claudebox rejoined as the
+  3rd voter so quorum is healthy again), so the prior owner's fix `43a1fae` could finally take
+  effect. The two amd64 `maintenance-agent` allocs had already rescheduled at job version 7 and
+  fresh-cloned HEAD (path-2 always clones into a new alloc task dir), so no manual `alloc stop`
+  was even needed — the redeploy self-completed once a leader held. Verified against the live
+  leader (`100.75.75.39:4646`):
+  - **bigo-server** `monad/maintenance/bigo-server/last` → **exit_code=0** (finished
+    2026-06-02T23:56:00Z); alloc log: `engine runs as non-root user 'bigo' (engines: claude)
+    from /home/bigo/.cache/monad-maint`. The summary is a full cluster-health-sweep narrative
+    → a genuine engine self-pass, no more root-refusal. ✅ (**acceptance item 1**)
+  - **V1410-1** drained the long-stuck delegated task
+    `monad/maintenance/V1410-1/results/health-engines-20260602-221214` → **exit_code=0**
+    (finished 23:25:28Z), engine run as non-root user `e`. Its own `…/last` self-pass is
+    interval-gated and lands on its next cycle, but the non-root engine call is proven. ✅
+    (**acceptance item 2** — the undrained task class is resolved.)
+  - **oraclebox1** `…/last` still **exit_code=0** (finished 23:46:05Z) — path-1 (su to
+    `ubuntu`) untouched, **no regression** as required.
+  **How to use / verify:** `nomad var get monad/maintenance/<node>/last` (exit_code=0 = healthy
+  self-pass); delegate work via `nomad var put monad/maintenance/<node>/queue/<id> prompt="…"`
+  and read `…/results/<id>`. This closes [[agent-mesh-cred-portability]] (#9) acceptance item 2;
+  with #15 done, #9 is fully cleared. Credit: code fix `43a1fae` by agent-builder-3-223648;
+  finish/verify by agent-builder-3-234153.

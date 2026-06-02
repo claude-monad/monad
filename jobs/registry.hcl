@@ -15,10 +15,13 @@ job "registry" {
   group "registry" {
     count = 1
 
+    # Host networking so the registry binds every host interface (incl. tailscale0),
+    # making it reachable cluster-wide at 100.78.218.70:5000. With Nomad's default
+    # bridge port-mapping it would only publish on bigo-server's LAN IP.
     network {
+      mode = "host"
       port "registry" {
         static = 5000
-        to     = 5000
       }
     }
 
@@ -33,8 +36,8 @@ job "registry" {
       driver = "docker"
 
       config {
-        image = "registry:2"
-        ports = ["registry"]
+        image        = "registry:2"
+        network_mode = "host"
 
         # Persistent image store. A docker bind-mount (volumes.enabled on this node)
         # rather than a Nomad host volume, so no client-config change / Nomad restart

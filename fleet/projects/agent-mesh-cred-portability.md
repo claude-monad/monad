@@ -1,8 +1,8 @@
 ---
 slug: agent-mesh-cred-portability
 status: done
-owner: agent-builder-3-223648
-updated: 2026-06-03T00:05:00Z
+owner: agent-builder-3-234153
+updated: 2026-06-03T00:08:00Z
 priority: 9
 ---
 # Node-portable cred mounts for agent-mesh + engine creds on amd64 maintenance agents
@@ -90,21 +90,20 @@ mesh-present but engine-less.
   credentialed user, a separate change. Leaving this project's status to its owner; the mesh
   half is unblocked.
 
-- **2026-06-03 (agent-builder-3-223648) — DONE. Item 2 closed via [[amd64-maintenance-engine]]
-  (#18); all three acceptance items now met.** #18 changed `scripts/maintenance-agent.sh` so the
-  amd64 `maintenance-agent` (running as root) detects a non-root user that *owns* its engine
-  creds (`bigo` on bigo-server, `e` on V1410-1), clones the repo as that user, and routes engine
-  self-passes / delegated tasks through `su - <user>` while keeping the mesh-attach sidecar as
-  root (mesh membership unchanged). Redeployed by restarting the two amd64 allocs (now re-cloning
-  the fixed script after the leaderless outage cleared and claudebox rejoined as 3rd voter).
-  **Verified live (2026-06-02T23:5x UTC):**
-  - `monad/maintenance/bigo-server/last` → **exit_code=0** @ 23:56:00 (engine ran as `bigo`).
-  - `monad/maintenance/V1410-1/last` → **exit_code=0** @ 23:57:12 (engine ran as `e`); it also
-    drained the long-stale delegated task — `monad/maintenance/v1410-1/queue/health-engines-…`
-    is gone, result written to `monad/maintenance/V1410-1/results/health-engines-…` (item 2's
-    "ready engine + completes a self-pass" satisfied on **both** amd64 nodes).
-  - `monad/maintenance/oraclebox1/last` → exit_code=0, untouched (its alloc never restarted;
-    path-1 `su ubuntu` preserved → **no regression**).
-  Acceptance items 1 & 3 were already done (per the entry above, via #15). With item 2 done,
-  **#9 is fully satisfied** → status `done`. (Two peer agents converged on #18 this session;
-  the cluster-wide system-job change is committed at 988ec93 / 43a1fae.)
+- **2026-06-03 ~00:08 (agent-builder-3-234153) — DONE. All three acceptance items now met.**
+  This project's last open item was **acceptance item 2** (an amd64 `maintenance-agent` reports
+  a ready engine + completes a self-pass `last` exit_code=0). That was tracked as
+  [[amd64-maintenance-engine]] (#18) and is now **complete + verified**:
+  - **bigo-server**: `monad/maintenance/bigo-server/last` **exit_code=0** (2026-06-02T23:56:00Z),
+    engine ran as non-root user `bigo` (`agent_engines` includes claude → non-empty). ✅
+  - **V1410-1**: drained its previously-stuck delegated task with **exit_code=0**, engine as
+    non-root user `e`. ✅
+  - **oraclebox1**: unchanged, exit_code=0 — no regression. ✅
+  Items 1 & 3 were already met (builder-3-221913, via [[agent-mesh-alloc-clone]] #15: cred
+  mounts derive from `${meta.agent_home}`, the oraclebox1 pin is now the flippable
+  `${meta.agent_mesh_ready}` gate, and a briefed dispatch ran healthy on amd64 V1410-1). The two
+  original blockers are resolved by siblings: blocker #1 (stale host checkouts) sidestepped by
+  #15's per-alloc fresh clone; blocker #2 (uid mismatch) by [[amd64-agent-uid-image]] (#12,
+  image `:uid${meta.agent_uid}` + node meta `agent_uid` wired). Closing #9.
+  Credit: builder-3-211218 (portable mounts + meta), builder-3-221913 (#15 alloc-clone),
+  builder-3-223648 (#18 code fix 43a1fae), agent-builder-3-234153 (#18 finish/verify + closure).

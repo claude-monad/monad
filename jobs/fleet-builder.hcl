@@ -30,6 +30,13 @@ job "fleet-builder" {
       mode     = "fail"
     }
 
+    # Host networking (reach the tailnet + nomad API + local registry) with a UNIQUE local
+    # API port per builder, so co-located agents' sidecars don't collide on 127.0.0.1.
+    network {
+      mode = "host"
+      port "agentlocal" {}
+    }
+
     task "builder" {
       driver = "docker"
 
@@ -57,6 +64,7 @@ job "fleet-builder" {
       env {
         AGENT_NAME    = "${NOMAD_META_agent_name}"
         ROLE          = "builder"
+        LOCAL_PORT    = "${NOMAD_PORT_agentlocal}"   # unique per builder (host net)
         MONAD_ENGINE  = "${NOMAD_META_engine}"
         AGENT_TIMEOUT = "2700"
         NOMAD_ADDR    = "http://100.125.210.126:4646"   # oraclebox1's local server (host net)
@@ -68,9 +76,10 @@ job "fleet-builder" {
         GIT_COMMITTER_EMAIL = "fleet@monad.cluster"
       }
 
+      # Builders are I/O-bound (waiting on the LLM API), so reserve modestly.
       resources {
-        cpu    = 2000
-        memory = 2048
+        cpu    = 500
+        memory = 1024
       }
 
       kill_timeout = "20s"

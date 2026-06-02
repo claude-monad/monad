@@ -59,8 +59,8 @@ job "maintenance-agent" {
             [ -f "$repo/scripts/maintenance-agent.sh" ] || continue
             exec bash "$repo/scripts/maintenance-agent.sh"
           done
-          echo "maintenance-agent: no monad checkout found on this node" >&2
-          sleep 120
+          echo "maintenance-agent: no monad checkout found on this node; idling" >&2
+          while true; do sleep 180; done
         EOC
         ]
       }

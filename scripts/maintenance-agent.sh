@@ -88,6 +88,17 @@ Do NOT take destructive or cluster-wide actions. If something looks wrong but ri
 report it for the conductor instead of acting. Keep your final reply to <12 lines: what you
 checked, what you changed, and anything the conductor should know.
 EOF
+  if [ "${ON_MESH:-0}" = 1 ]; then
+    local inbox; inbox="$(LOCAL_PORT="$LOCAL_PORT" "$AGENT_MSG" recv 2>/dev/null)"
+    cat >> "$pf" <<EOF
+
+You are on the Tailscale agent mesh as "$MESH_NAME". Coordinate with peers using:
+  LOCAL_PORT=$LOCAL_PORT $AGENT_MSG peers          # list peer agents
+  LOCAL_PORT=$LOCAL_PORT $AGENT_MSG send <peer> <text>
+Messages addressed to you since last pass: ${inbox:-[none]}
+If a peer asked you something or a cross-node issue needs coordinating, reply to them.
+EOF
+  fi
   log "self-maintenance pass (engine=$ENGINE)"
   event "maintenance" "self-pass" "start" ""
   local out; out="$("$RUN_AGENT" --engine "$ENGINE" --quiet --timeout "${SELF_TIMEOUT:-600}" --cwd "$REPO_DIR" "@$pf" 2>&1)"; rc=$?
@@ -98,7 +109,22 @@ EOF
 }
 
 log "maintenance-agent starting (interval=${INTERVAL}s poll=${POLL}s engine=$ENGINE)"
-event "maintenance" "boot" "ok" "engines=$(ready_engines)"
+
+# Join the Tailscale agent mesh as agent-maint-<node> so this standing agent is a reachable
+# peer and can coordinate with the rest of the fleet. Best-effort, non-fatal.
+MESH_NAME="agent-maint-${NODE}"
+if p="$("$REPO_DIR/meta/agent/mesh/mesh-attach.sh" "$MESH_NAME" 2>/dev/null)"; then
+  export LOCAL_PORT="$p"
+  AGENT_MSG="$REPO_DIR/meta/agent/mesh/agent-msg.sh"
+  ON_MESH=1
+  log "on mesh as $MESH_NAME (local api :$p)"
+  event "mesh" "attach" "ok" "$MESH_NAME"
+else
+  ON_MESH=0
+  log "not on mesh (sidecar unavailable) — continuing off-mesh"
+fi
+
+event "maintenance" "boot" "ok" "engines=$(ready_engines) mesh=$ON_MESH"
 # Wait one interval before the first self-pass so (re)starts don't burst LLM calls;
 # brain-delegated queue tasks still run immediately.
 last_self="$(date +%s)"

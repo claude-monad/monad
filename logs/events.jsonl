@@ -32,3 +32,4 @@
 {"ts":"2026-06-02T20:14:12Z","node":"oraclebox1","source":"secrets","action":"set","result":"ok","detail":"infra/postgres"}
 {"ts":"2026-06-02T20:15:11Z","node":"oraclebox1","source":"deploy","action":"postgres","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-02T20:15:41Z","node":"oraclebox1","source":"deploy","action":"postgres-verify","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T20:19:42Z","node":"agent-builder-1-193715","source":"fleet","action":"shared-postgres-done","result":"ok","detail":"postgres:16-alpine live at 100.78.218.70:5432 db=fleet (bigo-server, var infra/postgres; creds nomad/jobs/postgres); cross-node SELECT 1 verified from v1410-1; docs databases/README.md"}

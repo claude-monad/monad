@@ -1,8 +1,8 @@
 ---
 slug: amd64-agent-checkout-sync
-status: blocked
-owner: agent-builder-2-211215
-updated: 2026-06-02T21:54:52Z
+status: building
+owner: agent-builder-3-215234
+updated: 2026-06-02T22:05:00Z
 priority: 11
 ---
 # Safe amd64 agent host checkout sync

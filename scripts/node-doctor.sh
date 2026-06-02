@@ -23,7 +23,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-NOMAD_ADDR="${NOMAD_ADDR:-http://100.87.219.108:4646}"
+NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
 SERVER_IP="100.87.219.108"
 NODE_NAME="$(hostname)"
 LOG_DIR="$REPO_DIR/logs"
@@ -172,11 +172,19 @@ check_memory() {
 }
 
 # Check 7: Claude Code availability
-check_claude() {
-    if command -v claude &>/dev/null; then
-        ok "Claude Code CLI is available"
+check_engines() {
+    # Self-setup: ensure both agent engines (claude + codex) are installed and
+    # advertise the ready ones via dynamic node meta. Each machine keeps itself set
+    # up this way every doctor pass. ensure-engines is non-fatal by design.
+    if [ -x "$REPO_DIR/meta/agent/ensure-engines.sh" ]; then
+        "$REPO_DIR/meta/agent/ensure-engines.sh" 2>&1 | sed 's/^/    /' || true
+        local ready; ready="$( . "$REPO_DIR/meta/agent/engines.sh"; engines_ready )"
+        if [ -n "$ready" ]; then ok "agent engines ready: $ready"
+        else warn "no agent engine ready (install + log in to claude and/or codex) — node can't run agent jobs"; fi
+    elif command -v claude &>/dev/null || command -v codex &>/dev/null; then
+        ok "agent CLI present (engine abstraction script missing; run a git pull)"
     else
-        warn "Claude Code CLI not found — this node can't run research jobs"
+        warn "no agent CLI found — this node can't run agent jobs"
     fi
 }
 
@@ -245,7 +253,7 @@ check_nomad
 check_git
 check_disk
 check_memory
-check_claude
+check_engines
 
 # ─── Write report ────────────────────────────────────────────────────────────
 
@@ -298,11 +306,15 @@ REPAIR_SUCCEEDED=false
 if [ ${#ISSUES[@]} -gt 0 ]; then
     log "Issues detected — checking if Claude can auto-repair..."
 
-    if command -v claude &>/dev/null; then
+    RUN_AGENT="$REPO_DIR/meta/agent/run-agent.sh"
+    REPAIR_ENGINES="$( . "$REPO_DIR/meta/agent/engines.sh" 2>/dev/null; engines_ready )"
+    if [ -x "$RUN_AGENT" ] && [ -n "$REPAIR_ENGINES" ]; then
         ISSUE_LIST=$(printf '%s\n' "${ISSUES[@]}")
 
-        log "Spawning Claude repair session..."
-        if claude --print --dangerously-skip-permissions \
+        # Use whichever engine is ready (auto): if claude is rate-limited or absent,
+        # codex repairs instead. Either type, at every level.
+        log "Spawning repair agent (engine=auto; ready: $REPAIR_ENGINES)..."
+        if "$RUN_AGENT" --engine auto --cwd "$REPO_DIR" --timeout 300 --quiet \
             "You are the node-doctor for $NODE_NAME in the Monad cluster.
 
              These issues were detected:

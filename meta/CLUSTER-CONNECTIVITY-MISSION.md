@@ -4,6 +4,13 @@
 **Status**: Active
 **Goal**: All monad cluster nodes maintain persistent Tailscale connectivity and Nomad registration, measured continuously.
 
+> **Canonical health mandate:** `meta/CLUSTER-HEALTH.md` is the cluster's standing
+> "every node keeps every node healthy" mandate (roster, what-healthy-means, the sweep,
+> the claim-before-acting protocol). This file is the *connectivity slice* of it: the
+> measurement tooling (`cluster-uptime` job → `logs/cluster-uptime-summary.json`), the
+> **cluster-conductor** (the always-on coordination point), and per-machine asks. Keep
+> the two consistent; CLUSTER-HEALTH.md wins on roster/protocol.
+
 ---
 
 ## The Problem

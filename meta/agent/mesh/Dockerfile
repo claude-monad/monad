@@ -4,15 +4,17 @@
 # Stage 1 builds the tsnet sidecar; stage 2 is the runtime with both engine CLIs.
 # Auth at runtime (mounted): ~/.claude + ~/.claude.json (Claude) and ~/.codex (Codex);
 # TS_AUTHKEY is templated from secret/agent-mesh by the Nomad job; the repo mounts at /work.
-# Runs as non-root 'ubuntu' (uid 1000, matches host) so mounted creds stay usable and the
+# Runs as non-root 'ubuntu' (uid 1001, matches oraclebox1) so mounted creds stay usable and the
 # engines accept full-access mode.
 
-FROM golang:1.23 AS build
+FROM --platform=$BUILDPLATFORM golang:1.23 AS build
+ARG TARGETOS
+ARG TARGETARCH
 WORKDIR /src
 COPY sidecar/go.mod sidecar/go.sum ./
 RUN go mod download
 COPY sidecar/ ./
-RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /tsnet-sidecar .
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags="-s -w" -o /tsnet-sidecar .
 
 FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive

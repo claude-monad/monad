@@ -7,8 +7,8 @@ IMAGE="${1:-monad-agent-mesh}"
 TAG="${TAG:-latest}"
 PLATFORMS="${PLATFORMS:-linux/amd64,linux/arm64}"
 BUILDER="${BUILDER:-monad-agent-mesh-multiarch}"
-AGENT_UID="${AGENT_UID:-$(id -u)}"
-AGENT_GID="${AGENT_GID:-$(id -g)}"
+AGENT_UID="${AGENT_UID:-1001}"
+AGENT_GID="${AGENT_GID:-1001}"
 
 nomad_registry() {
   command -v nomad >/dev/null 2>&1 || return 1

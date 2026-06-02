@@ -62,7 +62,10 @@ job "maintenance-agent" {
           #    creds may be absent, but the agent still attaches to the mesh (mesh-attach runs
           #    before the engine check) and can drain delegated tasks. Reversible: lives with
           #    the alloc, removed on stop. See fleet/projects/amd64-maintenance-mesh.md.
-          WORK="$${NOMAD_TASK_DIR:-/tmp}/monad"
+          # Bare $NOMAD_TASK_DIR (no braces) so neither HCL nor Nomad's runtime arg
+          # interpolation touches it — bash expands the env var Nomad sets for raw_exec.
+          WORK="$NOMAD_TASK_DIR/monad"
+          [ -n "$NOMAD_TASK_DIR" ] || WORK="/tmp/maint-monad"
           if command -v git >/dev/null 2>&1; then
             [ -f "$WORK/scripts/maintenance-agent.sh" ] || { rm -rf "$WORK"; \
               git clone --depth 1 https://github.com/eliott-monad/monad "$WORK" >/dev/null 2>&1 || true; }

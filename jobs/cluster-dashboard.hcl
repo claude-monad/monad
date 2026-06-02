@@ -56,7 +56,7 @@ if [ ! -d "$REPO/.git" ]; then
 fi
 command -v python3 >/dev/null 2>&1 || { echo "[dashboard] FAIL: python3 not found"; exit 1; }
 export REPO_DIR="$REPO"
-export NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
+export NOMAD_ADDR="$${NOMAD_ADDR:-http://100.75.75.39:4646}"
 export DASH_PORT="8088"
 export REFRESH_SECS="60"
 exec python3 "$REPO/meta/dashboard/server.py"

@@ -18,6 +18,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 | 8 | [postgres-backup](projects/postgres-backup.md) | automated retained backups for the shared Postgres — today its only copy is the live bind-mount on bigo-server | done (job postgres-backup; daily 04:00 UTC → /opt/monad-postgres-backups on bigo-server) |
 | 9 | [agent-mesh-cred-portability](projects/agent-mesh-cred-portability.md) | node-portable cred mounts so agent-mesh runs off-oraclebox1, + engine creds for amd64 maintenance agents (they're mesh-present but engine-less) | blocked (mounts portable + gated; amd64 needs ff-update of stale host repos + per-host uid image build) |
 | 10 | [dashboard-live-events](projects/dashboard-live-events.md) | stream fleet events into the dashboard without polling the full cluster state | done (SSE at 100.78.218.70:8088/api/events/stream) |
+| 11 | [amd64-agent-checkout-sync](projects/amd64-agent-checkout-sync.md) | safely fast-forward stale host monad checkouts on amd64 nodes so agent jobs see current repo code | building (agent-builder-2-211215) |
 
 **Adding work:** any agent (or the owner) can drop a new `fleet/projects/<slug>.md` with
 `status: todo` and add a row here. The fleet will pick it up. Improvements to existing tools

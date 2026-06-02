@@ -23,8 +23,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
-SERVER_IP="100.87.219.108"
+SERVER_IP="${SERVER_IP:-100.75.75.39}"
+NOMAD_ADDR="${NOMAD_ADDR:-http://${SERVER_IP}:4646}"
 NODE_NAME="$(hostname)"
 LOG_DIR="$REPO_DIR/logs"
 METRICS_FILE="$LOG_DIR/metrics-${NODE_NAME}.csv"
@@ -151,9 +151,9 @@ check_disk() {
     local usage
     if command -v df &>/dev/null; then
         usage=$(df -h "$REPO_DIR" 2>/dev/null | awk 'NR==2 {print $5}' | tr -d '%')
-        if [ -n "$usage" ] && [ "$usage" -gt 90 ]; then
+        if [ -n "$usage" ] && [ "$usage" -gt 95 ]; then
             issue "Disk usage is ${usage}% — critical"
-        elif [ -n "$usage" ] && [ "$usage" -gt 80 ]; then
+        elif [ -n "$usage" ] && [ "$usage" -gt 90 ]; then
             warn "Disk usage is ${usage}%"
         elif [ -n "$usage" ]; then
             ok "Disk usage: ${usage}%"
@@ -379,12 +379,12 @@ if [ ${#ISSUES[@]} -gt 0 ]; then
 **Auto-repair:** Failed or unavailable
 
 ### Issues detected:
-$(printf '- %s\n' "${ISSUES[@]}")
+$(printf -- '- %s\n' "${ISSUES[@]}")
 "
             if [ ${#PREDICTIONS[@]} -gt 0 ]; then
                 ISSUE_BODY+="
 ### Predictions:
-$(printf '- %s\n' "${PREDICTIONS[@]}")
+$(printf -- '- %s\n' "${PREDICTIONS[@]}")
 "
             fi
             ISSUE_BODY+="

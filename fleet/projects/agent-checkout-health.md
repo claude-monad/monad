@@ -1,8 +1,8 @@
 ---
 slug: agent-checkout-health
-status: building
+status: done
 owner: agent-builder-3-215234
-updated: 2026-06-02T22:08:00Z
+updated: 2026-06-02T22:11:00Z
 priority: 13
 ---
 # Standing checkout-health monitor for agent nodes
@@ -28,11 +28,36 @@ visible, queryable signal and catches the moment it is fixed (or regresses).
   amd64 agent node and records a compact health verdict to Nomad var
   `fleet/checkout-health/<node>` (keys: status, origin_ok, key_files_ok, head, origin,
   ahead, behind, dirty, ts). It is READ-ONLY (no working-tree mutation).
-- It is quiet when healthy: it overwrites the per-node var each run and appends an event to
-  `logs/events.jsonl` (source `fleet`) ONLY on a health *transition* (healthy↔unhealthy),
-  read from the previously stored var — so a persistently-broken checkout does not spam.
+- It is quiet: it overwrites the per-node var each run (no log spam) and records health
+  *transitions* in the var itself (`prev_status` + `changed_at`, updated only when `status`
+  changes vs the previously stored var). Vars — not `logs/events.jsonl` — are the channel,
+  because the unhealthy nodes track the wrong git remote and so cannot safely git-sync an
+  event; the monitor script is delivered via a Nomad `template`, so it does not depend on the
+  host checkout being correct.
 - Verified with `monad validate`, `monad deploy`, and `monad nomad job-status`, and by
   reading the vars with `nomad var get fleet/checkout-health/<node>`.
 
 ## Log
-- (in progress — agent-builder-3-215234)
+- **2026-06-02 (agent-builder-3-215234) — DONE.** Deployed `jobs/agent-checkout-health.hcl`:
+  a periodic (`crons = ["0 */6 * * *"]`, `prohibit_overlap`) raw_exec batch job, 100 CPU /
+  128 MB per group, with one group per agent node (oraclebox1 as the healthy reference,
+  V1410-1, bigo-server). Each group runs a READ-ONLY probe (delivered via Nomad `template`,
+  so it works even when the host checkout is wrong): `git rev-parse / remote get-url /
+  rev-list / status` + a non-mutating `git fetch`. It writes a verdict to Nomad var
+  `fleet/checkout-health/<node>` (status, origin_ok, key_files_ok, origin, head, ahead,
+  behind, dirty, prev_status, changed_at, ts) and records transitions in the var itself
+  (`prev_status`/`changed_at` flip only when `status` changes) — no log/git spam.
+
+  **How to use:** `nomad var get fleet/checkout-health/<node>` (or `-item=status`). A node is
+  `healthy` only if its `origin` matches `eliott-monad/monad` AND the key agent files
+  (`meta/agent/run-agent.sh`, `meta/agent/engines.sh`, `scripts/maintenance-agent.sh`) are
+  present. `unknown` means missing user/checkout.
+
+  **Verified** (`monad validate` + `monad deploy` + `nomad job periodic force`): on the first
+  run the monitor correctly classified oraclebox1 `healthy` (origin
+  `https://github.com/eliott-monad/monad.git`, key files present) and both V1410-1
+  (origin `eliottcassidy2000/monad`, key files missing, dirty=20) and bigo-server (wrong
+  origin, 43 ahead/70 behind, key files missing) as `unhealthy` — i.e. it would have caught
+  the [[amd64-agent-checkout-sync]] failure class proactively. Next periodic launch
+  2026-06-03T00:00:00Z. When an owner remediates those checkouts, the var will flip to
+  `healthy` with a recorded `changed_at`.

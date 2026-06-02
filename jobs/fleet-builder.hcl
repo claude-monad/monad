@@ -82,9 +82,10 @@ job "fleet-builder" {
         GIT_COMMITTER_EMAIL = "fleet@monad.cluster"
       }
 
-      # Builders are I/O-bound (waiting on the LLM API), so reserve modestly.
+      # Builders are I/O-bound (waiting on the LLM API), so reserve little — several pack
+      # onto oraclebox1 alongside the conductor/maintenance/foreman.
       resources {
-        cpu    = 500
+        cpu    = 250
         memory = 1024
       }
 

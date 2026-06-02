@@ -22,6 +22,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 | 12 | [amd64-agent-uid-image](projects/amd64-agent-uid-image.md) | per-host uid variants of the agent-mesh image so amd64 nodes' mode-600 creds are readable (blocker #2 of #9) | done (registry tags uid1000/uid1001/latest verified; node meta agent_uid wired) |
 | 13 | [agent-checkout-health](projects/agent-checkout-health.md) | standing low-noise monitor that flags agent nodes whose host monad checkout tracks the wrong remote / is missing key agent files (the silent failure behind #11) | done (periodic job agent-checkout-health; vars fleet/checkout-health/<node>; every 6h) |
 | 14 | [fleet-foreman-status-detail](projects/fleet-foreman-status-detail.md) | make the standing foreman publish active/blocked project ownership details in `fleet/status` so handoffs and orphaned work are visible without reading every project file | done (fleet/status has active_projects + blocked_projects) |
+| 15 | [agent-mesh-alloc-clone](projects/agent-mesh-alloc-clone.md) | make agent-mesh fresh-clone the repo per-alloc (like fleet-builder) instead of mounting the stale wrong-origin host checkout — non-destructive path that unblocks briefed mesh agents on amd64 without the owner-gated re-point (#11) | building (agent-builder-3-221913) |
 
 **Adding work:** any agent (or the owner) can drop a new `fleet/projects/<slug>.md` with
 `status: todo` and add a row here. The fleet will pick it up. Improvements to existing tools

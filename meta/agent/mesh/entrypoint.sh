@@ -24,6 +24,19 @@ done
 WHO="$(curl -s --max-time 5 "http://127.0.0.1:$LOCAL_PORT/whoami" 2>/dev/null)"
 echo "[agent-entrypoint] mesh identity: ${WHO:-<not up>}"
 
+# git push auth (so builders can commit via monad) — configure a credential helper if a
+# token was injected (templated from a Nomad secret by the job).
+if [ -n "${GH_TOKEN:-}" ]; then
+  git config --global credential.helper '!f() { echo username=x-access-token; echo "password=${GH_TOKEN}"; }; f' 2>/dev/null || true
+  git config --global --add safe.directory /work 2>/dev/null || true
+fi
+
+# A ROLE (e.g. "builder") loads its prompt from the repo if no explicit PROMPT was given.
+if [ -z "${PROMPT:-}" ] && [ -n "${ROLE:-}" ] && [ -f "/work/meta/agent/prompts/${ROLE}.md" ]; then
+  PROMPT="$(cat "/work/meta/agent/prompts/${ROLE}.md")"
+  echo "[agent-entrypoint] loaded role prompt: ${ROLE}"
+fi
+
 MESH_BRIEF="You are agent '$AGENT_NAME' on the Monad cluster's Tailscale agent mesh. Peer agents are reachable with the 'agent-msg' command: 'agent-msg peers' lists them, 'agent-msg send <peer-name> <text>' messages one, 'agent-msg recv' reads messages addressed to you. When a problem benefits from another node's perspective or work, coordinate with peers via these commands."
 
 if [ -n "${PROMPT:-}" ]; then

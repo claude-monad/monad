@@ -26,10 +26,27 @@ fi
 # Pick a docker invocation that works (some nodes need sudo).
 DK="docker"; docker info >/dev/null 2>&1 || DK="sudo docker"
 
+nomad_registry() {
+  command -v nomad >/dev/null 2>&1 || return 1
+  for key in address addr registry value; do
+    value="$(nomad var get -item="$key" infra/registry 2>/dev/null || true)"
+    if [ -n "$value" ]; then
+      printf '%s\n' "$value"
+      return 0
+    fi
+  done
+  return 1
+}
+
 # Ensure the sidecar binary for this arch (cache once). Prefer extracting it from the
 # already-built agent image (instant, same arch); fall back to compiling via golang.
 if [ ! -x "$BIN" ]; then
-  IMG="${MESH_IMAGE:-localhost:5000/monad-agent-mesh:latest}"
+  if [ -n "${MESH_IMAGE:-}" ]; then
+    IMG="$MESH_IMAGE"
+  else
+    REGISTRY="${REGISTRY:-$(nomad_registry || true)}"
+    IMG="${REGISTRY:-localhost:5000}/monad-agent-mesh:latest"
+  fi
   cid="$($DK create "$IMG" 2>/dev/null || $DK create monad-agent-mesh:latest 2>/dev/null)"
   if [ -n "$cid" ] && $DK cp "$cid:/usr/local/bin/tsnet-sidecar" "$BIN" >/dev/null 2>&1; then
     chmod +x "$BIN"; $DK rm "$cid" >/dev/null 2>&1

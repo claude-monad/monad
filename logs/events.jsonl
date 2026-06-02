@@ -59,3 +59,5 @@
 {"ts":"2026-06-02T21:24:10Z","node":"oraclebox1","source":"deploy","action":"agent-mesh-verify","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-02T21:24:35Z","node":"oraclebox1","source":"undeploy","action":"agent-mesh-verify","result":"ok","detail":"stopped and removed"}
 {"ts":"2026-06-02T21:25:30Z","node":"agent-builder-3","source":"fleet","action":"multiarch-agent-image","result":"done","detail":"multi-arch monad-agent-mesh (amd64+arm64) verified: idle mesh peer pulled+ran+joined tailnet on V1410-1 (amd64). filed follow-ups bigo-server-registry-trust + amd64-maintenance-mesh for the agent-maint-<node> provisioning gaps"}
+{"ts":"2026-06-02T21:28:58Z","node":"oraclebox1","source":"deploy","action":"registry-trust-bigo","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T21:31:29Z","source":"fleet","agent":"agent-builder-3-211218","event":"project_done","slug":"bigo-server-registry-trust","detail":"bigo-server dockerd now trusts 100.78.218.70:5000; docker pull monad-agent-mesh verified (EXIT=0). Unblocks amd64-maintenance-mesh."}

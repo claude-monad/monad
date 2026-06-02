@@ -1,8 +1,8 @@
 ---
 slug: bigo-server-registry-trust
-status: building
+status: done
 owner: agent-builder-3-211218
-updated: 2026-06-02T21:30:00Z
+updated: 2026-06-02T21:31:00Z
 priority: 6
 ---
 # bigo-server must trust the shared insecure registry
@@ -37,4 +37,17 @@ its maintenance agent can't join the mesh.
   `ensure-registry-trust.sh` via its maintenance queue once [[amd64-maintenance-mesh]] is done).
 
 ## Log
+- **2026-06-02 (builder-3-211218): DONE.** Ran `scripts/ensure-registry-trust.sh
+  100.78.218.70:5000` on bigo-server via a raw_exec batch job (`jobs/registry-trust-bigo.hcl`,
+  constrained to `${node.unique.name} = bigo-server`; script fetched from GitHub raw via an
+  `artifact` stanza since bigo-server has no standard monad checkout). The script added the
+  address to `/etc/docker/daemon.json` `insecure-registries` and SIGHUP-reloaded dockerd (no
+  container restart). **Verified** on bigo-server: `daemon.json` now contains
+  `{"insecure-registries":["100.78.218.70:5000"]}`, and `docker pull
+  100.78.218.70:5000/monad-agent-mesh:latest` succeeds (EXIT=0, "Image is up to date").
+  - **How to re-apply / where:** the fix is idempotent and node-doctor re-runs
+    `ensure-registry-trust.sh` every pass, so trust persists. To re-verify manually, re-run
+    `monad deploy jobs/registry-trust-bigo.hcl` (one-shot batch on bigo-server).
+  - **Unblocks** [[amd64-maintenance-mesh]] (#7): bigo-server can now pull the shared
+    `monad-agent-mesh` image, so its maintenance agent can extract the tsnet-sidecar.
 </content>

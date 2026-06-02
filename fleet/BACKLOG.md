@@ -10,7 +10,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 |----:|---------|-----|--------|
 | 1 | [shared-registry](projects/shared-registry.md) | a tailnet-wide container registry so images run on every node (not just oraclebox1's localhost:5000) — unblocks everything below | done (100.78.218.70:5000) |
 | 2 | [multiarch-agent-image](projects/multiarch-agent-image.md) | build monad-agent-mesh for amd64+arm64 so v1410-1 & bigo-server can run mesh agents → maintenance agents on the mesh everywhere | done (amd64 verified on v1410-1; image multi-arch in registry) |
-| 6 | [bigo-server-registry-trust](projects/bigo-server-registry-trust.md) | bigo-server dockerd rejects the insecure shared registry (HTTP→HTTPS error) so it can't pull shared images | todo |
+| 6 | [bigo-server-registry-trust](projects/bigo-server-registry-trust.md) | bigo-server dockerd rejects the insecure shared registry (HTTP→HTTPS error) so it can't pull shared images | done (bigo-server trusts 100.78.218.70:5000; pull verified) |
 | 7 | [amd64-maintenance-mesh](projects/amd64-maintenance-mesh.md) | amd64 maintenance agents idle ("no monad checkout") + never join the mesh; provision repo + portable cred path | todo |
 | 3 | [cluster-dashboard](projects/cluster-dashboard.md) | a web app showing fleet state: nodes, jobs, mesh peers, events, this backlog | done (100.78.218.70:8088) |
 | 4 | [shared-postgres](projects/shared-postgres.md) | a Postgres the fleet can use for shared state & coordination | done (100.78.218.70:5432) |

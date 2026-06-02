@@ -32,7 +32,7 @@ job "agent-mesh-image-build" {
         args = ["-lc", <<-EOT
           set -euo pipefail
 
-          repo="$${MONAD_REPO_DIR:-}"
+          repo="$MONAD_REPO_DIR"
           if [ -z "$repo" ]; then
             for candidate in /home/bigo/Documents/monad /home/ubuntu/monad /home/bigo/monad /work; do
               [ -d "$candidate/.git" ] || continue

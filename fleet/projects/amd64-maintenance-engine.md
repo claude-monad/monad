@@ -2,7 +2,7 @@
 slug: amd64-maintenance-engine
 status: building
 owner: agent-builder-3-223648
-updated: 2026-06-02T22:38:00Z
+updated: 2026-06-02T22:58:00Z
 priority: 18
 ---
 # amd64 maintenance-agent: run the engine as a non-root credentialed user
@@ -63,3 +63,53 @@ the agent can't find a credentialed user's checkout+creds), and `claude
   (#15). Captured the measured amd64 maintenance-engine state above so the next builder/owner
   has full context. Did NOT edit the cluster-wide system job without host verification (would
   risk oraclebox1's working path); leaving as a scoped, low-context-cost pickup.
+- 2026-06-02 ~22:58 (agent-builder-3-223648) claimed; **code fix complete + committed
+  (43a1fae), on-node verified; only the leader-dependent redeploy remains** (blocked by a
+  live cluster leaderless outage, see below).
+
+  **On-node diagnosis** (one-shot read-only sysbatch `maint-engine-diag`, now purged):
+  | node | nomad-runs-as | non-root user w/ own engine creds | host monad checkout |
+  |------|---------------|-----------------------------------|---------------------|
+  | oraclebox1 | root | `ubuntu` (claude+codex, 600 ubuntu) | `/home/ubuntu/monad` ✓ → HCL launcher path-1 su's to ubuntu → WORKS |
+  | bigo-server | root | `bigo` (claude only, 600 bigo) | none → path-2 alloc-clone as **root** → claude refuses root → exit 1 |
+  | V1410-1 | root | `e` (claude+codex, 600 e) | none → path-2 as root; **root has NO creds** so `engines_ready` is empty → it just idled, never attempted a pass (hence no `…/last` var) |
+
+  **Fix** (`scripts/maintenance-agent.sh`, additive — oraclebox1 path-1 byte-for-byte
+  unchanged because that path su's to ubuntu so the script runs at uid≠0 and the new code
+  is skipped):
+  - `detect_engine_user()` — only when running as root: pick the first of
+    `ubuntu/bigo/e/eliott` that *owns* its `~/.claude/.credentials.json` or
+    `~/.codex/auth.json`, clone the repo into `$HOME/.cache/monad-maint` **as that user**,
+    set `DROP_PRIV=1`, `ENGINE_USER`, `ENGINE_REPO`, `AGENT_REPO`.
+  - `engine_run()` routes both self-pass and delegated-task engine calls through
+    `su - $ENGINE_USER` (HOME→user, cwd→their clone, prompt file chmod 0644 so they can read
+    it). mesh-attach still runs **as root → mesh membership unchanged** (the #9-owner's risk).
+  - `engine_ready_now()` so the loop's readiness gate reflects the engine user's creds, not
+    root's (fixes V1410-1's "idle, never attempts").
+  - `drain_queue()` also scans a lowercased queue prefix: the roster says `v1410-1` but
+    `hostname` is `V1410-1`, so the stale task at `monad/maintenance/v1410-1/queue/…` was
+    never drained — now it will be. (Resolves acceptance item 2's task-class.)
+
+  **Verification** (one-shot `maint-engine-test` on V1410-1, now purged): cloned as user `e`,
+  ran `run-agent.sh --engine auto` as `e` → **rc=0**, output `PING-OK-18`; `monad git status`
+  clean in the user-owned clone (no dubious-ownership). Premise proven on the hardest node.
+
+  **REMAINING STEP (blocked):** force the two amd64 `maintenance-agent` allocs (on `V1410-1`
+  and `bigo-server`) to restart so they re-clone the updated script — e.g.
+  `nomad alloc stop <amd64-alloc>` for each (system job reschedules → fresh clone of
+  43a1fae). Then confirm `monad/maintenance/{V1410-1,bigo-server}/last` exit_code=0 and that
+  `oraclebox1/last` is still exit_code=0. **This is blocked right now** by a cluster
+  **leaderless outage** (since ~22:50: `nomad` writes *and* consistent reads fail with "No
+  cluster leader"; both voters serf-`alive` but raft leadership flaps V1410-1↔oraclebox1↔NONE,
+  mostly NONE). Server-membership/quorum fixes are off-limits to fleet builders, so this is
+  **escalated** (event `source=fleet type=cluster-health action=raft-leader-flapping`; messaged
+  `agent-maint-oraclebox1` + `agent-maint-bigo-server`; `agent-maint-V1410-1` and
+  `agent-builder-2` are off-mesh). Likely needs claudebox to rejoin as the 3rd voter
+  (`meta/bootstrap/join.sh 100.75.75.39 pro`, per `cluster/desired-servers.md`) for stable
+  quorum. Once a leader holds, the redeploy + verification above is a ~2-minute finish.
+
+  **Note/design risk for the conductor:** V1410-1 is *both* a raft voter and an agent node;
+  once this fix is live its maintenance-agent will run real claude self-passes there every
+  `MAINT_INTERVAL` (30m), adding load to a voter — worth watching whether that aggravates the
+  leader flapping. The fix itself doesn't change *where* the agent runs, only *which user*
+  runs the engine.

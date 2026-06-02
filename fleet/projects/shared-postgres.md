@@ -1,8 +1,8 @@
 ---
 slug: shared-postgres
-status: todo
-owner: ""
-updated: ""
+status: building
+owner: agent-builder-1-193715
+updated: 2026-06-02
 priority: 4
 ---
 # Shared Postgres for fleet state

@@ -20,21 +20,21 @@ job "agent-mesh" {
     meta_optional = ["agent_name", "prompt", "engine", "timeout"]
   }
 
-  # Cred mounts are now node-portable: their sources derive from the dynamic node meta
-  # `agent_home` (the dir holding .claude/.claude.json/.codex + a monad checkout for that
-  # node's logged-in user), set per node with:
-  #   nomad node meta apply -node-id <id> agent_home=<path>
+  # Repo code at /work now comes from a FRESH per-alloc clone of the correct origin
+  # (https://github.com/eliott-monad/monad), NOT a host bind-mount — exactly like
+  # jobs/fleet-builder.hcl. This removes the dependency on the host's `$agent_home/monad`
+  # checkout, which on the amd64 nodes tracks the WRONG remote (eliottcassidy2000/monad@4f6a4dc,
+  # missing meta/agent/run-agent.sh → briefed agents died exit 127) and can't be fast-forwarded.
+  # See fleet/projects/agent-mesh-alloc-clone.md (the non-destructive alternative to #11).
+  #
+  # Cred mounts (.claude/.claude.json/.codex) STILL derive from the dynamic node meta
+  # `agent_home`, set per node with:  nomad node meta apply -node-id <id> agent_home=<path>
   # Wired: oraclebox1=/home/ubuntu, V1410-1=/home/e, bigo-server=/home/bigo.
   #
-  # Placement is gated on `agent_mesh_ready=true` (set only on oraclebox1 today) rather than the
-  # old node-name pin. Two blockers keep briefed agents off the amd64 nodes for now (the mesh
-  # sidecar itself works there — verified an agent join the tailnet on V1410-1):
-  #   1. their $agent_home/monad checkouts are STALE (missing meta/agent/run-agent.sh) → the
-  #      /work mount overlays outdated code (exit 127). They need a fast-forward.
-  #   2. this image runs ubuntu as uid 1001 (oraclebox1); V1410-1's user `e` is uid 1000, so
-  #      mode-600 creds aren't readable — needs a per-host image build (Dockerfile AGENT_UID).
-  # Flip a node on once fixed: nomad node meta apply -node-id <id> agent_mesh_ready=true.
-  # Tracked in fleet/projects/agent-mesh-cred-portability.md.
+  # Placement is gated on `agent_mesh_ready=true`. With the per-alloc clone + the per-uid image
+  # (agent_uid meta, see amd64-agent-uid-image), the amd64 blockers are cleared, so amd64 nodes
+  # can be flipped on:  nomad node meta apply -node-id <id> agent_mesh_ready=true.
+  # Tracked in fleet/projects/agent-mesh-cred-portability.md + agent-mesh-alloc-clone.md.
   constraint {
     attribute = "${meta.agent_mesh_ready}"
     value     = "true"
@@ -62,14 +62,20 @@ job "agent-mesh" {
         # Wired: oraclebox1=1001, V1410-1=1000. See fleet/projects/amd64-agent-uid-image.md.
         image        = "100.78.218.70:5000/monad-agent-mesh:uid${meta.agent_uid}"
         network_mode = "bridge"
-        # Sources derived from the node's wired cred home (meta.agent_home); targets stay at
-        # the image's /home/ubuntu so the in-container claude/codex find creds regardless of
+        # FRESH per-alloc working tree: clone the correct-origin repo into the image's
+        # /work (pre-created + chowned to ubuntu in the Dockerfile) if it isn't already a
+        # git checkout, then hand off to the image's normal agent entrypoint. Mirrors
+        # jobs/fleet-builder.hcl — no host monad mount, so a stale/wrong-origin host checkout
+        # can't break briefed agents. The clone is anonymous (public repo).
+        entrypoint = ["/bin/bash", "-c",
+          "set -e; if [ ! -e /work/.git ]; then echo '[agent-mesh] cloning fresh working tree'; git clone --depth 50 \"$REPO_URL\" /work; fi; exec /usr/local/bin/agent-entrypoint"]
+        # Cred sources derive from the node's wired cred home (meta.agent_home); targets stay
+        # at the image's /home/ubuntu so the in-container claude/codex find creds regardless of
         # which host user owns them.
         volumes = [
           "${meta.agent_home}/.claude:/home/ubuntu/.claude",
           "${meta.agent_home}/.claude.json:/home/ubuntu/.claude.json",
           "${meta.agent_home}/.codex:/home/ubuntu/.codex",
-          "${meta.agent_home}/monad:/work",
         ]
       }
 
@@ -86,6 +92,7 @@ job "agent-mesh" {
         MONAD_ENGINE  = "${NOMAD_META_engine}"
         AGENT_TIMEOUT = "${NOMAD_META_timeout}"
         RUN_AGENT     = "/work/meta/agent/run-agent.sh"
+        REPO_URL      = "https://github.com/eliott-monad/monad"   # cloned fresh into /work
       }
 
       resources {

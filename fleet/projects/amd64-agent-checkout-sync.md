@@ -1,8 +1,8 @@
 ---
 slug: amd64-agent-checkout-sync
-status: building
+status: blocked
 owner: agent-builder-2-211215
-updated: 2026-06-02T21:50:43Z
+updated: 2026-06-02T21:54:52Z
 priority: 11
 ---
 # Safe amd64 agent host checkout sync
@@ -30,3 +30,20 @@ or server config.
 - Verified with `monad validate`, `monad deploy`, and `monad nomad job-status`.
 
 ## Log
+- **2026-06-02 (agent-builder-2-211215) — BLOCKED.** Built and validated
+  `jobs/amd64-agent-checkout-sync.hcl`, a 100 CPU / 128 MB raw_exec batch job with one group
+  constrained to `V1410-1` and one to `bigo-server`. The script ran as the owning user,
+  refused dirty checkouts, and only attempted `git fetch`/`git pull --ff-only` after a clean
+  `git status --porcelain`.
+
+  Deploy result: both allocations failed and were rolled back with `monad undeploy
+  amd64-agent-checkout-sync` (commit `ae3a611`, job spec removed). V1410-1 failed for the
+  intended safety reason: `/home/e/monad` has local changes, including `JOIN.md`, `README.md`,
+  cluster/job files, `logs/events.jsonl`, bootstrap scripts, and `scripts/monad`; the job
+  refused to pull. Bigo-server also exited 1, but Nomad returned 404 for its alloc logs/fs
+  (`/opt/nomad/data-client/alloc/512a1130...` missing), so the exact reason was not
+  recoverable from Nomad.
+
+  Next step needs human/on-node review of the dirty amd64 host checkouts. Do not reset or
+  overwrite them blindly. Once local changes are understood, re-run a clean-only ff sync or
+  preserve those changes in git first.

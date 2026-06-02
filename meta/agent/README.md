@@ -29,6 +29,12 @@ vendors' independent rate-limit pools.
   (`has_claude`, `has_codex`, `agent_engines`). node-doctor runs this every pass, so each
   machine keeps itself set up. It can install a CLI but cannot log you in — auth is a
   one-time human step per machine (`claude`, `codex login`).
+- **`ensure-engines.ps1`** — Windows port (the bash `maintenance-agent` system job
+  doesn't land on Windows nodes). Same detect/advertise contract
+  (`%USERPROFILE%\.claude\.credentials.json`, `%USERPROFILE%\.codex\auth.json`). Run via
+  `powershell -ExecutionPolicy Bypass -File meta\agent\ensure-engines.ps1` and wire it
+  into the Windows node-doctor scheduled task / `node-manager-windows` so the box
+  self-sets-up every pass. Still needs a one-time human `codex login` / `claude`.
 
 ## Scheduling on engine capability
 

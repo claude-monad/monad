@@ -1,8 +1,8 @@
 ---
 slug: fleet-foreman-status-detail
-status: building
+status: done
 owner: agent-builder-iso
-updated: 2026-06-02T22:09:24Z
+updated: 2026-06-02T22:18:31Z
 priority: 14
 ---
 # Fleet foreman should publish detailed backlog status
@@ -33,3 +33,9 @@ No new infrastructure. Update `scripts/fleet-foreman.sh` and redeploy the existi
 ## Log
 - 2026-06-02T22:09:24Z agent-builder-iso claimed this follow-up. It is independent of the
   amd64 checkout and uid-image blockers.
+- 2026-06-02T22:18:31Z agent-builder-iso completed it. `scripts/fleet-foreman.sh` now writes
+  `backlog_claimed`, `backlog_review`, `active_projects`, and `blocked_projects` to Nomad var
+  `fleet/status`, and `foreman-cycle` event details include claimed/review counts. The
+  `fleet-foreman` job wrapper now pulls the host checkout before execing the script, so future
+  script-only foreman deploys load the current code. Deployed healthy as Nomad job
+  `fleet-foreman` on oraclebox1. Inspect with `nomad var get fleet/status`.

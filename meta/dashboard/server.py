@@ -91,7 +91,7 @@ def jobs():
 
 def mesh_peers():
     """Best-effort: tailnet hosts named agent-* via `tailscale status --json`."""
-    for cmd in (["tailscale", "status", "--json"], ["sudo", "tailscale", "status", "--json"]):
+    for cmd in (["tailscale", "status", "--json"], ["sudo", "-n", "tailscale", "status", "--json"]):
         try:
             raw = subprocess.run(cmd, capture_output=True, text=True, timeout=8)
             if raw.returncode != 0 or not raw.stdout.strip():
@@ -195,14 +195,41 @@ def state():
     }
 
 
-def repo_puller():
+# A cached snapshot so /api/state never blocks on data gathering (Nomad API +
+# `tailscale status` can be slow, especially on the first call). A background thread
+# refreshes it; requests just serve the latest cache. Starts as a valid empty shape.
+_cache = {
+    "generated": "warming…", "nomad_addr": NOMAD_ADDR,
+    "nodes": [], "jobs": [], "peers": [], "events": [], "backlog": [],
+}
+_cache_lock = threading.Lock()
+STATE_SECS = int(os.environ.get("STATE_SECS", "10"))
+
+
+def state_refresher():
+    global _cache
+    tick = 0
     while True:
+        # git-pull the repo clone every REFRESH_SECS so committed state stays fresh
+        if tick % max(1, REFRESH_SECS // STATE_SECS) == 0:
+            try:
+                subprocess.run(["git", "-C", REPO_DIR, "pull", "--ff-only"],
+                               capture_output=True, timeout=30)
+            except Exception:
+                pass
         try:
-            subprocess.run(["git", "-C", REPO_DIR, "pull", "--ff-only"],
-                           capture_output=True, timeout=30)
+            snap = state()
+            with _cache_lock:
+                _cache = snap
         except Exception:
             pass
-        time.sleep(REFRESH_SECS)
+        tick += 1
+        time.sleep(STATE_SECS)
+
+
+def cached_state():
+    with _cache_lock:
+        return _cache
 
 
 PAGE = """<!doctype html><html><head><meta charset="utf-8">
@@ -284,7 +311,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path.rstrip("/") in ("", "/index.html") or self.path == "/":
             self._send(200, PAGE, "text/html; charset=utf-8")
         elif self.path.startswith("/api/state"):
-            self._send(200, json.dumps(state()), "application/json")
+            self._send(200, json.dumps(cached_state()), "application/json")
         elif self.path == "/healthz":
             self._send(200, "ok", "text/plain")
         else:
@@ -292,7 +319,10 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
-    threading.Thread(target=repo_puller, daemon=True).start()
+    # Start serving immediately; the background refresher fills the cache within
+    # STATE_SECS. _cache starts as a valid empty shape so the first request and the
+    # page never error while data is still being gathered.
+    threading.Thread(target=state_refresher, daemon=True).start()
     print(f"[dashboard] serving on :{PORT} (nomad={NOMAD_ADDR}, repo={REPO_DIR})", flush=True)
     ThreadingHTTPServer(("0.0.0.0", PORT), Handler).serve_forever()
 

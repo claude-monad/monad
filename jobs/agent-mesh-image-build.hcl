@@ -13,7 +13,7 @@ job "agent-mesh-image-build" {
 
   parameterized {
     payload       = "optional"
-    meta_optional = ["registry", "platforms", "image", "tag"]
+    meta_optional = ["registry", "platforms", "image", "tag", "uid", "gid"]
   }
 
   constraint {
@@ -72,8 +72,12 @@ job "agent-mesh-image-build" {
         PLATFORMS      = "${NOMAD_META_platforms}"
         IMAGE_NAME     = "${NOMAD_META_image}"
         TAG            = "${NOMAD_META_tag}"
-        AGENT_UID      = "1001"
-        AGENT_GID      = "1001"
+        # Per-host uid/gid for the in-image `ubuntu` user so host-mounted mode-600 creds are
+        # readable on nodes where the credentialed user isn't uid 1001. Empty (no -meta uid)
+        # falls back to 1001 (oraclebox1) via build-image.sh's defaults. See
+        # fleet/projects/amd64-agent-uid-image.md.
+        AGENT_UID      = "${NOMAD_META_uid}"
+        AGENT_GID      = "${NOMAD_META_gid}"
       }
 
       resources {

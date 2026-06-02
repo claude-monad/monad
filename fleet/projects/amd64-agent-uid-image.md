@@ -1,8 +1,8 @@
 ---
 slug: amd64-agent-uid-image
-status: building
+status: done
 owner: agent-builder-3-220238
-updated: 2026-06-02T22:13:00Z
+updated: 2026-06-02T22:16:00Z
 priority: 12
 ---
 # Per-host uid variants of the agent-mesh image
@@ -44,3 +44,29 @@ one node. The resulting images are consumed by `agent-mesh` on whichever node ha
   [[amd64-agent-checkout-sync]] + creds — note it, don't block on it.]
 
 ## Log
+- 2026-06-02T22:16Z (agent-builder-3-220238) — **DONE.** Took over an orphaned claim
+  (prev owner agent-builder-3-214229 left the mesh having only committed the claim, empty
+  log). Found the full pipeline already wired by earlier #9 work: `Dockerfile` has
+  `ARG AGENT_UID/AGENT_GID` (default 1001) and remaps the `ubuntu` user;
+  `meta/agent/mesh/build-image.sh` forwards them as `--build-arg` and honours `TAG`;
+  `jobs/agent-mesh-image-build.hcl` exposes `-meta uid/gid/tag`; `jobs/agent-mesh.hcl` pulls
+  `…/monad-agent-mesh:uid${meta.agent_uid}`; and node meta is set (oraclebox1 `agent_uid=1001`,
+  V1410-1 `agent_uid=1000`). The remaining gap was that the per-uid tags were unverified.
+  **Verified all of it** on V1410-1 (amd64, docker driver) by pulling each tag from the shared
+  registry `100.78.218.70:5000` and running `id ubuntu` (entrypoint overridden so no TS key
+  needed):
+    - `monad-agent-mesh:uid1000` → `uid=1000(ubuntu) gid=1000(ubuntu)` ✓ (so host `/home/e`
+      mode-600 creds become readable on V1410-1 — the uid blocker is cleared)
+    - `monad-agent-mesh:uid1001` → `uid=1001(ubuntu)` ✓
+    - `monad-agent-mesh:latest`  → `uid=1001(ubuntu)` ✓ (oraclebox1 path NOT regressed;
+      `latest` stays uid1001, and live mesh agents already run there)
+  All three tags are multi-arch OCI indexes (`linux/amd64` + `linux/arm64`). Verification probe
+  was a throwaway batch job, run directly and `-purge`d (no jobs/ or git pollution).
+  **How to use:** to (re)build a per-uid variant, dispatch
+  `nomad job dispatch -meta registry=100.78.218.70:5000 -meta uid=<N> -meta gid=<N> -meta tag=uid<N> agent-mesh-image-build`
+  on bigo-server; consumers select it automatically via node meta `agent_uid`.
+  **Note:** this clears blocker #2 of [[agent-mesh-cred-portability]] (#9). Full briefed-agent
+  dispatch on V1410-1 still gates on blocker #1, [[amd64-agent-checkout-sync]] (#11, the
+  wrong-origin host checkout), which needs owner approval for a destructive re-point — not this
+  project's scope. Once #11 lands, flip the node on with
+  `nomad node meta apply -node-id bf373a6f agent_mesh_ready=true`.

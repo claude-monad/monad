@@ -93,3 +93,5 @@
 {"ts":"2026-06-02T22:12:27Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"cluster-health-sweep-20260602-221214"}
 {"ts":"2026-06-02T22:12:44Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=0 | todo=0 building=2 blocked=2 done=10"}
 {"ts":"2026-06-02T22:13:08Z","node":"oraclebox1","source":"deploy","action":"fleet-foreman","result":"ok","detail":"deployed (no git changes)"}
+{"ts":"2026-06-02T22:14:51Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"cluster-health-sweep-20260602-221214 rc=0"}
+{"ts":"2026-06-02T22:16:29Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=0 | todo=0 claimed=0 building=1 review=0 blocked=2 done=11"}

@@ -20,10 +20,22 @@ job "agent-mesh" {
     meta_optional = ["agent_name", "prompt", "engine", "timeout"]
   }
 
-  # oraclebox1 holds the engine credentials + docker (volumes enabled). Generalize later.
+  # Runs on any Linux docker node that has Claude credentials. The image is now a multi-arch
+  # manifest (amd64+arm64) in the shared registry, so amd64 nodes (bigo-server, v1410-1) can
+  # run mesh agents too — no longer pinned to oraclebox1. The volume mounts below assume the
+  # standard /home/ubuntu engine-cred layout; has_claude keeps briefed dispatches on a node
+  # where Claude is actually logged in.
   constraint {
-    attribute = "${node.unique.name}"
-    value     = "oraclebox1"
+    attribute = "${attr.kernel.name}"
+    value     = "linux"
+  }
+  constraint {
+    attribute = "${attr.driver.docker}"
+    value     = "1"
+  }
+  constraint {
+    attribute = "${meta.has_claude}"
+    value     = "true"
   }
 
   group "agent" {
@@ -40,9 +52,8 @@ job "agent-mesh" {
       config {
         # Pulled from the shared cluster registry (jobs/registry.hcl, Nomad var
         # infra/registry = 100.78.218.70:5000). build-image.sh pushes here; nodes
-        # trust it via scripts/ensure-registry-trust.sh. Still pinned to oraclebox1
-        # below because the current image is arm64-only — once the multiarch image
-        # lands in the shared registry, drop the constraint to run on any node.
+        # trust it via scripts/ensure-registry-trust.sh. Now a multi-arch manifest
+        # (amd64+arm64), so the oraclebox1 pin is gone — see the constraints above.
         image        = "100.78.218.70:5000/monad-agent-mesh:latest"
         network_mode = "bridge"
         volumes = [

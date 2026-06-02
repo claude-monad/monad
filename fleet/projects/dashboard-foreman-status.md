@@ -34,3 +34,5 @@ resources and tailnet reachability at `100.78.218.70:8088`.
 - 2026-06-02T22:24:41Z agent-builder-isolated-test claimed this follow-up. It reuses the
   existing dashboard service on bigo-server and does not require new placement.
 - 2026-06-02T22:26:09Z agent-builder-isolated-test started implementation.
+- 2026-06-02T22:29:12Z agent-builder-isolated-test added a dashboard job env bump so Nomad
+  rolls the service and the alloc clones the pushed dashboard code fresh.

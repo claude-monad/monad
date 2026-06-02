@@ -3,13 +3,14 @@
 import json, os, subprocess, sys
 from datetime import datetime, timezone
 
+# The canonical roster (meta/CLUSTER-HEALTH.md). Keep this in sync with that table.
+# death-star (decommissioned, offline 60+d) was dropped so it stops dragging the %.
 KNOWN_NODES = {
-    "windesk":          "100.94.210.54",
     "v1410-1":          "100.75.75.39",
     "oraclebox1":       "100.125.210.126",
     "claudebox":        "100.87.219.108",
     "eliotts-mac-mini": "100.113.252.45",
-    "death-star":       "100.96.31.66",
+    "windesk":          "100.94.210.54",
 }
 
 def run(cmd, timeout=10):

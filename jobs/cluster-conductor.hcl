@@ -52,8 +52,14 @@ job "cluster-conductor" {
       driver = "docker"
 
       config {
-        image        = "monad-conductor"
+        image        = "ghcr.io/eliott-monad/monad-conductor:latest"
         network_mode = "host"
+        # GHCR pull auth — templated from the encrypted Nomad variable so the
+        # package can stay private (no committed credentials).
+        auth {
+          username = "eliottcassidy2000"
+          password = "${GHCR_TOKEN}"
+        }
         # mounts: creds (rw for token refresh), repo, tailscale socket + host CLIs
         volumes = [
           "/home/ubuntu/.claude:/home/ubuntu/.claude",
@@ -65,9 +71,12 @@ job "cluster-conductor" {
         ]
       }
 
-      # GH token for GitOps pushes, templated from an encrypted Nomad variable.
+      # GitOps push token + GHCR pull token, templated from an encrypted Nomad var.
       template {
-        data        = "GH_TOKEN={{ with nomadVar \"secret/conductor\" }}{{ .github_token }}{{ end }}"
+        data        = <<-EOH
+          GH_TOKEN={{ with nomadVar "secret/conductor" }}{{ .github_token }}{{ end }}
+          GHCR_TOKEN={{ with nomadVar "secret/conductor" }}{{ .ghcr_token }}{{ end }}
+        EOH
         destination = "secrets/conductor.env"
         env         = true
       }

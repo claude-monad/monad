@@ -38,8 +38,9 @@ job "agent-mesh" {
       driver = "docker"
 
       config {
-        image        = "monad-agent-mesh:latest"
-        force_pull    = false
+        # Pulled from the node-local registry (oraclebox1:5000). Nomad's docker driver
+        # only uses registry images, not local builds; build-image.sh + a push populate it.
+        image        = "localhost:5000/monad-agent-mesh:latest"
         network_mode = "bridge"
         volumes = [
           "/home/ubuntu/.claude:/home/ubuntu/.claude",

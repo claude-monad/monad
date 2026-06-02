@@ -53,8 +53,13 @@ Ephemeral means nodes auto-deregister from the tailnet when the agent exits.
 
 ## Usage
 
+> **Image distribution:** Nomad's docker driver here only uses *registry* images, not local
+> builds, so `build-image.sh` builds **and** pushes to a node-local registry
+> (`localhost:5000`); the job pulls `localhost:5000/monad-agent-mesh:latest`. The image also
+> remaps `ubuntu` to the host uid/gid so mounted engine creds are readable.
+
 ```bash
-meta/agent/mesh/build-image.sh                      # build monad-agent-mesh (on oraclebox1)
+meta/agent/mesh/build-image.sh                      # build + push monad-agent-mesh (on oraclebox1)
 # a working agent that can talk to peers:
 nomad job dispatch -meta agent_name=agent-helper \
   -meta prompt="…task…" -meta engine=codex agent-mesh

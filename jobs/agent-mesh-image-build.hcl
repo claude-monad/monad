@@ -54,6 +54,8 @@ job "agent-mesh-image-build" {
         PLATFORMS      = "${NOMAD_META_platforms}"
         IMAGE_NAME     = "${NOMAD_META_image}"
         TAG            = "${NOMAD_META_tag}"
+        AGENT_UID      = "1001"
+        AGENT_GID      = "1001"
       }
 
       resources {

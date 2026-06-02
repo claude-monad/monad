@@ -6,7 +6,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 IMAGE="${1:-monad-agent-mesh}"
 TAG="${TAG:-latest}"
 PLATFORMS="${PLATFORMS:-linux/amd64,linux/arm64}"
-BUILDER="${BUILDER:-monad-agent-mesh-multiarch}"
+BUILDER="${BUILDER:-}"
 AGENT_UID="${AGENT_UID:-1001}"
 AGENT_GID="${AGENT_GID:-1001}"
 
@@ -25,6 +25,14 @@ nomad_registry() {
 REGISTRY="${REGISTRY:-$(nomad_registry || true)}"
 # Keep the current node-local path working until the shared registry is deployed.
 REGISTRY="${REGISTRY:-localhost:5000}"
+REGISTRY_INSECURE="${REGISTRY_INSECURE:-1}"
+if [ -z "$BUILDER" ]; then
+  if [ "$REGISTRY_INSECURE" = "0" ]; then
+    BUILDER="monad-agent-mesh-multiarch"
+  else
+    BUILDER="monad-agent-mesh-multiarch-http"
+  fi
+fi
 IMAGE_REF="${REGISTRY%/}/$IMAGE:$TAG"
 
 docker_cmd=(docker)
@@ -54,9 +62,24 @@ if [ "${INSTALL_BINFMT:-1}" != "0" ]; then
   "${docker_cmd[@]}" run --privileged --rm tonistiigi/binfmt --install arm64,amd64 >/dev/null
 fi
 
+buildx_create_args=(
+  --name "$BUILDER"
+  --driver docker-container
+  --driver-opt network=host
+)
+if [ "$REGISTRY_INSECURE" != "0" ]; then
+  BUILDKITD_CONFIG="${BUILDKITD_CONFIG:-/tmp/${BUILDER}-buildkitd.toml}"
+  cat > "$BUILDKITD_CONFIG" <<EOF
+[registry."${REGISTRY%/}"]
+  http = true
+  insecure = true
+EOF
+  buildx_create_args+=(--config "$BUILDKITD_CONFIG")
+fi
+
 if ! "${docker_cmd[@]}" buildx inspect "$BUILDER" >/dev/null 2>&1; then
   # Host networking lets buildkit push to the fallback localhost registry.
-  "${docker_cmd[@]}" buildx create --name "$BUILDER" --driver docker-container --driver-opt network=host --use >/dev/null
+  "${docker_cmd[@]}" buildx create "${buildx_create_args[@]}" --use >/dev/null
 else
   "${docker_cmd[@]}" buildx use "$BUILDER" >/dev/null
 fi

@@ -45,10 +45,11 @@ job "fleet-foreman" {
           for u in ubuntu bigo e eliott root; do
             home="$(getent passwd "$u" | cut -d: -f6)"
             [ -n "$home" ] && [ -f "$home/monad/scripts/fleet-foreman.sh" ] || continue
-            cmd="exec bash '$home/monad/scripts/fleet-foreman.sh' \"$FOREMAN_N\" --loop"
+            cmd="export INTERVAL='$INTERVAL' NOMAD_ADDR='$NOMAD_ADDR'; cd '$home/monad' && git pull --ff-only --quiet >/dev/null 2>&1 || true; exec bash '$home/monad/scripts/fleet-foreman.sh' '$FOREMAN_N' --loop"
             if [ "$(id -u)" = 0 ] && [ "$u" != root ]; then
-              exec su - "$u" -c "INTERVAL='$INTERVAL' NOMAD_ADDR='$NOMAD_ADDR' $cmd"
+              exec su - "$u" -c "$cmd"
             else
+              cd "$home/monad" && git pull --ff-only --quiet >/dev/null 2>&1 || true
               exec bash "$home/monad/scripts/fleet-foreman.sh" "$FOREMAN_N" --loop
             fi
           done

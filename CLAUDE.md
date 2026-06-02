@@ -13,6 +13,13 @@ The cluster's mission is **autonomous pure mathematics research**.
   (3-voter Raft). As of 2026-06-01: `v1410-1` (100.75.75.39) is the live leader and
   `oraclebox1` (100.125.210.126) is a voter; `claudebox` rejoins as the 3rd once revived.
   See `cluster/desired-servers.md` for the declarative target + convergence procedure.
+- **Agent engines**: agents run on EITHER `claude` or `codex`, interchangeably, via the
+  engine abstraction in `meta/agent/` (`run-agent.sh --engine claude|codex|auto`). Each node
+  self-installs both CLIs and advertises ready engines as dynamic meta
+  (`has_claude`/`has_codex`/`agent_engines`) via `ensure-engines.sh` (run by node-doctor).
+  Dispatch is engine-aware (`dispatch.sh --engine …`, `claude-task` job `-meta engine=…`).
+  A `maintenance-agent` system job puts a standing agent on every node that drains
+  brain-delegated tasks from `monad/maintenance/<node>/queue/*`. See `meta/agent/README.md`.
 - **Worker nodes**: Join via Tailscale, run as Nomad clients
 - **GitOps**: `monad-sync` pulls git every 5 min, drift-detects changed jobs, canary-checks deploys
 - **Service discovery**: Nomad native (no Consul)

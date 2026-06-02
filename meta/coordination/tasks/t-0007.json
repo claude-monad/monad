@@ -1,0 +1,10 @@
+{
+  "id": "t-0007",
+  "type": "infra",
+  "scope": "eliotts-mac-mini is DOWN in nomad node status (Tailscale last seen ~6m ago, flaky). Cannot fix remotely \u2014 needs the machine powered on + 'tailscale up' + its nomad client restarted (node-doctor cron / re-join meta/bootstrap/join.sh 100.75.75.39). Roster health: mac-mini offline.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

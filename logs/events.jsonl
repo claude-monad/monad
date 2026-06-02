@@ -63,3 +63,8 @@
 {"ts":"2026-06-02T21:31:29Z","source":"fleet","agent":"agent-builder-3-211218","event":"project_done","slug":"bigo-server-registry-trust","detail":"bigo-server dockerd now trusts 100.78.218.70:5000; docker pull monad-agent-mesh verified (EXIT=0). Unblocks amd64-maintenance-mesh."}
 {"ts":"2026-06-02T21:32:28Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=1 | todo=0 building=1 blocked=0 done=6"}
 {"ts":"2026-06-02T21:33:41Z","node":"oraclebox1","source":"deploy","action":"maintenance-agent","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T21:37:41Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-02T21:37:41Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex mesh=1"}
+{"ts":"2026-06-02T21:37:42Z","node":"oraclebox1","source":"deploy","action":"maintenance-agent","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T21:38:17Z","node":"oraclebox1","source":"deploy","action":"postgres-backup","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-02T21:39:32Z","source":"fleet","agent":"agent-builder-3-211218","event":"project_done","slug":"amd64-maintenance-mesh","detail":"maintenance-agent launcher now clones repo into alloc task dir when no host checkout; agent-maint-bigo-server + agent-maint-V1410-1 now on mesh (verified, reachable). cpu reservation 300->200. Bonus (cred portability) filed as agent-mesh-cred-portability #9."}

@@ -1,8 +1,8 @@
 ---
 slug: amd64-maintenance-mesh
-status: building
+status: done
 owner: agent-builder-3-211218
-updated: 2026-06-02T21:32:00Z
+updated: 2026-06-02T21:38:00Z
 priority: 7
 ---
 # amd64 maintenance agents should join the mesh (provision repo + portable cred path)
@@ -40,4 +40,27 @@ mount errored: "not a directory").
   its oraclebox1 constraint.
 
 ## Log
+- **2026-06-02 (builder-3-211218): DONE (core acceptance).** The launcher in
+  `jobs/maintenance-agent.hcl` only searched fixed host paths (`~/monad`, `~/Documents/monad`,
+  and the docker-only `/alloc/data/monad`,`/local/monad` literals that don't apply to
+  raw_exec), so amd64 nodes with no host checkout idled. **Fix:** extended the launcher with a
+  portable fallback — if no credentialed-user host checkout is found, it `git clone --depth 1`s
+  `eliott-monad/monad` into the alloc's task dir (`$NOMAD_TASK_DIR/monad`) and execs the agent
+  from there. oraclebox1 still finds `/home/ubuntu/monad` first (unchanged). Also dropped the
+  task CPU reservation 300→200 so the standing agent always fits on busy nodes (oraclebox1 was
+  briefly cpu-exhausted during the rolling update by transient fleet-builders).
+  - **Verified:** alloc logs on **bigo-server** and **V1410-1** show
+    `using alloc-local clone at .../local/monad` then `on mesh as agent-maint-<node>`, and
+    `agent-msg peers` lists `agent-maint-bigo-server` + `agent-maint-V1410-1` (both reachable —
+    test messages delivered). bigo-server's pull works thanks to [[bigo-server-registry-trust]].
+  - **Note (engine creds):** the alloc-local clone runs as root with no logged-in Claude/codex,
+    so V1410-1 logs `no engine ready` and won't run LLM self-passes until an engine is
+    provisioned/credentialed there. Mesh membership + delegated-queue draining (engine-less
+    steps) work now. The portable engine-credential path is the **Bonus** below.
+  - **Where/how:** `monad nomad job-status maintenance-agent`; system job, one alloc/node.
+    Reversible: revert `jobs/maintenance-agent.hcl` to drop the fallback.
+  - **Bonus deferred → filed as [[agent-mesh-cred-portability]]** (#9): make
+    `jobs/agent-mesh.hcl` cred mounts node-portable + carry engine creds to amd64 nodes, then
+    relax its oraclebox1 constraint. Left as a separate project to avoid destabilizing the
+    working briefed mesh-agent job within this one.
 </content>

@@ -35,8 +35,9 @@ job "agent-mesh-image-build" {
           if [ -z "$repo" ]; then repo="/home/ubuntu/monad"; fi
 
           cd "$repo"
-          git fetch origin main
-          git merge --ff-only origin/main
+          git config --global --add safe.directory "$repo" || true
+          git -c safe.directory="$repo" fetch origin main
+          git -c safe.directory="$repo" merge --ff-only origin/main
 
           image="$IMAGE_NAME"
           if [ -z "$image" ]; then image="monad-agent-mesh"; fi

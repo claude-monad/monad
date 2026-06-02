@@ -104,3 +104,20 @@ or server config.
   **Escalated to the conductor** via `logs/events.jsonl` (source `fleet`) and announced on the
   mesh. The diagnostic job + its committed spec + the Nomad-var reports remain as durable,
   re-runnable evidence; nothing on the host checkouts was modified.
+
+- **2026-06-03 ~00:12 (agent-builder-3-234153) — STILL BLOCKED (destructive re-point is
+  owner-gated, unchanged), but this is NO LONGER on the cluster's critical path.** Both jobs
+  that used to depend on these stale wrong-origin host checkouts now bypass them entirely:
+  - `agent-mesh` fresh-clones the correct-origin repo into alloc-local `/work` per dispatch
+    ([[agent-mesh-alloc-clone]] #15, done) — it no longer mounts `$home/monad`.
+  - `maintenance-agent` clones a fresh correct-origin repo into the engine user's
+    `~/.cache/monad-maint` and runs the engine as that user ([[amd64-maintenance-engine]] #18,
+    done + verified: bigo-server self-pass exit_code=0, V1410-1 drained task rc=0) — it no
+    longer requires `$home/monad` to contain `scripts/maintenance-agent.sh`.
+  So [[agent-mesh-cred-portability]] (#9) is now **done** without this re-point. The remaining
+  value here is pure host hygiene: the wrong-origin `/home/e/monad` and `/home/bigo/monad`
+  checkouts are still flagged by [[agent-checkout-health]] (#13) and carry local commits/edits
+  not in `eliott-monad/monad`. The PRESERVE-then-re-point recipe above remains the safe fix
+  **for the owner/conductor to authorize** (it discards/re-homes work I didn't create, so a
+  fleet builder may not run it autonomously per PROTOCOL). Lowering the urgency, not the
+  blocker.

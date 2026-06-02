@@ -16,11 +16,17 @@ RUN go mod download
 COPY sidecar/ ./
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags="-s -w" -o /tsnet-sidecar .
 
+FROM --platform=$TARGETPLATFORM node:22-bookworm-slim AS node
+
 FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        git python3 curl ca-certificates jq nodejs npm \
+        git python3 curl ca-certificates jq \
     && rm -rf /var/lib/apt/lists/*
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/bin/npm /usr/local/bin/npm
+COPY --from=node /usr/local/bin/npx /usr/local/bin/npx
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 # Match the 'ubuntu' user to the HOST's uid/gid so mounted creds (mode 600) are readable
 # and the in-image claude install lands in a home the runtime user owns. Default 1001
 # (oraclebox1's ubuntu); override with --build-arg AGENT_UID=/AGENT_GID= for other hosts.

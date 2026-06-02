@@ -38,9 +38,12 @@ job "agent-mesh" {
       driver = "docker"
 
       config {
-        # Pulled from the node-local registry (oraclebox1:5000). Nomad's docker driver
-        # only uses registry images, not local builds; build-image.sh + a push populate it.
-        image        = "localhost:5000/monad-agent-mesh:latest"
+        # Pulled from the shared cluster registry (jobs/registry.hcl, Nomad var
+        # infra/registry = 100.78.218.70:5000). build-image.sh pushes here; nodes
+        # trust it via scripts/ensure-registry-trust.sh. Still pinned to oraclebox1
+        # below because the current image is arm64-only — once the multiarch image
+        # lands in the shared registry, drop the constraint to run on any node.
+        image        = "100.78.218.70:5000/monad-agent-mesh:latest"
         network_mode = "bridge"
         volumes = [
           "/home/ubuntu/.claude:/home/ubuntu/.claude",

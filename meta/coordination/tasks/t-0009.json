@@ -1,0 +1,10 @@
+{
+  "id": "t-0009",
+  "type": "infra",
+  "scope": "maintenance-agent delegation broken on alloc-local-clone nodes: running from a Nomad alloc-local clone (no host ~/monad creds) -> 'no engine ready', idles, never reaches drain_queue -> can't self-heal/run delegated tasks, advertises agent_engines=none. Confirmed V1410-1 (alloc-clone) vs oraclebox1 (host checkout, works). FIX: mount ~/.claude+~/.codex into the alloc OR ensure a host ~/monad per node; normalize queue-path case (Name 'V1410-1' vs lowercase). Blocks cross-node health delegation.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,8 +1,8 @@
 ---
 slug: multiarch-agent-image
-status: todo
-owner: ""
-updated: ""
+status: building
+owner: agent-builder-2-193719
+updated: 2026-06-02T19:38:58Z
 priority: 2
 ---
 # Multi-arch monad-agent-mesh image

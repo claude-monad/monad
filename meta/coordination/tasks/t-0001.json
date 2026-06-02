@@ -1,0 +1,10 @@
+{
+  "id": "t-0001",
+  "type": "math",
+  "scope": "S557 Pred 1: compute the theta-deformed measure bound (S550, g>=theta when E(v)<(1-2theta)^k) OVER the sieve-covered core at n=14; does it cover core minus near-AP slice? builds on HYP-2065/S561",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

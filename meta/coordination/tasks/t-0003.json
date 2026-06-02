@@ -1,0 +1,10 @@
+{
+  "id": "t-0003",
+  "type": "math",
+  "scope": "derive/fit the asymptotics of the sieve-covered core density as n->inf (large prime-power constraints q in {11,13,...} dominate); does it ->0 and how fast? HYP-2065/S561",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0002",
+  "type": "math",
+  "scope": "S557 Pred 2: define a dilated-AP distance and test small-gap <=> near-dilated-AP across the sieve-covered core (use the 200-set S561 small-gap tail); HYP-2065",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

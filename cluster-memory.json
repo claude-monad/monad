@@ -10,12 +10,17 @@
     "value": "tournament theory H(T) counting"
   },
   "work:co-CASE-burnside-formula-bug": {
-    "updated": 1780342801.982511,
+    "updated": 1780425601.947314,
     "updated_by": "claudebox",
     "value": "nomad-max-3"
   },
+  "work:lrc-sieve-core-density": {
+    "updated": 1780425837.9373264,
+    "updated_by": "claudebox",
+    "value": "DONE-S561-PR4"
+  },
   "work:op-math-264": {
-    "updated": 1780342801.868657,
+    "updated": 1780425601.7850716,
     "updated_by": "claudebox",
     "value": "nomad-max-1"
   }

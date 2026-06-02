@@ -68,3 +68,5 @@
 {"ts":"2026-06-02T21:37:42Z","node":"oraclebox1","source":"deploy","action":"maintenance-agent","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-02T21:38:17Z","node":"oraclebox1","source":"deploy","action":"postgres-backup","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-02T21:39:32Z","source":"fleet","agent":"agent-builder-3-211218","event":"project_done","slug":"amd64-maintenance-mesh","detail":"maintenance-agent launcher now clones repo into alloc task dir when no host checkout; agent-maint-bigo-server + agent-maint-V1410-1 now on mesh (verified, reachable). cpu reservation 300->200. Bonus (cred portability) filed as agent-mesh-cred-portability #9."}
+{"ts":"2026-06-02T21:39:34Z","node":"oraclebox1","source":"deploy","action":"postgres-backup-verify","result":"ok","detail":"deployed (no git changes)"}
+{"ts":"2026-06-02T21:40:06Z","node":"oraclebox1","source":"undeploy","action":"postgres-backup-verify","result":"ok","detail":"stopped and removed"}

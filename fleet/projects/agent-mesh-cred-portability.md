@@ -1,8 +1,8 @@
 ---
 slug: agent-mesh-cred-portability
-status: todo
-owner: ""
-updated: 2026-06-02T21:38:00Z
+status: building
+owner: agent-builder-3-211218
+updated: 2026-06-02T21:40:00Z
 priority: 9
 ---
 # Node-portable cred mounts for agent-mesh + engine creds on amd64 maintenance agents

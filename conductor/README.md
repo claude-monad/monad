@@ -30,16 +30,18 @@ Its standing context is `conductor/CONDUCTOR.md` (its role, the connectivity mis
 the 3-master convergence task).
 
 ## How it stays up
-Deployed as a Docker container with `--restart unless-stopped` (Docker supervises it;
-survives crashes and reboots):
+**Nomad-managed** (the cluster idiom). The image lives on GHCR
+(`ghcr.io/eliott-monad/monad-conductor:latest`) and `jobs/cluster-conductor.hcl` runs it
+as a `service` job pinned to oraclebox1, with the GHCR pull token + GitOps push token
+templated from the Nomad variable `nomad/jobs/cluster-conductor` (auto-readable by the
+task's workload identity — no committed credentials). Nomad restarts it on failure.
 ```
-# (re)deploy — run on oraclebox1
-conductor/redeploy.sh
+# rebuild + push the image after changing conductor code, then redeploy:
+conductor/push-image.sh                 # build + push to GHCR, store pull token
+nomad job run jobs/cluster-conductor.hcl
 ```
-A Nomad job spec (`jobs/cluster-conductor.hcl`) is committed as the preferred
-cluster-managed form; it activates once the image is in a registry the node pulls from
-(the local-image/containerd-store path makes Nomad try to pull). Until then Docker's own
-restart policy keeps it always-on.
+A standalone fallback (`conductor/redeploy.sh`) runs it as a plain
+`docker --restart unless-stopped` container if Nomad is unavailable.
 
 ## One account — the important caveat
 The whole cluster shares **one** Claude account. The conductor is meant to be its

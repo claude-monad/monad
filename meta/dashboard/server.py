@@ -5,7 +5,7 @@ Single-file, stdlib-only HTTP server. Shows:
   - Nomad nodes (status / eligibility / drain / class)
   - Nomad jobs + a running-allocation count
   - mesh peers (best-effort, from `tailscale status --json`: hosts named agent-*)
-  - the last ~50 cluster events (logs/events.jsonl)
+  - the last ~50 cluster events (logs/events.jsonl), with a Server-Sent Events stream
   - the fleet backlog (fleet/BACKLOG.md rows + each project's live status)
 
 Data sources: the Nomad HTTP API ($NOMAD_ADDR) and this git repo (which a background
@@ -16,6 +16,7 @@ Env:
   DASH_PORT     listen port (default 8088)
   REPO_DIR      repo root (default: two levels up from this file)
   REFRESH_SECS  git pull interval (default 60)
+  EVENT_STREAM_SECS  event-stream check interval (default 5)
 """
 import json
 import os
@@ -32,6 +33,8 @@ REPO_DIR = os.environ.get(
     "REPO_DIR", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 )
 REFRESH_SECS = int(os.environ.get("REFRESH_SECS", "60"))
+EVENT_LIMIT = int(os.environ.get("EVENT_LIMIT", "50"))
+EVENT_STREAM_SECS = int(os.environ.get("EVENT_STREAM_SECS", "5"))
 
 
 def _nomad(path):
@@ -118,7 +121,7 @@ def mesh_peers():
     return []
 
 
-def events(limit=50):
+def events(limit=EVENT_LIMIT):
     path = os.path.join(REPO_DIR, "logs", "events.jsonl")
     try:
         with open(path, "r") as f:
@@ -259,7 +262,7 @@ code{font:12px ui-monospace,monospace;color:#a5d6ff}
 </style></head><body>
 <header><h1>Monad cluster</h1>
 <span class="muted" id="meta"></span>
-<span class="muted">auto-refresh 15s · read-only</span></header>
+<span class="muted">state refresh 30s · event stream · read-only</span></header>
 <main id="app">loading…</main>
 <script>
 const pill=(t,c)=>`<span class="pill ${c}">${t}</span>`;
@@ -270,6 +273,26 @@ function statusPill(s){s=(s||'').toLowerCase();
   return pill(s||'?','dim');}
 function tbl(cols,rows){return `<table><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.join('')}</table>`;}
 function esc(x){return (x==null?'':String(x)).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
+const STATE_REFRESH_MS=30000;
+let eventStreamStarted=false;
+function eventResult(e){return e.result||e.status||'';}
+function eventAction(e){return e.action||e.event||e.raw||'';}
+function eventNode(e){return e.node||e.agent||'';}
+function renderEvents(events){
+ const evs=tbl(['time','node','source','action','result'],(events||[]).map(e=>
+   `<tr class="ev"><td>${esc((e.ts||'').replace('T',' ').replace('Z',''))}</td><td>${esc(eventNode(e))}</td><td>${esc(e.source)}</td><td>${esc(eventAction(e))}</td><td>${statusPill(eventResult(e))}</td></tr>`));
+ const el=document.getElementById('events-body');
+ if(el)el.innerHTML=evs;
+ return evs;
+}
+function connectEvents(){
+ if(eventStreamStarted||!window.EventSource)return;
+ eventStreamStarted=true;
+ const es=new EventSource('api/events/stream');
+ es.addEventListener('events',ev=>{
+   try{renderEvents(JSON.parse(ev.data));}catch(e){}
+ });
+}
 async function load(){
  let s;try{s=await (await fetch('api/state')).json();}catch(e){document.getElementById('app').textContent='fetch failed';return;}
  document.getElementById('meta').textContent=`${s.generated} · ${s.nomad_addr} · ${s.nodes.length} nodes · ${s.jobs.length} jobs · ${s.peers.length} mesh peers`;
@@ -282,16 +305,15 @@ async function load(){
    :'<p class="muted" style="padding:12px 14px">no mesh peers visible (tailscale status unavailable on host)</p>';
  const back=tbl(['#','project','status','why'],s.backlog.map(b=>
    `<tr><td>${esc(b.pri)}</td><td><b>${esc(b.project)}</b></td><td>${statusPill(b.status)}</td><td class="muted">${esc(b.why)}</td></tr>`));
- const evs=tbl(['time','node','source','action','result'],s.events.map(e=>
-   `<tr class="ev"><td>${esc((e.ts||'').replace('T',' ').replace('Z',''))}</td><td>${esc(e.node)}</td><td>${esc(e.source)}</td><td>${esc(e.action||e.raw||'')}</td><td>${statusPill(e.result)}</td></tr>`));
  document.getElementById('app').innerHTML=
    `<section><h2>Nodes</h2>${nodes}</section>`+
    `<section><h2>Mesh peers</h2>${peers}</section>`+
    `<section class="full"><h2>Backlog</h2>${back}</section>`+
    `<section><h2>Jobs</h2>${jobs}</section>`+
-   `<section class="full"><h2>Recent events</h2>${evs}</section>`;
+   `<section class="full"><h2>Recent events</h2><div id="events-body">${renderEvents(s.events)}</div></section>`;
+ connectEvents();
 }
-load();setInterval(load,15000);
+load();setInterval(load,STATE_REFRESH_MS);
 </script></body></html>"""
 
 
@@ -307,11 +329,39 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(b)
 
+    def _stream_events(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Connection", "keep-alive")
+        self.end_headers()
+        self.wfile.write(b"retry: 5000\n\n")
+        self.wfile.flush()
+        last_payload = None
+        while True:
+            try:
+                payload = json.dumps(events())
+                if payload != last_payload:
+                    self.wfile.write(f"event: events\ndata: {payload}\n\n".encode())
+                    last_payload = payload
+                else:
+                    self.wfile.write(b": keepalive\n\n")
+                self.wfile.flush()
+                time.sleep(EVENT_STREAM_SECS)
+            except (BrokenPipeError, ConnectionResetError):
+                return
+            except Exception:
+                return
+
     def do_GET(self):
         if self.path.rstrip("/") in ("", "/index.html") or self.path == "/":
             self._send(200, PAGE, "text/html; charset=utf-8")
         elif self.path.startswith("/api/state"):
             self._send(200, json.dumps(cached_state()), "application/json")
+        elif self.path.startswith("/api/events/stream"):
+            self._stream_events()
+        elif self.path.startswith("/api/events"):
+            self._send(200, json.dumps(events()), "application/json")
         elif self.path == "/healthz":
             self._send(200, "ok", "text/plain")
         else:

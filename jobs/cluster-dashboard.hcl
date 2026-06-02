@@ -59,6 +59,7 @@ export REPO_DIR="$REPO"
 export NOMAD_ADDR="$${NOMAD_ADDR:-http://100.75.75.39:4646}"
 export DASH_PORT="8088"
 export REFRESH_SECS="60"
+export EVENT_STREAM_SECS="5"
 exec python3 "$REPO/meta/dashboard/server.py"
 SCRIPT
       }

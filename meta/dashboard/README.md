@@ -14,16 +14,21 @@ A lean, **read-only** web view of the Monad fleet, served on the tailnet.
   on the host (empty if the tailscale CLI isn't available there).
 - **Backlog** — `fleet/BACKLOG.md` rows enriched with each project's live `status`/`owner`.
 - **Recent events** — last ~50 lines of `logs/events.jsonl`, newest first.
+- **Live event stream** — the Recent events panel subscribes to a focused SSE feed so it
+  updates independently from the full state snapshot.
 
 ## How it works
 The job clones the public `eliott-monad/monad` repo into its alloc dir and runs `server.py`
 from it. A background thread `git pull`s that clone every `REFRESH_SECS` (60s) so committed
 state (events, backlog, project statuses) stays current without a redeploy. Nomad data is
-read live from the API each request. The page auto-refreshes every 15s.
+read from the cached dashboard state. The page refreshes full state every 30s, while recent
+events update from a Server-Sent Events stream every few seconds.
 
 ## Endpoints
 - `GET /`            — the HTML dashboard
 - `GET /api/state`   — JSON snapshot (nodes, jobs, peers, events, backlog)
+- `GET /api/events`  — JSON array of recent fleet events
+- `GET /api/events/stream` — Server-Sent Events feed for recent fleet events
 - `GET /healthz`     — liveness (used by the Nomad health check)
 
 ## Config (env)
@@ -33,6 +38,7 @@ read live from the API each request. The page auto-refreshes every 15s.
 | `DASH_PORT` | `8088` | listen port |
 | `REPO_DIR` | repo root | where to read repo files / git-pull |
 | `REFRESH_SECS` | `60` | repo git-pull interval |
+| `EVENT_STREAM_SECS` | `5` | event-stream file check interval |
 
 ## Run locally
 ```bash

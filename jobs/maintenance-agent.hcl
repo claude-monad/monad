@@ -38,8 +38,24 @@ job "maintenance-agent" {
 
       config {
         command = "/bin/bash"
-        # repo is at $HOME/monad on every node
-        args    = ["-c", "exec \"$HOME/monad/scripts/maintenance-agent.sh\""]
+        # Find the user whose home has ~/monad (that user is logged in to the engines)
+        # and exec the agent as them. Nomad runs as root here, so we su to the credentialed
+        # user — this fixes both the repo path and engine-credential location. Falls back to
+        # running directly if we're already a non-root user with the repo.
+        args = ["-c", <<-EOC
+          for u in ubuntu bigo e eliott root; do
+            home="$(getent passwd "$u" | cut -d: -f6)"
+            [ -n "$home" ] && [ -f "$home/monad/scripts/maintenance-agent.sh" ] || continue
+            if [ "$(id -u)" = 0 ] && [ "$u" != root ]; then
+              exec su - "$u" -c "exec '$home/monad/scripts/maintenance-agent.sh'"
+            else
+              exec "$home/monad/scripts/maintenance-agent.sh"
+            fi
+          done
+          echo "maintenance-agent: no user with ~/monad found on this node" >&2
+          sleep 120
+        EOC
+        ]
       }
 
       env {

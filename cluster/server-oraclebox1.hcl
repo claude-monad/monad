@@ -59,6 +59,14 @@ plugin "docker" {
   }
 }
 
+# raw_exec: needed to run agent jobs (claude/codex sessions, maintenance-agent) that use
+# the host's logged-in CLIs directly. All other agent nodes have it enabled.
+plugin "raw_exec" {
+  config {
+    enabled = true
+  }
+}
+
 telemetry {
   disable_hostname       = true
   prometheus_metrics     = true

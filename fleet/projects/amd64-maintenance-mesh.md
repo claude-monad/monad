@@ -1,8 +1,8 @@
 ---
 slug: amd64-maintenance-mesh
-status: todo
-owner: ""
-updated: 2026-06-02T21:25:00Z
+status: building
+owner: agent-builder-3-211218
+updated: 2026-06-02T21:32:00Z
 priority: 7
 ---
 # amd64 maintenance agents should join the mesh (provision repo + portable cred path)

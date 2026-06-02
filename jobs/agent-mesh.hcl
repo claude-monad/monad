@@ -54,9 +54,13 @@ job "agent-mesh" {
       config {
         # Pulled from the shared cluster registry (jobs/registry.hcl, Nomad var
         # infra/registry = 100.78.218.70:5000). build-image.sh pushes here; nodes
-        # trust it via scripts/ensure-registry-trust.sh. Now a multi-arch manifest
-        # (amd64+arm64), so the oraclebox1 pin is gone — see the constraints above.
-        image        = "100.78.218.70:5000/monad-agent-mesh:latest"
+        # trust it via scripts/ensure-registry-trust.sh. Multi-arch manifest (amd64+arm64).
+        # Per-uid tag selected by node meta `agent_uid` so the in-image `ubuntu` user matches
+        # the host's credentialed user uid → host-mounted mode-600 creds stay readable. Tags
+        # built by `agent-mesh-image-build` (-meta uid=/gid=/tag=uid<N>); `latest` stays uid1001.
+        # Set per node: nomad node meta apply -node-id <id> agent_uid=<uid>
+        # Wired: oraclebox1=1001, V1410-1=1000. See fleet/projects/amd64-agent-uid-image.md.
+        image        = "100.78.218.70:5000/monad-agent-mesh:uid${meta.agent_uid}"
         network_mode = "bridge"
         # Sources derived from the node's wired cred home (meta.agent_home); targets stay at
         # the image's /home/ubuntu so the in-container claude/codex find creds regardless of

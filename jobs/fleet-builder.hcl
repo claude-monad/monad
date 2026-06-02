@@ -43,11 +43,16 @@ job "fleet-builder" {
       config {
         image        = "localhost:5000/monad-agent-mesh:latest"
         network_mode = "host"   # reach the tailnet (mesh + nomad API) and the local registry
+        # ISOLATED working tree: each builder clones a FRESH repo into its own container-local
+        # /work (no shared host mount), so concurrent builders never race on the same git tree.
+        # They coordinate purely through origin (claim via push) per fleet/PROTOCOL.md. The
+        # override clones, then hands off to the image's normal agent entrypoint.
+        entrypoint = ["/bin/bash", "-c",
+          "set -e; if [ ! -e /work/.git ]; then echo '[builder] cloning isolated working tree'; git clone --depth 50 \"$REPO_URL\" /work; fi; exec /usr/local/bin/agent-entrypoint"]
         volumes = [
           "/home/ubuntu/.claude:/home/ubuntu/.claude",
           "/home/ubuntu/.claude.json:/home/ubuntu/.claude.json",
           "/home/ubuntu/.codex:/home/ubuntu/.codex",
-          "/home/ubuntu/monad:/work",
           "/usr/bin/nomad:/usr/local/bin/nomad:ro",
         ]
       }
@@ -64,6 +69,7 @@ job "fleet-builder" {
       env {
         AGENT_NAME    = "${NOMAD_META_agent_name}"
         ROLE          = "builder"
+        REPO_URL      = "https://github.com/eliott-monad/monad"   # cloned fresh into /work
         LOCAL_PORT    = "${NOMAD_PORT_agentlocal}"   # unique per builder (host net)
         MONAD_ENGINE  = "${NOMAD_META_engine}"
         AGENT_TIMEOUT = "2700"

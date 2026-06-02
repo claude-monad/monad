@@ -38,21 +38,28 @@ job "maintenance-agent" {
 
       config {
         command = "/bin/bash"
-        # Find the user whose home has ~/monad (that user is logged in to the engines)
-        # and exec the agent as them. Nomad runs as root here, so we su to the credentialed
-        # user — this fixes both the repo path and engine-credential location. Falls back to
-        # running directly if we're already a non-root user with the repo.
+        # Find the user whose home has the monad checkout (that user is logged in to the
+        # engines) and exec the agent as them. Nomad runs as root here, so we su to the
+        # credentialed user — this fixes both the repo path and engine-credential location.
+        # Falls back to running directly if we're already a non-root user with the repo.
         args = ["-c", <<-EOC
           for u in ubuntu bigo e eliott root; do
             home="$(getent passwd "$u" | cut -d: -f6)"
-            [ -n "$home" ] && [ -f "$home/monad/scripts/maintenance-agent.sh" ] || continue
-            if [ "$(id -u)" = 0 ] && [ "$u" != root ]; then
-              exec su - "$u" -c "exec bash '$home/monad/scripts/maintenance-agent.sh'"
-            else
-              exec bash "$home/monad/scripts/maintenance-agent.sh"
-            fi
+            [ -n "$home" ] || continue
+            for repo in "$home/monad" "$home/Documents/monad"; do
+              [ -f "$repo/scripts/maintenance-agent.sh" ] || continue
+              if [ "$(id -u)" = 0 ] && [ "$u" != root ]; then
+                exec su - "$u" -c "exec bash '$repo/scripts/maintenance-agent.sh'"
+              else
+                exec bash "$repo/scripts/maintenance-agent.sh"
+              fi
+            done
           done
-          echo "maintenance-agent: no user with ~/monad found on this node" >&2
+          for repo in /alloc/data/monad /local/monad; do
+            [ -f "$repo/scripts/maintenance-agent.sh" ] || continue
+            exec bash "$repo/scripts/maintenance-agent.sh"
+          done
+          echo "maintenance-agent: no monad checkout found on this node" >&2
           sleep 120
         EOC
         ]

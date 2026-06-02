@@ -56,7 +56,7 @@ job "agent-mesh-image-build" {
       }
 
       resources {
-        cpu    = 1000
+        cpu    = 500
         memory = 2048
       }
 

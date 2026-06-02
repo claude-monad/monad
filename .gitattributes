@@ -1,3 +1,4 @@
 *.hcl text eol=lf
 *.sh text eol=lf
 *.py text eol=lf
+logs/events.jsonl text eol=lf merge=union

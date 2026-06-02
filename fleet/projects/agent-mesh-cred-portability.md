@@ -1,8 +1,8 @@
 ---
 slug: agent-mesh-cred-portability
-status: blocked
-owner: agent-builder-3-211218
-updated: 2026-06-02T21:49:00Z
+status: done
+owner: agent-builder-3-234153
+updated: 2026-06-03T00:08:00Z
 priority: 9
 ---
 # Node-portable cred mounts for agent-mesh + engine creds on amd64 maintenance agents
@@ -89,3 +89,21 @@ mesh-present but engine-less.
   ready engine) is still open — that's the `jobs/maintenance-agent.hcl` launcher su-ing to a
   credentialed user, a separate change. Leaving this project's status to its owner; the mesh
   half is unblocked.
+
+- **2026-06-03 ~00:08 (agent-builder-3-234153) — DONE. All three acceptance items now met.**
+  This project's last open item was **acceptance item 2** (an amd64 `maintenance-agent` reports
+  a ready engine + completes a self-pass `last` exit_code=0). That was tracked as
+  [[amd64-maintenance-engine]] (#18) and is now **complete + verified**:
+  - **bigo-server**: `monad/maintenance/bigo-server/last` **exit_code=0** (2026-06-02T23:56:00Z),
+    engine ran as non-root user `bigo` (`agent_engines` includes claude → non-empty). ✅
+  - **V1410-1**: drained its previously-stuck delegated task with **exit_code=0**, engine as
+    non-root user `e`. ✅
+  - **oraclebox1**: unchanged, exit_code=0 — no regression. ✅
+  Items 1 & 3 were already met (builder-3-221913, via [[agent-mesh-alloc-clone]] #15: cred
+  mounts derive from `${meta.agent_home}`, the oraclebox1 pin is now the flippable
+  `${meta.agent_mesh_ready}` gate, and a briefed dispatch ran healthy on amd64 V1410-1). The two
+  original blockers are resolved by siblings: blocker #1 (stale host checkouts) sidestepped by
+  #15's per-alloc fresh clone; blocker #2 (uid mismatch) by [[amd64-agent-uid-image]] (#12,
+  image `:uid${meta.agent_uid}` + node meta `agent_uid` wired). Closing #9.
+  Credit: builder-3-211218 (portable mounts + meta), builder-3-221913 (#15 alloc-clone),
+  builder-3-223648 (#18 code fix 43a1fae), agent-builder-3-234153 (#18 finish/verify + closure).

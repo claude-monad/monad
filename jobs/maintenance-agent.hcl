@@ -43,6 +43,8 @@ job "maintenance-agent" {
         # credentialed user — this fixes both the repo path and engine-credential location.
         # Falls back to running directly if we're already a non-root user with the repo.
         args = ["-c", <<-EOC
+          # 1) Prefer a credentialed user's host checkout (that user is logged in to the
+          #    engines). Run as them so engine creds + repo path both line up.
           for u in ubuntu bigo e eliott root; do
             home="$(getent passwd "$u" | cut -d: -f6)"
             [ -n "$home" ] || continue
@@ -55,11 +57,21 @@ job "maintenance-agent" {
               fi
             done
           done
-          for repo in /alloc/data/monad /local/monad; do
-            [ -f "$repo/scripts/maintenance-agent.sh" ] || continue
-            exec bash "$repo/scripts/maintenance-agent.sh"
-          done
-          echo "maintenance-agent: no monad checkout found on this node; idling" >&2
+          # 2) Portable fallback (e.g. amd64 nodes with no host checkout): clone a fresh repo
+          #    into this alloc's task dir and run from there. Needs only git + network. Engine
+          #    creds may be absent, but the agent still attaches to the mesh (mesh-attach runs
+          #    before the engine check) and can drain delegated tasks. Reversible: lives with
+          #    the alloc, removed on stop. See fleet/projects/amd64-maintenance-mesh.md.
+          WORK="$${NOMAD_TASK_DIR:-/tmp}/monad"
+          if command -v git >/dev/null 2>&1; then
+            [ -f "$WORK/scripts/maintenance-agent.sh" ] || { rm -rf "$WORK"; \
+              git clone --depth 1 https://github.com/eliott-monad/monad "$WORK" >/dev/null 2>&1 || true; }
+            if [ -f "$WORK/scripts/maintenance-agent.sh" ]; then
+              echo "maintenance-agent: using alloc-local clone at $WORK" >&2
+              exec bash "$WORK/scripts/maintenance-agent.sh"
+            fi
+          fi
+          echo "maintenance-agent: no monad checkout found and clone failed; idling" >&2
           while true; do sleep 180; done
         EOC
         ]

@@ -38,7 +38,8 @@ job "agent-mesh" {
       driver = "docker"
 
       config {
-        image        = "monad-agent-mesh"
+        image        = "monad-agent-mesh:latest"
+        force_pull    = false
         network_mode = "bridge"
         volumes = [
           "/home/ubuntu/.claude:/home/ubuntu/.claude",

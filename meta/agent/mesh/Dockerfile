@@ -19,6 +19,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git python3 curl ca-certificates jq nodejs npm \
     && rm -rf /var/lib/apt/lists/*
+# Match the 'ubuntu' user to the HOST's uid/gid so mounted creds (mode 600) are readable
+# and the in-image claude install lands in a home the runtime user owns. Default 1001
+# (oraclebox1's ubuntu); override with --build-arg AGENT_UID=/AGENT_GID= for other hosts.
+ARG AGENT_UID=1001
+ARG AGENT_GID=1001
+RUN if [ "$(id -u ubuntu)" != "${AGENT_UID}" ]; then \
+        groupmod -g ${AGENT_GID} ubuntu && usermod -u ${AGENT_UID} -g ${AGENT_GID} ubuntu; \
+    fi && chown -R ${AGENT_UID}:${AGENT_GID} /home/ubuntu
 RUN mkdir -p /work && chown ubuntu:ubuntu /work
 COPY --from=build /tsnet-sidecar /usr/local/bin/tsnet-sidecar
 COPY agent-msg.sh   /usr/local/bin/agent-msg

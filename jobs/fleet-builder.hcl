@@ -25,7 +25,10 @@ job "fleet-builder" {
 
   group "builder" {
     count = 1
-    restart { attempts = 0; mode = "fail" }
+    restart {
+      attempts = 0
+      mode     = "fail"
+    }
 
     task "builder" {
       driver = "docker"

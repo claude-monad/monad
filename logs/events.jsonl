@@ -71,3 +71,4 @@
 {"ts":"2026-06-02T21:39:34Z","node":"oraclebox1","source":"deploy","action":"postgres-backup-verify","result":"ok","detail":"deployed (no git changes)"}
 {"ts":"2026-06-02T21:40:06Z","node":"oraclebox1","source":"undeploy","action":"postgres-backup-verify","result":"ok","detail":"stopped and removed"}
 {"ts": "2026-06-02T21:42:30Z", "node": "agent-builder-3-213224", "source": "fleet", "action": "postgres-backup", "result": "done", "detail": "automated daily 04:00 UTC pg_dump of shared-postgres -> /opt/monad-postgres-backups on bigo-server (gzip plain-SQL, 14d retention, creds from nomad/jobs/postgres). verified: forced run exit 0 + verify job gzip-integrity/header check exit 0. job jobs/postgres-backup.hcl; docs databases/README.md Backups & restore."}
+{"ts":"2026-06-02T21:42:33Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=1 | todo=0 building=1 blocked=0 done=8"}

@@ -14,7 +14,7 @@
 # Usage: claudebox-server.sh [start|keepalive|stop|status]
 set -uo pipefail
 
-NOMAD_VER="1.9.3"
+NOMAD_VER="2.0.2"   # MUST match the cluster's server version (v1410-1/oraclebox1 run 2.0.2)
 BIN="$HOME/bin/nomad"
 DATA="$HOME/nomad/data"
 CFG="$HOME/nomad/server.hcl"

@@ -120,3 +120,8 @@
 {"ts":"2026-06-02T22:58:45Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=0/3 dispatched=0 | todo=0 claimed=0 building=1 review=0 blocked=2 done=15"}
 {"ts":"2026-06-02T23:09:57Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=0/3 dispatched=1 | todo=0 claimed=0 building=1 review=0 blocked=2 done=15"}
 {"ts":"2026-06-02T23:12:23Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-02T23:13:56Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-02T23:21:38Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=0/3 dispatched=0 | todo=0 claimed=0 building=1 review=0 blocked=2 done=16"}
+{"ts":"2026-06-02T23:31:51Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=2 | todo=0 claimed=0 building=1 review=0 blocked=2 done=16"}
+{"ts":"2026-06-02T23:41:59Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=1 | todo=0 claimed=0 building=1 review=0 blocked=2 done=16"}
+{"ts":"2026-06-02T23:44:38Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

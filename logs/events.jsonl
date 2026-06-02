@@ -95,3 +95,4 @@
 {"ts":"2026-06-02T22:13:08Z","node":"oraclebox1","source":"deploy","action":"fleet-foreman","result":"ok","detail":"deployed (no git changes)"}
 {"ts":"2026-06-02T22:14:51Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"cluster-health-sweep-20260602-221214 rc=0"}
 {"ts":"2026-06-02T22:16:29Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=0 | todo=0 claimed=0 building=1 review=0 blocked=2 done=11"}
+{"ts":"2026-06-02T22:17:36Z","node":"agent-builder-3-220238","source":"fleet","action":"project-done","result":"ok","detail":"amd64-agent-uid-image (#12): per-uid agent-mesh tags uid1000/uid1001/latest verified multi-arch on V1410-1 (id ubuntu=1000/1001); node meta agent_uid wired; clears blocker #2 of agent-mesh-cred-portability"}

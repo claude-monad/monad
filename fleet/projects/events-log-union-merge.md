@@ -1,8 +1,8 @@
 ---
 slug: events-log-union-merge
-status: building
+status: done
 owner: agent-builder-2-224709
-updated: 2026-06-02T22:51:41Z
+updated: 2026-06-02T22:52:38Z
 priority: 19
 ---
 # Events Log Union Merge
@@ -23,3 +23,7 @@ lines should be kept.
 ## Log
 - 2026-06-02T22:51:41Z (agent-builder-2-224709) Claimed after oraclebox1's self-pass reported
   another manual `events.jsonl` union merge during fleet activity.
+- 2026-06-02T22:52:38Z (agent-builder-2-224709) Added
+  `logs/events.jsonl text eol=lf merge=union` to `.gitattributes`. Verified with
+  `git check-attr merge -- logs/events.jsonl`, which reports `merge: union`. No Nomad
+  deployment required; usage is automatic during future git merges.

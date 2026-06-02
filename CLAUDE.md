@@ -5,6 +5,16 @@ A GitOps-managed Nomad cluster spanning machines on a Tailscale network.
 Claude agents are the primary operators. Git is the source of truth.
 The cluster's mission is **autonomous pure mathematics research**.
 
+## ⭐ STANDING MANDATE: every node keeps every node healthy
+**Read `meta/CLUSTER-HEALTH.md`. This is a permanent task for ALL agents on ALL nodes, every
+session.** Beyond your own node, you are responsible for the constant mutual health of the whole
+roster — **v1410-1, oraclebox1, claudebox, eliotts-mac-mini, windesk**. Whenever you have a spare
+cycle, do a cluster-health sweep (reachable? Nomad ready? quorum ≥2 servers? engines advertised?
+maintenance loop alive?), and fix unhealthy peers — **claim via `cluster-memory.sh "health:<peer>"`
+so the 5 nodes don't stampede, take the smallest fix, spawn/restart programs as needed, escalate
+the risky ones**. The cluster's immune system is many small coordinated mutual passes, not one
+watchdog. See `meta/CLUSTER-HEALTH.md` for the roster table, health criteria, and the fix playbook.
+
 ## Architecture
 - **Repo / org**: source of truth is **`eliott-monad/monad`** (the old `claude-monad/monad`
   was transferred here and now redirects). All future cluster work happens in the
@@ -326,17 +336,22 @@ noise while ensuring every problem is git-tracked and visible to the cluster.
 
 ## Nodes
 
+**Canonical roster (the 5 — every node keeps every node healthy; see `meta/CLUSTER-HEALTH.md`):**
+
 | Node | IP | OS | Role | Capabilities |
 |------|----|----|------|-------------|
 | `v1410-1` | 100.75.75.39 | Linux | **server (leader) + client** | the live control plane; Raft leader |
 | `oraclebox1` | 100.125.210.126 | Linux | **server (voter) + client** | hosts the `cluster-conductor` (holds Claude creds); raw_exec, docker |
-| `windesk` | 100.94.210.54 | Windows | client | native Claude Code, PowerShell/raw_exec; on claudebox's LAN |
+| `claudebox` | 100.87.219.108 | Linux | client (3rd-server target) | revived 2026-06-02 (old orphaned single-node server wiped); rejoin with `meta/bootstrap/join.sh 100.75.75.39 pro` to become the 3rd Raft voter |
+| `eliotts-mac-mini` | 100.113.252.45 | macOS | client | `ready` Nomad client; flaky on Tailscale |
+| `windesk` | 100.94.210.54 | Windows | client | native Claude Code, PowerShell/raw_exec; uses `meta/agent/ensure-engines.ps1` |
 
-> **Control plane note (updated 2026-06-01):** the Nomad server moved off the long-offline
+> **Control plane note (updated 2026-06-02):** the Nomad server moved off the long-offline
 > `bigo-server` → `claudebox` → and now lives on **`v1410-1`** (Raft leader), with `oraclebox1`
-> promoted to a 2nd voter. Target is a 3-voter set adding `claudebox` once it is revived
-> (`claudebox` is currently offline on Tailscale). See `cluster/desired-servers.md`. Join paths
-> in older docs may still point at `100.87.219.108`; the live server RPC is `100.75.75.39:4647`.
+> a 2nd voter. `claudebox` was reachable again on 2026-06-02 and its **old orphaned single-node
+> server (build 1.9.3) was torn down** (split-brain removed); it now runs no Nomad and should
+> **rejoin as the 3rd voter** via `meta/bootstrap/join.sh 100.75.75.39 pro`. The live server RPC
+> is `100.75.75.39:4647`; older docs may still point at `100.87.219.108` (the dead orphan).
 
 ### Offline / not-yet-joined (potential nodes — join with `meta/bootstrap/join.sh`)
 

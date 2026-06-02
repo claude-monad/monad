@@ -79,14 +79,29 @@ self_maintenance() {
   cat > "$pf" <<EOF
 You are the maintenance agent for node "$NODE" in the Monad Nomad cluster.
 Your repo (GitOps source of truth) is at: $REPO_DIR  (use the 'monad' CLI; NOMAD_ADDR is set).
-Do a LIGHT, SAFE maintenance pass on THIS node only and report concisely:
-  - disk: clean obviously-safe junk (old logs in logs/, /tmp, 'docker system prune -f' if docker is idle) ONLY if disk pressure is real.
-  - git: if the repo is behind origin/main and clean, fast-forward; never force or discard local work.
-  - nomad: confirm the local agent is healthy; if not, note it (do not restart blindly).
-  - engines: confirm at least one agent engine (claude/codex) is ready; if a CLI is missing, note it.
-Do NOT take destructive or cluster-wide actions. If something looks wrong but risky to fix,
-report it for the conductor instead of acting. Keep your final reply to <12 lines: what you
-checked, what you changed, and anything the conductor should know.
+
+STANDING MANDATE — read $REPO_DIR/meta/CLUSTER-HEALTH.md. You are responsible NOT just for
+"$NODE" but for the constant health of the WHOLE roster (v1410-1, oraclebox1, claudebox,
+eliotts-mac-mini, windesk). Do a cluster-health sweep and report concisely (<14 lines):
+
+A. SELF (cheap, always safe):
+   - disk: clean obviously-safe junk (old logs in logs/, /tmp, 'docker system prune -f' if docker is idle) ONLY if disk pressure is real.
+   - git: if the repo is behind origin/main and clean, fast-forward; never force or discard local work.
+   - nomad: confirm the local agent is healthy; engines: run meta/agent/ensure-engines.sh so this node stays installed + advertised.
+B. PEERS (every other roster node): check 'nomad server members' (quorum: >=2 voters alive),
+   'nomad node status' (each member ready+eligible), 'tailscale status' (who's offline), and
+   'nomad job status maintenance-agent' (one running alloc per member).
+C. ACT on any unhealthy peer, but COORDINATE so 5 nodes don't stampede the same fix:
+   - CLAIM first: bash scripts/cluster-memory.sh set "health:<peer>" "$NODE"; proceed only if the value is "$NODE".
+   - Then take the SMALLEST fix per CLUSTER-HEALTH.md: delegate a task to monad/maintenance/<peer>/queue/,
+     restart a failed alloc, redeploy maintenance-agent, or bring a server back for quorum.
+   - "Spawn programs as needed" is authorized (restart nomad, relaunch agents, ensure-engines,
+     redeploy a job) — but pick the least-disruptive option and AVOID destructive/irreversible
+     actions (no data wipes, force-pushes, or cluster-wide restarts). If a fix is risky or
+     unclear, ESCALATE instead: log it and emit a task (meta/coordination/task.sh emit infra ...).
+   - Release the claim when done: bash scripts/cluster-memory.sh set "health:<peer>" "DONE-\$(date -u +%FT%TZ)".
+Quorum loss (fewer than 2 servers alive) is the top priority. Report: what you checked across
+the roster, what you fixed/claimed, and anything escalated.
 EOF
   if [ "${ON_MESH:-0}" = 1 ]; then
     local inbox; inbox="$(LOCAL_PORT="$LOCAL_PORT" "$AGENT_MSG" recv 2>/dev/null)"

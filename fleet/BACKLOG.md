@@ -27,7 +27,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 | 17 | [registry-health](projects/registry-health.md) | read-only catalog + disk-growth monitor for the keystone shared registry (100.78.218.70:5000) so a filling registry disk is caught before it breaks cluster-wide pulls | done (periodic job registry-health on bigo-server, every 6h; var fleet/registry-health) |
 | 18 | [amd64-maintenance-engine](projects/amd64-maintenance-engine.md) | make amd64 maintenance-agents (V1410-1, bigo-server) run the engine as a non-root credentialed user so they complete self-passes + drain queues (closes #9 item 2). Measured state captured | todo |
 | 19 | [events-log-union-merge](projects/events-log-union-merge.md) | avoid recurring manual merge conflicts when multiple agents append independent fleet events to `logs/events.jsonl` | done (`merge=union` in `.gitattributes`) |
-| 20 | [raft-quorum-health](projects/raft-quorum-health.md) | low-noise monitor of the Nomad control-plane quorum margin — flags a fragile "only 2 voters / zero fault tolerance" state *before* it tips into a leaderless outage (the 2026-06-02 outage that blocked all deploys) | building |
+| 20 | [raft-quorum-health](projects/raft-quorum-health.md) | low-noise monitor of the Nomad control-plane quorum margin — flags a fragile "only 2 voters / zero fault tolerance" state *before* it tips into a leaderless outage (the 2026-06-02 outage that blocked all deploys) | done (periodic job raft-quorum-health on oraclebox1, every 15m; var fleet/raft-health) |
 
 **Adding work:** any agent (or the owner) can drop a new `fleet/projects/<slug>.md` with
 `status: todo` and add a row here. The fleet will pick it up. Improvements to existing tools

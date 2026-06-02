@@ -1,8 +1,8 @@
 ---
 slug: raft-quorum-health
-status: building
+status: done
 owner: agent-builder-3-230917
-updated: 2026-06-02T23:25:00Z
+updated: 2026-06-02T23:26:00Z
 priority: 20
 ---
 # raft-quorum-health: low-noise monitor of the Nomad control plane's quorum margin
@@ -56,3 +56,26 @@ each run (no log/commit spam), mirroring [[registry-health]] / [[agent-checkout-
   leaderless-outage so no deploy was possible. Authored this read-only monitor — directly
   motivated by the live outage — during the blocked window so it is ready to deploy the moment
   a leader returns. Deploy + first-run verification are pending control-plane recovery.
+- 2026-06-02 23:26 (agent-builder-3-230917) **done**. The leader recovered (v1410-1 became the
+  stable leader ~23:23 after its server revived), so I deployed and verified.
+  - Built `jobs/raft-quorum-health.hcl`: a periodic (`*/15 * * * *`, `prohibit_overlap`)
+    `raw_exec` batch job pinned to `oraclebox1`, modeled on `jobs/registry-health.hcl`. The
+    probe is Python (cleaner raft `latest_configuration` parsing): for each server in `SERVERS`
+    it GETs `/v1/agent/self` (+ `/v1/status/leader` cross-check), counts Raft voters, derives
+    `fault_tolerance = voters - (floor(voters/2)+1)`, tracks term churn vs. the last run, and
+    writes the verdict to Nomad var `fleet/raft-health`. READ-ONLY — no membership/`peers.json`
+    writes. Validated (`nomad job validate` ok; local `-output` render clean, no HCL
+    interpolation of the Python), deployed, force-ran once → **alloc exit 0**.
+  - **How to use:** `nomad var get fleet/raft-health` (or build it into the dashboard). First
+    run wrote: `status=warn`, `detail="fragile quorum: 2 voters, fault_tolerance=0 (target is 3
+    voters for 1-node tolerance)"`, `leader_present=yes`,
+    `server_states="100.75.75.39=Leader;100.125.210.126=Follower"`,
+    `voters="100.75.75.39:4647,100.125.210.126:4647"`, `term=1210`, `term_delta=5`,
+    plus `prev_status`/`changed_at` transition. Verdict: `critical`=no leader (active outage),
+    `warn`=leader but <3 voters or term churn ≥ `CHURN_WARN` (default 5), `healthy`=leader+≥3
+    voters, `unknown`=no server reachable. Quiet: the single var is overwritten each run.
+  - **Actionable right now:** the monitor's standing `warn` confirms the cluster is *still*
+    fragile at **2 voters** — exactly the condition that caused today's outage. The fix
+    (`claudebox` rejoins as the 3rd voter via `meta/bootstrap/join.sh 100.75.75.39 pro`) can now
+    commit because a leader is present again; once it does, this var flips to `healthy`.
+  - To remove: `monad undeploy raft-quorum-health` (purely additive; nothing to roll back).

@@ -1,0 +1,10 @@
+{
+  "id": "t-0004",
+  "type": "setup",
+  "scope": "windesk: git pull, then run 'powershell -ExecutionPolicy Bypass -File meta/agent/ensure-engines.ps1' (installs codex via npm/scoop + advertises node meta); then a human runs 'codex login' (ChatGPT) on windesk so has_codex=true",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

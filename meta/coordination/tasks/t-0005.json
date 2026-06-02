@@ -1,0 +1,10 @@
+{
+  "id": "t-0005",
+  "type": "infra",
+  "scope": "build a Windows maintenance-agent variant (PowerShell/raw_exec) so windesk drains monad/maintenance/windesk/queue/* like the bash nodes, and runs ensure-engines.ps1 each pass \u2014 closes the Windows gap in the self-setup loop",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -48,12 +48,19 @@ job "agent-mesh-image-build" {
           cd "$repo"
           git config --global --add safe.directory "$repo" || true
           git -c safe.directory="$repo" fetch origin main
-          git -c safe.directory="$repo" merge --ff-only origin/main
+          build_repo="$(mktemp -d /tmp/monad-agent-mesh-build.XXXXXX)"
+          cleanup() {
+            cd /
+            git -C "$repo" worktree remove --force "$build_repo" >/dev/null 2>&1 || rm -rf "$build_repo"
+          }
+          trap cleanup EXIT
+          git -c safe.directory="$repo" worktree add --detach "$build_repo" origin/main >/dev/null
+          cd "$build_repo"
 
           image="$IMAGE_NAME"
           if [ -z "$image" ]; then image="monad-agent-mesh"; fi
 
-          exec meta/agent/mesh/build-image.sh "$image"
+          meta/agent/mesh/build-image.sh "$image"
         EOT
         ]
       }

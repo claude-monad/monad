@@ -5,7 +5,8 @@ job "claude-task" {
   parameterized {
     payload       = "optional"
     meta_required = ["prompt"]
-    meta_optional = ["target_node", "target_account", "timeout", "task_id"]
+    # engine = claude|codex|auto (default auto → node picks a ready engine)
+    meta_optional = ["target_node", "target_account", "timeout", "task_id", "engine"]
   }
 
   group "session" {
@@ -16,7 +17,8 @@ job "claude-task" {
 
       config {
         command = "/bin/bash"
-        args    = ["/root/monad/scripts/run-claude-task.sh"]
+        # portable: repo is at $HOME/monad on every node (root or non-root)
+        args    = ["-c", "exec \"$HOME/monad/scripts/run-claude-task.sh\""]
       }
 
       resources {

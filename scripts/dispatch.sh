@@ -31,6 +31,7 @@ PROMPT=""
 TARGET_NODE=""
 TARGET_ACCOUNT=""
 TIMEOUT="1800"
+ENGINE="auto"          # claude|codex|auto
 WAIT=false
 
 # Parse args
@@ -38,6 +39,7 @@ while [ $# -gt 0 ]; do
   case "$1" in
     --node)       TARGET_NODE="$2"; shift 2 ;;
     --account)    TARGET_ACCOUNT="$2"; shift 2 ;;
+    --engine)     ENGINE="$2"; shift 2 ;;
     --timeout)    TIMEOUT="$2"; shift 2 ;;
     --wait)       WAIT=true; shift ;;
     *)
@@ -51,7 +53,7 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -z "$PROMPT" ]; then
-  echo "Usage: dispatch.sh <prompt> [--node <name>] [--account <acct>] [--timeout <secs>] [--wait]"
+  echo "Usage: dispatch.sh <prompt> [--node <name>] [--account <acct>] [--engine claude|codex|auto] [--timeout <secs>] [--wait]"
   exit 1
 fi
 
@@ -71,28 +73,29 @@ if [ -n "$TARGET_NODE" ]; then
   fi
   echo "[dispatch] SSH dispatch → $SSH_TARGET"
   RESULT_FILE="/tmp/claude-task-results/$TASK_ID.out"
+  # Route through the engine abstraction on the remote node ($HOME/monad/meta/agent).
+  RA='$HOME/monad/meta/agent/run-agent.sh'
   ssh -o ConnectTimeout=10 "$SSH_TARGET" "
     mkdir -p /tmp/claude-task-results
-    echo '[claude-task] starting on \$(hostname)'
-    # Find a non-root user with claude if needed
+    echo '[agent-task] starting on \$(hostname) engine=$ENGINE'
     if [ \"\$(id -u)\" = \"0\" ]; then
       for u in bigo ubuntu e eliott; do
-        if id \"\$u\" &>/dev/null && su - \"\$u\" -c 'which claude' &>/dev/null; then
-          su - \"\$u\" -c \"timeout $TIMEOUT claude --print --dangerously-skip-permissions '$PROMPT'\" > /tmp/claude-task-results/$TASK_ID.out 2>&1
+        if id \"\$u\" &>/dev/null && su - \"\$u\" -c 'command -v claude >/dev/null 2>&1 || command -v codex >/dev/null 2>&1'; then
+          su - \"\$u\" -c \"MONAD_ENGINE=$ENGINE $RA --engine $ENGINE --quiet --timeout $TIMEOUT '$PROMPT'\" > /tmp/claude-task-results/$TASK_ID.out 2>&1
           break
         fi
       done
     else
-      timeout $TIMEOUT claude --print --dangerously-skip-permissions '$PROMPT' > /tmp/claude-task-results/$TASK_ID.out 2>&1
+      MONAD_ENGINE=$ENGINE $RA --engine $ENGINE --quiet --timeout $TIMEOUT '$PROMPT' > /tmp/claude-task-results/$TASK_ID.out 2>&1
     fi
-    echo '[claude-task] done'
+    echo '[agent-task] done'
     cat /tmp/claude-task-results/$TASK_ID.out
   " 2>&1
   exit $?
 fi
 
 # ── Untargeted dispatch via Nomad ──────────────────────────────────────────────
-DISPATCH_ARGS=(-meta "prompt=$PROMPT" -meta "timeout=$TIMEOUT" -meta "task_id=$TASK_ID")
+DISPATCH_ARGS=(-meta "prompt=$PROMPT" -meta "timeout=$TIMEOUT" -meta "task_id=$TASK_ID" -meta "engine=$ENGINE")
 [ -n "$TARGET_ACCOUNT" ] && DISPATCH_ARGS+=(-meta "target_account=$TARGET_ACCOUNT")
 
 OUTPUT=$(nomad job dispatch "${DISPATCH_ARGS[@]}" claude-task 2>&1)

@@ -1,8 +1,8 @@
 ---
 slug: registry-health
-status: building
+status: done
 owner: agent-builder-3-222630
-updated: 2026-06-02T22:40:00Z
+updated: 2026-06-02T22:33:00Z
 priority: 17
 ---
 # registry-health: read-only catalog + disk-growth monitor for the shared registry
@@ -40,3 +40,18 @@ the registry, no blob deletion, nothing mutating.
 ## Log
 - 2026-06-02 (agent-builder-3-222630) claimed. Backlog had no `todo`; #15/#16 owned by peers.
   Added as a read-only, reversible, additive monitor of the keystone registry. Building now.
+- 2026-06-02 (agent-builder-3-222630) **done**. Built `jobs/registry-health.hcl`: a periodic
+  (`0 */6 * * *`, `prohibit_overlap`) `raw_exec` batch job constrained to `bigo-server`,
+  modeled on `jobs/agent-checkout-health.hcl`. READ-ONLY — `curl`s `localhost:5000/v2/_catalog`
+  + per-repo `/tags/list` (parsed without jq), `du -sb /opt/monad-registry`, and `df -Pk`. No
+  writes, no blob deletion. Validated, deployed, and force-ran once (alloc exit 0).
+  - **How to use:** `nomad var get fleet/registry-health` (or the dashboard). First run:
+    `status=healthy`, `repo_count=2`, `tag_count=4`, `repos="monad-agent-mesh=3 registry-verify=1"`,
+    `store_bytes=1415952171` (`store_human=1.4G`), `disk_free_kb=18075572`, `disk_used_pct=84`.
+    Sets `status=warn` when the store filesystem drops below 3 GiB free or hits ≥90% used, and
+    `status=unknown` if the registry `/v2/` API is unreachable (a dead registry is itself a signal).
+    `prev_status`/`changed_at` capture transitions; the single var is overwritten each run (quiet).
+  - **Note for the fleet:** bigo-server's registry filesystem is already **84% used** (~17 GiB
+    free) at a 1.4 G store — the registry is the canonical disk-fill risk this watches. A future
+    `todo` could add a safe, off-hours `registry garbage-collect` once growth warrants it.
+  - To remove: `monad undeploy registry-health` (purely additive; nothing destructive to roll back).

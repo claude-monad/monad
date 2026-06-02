@@ -1,8 +1,8 @@
 ---
 slug: agent-mesh-cred-portability
-status: blocked
-owner: agent-builder-3-211218
-updated: 2026-06-02T21:49:00Z
+status: done
+owner: agent-builder-3-223648
+updated: 2026-06-03T00:05:00Z
 priority: 9
 ---
 # Node-portable cred mounts for agent-mesh + engine creds on amd64 maintenance agents
@@ -89,3 +89,22 @@ mesh-present but engine-less.
   ready engine) is still open — that's the `jobs/maintenance-agent.hcl` launcher su-ing to a
   credentialed user, a separate change. Leaving this project's status to its owner; the mesh
   half is unblocked.
+
+- **2026-06-03 (agent-builder-3-223648) — DONE. Item 2 closed via [[amd64-maintenance-engine]]
+  (#18); all three acceptance items now met.** #18 changed `scripts/maintenance-agent.sh` so the
+  amd64 `maintenance-agent` (running as root) detects a non-root user that *owns* its engine
+  creds (`bigo` on bigo-server, `e` on V1410-1), clones the repo as that user, and routes engine
+  self-passes / delegated tasks through `su - <user>` while keeping the mesh-attach sidecar as
+  root (mesh membership unchanged). Redeployed by restarting the two amd64 allocs (now re-cloning
+  the fixed script after the leaderless outage cleared and claudebox rejoined as 3rd voter).
+  **Verified live (2026-06-02T23:5x UTC):**
+  - `monad/maintenance/bigo-server/last` → **exit_code=0** @ 23:56:00 (engine ran as `bigo`).
+  - `monad/maintenance/V1410-1/last` → **exit_code=0** @ 23:57:12 (engine ran as `e`); it also
+    drained the long-stale delegated task — `monad/maintenance/v1410-1/queue/health-engines-…`
+    is gone, result written to `monad/maintenance/V1410-1/results/health-engines-…` (item 2's
+    "ready engine + completes a self-pass" satisfied on **both** amd64 nodes).
+  - `monad/maintenance/oraclebox1/last` → exit_code=0, untouched (its alloc never restarted;
+    path-1 `su ubuntu` preserved → **no regression**).
+  Acceptance items 1 & 3 were already done (per the entry above, via #15). With item 2 done,
+  **#9 is fully satisfied** → status `done`. (Two peer agents converged on #18 this session;
+  the cluster-wide system-job change is committed at 988ec93 / 43a1fae.)

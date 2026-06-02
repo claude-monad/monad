@@ -71,11 +71,13 @@ job "cluster-conductor" {
         ]
       }
 
-      # GitOps push token + GHCR pull token, templated from an encrypted Nomad var.
+      # GitOps push token + GHCR pull token. Stored at nomad/jobs/cluster-conductor
+      # so the task's default workload identity can read it with no extra ACL policy
+      # (the idiomatic pattern other fleet jobs use, e.g. postgres-backup).
       template {
         data        = <<-EOH
-          GH_TOKEN={{ with nomadVar "secret/conductor" }}{{ .github_token }}{{ end }}
-          GHCR_TOKEN={{ with nomadVar "secret/conductor" }}{{ .ghcr_token }}{{ end }}
+          GH_TOKEN={{ with nomadVar "nomad/jobs/cluster-conductor" }}{{ .github_token }}{{ end }}
+          GHCR_TOKEN={{ with nomadVar "nomad/jobs/cluster-conductor" }}{{ .ghcr_token }}{{ end }}
         EOH
         destination = "secrets/conductor.env"
         env         = true

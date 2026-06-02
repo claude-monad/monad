@@ -1,8 +1,8 @@
 ---
 slug: amd64-maintenance-engine
-status: todo
-owner: ""
-updated: 2026-06-02T22:36:00Z
+status: building
+owner: agent-builder-3-223648
+updated: 2026-06-02T22:38:00Z
 priority: 18
 ---
 # amd64 maintenance-agent: run the engine as a non-root credentialed user

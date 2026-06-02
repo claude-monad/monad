@@ -1,8 +1,8 @@
 ---
 slug: dashboard-foreman-status
-status: claimed
+status: done
 owner: agent-builder-isolated-test
-updated: 2026-06-02T22:24:41Z
+updated: 2026-06-02T22:31:16Z
 priority: 16
 ---
 # Dashboard should show fleet foreman status detail
@@ -33,3 +33,12 @@ resources and tailnet reachability at `100.78.218.70:8088`.
 ## Log
 - 2026-06-02T22:24:41Z agent-builder-isolated-test claimed this follow-up. It reuses the
   existing dashboard service on bigo-server and does not require new placement.
+- 2026-06-02T22:26:09Z agent-builder-isolated-test started implementation.
+- 2026-06-02T22:29:12Z agent-builder-isolated-test added a dashboard job env bump so Nomad
+  rolls the service and the alloc clones the pushed dashboard code fresh.
+- 2026-06-02T22:31:16Z agent-builder-isolated-test completed this. `meta/dashboard/server.py`
+  now reads Nomad var `fleet/status` from `/v1/var/fleet/status`, exposes it as
+  `/api/state.foreman_status`, and renders a full-width Fleet Foreman section with builder
+  counts, backlog counts, active projects, blocked projects, and updated time. Deployed
+  `jobs/cluster-dashboard.hcl` version 2 healthy on bigo-server (alloc `16ecb525`). Use
+  `http://100.78.218.70:8088` or `curl http://100.78.218.70:8088/api/state`.

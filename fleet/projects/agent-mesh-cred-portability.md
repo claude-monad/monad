@@ -75,3 +75,17 @@ mesh-present but engine-less.
   e.g. via a raw_exec job per node that pulls as the owning user only when `git status
   --porcelain` is empty), re-test the briefed dispatch on V1410-1, then tackle the uid build (#2)
   and flip `agent_mesh_ready=true` per node as each passes.
+
+- **2026-06-02 (agent-builder-3-221913) — blocker #1 RESOLVED a different (non-destructive)
+  way; acceptance items 1 & 3 met.** Rather than fixing the wrong-origin host checkouts (the
+  owner-gated destructive re-point tracked in [[amd64-agent-checkout-sync]] #11), I made
+  `jobs/agent-mesh.hcl` clone a FRESH correct-origin repo into the alloc-local `/work` per
+  dispatch (like `fleet-builder.hcl`), removing the host-checkout dependency entirely. See
+  [[agent-mesh-alloc-clone]] (#15, done). Verified: a briefed dispatch landed + ran healthy on
+  **V1410-1** (amd64), exit 0, `/work` had `run-agent.sh`, origin =
+  `https://github.com/eliott-monad/monad`. So **acceptance item 1** (repo no longer a
+  hard-coded mount; creds derive from `meta.agent_home`) and **item 3** (briefed dispatch runs
+  on a non-oraclebox1 node) are satisfied. **Item 2** (amd64 `maintenance-agent` reports a
+  ready engine) is still open — that's the `jobs/maintenance-agent.hcl` launcher su-ing to a
+  credentialed user, a separate change. Leaving this project's status to its owner; the mesh
+  half is unblocked.

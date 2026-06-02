@@ -65,7 +65,8 @@ SCRIPT
       }
 
       env {
-        NOMAD_ADDR = "http://100.75.75.39:4646"
+        NOMAD_ADDR    = "http://100.75.75.39:4646"
+        DASH_RELEASE  = "2026-06-02T22:29:12Z"
       }
 
       resources {

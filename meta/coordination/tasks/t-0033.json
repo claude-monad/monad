@@ -1,0 +1,10 @@
+{
+  "id": "t-0033",
+  "type": "infra",
+  "scope": "oraclebox1 voter/client is failed/down; V1410-1 could not reach it via tailscale ping or TCP 22/4646/4647/4648. Restore reachability/Nomad server membership; quorum currently survives on V1410-1+claudebox only.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

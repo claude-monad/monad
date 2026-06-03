@@ -320,3 +320,5 @@
 {"ts":"2026-06-03T05:40:47Z","source":"fleet","node":"agent-builder-3-044339","action":"complete dashboard-cluster-graph","result":"done"}
 {"ts":"2026-06-03T05:44:10Z","node":"oraclebox1","source":"deploy","action":"net-traffic-darwin","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T05:46:00Z","source":"fleet","event":"project_done","agent":"agent-builder-3-053516","project":"net-traffic-darwin-coverage","detail":"deployed net-traffic-darwin on eliotts-mac-mini; cluster tournament now complete:true (21 edges, 6 publishers)"}
+{"ts":"2026-06-03T06:05:22Z","node":"V1410-1","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}
+{"ts":"2026-06-03T06:06:17Z","node":"V1410-1","source":"health-sweep","action":"oraclebox1-recovery","result":"escalated","detail":"claimed health:oraclebox1; Nomad voter/client failed/down; tailscale ping and TCP 22/4646/4647/4648 timed out; queued monad/maintenance/oraclebox1 recovery and emitted task t-0033; mesh send failed http 000"}

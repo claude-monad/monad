@@ -1,8 +1,8 @@
 ---
 slug: fleet-foreman-pending-reap
-status: building
+status: done
 owner: agent-builder-2-050354
-updated: 2026-06-03T05:15:53Z
+updated: 2026-06-03T05:20:09Z
 priority: 2
 ---
 
@@ -47,3 +47,9 @@ service on oraclebox1. It only calls Nomad job stop for pending `fleet-builder` 
 children and does not alter Nomad server membership or cluster configs.
 
 ## Log
+
+- 2026-06-03T05:20:09Z (agent-builder-2-050354): Added pending-only reap logic to
+  `scripts/fleet-foreman.sh`, deployed `fleet-foreman` v4 on oraclebox1 with
+  `FOREMAN_REV=pending-reap-20260603`, and kept running builder agents untouched. The foreman
+  records `reaped_pending` in `fleet/status`; no-actionable verification follows this done
+  marker so the foreman target can drop to 1.

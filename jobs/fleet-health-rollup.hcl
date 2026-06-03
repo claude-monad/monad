@@ -16,6 +16,16 @@
 # Quiet by design: overwrites the single var each run; a status transition is
 # captured via prev_status + changed_at, mirroring jobs/raft-quorum-health.hcl.
 #
+# ACKNOWLEDGEMENT LAYER (fleet/projects/health-summary-acknowledge.md, #23): the
+# top-line `status` is the worst of components NOT acknowledged in the optional
+# var fleet/health-ack (item `acks` = ';'-list of `component|acked_status|reason`).
+# A component is covered only while its current status is no worse than its acked
+# level -- so an accepted, owner-gated condition (e.g. the #11 wrong-origin
+# checkouts) doesn't pin the signal to warn, but a NEW degradation beyond the
+# acked level still trips it. Acks never hide a component: `raw_status` (worst of
+# ALL components) and the full `components`/`d_*` breakdown are unchanged, and
+# covered components are listed under `acknowledged`. No ack var => old behavior.
+#
 # The embedded probe is Python (clean JSON/var parsing). It contains no ${...}
 # sequences, so Nomad HCL2 does not try to interpolate it.
 job "fleet-health-rollup" {
@@ -148,6 +158,28 @@ def synth_detail(items):
             bits.append("%s=%s" % (k, items[k]))
     return " ".join(bits)[:140]
 
+# Acknowledged conditions: fleet/health-ack carries a single item `acks`, a
+# ';'-separated list of `component|acked_status|reason` (component names contain
+# ':' but never '|' or ';'). A component is "covered" while its current effective
+# status is no WORSE than its acked status (rank <= acked rank) -- so an accepted,
+# owner-gated condition (e.g. the #11 wrong-origin checkouts) does not pin the
+# top-line, but if it degrades BEYOND what was accepted it counts again. Absent
+# var => no acks => behaves exactly as before. Acks never hide a component: it
+# still appears in `components`/`d_*` and is listed under `acknowledged`.
+ack_items = var_items("fleet/health-ack") or {}
+acks = {}  # component -> (acked_status, reason)
+for entry in (ack_items.get("acks", "") or "").split(";"):
+    entry = entry.strip()
+    if not entry:
+        continue
+    parts = entry.split("|")
+    comp = parts[0].strip()
+    if not comp:
+        continue
+    ast = norm(parts[1].strip()) if len(parts) > 1 and parts[1].strip() else "warn"
+    reason = parts[2].strip() if len(parts) > 2 else ""
+    acks[comp] = (ast, reason)
+
 results = {}   # name -> normalized status
 details = {}   # name -> short detail
 stale_list = []
@@ -173,30 +205,65 @@ for name, path, thresh in comps:
     if rank(eff) > rank(overall):
         overall = eff
 
+# raw_status = worst of ALL components (the pre-ack behavior, full transparency).
+raw_status = overall
+
+# Top-line `status` = worst of components NOT covered by an ack. A component is
+# covered only while its current status is no worse than its acked level; if it
+# degrades beyond what was accepted (or it's un-acked), it counts toward the
+# top-line so a NEW problem still surfaces.
+def covered(n):
+    a = acks.get(n)
+    return a is not None and rank(results[n]) <= rank(a[0])
+
+status = "healthy"
+for n, _, _ in comps:
+    if covered(n):
+        continue
+    if rank(results[n]) > rank(status):
+        status = results[n]
+
+# acknowledged: components currently covered by an ack, with their reason.
+ack_listed = []
+for n, _, _ in comps:
+    if covered(n):
+        a = acks[n]
+        ack_listed.append("%s=%s(%s)" % (n, results[n], a[1] or "acked"))
+acknowledged_str = ",".join(ack_listed) if ack_listed else "none"
+
 # foreman context (informational, not part of the verdict)
 fs = var_items("fleet/status") or {}
 foreman = "running=%s/%s todo=%s building=%s blocked=%s" % (
     fs.get("running", "?"), fs.get("target", "?"), fs.get("backlog_todo", "?"),
     fs.get("backlog_building", "?"), fs.get("backlog_blocked", "?"))
 
-# human summary line
-nothealthy = [n for n, _, _ in comps if results[n] != "healthy"]
-if overall == "healthy":
-    detail = "all %d components healthy" % len(comps)
+# human summary line, based on the actionable top-line status
+actionable_bad = [n for n, _, _ in comps if results[n] != "healthy" and not covered(n)]
+if status == "healthy":
+    if ack_listed:
+        detail = "all actionable components healthy (%d acknowledged: %s)" % (
+            len(ack_listed), acknowledged_str)
+    else:
+        detail = "all %d components healthy" % len(comps)
 else:
-    detail = "%s: " % overall + ", ".join("%s=%s" % (n, results[n]) for n in nothealthy)
+    detail = "%s: " % status + ", ".join("%s=%s" % (n, results[n]) for n in actionable_bad)
     if stale_list:
         detail += " | stale: " + ",".join(stale_list)
+    if ack_listed:
+        detail += " | ack: " + acknowledged_str
+detail = detail[:200]
 
 components_str = ";".join("%s=%s" % (n, results[n]) for n, _, _ in comps)
 
 prev = var_items(HVAR) or {}
 prev_status = prev.get("status", "none")
 changed_at = prev.get("changed_at")
-ca = changed_at if (changed_at and prev_status == overall) else now_s
+ca = changed_at if (changed_at and prev_status == status) else now_s
 
 args = ["nomad", "var", "put", "-force", HVAR,
-        "status=" + overall,
+        "status=" + status,
+        "raw_status=" + raw_status,
+        "acknowledged=" + acknowledged_str,
         "detail=" + detail,
         "components=" + components_str,
         "component_count=" + str(len(comps)),
@@ -213,8 +280,8 @@ for n, _, _ in comps:
 r = run(args)
 if r.returncode != 0:
     print("[health-rollup] WARN: nomad var put failed: %s" % r.stderr.strip())
-print("[health-rollup] overall=%s components=[%s] stale=%s" % (
-    overall, components_str, ",".join(stale_list) or "none"))
+print("[health-rollup] status=%s raw=%s components=[%s] stale=%s ack=%s" % (
+    status, raw_status, components_str, ",".join(stale_list) or "none", acknowledged_str))
 SCRIPT
       }
 

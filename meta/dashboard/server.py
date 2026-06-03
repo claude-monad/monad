@@ -327,6 +327,51 @@ def health_summary():
     }
 
 
+def health_trend():
+    """Read the health-history-trends var (fleet/health-trend): the rolling 24h trend
+    digest derived from the fleet.health_snapshots time-series. Makes the dashboard's
+    Cluster-health panel answer 'trending better/worse?' and 'how long has X been bad?'."""
+    data = _nomad("/v1/var/fleet/health-trend") or {}
+    items = data.get("Items") or {}
+    if not items:
+        return {"available": False, "degraded_now": []}
+    # degraded_now is "name=status(since=…,for=…h);…" — parse into rows for a table.
+    degraded = []
+    for entry in (items.get("degraded_now", "") or "").split(";"):
+        entry = entry.strip()
+        if not entry or "=" not in entry:
+            continue
+        name, rest = entry.split("=", 1)
+        st, since, dur = rest, "", ""
+        if "(" in rest:
+            st = rest.split("(", 1)[0]
+            inside = rest.split("(", 1)[1].rstrip(")")
+            for kv in inside.split(","):
+                kv = kv.strip()
+                if kv.startswith("since="):
+                    since = kv[len("since="):]
+                elif kv.startswith("for="):
+                    dur = kv[len("for="):]
+        degraded.append({"name": name, "status": st, "since": since, "for": dur})
+    return {
+        "available": True,
+        "trend": items.get("trend", "?"),
+        "detail": items.get("detail", ""),
+        "current_status": items.get("current_status", "?"),
+        "current_degraded": items.get("current_degraded", "?"),
+        "start_status": items.get("start_status", "?"),
+        "start_degraded": items.get("start_degraded", "?"),
+        "flaps": items.get("flaps", "?"),
+        "status_dist": items.get("status_dist", ""),
+        "window_hours": items.get("window_hours", "?"),
+        "rows": items.get("rows", "?"),
+        "span_hours": items.get("span_hours", "?"),
+        "longest_degraded": items.get("longest_degraded", ""),
+        "degraded_now": degraded,
+        "updated": items.get("ts", ""),
+    }
+
+
 def capabilities():
     """Per-node engine capability matrix from Nomad vars `capability/<node>` (written by
     the cluster-capability sysbatch job). Honest: each node actually ran claude+codex."""
@@ -571,6 +616,7 @@ def state():
         "backlog": backlog(),
         "foreman_status": foreman_status(),
         "health_summary": health_summary(),
+        "health_trend": health_trend(),
         "capabilities": capabilities(),
         "resources": cached_resources(),
         "engine": engine_config(),
@@ -586,6 +632,7 @@ _cache = {
     "nodes": [], "jobs": [], "peers": [], "events": [], "backlog": [],
     "foreman_status": {"available": False, "active_projects": [], "blocked_projects": []},
     "health_summary": {"available": False, "components": []},
+    "health_trend": {"available": False, "degraded_now": []},
     "capabilities": [],
     "resources": [],
     "engine": {"engine": "auto", "set_by": "", "updated": "", "valid": list(ENGINE_VALID)},
@@ -723,6 +770,28 @@ function renderHealth(h){
  const meta=`<p class="muted" style="padding:0 14px 8px">foreman: ${esc(h.foreman)} · updated ${esc((h.updated||'').replace('T',' ').replace('Z',''))}</p>`;
  return head+ack+t+meta;
 }
+function trendPill(t){t=(t||'').toLowerCase();
+  if(t==='improving')return pill('improving ↑','ok');
+  if(t==='worsening')return pill('worsening ↓','bad');
+  if(t==='stable')return pill('stable →','dim');
+  return pill(t||'?','dim');}
+function renderHealthTrend(h){
+ if(!h||!h.available)return '<p class="muted" style="padding:6px 14px">fleet/health-trend unavailable (health-history-trends not run yet)</p>';
+ const head=`<p style="padding:6px 14px 0">trend ${trendPill(h.trend)} <span class="muted">over ${esc(h.window_hours)}h (${esc(h.rows)} snaps, span ${esc(h.span_hours)}h)</span></p>`;
+ const now=`<p style="padding:2px 14px 0"><span class="muted">now</span> ${healthPill(h.current_status)} <span class="muted">${esc(h.current_degraded)} degraded · vs window-start</span> ${healthPill(h.start_status)} <span class="muted">${esc(h.start_degraded)} degraded · flaps ${esc(h.flaps)} · dist ${esc(h.status_dist)}</span></p>`;
+ let streaks='';
+ if(h.degraded_now&&h.degraded_now.length){
+   const longest=(h.longest_degraded||'').split('=')[0];
+   const rows=h.degraded_now.map(c=>{
+     const star=(c.name===longest)?' <span class="muted">(longest)</span>':'';
+     return `<tr><td><code>${esc(c.name)}</code>${star}</td><td>${healthPill(c.status)}</td><td class="muted">${esc(c.for)}</td><td class="muted">${esc((c.since||'').replace('T',' ').replace('Z',''))}</td></tr>`;});
+   streaks=tbl(['degraded component','status','for','since'],rows);
+ } else {
+   streaks='<p class="muted" style="padding:2px 14px 6px">no components currently degraded</p>';
+ }
+ const meta=`<p class="muted" style="padding:0 14px 8px">updated ${esc((h.updated||'').replace('T',' ').replace('Z',''))}</p>`;
+ return head+now+streaks+meta;
+}
 function renderForeman(f){
  if(!f||!f.available)return '<p class="muted" style="padding:12px 14px">fleet/status unavailable</p>';
  const b=f.backlog||{};
@@ -820,7 +889,7 @@ async function load(){
    `<section><h2>Default engine</h2>${renderEngine(s.engine)}</section>`+
    `<section><h2>Account usage (Anthropic / OpenAI)</h2>${renderUsage(s.usage)}</section>`+
    `<section class="full"><h2>Node capabilities — autonomous math session (claude / codex)</h2>${caps}</section>`+
-   `<section class="full"><h2>Cluster health</h2>${renderHealth(s.health_summary)}</section>`+
+   `<section class="full"><h2>Cluster health</h2>${renderHealth(s.health_summary)}<h2>Health trend (24h)</h2>${renderHealthTrend(s.health_trend)}</section>`+
    `<section><h2>Nodes</h2>${nodes}</section>`+
    `<section><h2>Mesh peers</h2>${peers}</section>`+
    `<section class="full"><h2>Fleet foreman</h2>${renderForeman(s.foreman_status)}</section>`+

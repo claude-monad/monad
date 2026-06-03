@@ -21,9 +21,10 @@
     "value": "DONE-2026-06-03T02:08:41Z"
   },
   "health:death-star": {
-    "updated": 1780452637.2330525,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T02:10:37Z"
+    "expires": 1780568002.267214,
+    "updated": 1780481602.267213,
+    "updated_by": "bigo-server",
+    "value": "bigo-server: flapping (No path to node) - breaks codex-tui; tracked in fleet/projects/codex-tui-availability.md; needs on-node stabilization"
   },
   "health:eliotts-mac-mini": {
     "updated": 1780469726.8228903,

@@ -11,9 +11,9 @@
     "value": "building by agent-builder-3-052458 since 2026-06-03T08:0x"
   },
   "health:bigo-server": {
-    "updated": 1780470223.9911842,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T07:03:43Z"
+    "updated": 1780497988.3672824,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:claudebox": {
     "updated": 1780476128.929691,
@@ -27,29 +27,29 @@
     "value": "bigo-server: flapping (No path to node) - breaks codex-tui; tracked in fleet/projects/codex-tui-availability.md; needs on-node stabilization"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1780482583.2879303,
+    "updated": 1780497988.2676554,
     "updated_by": "V1410-1",
-    "value": "DONE-2026-06-03T10:29:43Z-existing-infra-tasks"
-  },
-  "health:eliotts-mac-mini:oraclebox1-20260603T102743Z": {
-    "updated": 1780482464.1440544,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T10:27:43Z-escalated-t0035"
+    "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
     "updated_by": "V1410-1",
     "value": "DONE-2026-06-03T08:03:27Z"
   },
+  "health:eliotts-mac-mini:oraclebox1-20260603T102743Z": {
+    "updated": 1780482464.1440544,
+    "updated_by": "oraclebox1",
+    "value": "DONE-2026-06-03T10:27:43Z-escalated-t0035"
+  },
   "health:oraclebox1": {
-    "updated": 1780480524.7381442,
+    "updated": 1780497988.4206212,
     "updated_by": "V1410-1",
-    "value": "DONE-2026-06-03T09:55:24Z-escalated-t0035"
+    "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:windesk": {
-    "updated": 1780482583.4118543,
+    "updated": 1780497988.3097188,
     "updated_by": "V1410-1",
-    "value": "DONE-2026-06-03T10:29:43Z-existing-infra-tasks"
+    "value": "DONE-2026-06-03T14:46:28Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

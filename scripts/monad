@@ -577,9 +577,60 @@ cmd_secrets() {
 
 # ─── GitHub commands ────────────────────────────────────────────────────────
 
+# When the `gh` CLI is missing, escalations (node-doctor auto-filing an issue on a failed
+# repair) must NOT silently vanish. Capture them durably instead: emit a loud event AND write
+# the would-be issue/PR to a Nomad var (fleet/pending-issues/<ts>), so any gh-capable node can
+# file it later. A GitHub-API-via-token path can replace this once an owner provisions a
+# fleet/github-token secret. See fleet/projects/gh-escalation-resilience.md.
+_gh_no_cli() {
+    local subcmd="${1:-}"; shift || true
+    case "$subcmd" in
+        issue|pr)
+            local title="${1:-}" body="${2:-}"
+            [ -z "$title" ] && { err "Usage: monad gh $subcmd <title> [body]"; return 1; }
+            local ts path
+            ts="$(date -u '+%Y%m%dT%H%M%SZ')"
+            path="fleet/pending-issues/${ts}-$$"
+            if nomad var put -force "$path" \
+                    kind="$subcmd" title="$title" body="$body" \
+                    node="$(hostname)" created="$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
+                    repo="eliott-monad/monad" >/dev/null 2>&1; then
+                emit_event "escalation" "gh-missing" "captured" "$subcmd captured to $path"
+                warn "gh CLI not installed — $subcmd NOT filed to GitHub, but durably captured."
+                warn "  Nomad var: $path   (title: $title)"
+                warn "  File it later from a gh-capable node:  monad secrets get $path"
+                return 0
+            fi
+            # Last resort: at least record it in the event log so it is never lost.
+            emit_event "escalation" "gh-missing" "capture-failed" "$subcmd lost (no gh + var put failed): $title"
+            err "gh CLI not installed AND could not write capture var — $subcmd: $title"
+            err "  Recorded to event log only. Install gh, or provision fleet/github-token."
+            return 1
+            ;;
+        issues)
+            warn "gh CLI not installed — cannot list GitHub issues."
+            warn "Escalations captured while gh was unavailable (fleet/pending-issues):"
+            nomad var list fleet/pending-issues 2>/dev/null || echo "  (none, or Nomad unreachable)"
+            return 0
+            ;;
+        *)
+            err "Unknown gh subcommand: $subcmd"
+            echo "Available: issue, pr, issues"
+            return 1
+            ;;
+    esac
+}
+
 cmd_gh() {
     local subcmd="${1:-}"; shift || true
     cd "$REPO_DIR"
+
+    # No gh CLI on this node → degrade gracefully (capture, don't drop). Fast path below
+    # is unchanged when gh is present.
+    if ! command -v gh >/dev/null 2>&1; then
+        _gh_no_cli "$subcmd" "$@"
+        return $?
+    fi
 
     case "$subcmd" in
         issue)

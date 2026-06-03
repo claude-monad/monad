@@ -23,7 +23,10 @@ export NOMAD_ADDR
 MATH_REPO_URL="${MATH_REPO_URL:-https://github.com/eliottcassidy2000/math.git}"
 MATH_BRANCH="${MATH_BRANCH:-main}"
 FORMALIZER_JOB="${FORMALIZER_JOB:-math-formalizer}"
-STATE_VAR="monad/formalize/state"
+# Cursor: the math-repo commit we've processed. Named per the fleet project spec
+# (fleet/projects/math-commit-driven-formalization.md) so "is math-lean caught up to math?"
+# is answerable from one var and can feed a formalizer-lag health signal.
+STATE_VAR="fleet/formalizer-cursor"
 INBOX_VAR="monad/formalize/inbox"
 
 EVENTS_FILE="$REPO_DIR/logs/events.jsonl"

@@ -214,9 +214,9 @@ powered by Claude Code instances running as Nomad batch jobs.
   `math-formalizer` run (or, if one is already active, leaves the new commits in the
   `monad/formalize/inbox` var for the running session). So math-lean is **always** up to date.
 - **Dual mandate**: the codex formalizer doesn't just transcribe — it *equally* mines the
-  mathematics it touches (implications, extensions, connections between results) and records
-  that thinking back in its own working copy of the informal math repo, where it becomes new
-  formalization candidates. The loop feeds itself.
+  mathematics it touches (implications, extensions, connections between results), keeping that
+  thinking in a scratch `exploration/` area of math-lean and forwarding genuinely new results
+  to the informal repo, where they become new formalization candidates. The loop feeds itself.
 - **Feedback loop**: if a result resists formalization (wrong, under-specified, or a
   counterexample appears), the formalizer opens a court case back in the informal repo — so
   formalization actively reconciles the research, it is not a one-way sink.

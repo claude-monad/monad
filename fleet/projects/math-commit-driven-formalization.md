@@ -1,11 +1,24 @@
 ---
 slug: math-commit-driven-formalization
-status: todo
-owner:
+status: done
+owner: bigo-server
 updated: 2026-06-03
 priority: 2
 ---
 # Commit-driven Lean formalization: every math commit feeds an automated Codex formalizer
+
+> **Implemented 2026-06-03 (bigo-server).** Built concurrently with this project doc; see
+> `meta/FORMALIZATION-POLICY.md` and commit "delegate formalization to commit-triggered codex
+> work". Delivered: `jobs/formalize-watch.hcl` + `scripts/formalize-watch.sh` (poll math HEAD,
+> advance `fleet/formalizer-cursor`, write `monad/formalize/inbox`, force `math-formalizer` or
+> defer to an active session); `math-formalizer` switched to codex on `has_codex` nodes with
+> `MONAD_CODEX_EFFORT=high`; `engines.sh` honors `MONAD_CODEX_EFFORT` (opt-in, fleet default
+> unchanged); `scripts/prompts/formalizer.md` gains the dual mandate (formalize + mine
+> implications/extensions/connections, scratch in math-lean `exploration/`, forward new
+> results + court cases to the informal repo). Reconciled to this spec's var name
+> (`fleet/formalizer-cursor`) and math-lean scratch location.
+> **Follow-on (not done here):** fold a `formalizer-lag` signal (cursor vs math HEAD) into
+> `fleet/health-summary`.
 
 **Owner request (2026-06-03).** We have a separate, Lean-specific repo
 (`eliott-monad/math-lean`). **Delegate formalization to automated Codex work** and make it

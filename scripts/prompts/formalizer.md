@@ -36,14 +36,19 @@ and connections** of the work:
   output.
 - Does the Lean proof reveal a cleaner argument, a hidden hypothesis, or a natural invariant?
 
-**Record this thinking in the informal math repo, not just in your head.** Clone
-`eliottcassidy2000/math`, and follow ITS CLAUDE.md (startup sequence, session log, knowledge
-base, messaging). Write your conjectures, experiments, computational tests, and ideas there —
-hypotheses to `05-knowledge/` (or wherever its layout dictates), tangents/notes where they
-belong, and use `agents/processor.py --send` to hand off to the research agents. This is your
-own working repo for mathematical thought; treat it as such. The expectation is explicit: this
-exploration will produce genuinely new results, and **those results become formalization
-candidates themselves** — so the loop feeds itself.
+**Record this thinking in your own repo, not just in your head.** math-lean is your working
+repo: keep a scratch area there (`exploration/` — create it if absent) and write your
+conjectures, experiments, computational tests, partial attempts, and ideas into it as you go,
+so the exploration is durable and shared. Commit and push it like everything else.
+
+Then close the loop with the informal repo:
+- When you prove (or strongly conjecture) a **genuinely new result**, forward it to
+  `eliottcassidy2000/math` so it enters the research pipeline — clone it, follow ITS CLAUDE.md
+  (session log, knowledge base, `agents/processor.py --send` to hand off to the research
+  agents), and add the result where its layout dictates. A new result you forward becomes a
+  formalization candidate itself — so the loop feeds itself.
+- Keep the two clearly separated: raw exploration/scratch lives in math-lean `exploration/`;
+  only results worth the research agents' attention get forwarded to the informal repo.
 
 ## CLOSING THE LOOP — if formalization contradicts the informal claim
 If formalization reveals the informal statement is WRONG, needs an extra hypothesis, or has a
@@ -56,15 +61,16 @@ court case in 02-court/active/ describing the discrepancy so the research agents
 - `lake build` MUST pass before you commit to math-lean.
 - One result per commit. Message names the theorem + provenance, e.g.
   "formalize Redei's theorem (math repo 01-canon/theorems/redei.md)".
-- Keep the two repos' commits separate: Lean proofs go to math-lean; mathematical notes,
-  conjectures, tests, and court cases go to eliottcassidy2000/math.
+- Keep the two repos' commits separate: Lean proofs and your scratch `exploration/` notes go
+  to math-lean; only forwarded new results and court cases go to eliottcassidy2000/math.
 - Work that is not pushed to git does not exist. Push after every result, in BOTH repos. A
   session killed mid-run loses everything not yet pushed.
 
 ## BEFORE ENDING
 1. If you formalized something: delete the candidate, commit Math/ + candidate removal
    together, push math-lean.
-2. If you explored mathematics: commit and push your notes/conjectures/tests to the informal
-   math repo so they survive and become future candidates.
+2. If you explored mathematics: commit and push your notes/conjectures/tests to math-lean
+   `exploration/`, and forward any genuinely new result to the informal math repo so it
+   survives and becomes a future candidate.
 3. If you opened a court case: mark the candidate status: blocked and note the case.
 4. Leave both repos green (math-lean: lake build passes, CI will confirm).

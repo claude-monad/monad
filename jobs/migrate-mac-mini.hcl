@@ -13,7 +13,13 @@ job "migrate-mac-mini" {
 
       config {
         command = "/bin/bash"
-        args    = ["-c", "cd $HOME/monad && git pull origin main 2>/dev/null; exec bash $HOME/monad/scripts/migrate-mac.sh"]
+        args    = ["local/migrate-mac.sh"]
+      }
+
+      artifact {
+        source      = "https://raw.githubusercontent.com/eliott-monad/monad/main/scripts/migrate-mac.sh"
+        destination = "local/migrate-mac.sh"
+        mode        = "file"
       }
 
       resources {

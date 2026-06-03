@@ -1,141 +1,144 @@
 #!/usr/bin/env bash
-# migrate-mac.sh — Copy media from macOS machine to death-star storage
+# migrate-mac.sh — Copy media from macOS machine to death-star storage via S3 (MinIO)
+# Uses curl for S3 uploads — no root access or mount required.
 set -uo pipefail
 
 STORAGE_IP="100.96.31.66"
-NFS_EXPORT="/srv/samba/public"
-MOUNT_POINT="/tmp/monad-storage"
-MEDIA="$MOUNT_POINT/media"
+MINIO_URL="http://${STORAGE_IP}:9000"
+MINIO_USER="monad-admin"
+MINIO_PASS="7flNW73Yiq0V4dMGVAhAH9CngRPgXBaZ"
 HOME_DIR="$HOME"
 LOG="/tmp/monad-migration.log"
+NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
 
 log() { echo "[$(date '+%H:%M:%S')] $*" | tee -a "$LOG"; }
+report() {
+    # Write progress to Nomad variable so we can monitor remotely
+    nomad var put -force -address "$NOMAD_ADDR" monad/migration/mac-mini \
+        status="$1" last_update="$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
+        message="$2" 2>/dev/null || true
+}
 
 log "=== MAC MINI MEDIA MIGRATION ==="
 log "Source: $HOME_DIR"
-log "Destination: $STORAGE_IP:$NFS_EXPORT/media"
-log ""
+log "Destination: $MINIO_URL (S3)"
 
-# Mount NFS
-mkdir -p "$MOUNT_POINT"
-if mount | grep -q "$MOUNT_POINT"; then
-    log "NFS already mounted"
+# Install mc if not present
+if ! command -v mc &>/dev/null; then
+    log "Installing MinIO client (mc)..."
+    curl -fsSL "https://dl.min.io/client/mc/release/darwin-arm64/mc" -o /tmp/mc 2>&1
+    chmod +x /tmp/mc
+    MC="/tmp/mc"
 else
-    log "Mounting NFS..."
-    mount -t nfs -o resvport,rw,soft,timeo=30,retrans=3 \
-        "$STORAGE_IP:$NFS_EXPORT" "$MOUNT_POINT" 2>&1 | tee -a "$LOG"
-    if ! mount | grep -q "$MOUNT_POINT"; then
-        log "NFS failed. Trying SMB..."
-        mount -t smbfs "//monad:monad@$STORAGE_IP/media" "$MOUNT_POINT" 2>&1 | tee -a "$LOG"
-        MEDIA="$MOUNT_POINT"
-        if ! mount | grep -q "$MOUNT_POINT"; then
-            log "ERROR: Cannot mount storage. Aborting."
-            exit 1
-        fi
-    fi
+    MC="mc"
 fi
-log "Storage mounted at $MOUNT_POINT"
 
-# Create destination dirs
-mkdir -p "$MEDIA/photos/mac-mini" "$MEDIA/videos/mac-mini" \
-         "$MEDIA/music/mac-mini" "$MEDIA/documents/mac-mini" \
-         "$MEDIA/photo-libraries/mac-mini" "$MEDIA/downloads" 2>/dev/null || true
+# Configure mc
+$MC alias set monad "$MINIO_URL" "$MINIO_USER" "$MINIO_PASS" 2>&1 | tee -a "$LOG"
+log "S3 client configured"
+report "running" "S3 client configured, starting migration"
 
-# --- Photo Libraries ---
+TOTAL_BYTES=0
+FILE_COUNT=0
+
+upload_dir() {
+    local src="$1" bucket="$2" prefix="$3"
+    if [ ! -d "$src" ]; then
+        log "  Skip (not found): $src"
+        return
+    fi
+    local size
+    size=$(du -sh "$src" 2>/dev/null | cut -f1)
+    log "  $src ($size) -> monad/$bucket/$prefix/"
+    $MC mirror --overwrite --preserve "$src/" "monad/$bucket/$prefix/" 2>&1 | tail -5 | tee -a "$LOG"
+}
+
+upload_file() {
+    local src="$1" bucket="$2"
+    local name
+    name=$(basename "$src")
+    local sizeh
+    sizeh=$(du -sh "$src" 2>/dev/null | cut -f1)
+    log "  Uploading: $name ($sizeh)"
+    $MC cp "$src" "monad/$bucket/$name" 2>&1 | tail -1 | tee -a "$LOG"
+}
+
+# --- Photo Libraries (the important ones) ---
 log ""
-log "=== MIGRATING PHOTO LIBRARIES ==="
+log "=== PHOTO LIBRARIES ==="
+report "running" "Migrating photo libraries"
 find "$HOME_DIR" -maxdepth 5 \( -name "*.photoslibrary" -o -name "*.aplibrary" \) -prune 2>/dev/null | while read lib; do
     BASENAME=$(basename "$lib")
-    DEST="$MEDIA/photo-libraries/mac-mini/$BASENAME"
     SIZE=$(du -sh "$lib" 2>/dev/null | cut -f1)
     log "Photo library: $lib ($SIZE)"
-    mkdir -p "$DEST"
-    rsync -a --partial --no-perms --no-owner --no-group \
-        "$lib/" "$DEST/" 2>&1 | tail -3 | tee -a "$LOG"
+    report "running" "Photo library: $BASENAME ($SIZE)"
+    $MC mirror --overwrite --preserve "$lib/" "monad/media/photo-libraries/mac-mini/$BASENAME/" 2>&1 | tail -5 | tee -a "$LOG"
     log "  Done: $BASENAME"
 done
 
-# Also check /Volumes for external photo libraries
+# Also check /Volumes
 for vol in /Volumes/*/; do
     VOLNAME=$(basename "$vol")
     [ "$VOLNAME" = "Macintosh HD" ] && continue
     [ "$VOLNAME" = "Recovery" ] && continue
     find "$vol" -maxdepth 3 \( -name "*.photoslibrary" -o -name "*.aplibrary" \) -prune 2>/dev/null | while read lib; do
         BASENAME=$(basename "$lib")
-        DEST="$MEDIA/photo-libraries/mac-mini/$BASENAME"
         SIZE=$(du -sh "$lib" 2>/dev/null | cut -f1)
         log "External photo library: $lib ($SIZE)"
-        mkdir -p "$DEST"
-        rsync -a --partial --no-perms --no-owner --no-group \
-            "$lib/" "$DEST/" 2>&1 | tail -3 | tee -a "$LOG"
-        log "  Done: $BASENAME"
+        report "running" "External lib: $BASENAME ($SIZE)"
+        $MC mirror --overwrite --preserve "$lib/" "monad/media/photo-libraries/mac-mini/$BASENAME/" 2>&1 | tail -5 | tee -a "$LOG"
     done
 done
 
 # --- Pictures ---
 log ""
-log "=== MIGRATING PICTURES ==="
+log "=== PICTURES ==="
+report "running" "Migrating Pictures"
 if [ -d "$HOME_DIR/Pictures" ]; then
-    SIZE=$(du -sh "$HOME_DIR/Pictures" 2>/dev/null | cut -f1)
-    log "Pictures ($SIZE) -> $MEDIA/photos/mac-mini/"
-    rsync -a --partial --no-perms --no-owner --no-group \
-        --exclude '*.photoslibrary' --exclude '*.aplibrary' \
-        "$HOME_DIR/Pictures/" "$MEDIA/photos/mac-mini/" 2>&1 | tail -3 | tee -a "$LOG"
+    upload_dir "$HOME_DIR/Pictures" "media" "photos/mac-mini"
 fi
 
 # --- Movies ---
 log ""
-log "=== MIGRATING MOVIES ==="
+log "=== MOVIES ==="
+report "running" "Migrating Movies"
 if [ -d "$HOME_DIR/Movies" ]; then
-    SIZE=$(du -sh "$HOME_DIR/Movies" 2>/dev/null | cut -f1)
-    log "Movies ($SIZE) -> $MEDIA/videos/mac-mini/"
-    rsync -a --partial --no-perms --no-owner --no-group \
-        "$HOME_DIR/Movies/" "$MEDIA/videos/mac-mini/" 2>&1 | tail -3 | tee -a "$LOG"
+    upload_dir "$HOME_DIR/Movies" "media" "videos/mac-mini"
 fi
 
-# --- Music (including iTunes/Apple Music) ---
+# --- Music ---
 log ""
-log "=== MIGRATING MUSIC ==="
+log "=== MUSIC ==="
+report "running" "Migrating Music"
 if [ -d "$HOME_DIR/Music" ]; then
-    SIZE=$(du -sh "$HOME_DIR/Music" 2>/dev/null | cut -f1)
-    log "Music ($SIZE) -> $MEDIA/music/mac-mini/"
-    rsync -a --partial --no-perms --no-owner --no-group \
-        "$HOME_DIR/Music/" "$MEDIA/music/mac-mini/" 2>&1 | tail -3 | tee -a "$LOG"
+    upload_dir "$HOME_DIR/Music" "media" "music/mac-mini"
 fi
 
 # --- Documents ---
 log ""
-log "=== MIGRATING DOCUMENTS ==="
+log "=== DOCUMENTS ==="
+report "running" "Migrating Documents"
 if [ -d "$HOME_DIR/Documents" ]; then
-    SIZE=$(du -sh "$HOME_DIR/Documents" 2>/dev/null | cut -f1)
-    log "Documents ($SIZE) -> $MEDIA/documents/mac-mini/"
-    rsync -a --partial --no-perms --no-owner --no-group \
-        "$HOME_DIR/Documents/" "$MEDIA/documents/mac-mini/" 2>&1 | tail -3 | tee -a "$LOG"
+    upload_dir "$HOME_DIR/Documents" "media" "documents/mac-mini"
 fi
 
 # --- Large downloads ---
 log ""
-log "=== MIGRATING LARGE DOWNLOADS ==="
+log "=== LARGE DOWNLOADS ==="
+report "running" "Migrating large downloads"
 if [ -d "$HOME_DIR/Downloads" ]; then
-    find "$HOME_DIR/Downloads" -type f \( -iname "*.mp4" -o -iname "*.mov" -o -iname "*.mkv" -o -iname "*.avi" -o -iname "*.iso" -o -iname "*.dmg" -o -iname "*.zip" \) -size +50M 2>/dev/null | while read f; do
-        BASENAME=$(basename "$f")
-        DEST="$MEDIA/downloads/$BASENAME"
-        if [ ! -f "$DEST" ]; then
-            SIZE=$(du -sh "$f" 2>/dev/null | cut -f1)
-            log "  Copying: $BASENAME ($SIZE)"
-            cp "$f" "$MEDIA/downloads/"
-        else
-            log "  Skip (exists): $BASENAME"
-        fi
+    find "$HOME_DIR/Downloads" -type f \( -iname "*.mp4" -o -iname "*.mov" -o -iname "*.mkv" -o -iname "*.iso" -o -iname "*.dmg" \) -size +50M 2>/dev/null | while read f; do
+        upload_file "$f" "media/downloads"
     done
 fi
 
 # --- Summary ---
 log ""
 log "=== MIGRATION SUMMARY ==="
-du -sh "$MEDIA"/* 2>/dev/null | tee -a "$LOG" || true
+$MC ls monad/media/ 2>/dev/null | tee -a "$LOG" || true
 log ""
 log "=== MIGRATION COMPLETE ==="
+report "done" "Migration complete"
 
-# Unmount
-umount "$MOUNT_POINT" 2>/dev/null || true
+# Cleanup
+[ -f /tmp/mc ] && rm -f /tmp/mc

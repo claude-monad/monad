@@ -1,10 +1,11 @@
 {
   "id": "t-0034",
   "type": "infra",
-  "scope": "oraclebox1 (100.125.210.126) is DOWN: Nomad server member 'failed' + node 'down', and 'tailscale ping' times out (machine unreachable, relay-only). Raft quorum currently held at 2/3 (V1410-1 leader + claudebox voter) but degraded \u2014 one more server loss = quorum loss. Needs the oraclebox1 machine powered on / 'tailscale up' + 'systemctl restart nomad' locally; cannot be fixed remotely. NOTE: claudebox has rejoined as 3rd server voter, so CLUSTER-HEALTH.md/CLAUDE.md roster tables are stale.",
+  "scope": "oraclebox1 (100.125.210.126) regressed during 2026-06-03T09Z sweep: server voter is reachable/alive again (ports 22/4646/4647/4648 open, tailscale ping OK), but Nomad client 73795fbb remains down with repeated heartbeat misses and lost allocs. V1410-1 notified agent-maint-oraclebox1 over mesh; direct Tailscale SSH requires interactive approval. Needs local node-doctor/ensure-engines and a safe Nomad client/service restart if it does not re-register.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
+  "status": "resolved",
+  "owner": "V1410-1",
+  "resolution": "Recovered during V1410-1 sweep by 2026-06-03T09:21:55Z: oraclebox1 server voter alive, Nomad client ready/eligible, agent_engines=claude,codex, and maintenance-agent alloc 5e9dc14e running. Mesh peer agent-maint-oraclebox1 was notified while the client was down; no blind remote restart was performed.",
   "parent": null
 }

@@ -1,0 +1,10 @@
+{
+  "id": "t-0012",
+  "type": "infra",
+  "scope": "dashboard-chat: conductor gateway (oraclebox1:8200) /ask TIMES OUT (>240s, 0 successful queries ever) \u2014 its Claude session is stuck. Diagnose cluster-conductor alloc; until fixed, claudebox node-chat-gateway is the working chat target.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

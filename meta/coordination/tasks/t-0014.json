@@ -1,0 +1,10 @@
+{
+  "id": "t-0014",
+  "type": "infra",
+  "scope": "dashboard-chat: make mesh-agent chat two-way \u2014 today dashboard POSTs to agent :8472/msg (send-only); add a reply path so agent-* mailbox responses show in the dashboard transcript.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

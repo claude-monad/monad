@@ -1,0 +1,10 @@
+{
+  "id": "t-0013",
+  "type": "infra",
+  "scope": "dashboard-chat: deploy node-chat-gateway on mac-mini + oraclebox1 (clone the claudebox stanza in jobs/node-chat-gateway.hcl, change constraint+name+port, add to cluster-dashboard GATEWAYS env) so every node is a chattable brain (spawn-on-demand).",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -221,9 +221,30 @@ fi
 detect_engine_user
 
 event "maintenance" "boot" "ok" "engines=$(ready_engines) drop_priv=$DROP_PRIV engine_user=${ENGINE_USER:-none} mesh=$ON_MESH"
-# Wait one interval before the first self-pass so (re)starts don't burst LLM calls;
-# brain-delegated queue tasks still run immediately.
-last_self="$(date +%s)"
+# First self-pass timing. Two goals, no LLM bursts (brain-delegated queue tasks still run
+# immediately regardless):
+#   1. Don't reset the clock on every (re)start. Seed last_self from the persisted
+#      monad/maintenance/<node>/last 'finished' time, so a restart waits only the *remaining*
+#      time since the last real pass. A node that churns/crashes faster than INTERVAL (e.g.
+#      claudebox during fleet churn) therefore still records passes instead of being pinned
+#      "running but no self-pass report" forever.
+#   2. A node with no recent prior pass (brand-new, or one that has never managed one) does its
+#      first pass after a short FIRST_PASS_WARMUP, not a full interval, so it reports quickly.
+# The WARMUP floor also means a (re)start never fires a pass sooner than WARMUP after boot,
+# which preserves the original "don't burst on restart" intent.
+WARMUP="${FIRST_PASS_WARMUP:-180}"
+now="$(date +%s)"
+floor=$(( now - INTERVAL + WARMUP ))   # first pass no sooner than WARMUP seconds after boot
+prev_fin="$(nomad var get -item=finished "$LAST" 2>/dev/null)"
+prev_epoch=""
+[ -n "$prev_fin" ] && prev_epoch="$(date -d "$prev_fin" +%s 2>/dev/null || true)"
+if [ -n "$prev_epoch" ] && [ "$prev_epoch" -gt "$floor" ] 2>/dev/null; then
+  last_self="$prev_epoch"
+  log "resuming self-pass cadence from last pass at $prev_fin"
+else
+  last_self="$floor"
+  log "first self-pass in ~${WARMUP}s (no recent prior pass)"
+fi
 while true; do
   if ! engine_ready_now; then
     log "no engine ready — running ensure-engines and idling"

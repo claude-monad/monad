@@ -85,7 +85,7 @@ job "maintenance-agent" {
         POLL           = "60"     # delegated-queue poll cadence (s)
         MONAD_ENGINE   = "auto"   # claude|codex|auto
         NOMAD_ADDR     = "http://100.75.75.39:4646"
-        MONAD_MAINT_REV = "cache-path-monad-20260603" # bump for script-only refreshes
+        MONAD_MAINT_REV = "selfpass-resilience-20260603" # bump for script-only refreshes
       }
 
       # Mostly an idle poller (60s sleep loop); LLM self-passes burst above this

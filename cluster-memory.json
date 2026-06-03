@@ -4,6 +4,11 @@
     "updated_by": "oraclebox1",
     "value": "agent-builder-3-022212 @ 2026-06-03T03:05:33Z: DONE gateway(claudebox /ask verified); conductor(oraclebox1) JOB restored+/health ok but container claude auth-hang -> escalated infra task t-0016 to owner. Released."
   },
+  "cluster.health.gateway-redeploy": {
+    "updated": 1780458099.187184,
+    "updated_by": "oraclebox1",
+    "value": "agent-builder-3-031242 @ 03:41:39Z: DONE \u2014 gateway redeployed+serving on claudebox (/health 200, /ask Pong). Deploy-health false-fail root cause = claudebox Nomad advertises LAN IP vs Tailscale bind (check refused); proper fix = client host_network=tailscale (OWNER/conductor). Escalated; my healthy_deadline tweak reverted."
+  },
   "cluster.innovator": {
     "updated": 1774537765.6201644,
     "updated_by": "claudebox",

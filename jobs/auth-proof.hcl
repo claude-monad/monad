@@ -33,15 +33,18 @@ job "auth-proof" {
         data        = <<-SCRIPT
           #!/bin/bash
           set -uo pipefail
-          U=claude; H="$(getent passwd "$U" | cut -d: -f6)"
-          P="/usr/local/bin:/snap/bin:$H/.local/bin:/usr/bin:/bin"
-          echo "=== auth-proof on $(hostname) as $U ==="
-          echo "claude bin: $(su - "$U" -c "PATH=$P command -v claude" 2>&1)"
-          echo "codex  bin: $(su - "$U" -c "PATH=$P command -v codex" 2>&1)"
+          # raw_exec may run as the node's run-user (e.g. 'claude' on claudebox) rather than root,
+          # so run engines DIRECTLY as whoever we are — never su to self (that prompts a password).
+          ME="$(id -un)"; H="$HOME"
+          export PATH="/usr/local/bin:/snap/bin:$H/.local/bin:$H/.claude/local:/usr/bin:/bin:$PATH"
+          echo "=== auth-proof on $(hostname) as $ME (home=$H) ==="
+          echo "claude bin: $(command -v claude 2>&1)"
+          echo "codex  bin: $(command -v codex 2>&1)"
+          echo "creds: $(ls -la "$H/.claude/.credentials.json" "$H/.codex/auth.json" 2>&1 | awk '{print $NF}' | tr '\n' ' ')"
           echo "--- claude (distributed token) ---"
-          timeout 90 su - "$U" -c "PATH=$P claude --print --dangerously-skip-permissions 'Reply with exactly: CLAUDE_AUTH_OK'" 2>&1 | tail -3
+          command -v claude >/dev/null && timeout 90 claude --print --dangerously-skip-permissions 'Reply with exactly: CLAUDE_AUTH_OK' 2>&1 | tail -3 || echo "(claude not on PATH)"
           echo "--- codex (distributed token) ---"
-          timeout 120 su - "$U" -c "PATH=$P codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check 'Reply with exactly: CODEX_AUTH_OK'" 2>&1 | tail -4
+          command -v codex >/dev/null && timeout 120 codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check 'Reply with exactly: CODEX_AUTH_OK' 2>&1 | tail -4 || echo "(codex not on PATH)"
           echo "=== done ==="
         SCRIPT
       }

@@ -1,0 +1,10 @@
+{
+  "id": "t-0024",
+  "type": "infra",
+  "scope": "bigo-server: current Nomad node meta shows has_claude=true but no agent_engines/has_codex; oraclebox1 claimed health:bigo-server and queued monad/maintenance/bigo-server/queue/health-ensure-engines-20260603T065908Z, and the bigo maintenance-agent started it but no result returned during the sweep; direct tailscale ssh requires interactive auth. Verify task completion and rerun ensure-engines locally if needed.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "done",
+  "owner": null,
+  "parent": null
+}

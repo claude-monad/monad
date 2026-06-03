@@ -356,3 +356,29 @@
 {"ts":"2026-06-03T08:13:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"refresh-engines-1780474362 rc=0"}
 {"ts":"2026-06-03T08:21:01Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-03T08:22:19Z","node":"bigo-server","type":"health-sweep","detail":"cluster sweep: self healthy (claude=ready, disk 87%/14G free, maint-agent running); quorum 2/3 (V1410-1 leader + claudebox voter); oraclebox1 DOWN+unreachable, escalated t-0034"}
+{"ts":"2026-06-03T07:25:02Z","node":"oraclebox1","source":"deploy","action":"backup-restore-verify","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:28:30Z","source":"fleet","node":"agent-builder-3-052458","event":"project_done","slug":"vars-restore-verify-sigpipe","detail":"Fixed backup-restore-verify SIGPIPE+pipefail false-warn: makespec now drains stdin so gunzip does not get SIGPIPE(141) on dumps >64KiB pipe buffer (115 vars/96KiB). fleet/backup-restore-verify vars_status warn->healthy (round-trip sha match); health-summary backup-restore warn->healthy."}
+{"ts":"2026-06-03T05:47:51Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T05:47:51Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-03T05:54:13Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T06:15:01Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-03T06:16:03Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T06:16:03Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-03T06:16:04Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"oraclebox1-recover-20260603T060449Z-V1410-1"}
+{"ts":"2026-06-03T06:48:11Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"fail","detail":"oraclebox1-recover-20260603T060449Z-V1410-1 rc=124"}
+{"ts":"2026-06-03T06:48:24Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T06:51:35Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T06:51:35Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-03T06:54:39Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T06:56:10Z","node":"oraclebox1","source":"codex","type":"maintenance","action":"cluster-health-sweep","status":"ok","detail":"quorum=3/3 nodes=7/7 ready maintenance-agent=5/5-linux running; mac/windesk engine-loop gaps already escalated"}
+{"ts":"2026-06-03T07:04:27Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T07:34:49Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T07:36:19Z","node":"oraclebox1","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}
+{"ts":"2026-06-03T06:18:35Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-03T06:44:42Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T06:46:15Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T07:16:21Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T07:17:27Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T07:47:35Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T07:48:54Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T08:14:00Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"refresh-engines-1780474375"}

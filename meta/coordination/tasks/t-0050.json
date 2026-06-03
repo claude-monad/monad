@@ -1,0 +1,10 @@
+{
+  "id": "t-0050",
+  "type": "formalize",
+  "scope": "S581b/HYP-2115 extension exposed by Lean: the resonance_bound (math-lean Math/LonelyRunner/OwnerCongruence.lean) is PROVEN to use only w>=1 + windows + positivity — it is j-free/congruence-blind. Formalize the INTEGRALITY-REFINED bound: add the congruences w(k_a n+1)≡r_a (mod u_a), w(k_b n−1)≡r_b (mod u_b) to derive a strictly sharper necessary condition (the CRT content the resonance bound discards). Then define the valid-G(S')-config predicate as a Lean structure, toward accept ∩ valid = ∅ (the real residual proof).",
+  "repo": "claude-monad/math-lean",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

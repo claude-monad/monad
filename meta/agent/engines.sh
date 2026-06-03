@@ -47,7 +47,16 @@ engine_available() {
 engine_authed() {
   case "$1" in
     claude) [ -f "${CLAUDE_HOME:-$HOME/.claude}/.credentials.json" ] ;;
-    codex)  [ -f "${CODEX_HOME:-$HOME/.codex}/auth.json" ] ;;
+    codex)
+      # Standard home, plus the snap-confined home (snap remaps $HOME to
+      # ~/snap/codex/current, so a snap-installed codex stores auth.json there,
+      # not in ~/.codex). Glob the revision dirs as a fallback for systems
+      # where the `current` symlink is absent.
+      [ -f "${CODEX_HOME:-$HOME/.codex}/auth.json" ] && return 0
+      [ -f "$HOME/snap/codex/current/auth.json" ] && return 0
+      local f; for f in "$HOME"/snap/codex/*/auth.json; do [ -f "$f" ] && return 0; done
+      return 1
+      ;;
     *) return 1 ;;
   esac
 }

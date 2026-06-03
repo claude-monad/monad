@@ -27,15 +27,14 @@ job "account-manager" {
       config {
         command = "/bin/bash"
         args    = ["-c", <<EOT
-# Try local repo first, fall back to downloading
-SCRIPT=""
-for p in /home/bigo/Documents/monad /home/e/monad /root/monad; do
-  [ -f "$p/scripts/account-manager.py" ] && SCRIPT="$p/scripts/account-manager.py" && break
-done
-if [ -z "$SCRIPT" ]; then
-  mkdir -p /tmp/monad-am
-  curl -sL https://raw.githubusercontent.com/eliott-monad/monad/main/scripts/account-manager.py -o /tmp/monad-am/account-manager.py
-  SCRIPT="/tmp/monad-am/account-manager.py"
+# Use a fresh alloc-local clone so Linux nodes do not run stale host checkouts.
+REPO="$NOMAD_TASK_DIR/monad"
+rm -rf "$REPO"
+git clone --depth 1 https://github.com/eliott-monad/monad "$REPO" >/dev/null \
+  || { echo "[account-manager] clone failed; falling back to raw script"; mkdir -p /tmp/monad-am; curl -fsSL https://raw.githubusercontent.com/eliott-monad/monad/main/scripts/account-manager.py -o /tmp/monad-am/account-manager.py; REPO="/tmp/monad-am"; }
+SCRIPT="$REPO/scripts/account-manager.py"
+if [ ! -f "$SCRIPT" ]; then
+  SCRIPT="$REPO/account-manager.py"
 fi
 exec python3 "$SCRIPT"
 EOT

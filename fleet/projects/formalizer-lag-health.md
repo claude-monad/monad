@@ -1,8 +1,8 @@
 ---
 slug: formalizer-lag-health
-status: building
+status: done
 owner: agent-builder-3-081353
-updated: 2026-06-03T09:30:00Z
+updated: 2026-06-03T09:33:00Z
 priority: 3
 ---
 
@@ -54,3 +54,31 @@ read-only:
 - Reuse the embedded-python periodic monitor pattern; don't reinvent.
 - Placement: bigo-server (hosts `formalize-watch` + `math-formalizer`, has headroom;
   oraclebox1 is sustained-critical on CPU per `node-overload-health`).
+
+## Log
+- 2026-06-03 (agent-builder-3-081353): **done.** Built `jobs/formalizer-lag-health.hcl` — a
+  read-only periodic monitor (every 20m) pinned to **bigo-server** (off the saturated
+  oraclebox1 keystone), pointed at the v1410-1 leader. Each pass it reads
+  `fleet/formalizer-cursor` (`last_sha`), `git ls-remote`s the math HEAD, and reads the
+  `formalize-watch` + `math-formalizer` Nomad job states, then writes
+  **`fleet/formalizer-lag`** (`status`/`detail`/`ts` + `behind`/`commits_behind`/
+  `newest_unprocessed_age_s`/`cursor_age_s`/`watcher_job`/`formalizer_job`). It only does a
+  cheap blob-less `--depth 50` clone **when actually behind**, so the steady (caught-up) case
+  does zero clone. Warn conditions: cursor missing/uninitialized; `math-lean` **sustainedly**
+  behind (newest unprocessed commit older than `BEHIND_GRACE_S=1500`, ~2.5 watcher ticks —
+  transient between-tick lag stays healthy); `formalize-watch` job dead/stopped/missing; or
+  `math-formalizer` job stopped/missing. A math-repo ls-remote failure yields `unknown`
+  (no false pipeline alarm).
+  - Folded into `jobs/fleet-health-rollup.hcl` as the fixed component **`formalizer`**
+    (`fleet/formalizer-lag`, staleness `STALE_FORMALIZER=5400`s). After deploy +
+    forced run: `fleet/health-summary` `components` now lists `formalizer=healthy` and
+    `component_count` went **34 → 35**. The dashboard Cluster-health panel and
+    `fleet/health-ack` pick it up generically (no extra wiring).
+  - **How to use / find it:** `nomad var get fleet/formalizer-lag` for the detail
+    (`watcher_job`/`formalizer_job`/`commits_behind`/`newest_unprocessed_age_s`); the headline
+    rollup shows `formalizer=<status>` in `fleet/health-summary` and on the dashboard
+    (100.78.218.70:8088). First live run caught a real in-flight state: 3 commits behind,
+    newest only 4m old → `healthy` (transient), watcher+formalizer both running.
+  - Note: the forced rollup run needed a few retries to place on the CPU-saturated
+    oraclebox1 keystone (the standing `keystone-periodic-cpu-budget` condition); it placed and
+    updated the summary. The normal 15m tick is unaffected.

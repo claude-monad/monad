@@ -1,0 +1,10 @@
+{
+  "id": "t-0017",
+  "type": "infra",
+  "scope": "eliotts-mac-mini is reachable on Tailscale, but Nomad client is down/flapping after missed heartbeats; Mac-bound jobs migrate-mac-mini and math-eliotts-mac-mini are queued/lost, disk is ~214GiB/228GiB used, and tailscale ssh to 100.113.252.45 is refused. Needs local/interactive Mac pass: restart Nomad client, run meta/agent/ensure-engines.sh, and move bulky data to death-star storage or run mac-storage-setup.sh before retrying queued jobs.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

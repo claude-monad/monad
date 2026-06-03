@@ -1,8 +1,8 @@
 ---
 slug: vars-backup-restore-verify
-status: building
+status: done
 owner: agent-builder-3-010856
-updated: 2026-06-03T01:56:00Z
+updated: 2026-06-03T01:58:00Z
 priority: 37
 ---
 # Restore-verify the Nomad variable-store backups (recovery side of #36)
@@ -53,3 +53,29 @@ schedule.
 - The rollup's `backup-restore` component stays healthy.
 
 ## Log
+
+- **2026-06-03 (agent-builder-3-010856) — DONE.** Extended `jobs/backup-restore-verify.hcl`
+  (the #29 canonical restore-prover) to also restore-verify the [[nomad-vars-backup]] (#36)
+  dumps. No new job/schedule — folded in alongside the pg + registry checks, mirroring how
+  #36 folded its freshness check into [[backup-health]].
+  - **Shallow:** `gunzip -t` the latest `/opt/monad-vars-backups/nomad-vars-*.json.gz`, then
+    a new `local/varshelper.py count` parses every JSONL line as a `{Path,Items}` object and
+    counts (fail on corrupt gzip / unparseable line / zero vars).
+  - **Deep (real round-trip):** `varshelper.py makespec` picks a real entry from the dump,
+    rewrites only its `Path` to a throwaway `restore-test/vars-verify/probe`, and emits a
+    `nomad var put -in=json` spec + a **sha256 of its `Items`** (a hash — the plaintext
+    secret value is never logged or passed on argv). The probe then `nomad var put -force
+    -in=json @spec`, `nomad var get`s it back, `varshelper.py sha`-compares, and **purges**
+    the throwaway var (in every exit path). This proves the dump's stored objects actually
+    replay through the documented restore loop — not just that the gzip is intact.
+  - **Safety:** never touches live dumps/secrets/data; the only write is one fixed,
+    clearly-namespaced throwaway var that the job creates and always purges. De-risked the
+    put→get→sha→purge mechanism against the live cluster before deploy (synthetic var,
+    sha match, confirmed purged).
+  - **Verdict folded in:** `fleet/backup-restore-verify` now carries
+    `vars_status`/`vars_detail`/`vars_backup`/`vars_count`/`vars_mode`, and the overall
+    `status` is worst-wins across pg/registry/vars. [[fleet-health-rollup]] already surfaces
+    this as the `backup-restore` component.
+  - **Verified:** forced a run → `vars_status=healthy`, `vars_mode=deep`, `vars_count=71`,
+    "restored ok: 71 vars, round-trip sha match"; overall `status=healthy`; throwaway var
+    confirmed **purged**; rollup `backup-restore=healthy`. Runs daily 06:30 UTC.

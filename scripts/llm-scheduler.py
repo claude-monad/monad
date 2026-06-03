@@ -92,6 +92,13 @@ def node_load():
         nr = d.get("NodeResources", {})
         tot_cpu = nr.get("Cpu", {}).get("CpuShares", 0) or nr.get("Processors", {}).get("Topology", {}).get("TotalCompute", 0)
         tot_mem = nr.get("Memory", {}).get("MemoryMB", 0)
+        # Live engine readiness from node meta (set by ensure-engines/provision-node). The
+        # capacity governor uses this to know which engines a node can actually run RIGHT NOW,
+        # so as the per-node provisioner makes more nodes Claude/Codex-ready, placement follows
+        # automatically — no manual policy edit. Falls back to the policy's engines if no meta.
+        meta = d.get("Meta", {}) or {}
+        ready = [e for e, k in (("claude", "has_claude"), ("codex", "has_codex"))
+                 if str(meta.get(k, "")).lower() == "true"]
         a_cpu = a_mem = agents = 0
         for al in allocs:
             if al.get("ClientStatus") != "running":
@@ -103,7 +110,8 @@ def node_load():
             if any(s in al.get("JobID", "") for s in AGENT_JOBS):
                 agents += 1
         nodes[name] = {"id": nid, "tot_cpu": tot_cpu, "a_cpu": a_cpu,
-                       "tot_mem": tot_mem, "a_mem": a_mem, "agents": agents}
+                       "tot_mem": tot_mem, "a_mem": a_mem, "agents": agents,
+                       "ready_engines": ready}
     return nodes
 
 
@@ -116,7 +124,10 @@ def evaluate():
     nodes = node_load()
     rows = []
     for name, ld in nodes.items():
-        p = pol.get(name, {"engines": [], "max_agents": 0, "cpu_pct": 75, "mem_pct": 75})
+        p = dict(pol.get(name, {"engines": [], "max_agents": 0, "cpu_pct": 75, "mem_pct": 75}))
+        # Prefer live readiness from node meta; fall back to the static policy engines.
+        if ld.get("ready_engines"):
+            p["engines"] = ld["ready_engines"]
         cp, mp = pct(ld["a_cpu"], ld["tot_cpu"]), pct(ld["a_mem"], ld["tot_mem"])
         # Resource overload is always real; agent-count overload only where a cap is set
         # (nodes absent from policy have cap 0 = "not a placement target", not "overloaded").

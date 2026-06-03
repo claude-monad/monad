@@ -1,0 +1,10 @@
+{
+  "id": "t-0071",
+  "type": "math",
+  "scope": "S620 HYP-2190 H3: attempt a quantitative LRC step \u2014 prove a lower bound p_0>0 off the collapse family from fixed (S1,S2) + circular-arc Helly-order<=3, using THM-410 moment-sieve + Bonferroni. The pair-sum sieve THM-401 is the order-2 layer.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S620"
+}

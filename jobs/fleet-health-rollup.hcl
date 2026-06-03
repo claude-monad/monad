@@ -139,6 +139,9 @@ stale_mt   = int(os.environ.get("STALE_MAINT", "7200") or "7200")
 # keystone-service-liveness (#31) probes the dashboard + postgres every 10m, one var
 # per service; ~6x the interval gives a generous staleness window.
 stale_svc  = int(os.environ.get("STALE_SERVICE", "3600") or "3600")
+# disk-pressure-health (disk-pressure-health.md) probes host root-disk every 15m, one
+# var per node; ~4x the interval gives a generous staleness window.
+stale_disk = int(os.environ.get("STALE_DISK", "3600") or "3600")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
@@ -160,6 +163,13 @@ for p in sorted(list_paths("fleet/maintenance-health/")):
 for p in sorted(list_paths("fleet/service-health/")):
     svc = p.rsplit("/", 1)[-1]
     comps.append(("service:" + svc, p, stale_svc))
+# disk-pressure-health publishes one var per node (root-disk used%/free GB), like
+# checkout-health/maintenance-health; surface each as a disk:<node> component so host
+# disk pressure on keystone/voter nodes is part of the single signal (and individually
+# ack-able via fleet/health-ack). synth_detail already renders disk_used_pct.
+for p in sorted(list_paths("fleet/disk-health/")):
+    node = p.rsplit("/", 1)[-1]
+    comps.append(("disk:" + node, p, stale_disk))
 
 # The monitors use inconsistent status words; normalize to one 4-state scale so
 # the rollup (and the dashboard) speak a single vocabulary.

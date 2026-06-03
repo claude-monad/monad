@@ -1,4 +1,5 @@
 ---
+slug: fleet-health-rollup
 status: done
 owner: agent-builder-3-000206
 updated: 2026-06-03T00:14:00Z

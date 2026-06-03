@@ -5,9 +5,10 @@
 # to FOREMAN_N, and records a summary to the Nomad var fleet/status + logs/events.jsonl
 # (source "fleet"). Without this, building only happens when a human runs the script.
 #
-# Singleton on oraclebox1 — the always-on node that holds the engine creds, runs a local
-# Nomad server, and is where fleet-builder is constrained to run (so the foreman dispatches
-# builders onto the same node). raw_exec so it uses the host nomad/git binaries directly.
+# Singleton on oraclebox1 — the always-on node that runs a local Nomad server and is where
+# fleet-builder is constrained to run (so the foreman dispatches builders onto the same node).
+# The service runs from an alloc-local clone so a dirty host checkout cannot make fleet/status
+# stale. raw_exec so it uses host nomad/git/python binaries directly.
 #
 # Inspect:  nomad var get fleet/status   |   monad events
 job "fleet-foreman" {
@@ -38,23 +39,18 @@ job "fleet-foreman" {
 
       config {
         command = "/bin/bash"
-        # Nomad runs as root here; su to the user whose home has ~/monad (that user has the
-        # repo + git credentials), then loop the foreman. Falls back to direct exec if we're
-        # already a non-root user with the repo.
         args = ["-c", <<-EOC
-          for u in ubuntu bigo e eliott root; do
-            home="$(getent passwd "$u" | cut -d: -f6)"
-            [ -n "$home" ] && [ -f "$home/monad/scripts/fleet-foreman.sh" ] || continue
-            cmd="export INTERVAL='$INTERVAL' NOMAD_ADDR='$NOMAD_ADDR'; cd '$home/monad' && git pull --ff-only --quiet >/dev/null 2>&1 || true; exec bash '$home/monad/scripts/fleet-foreman.sh' '$FOREMAN_N' --loop"
-            if [ "$(id -u)" = 0 ] && [ "$u" != root ]; then
-              exec su - "$u" -c "$cmd"
-            else
-              cd "$home/monad" && git pull --ff-only --quiet >/dev/null 2>&1 || true
-              exec bash "$home/monad/scripts/fleet-foreman.sh" "$FOREMAN_N" --loop
-            fi
-          done
-          echo "fleet-foreman: no user with ~/monad found on this node" >&2
-          sleep 120
+          set -e
+          WORK="$NOMAD_TASK_DIR/monad"
+          clone_repo() {
+            rm -rf "$WORK"
+            git clone --depth 50 "$REPO_URL" "$WORK" >/dev/null
+          }
+          [ -f "$WORK/scripts/fleet-foreman.sh" ] || clone_repo
+          git -C "$WORK" pull --ff-only --quiet >/dev/null 2>&1 || clone_repo
+          export INTERVAL="$INTERVAL" NOMAD_ADDR="$NOMAD_ADDR"
+          export FOREMAN_EVENTS_FILE="$NOMAD_TASK_DIR/foreman-events.jsonl"
+          exec bash "$WORK/scripts/fleet-foreman.sh" "$FOREMAN_N" --loop
         EOC
         ]
       }
@@ -63,6 +59,7 @@ job "fleet-foreman" {
         FOREMAN_N  = "3"                              # generous but bounded builder count
         INTERVAL   = "600"                            # top-up cadence (s)
         NOMAD_ADDR = "http://100.125.210.126:4646"    # oraclebox1's local server
+        REPO_URL   = "https://github.com/eliott-monad/monad"
       }
 
       resources {

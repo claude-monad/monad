@@ -12,7 +12,8 @@
 # Each cycle it: (1) git-pulls so the backlog is fresh, (2) reads fleet/projects/*.md and
 # counts statuses, (3) tops up builders up to N (Nomad reaps finished batch allocs, so dead
 # ones simply stop counting and get replaced), (4) records a summary to the Nomad var
-# fleet/status and an event line to logs/events.jsonl (source "fleet").
+# fleet/status and an event line (source "fleet"). FOREMAN_EVENTS_FILE can redirect that
+# event stream outside the Git checkout so a standing service does not dirty the source tree.
 set -uo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -20,13 +21,14 @@ export NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
 N="${1:-2}"; LOOP=""; [ "${2:-}" = "--loop" ] && LOOP=1
 INTERVAL="${INTERVAL:-600}"
 PROJECTS_DIR="$REPO_DIR/fleet/projects"
-EVENTS="$REPO_DIR/logs/events.jsonl"
+EVENTS="${FOREMAN_EVENTS_FILE:-$REPO_DIR/logs/events.jsonl}"
 NODE="$(uname -n)"
 
 log() { echo "[foreman $(date '+%H:%M:%S')] $*"; }
 
 event() { # action result detail
   local ts; ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  mkdir -p "$(dirname "$EVENTS")" 2>/dev/null || true
   printf '{"ts":"%s","node":"%s","source":"fleet","action":"%s","result":"%s","detail":"%s"}\n' \
     "$ts" "$NODE" "$1" "$2" "${3//\"/\'}" >> "$EVENTS" 2>/dev/null || true
 }
@@ -84,7 +86,9 @@ backlog_counts() {
 
 ensure() {
   # Refresh the backlog from git so counts/claims reflect what builders have pushed.
-  git -C "$REPO_DIR" pull --ff-only --quiet >/dev/null 2>&1 || true
+  if ! git -C "$REPO_DIR" pull --ff-only --quiet >/dev/null 2>&1; then
+    log "WARN: git pull failed for $REPO_DIR; using existing checkout"
+  fi
 
   # make sure the parameterized job is registered
   nomad job status fleet-builder >/dev/null 2>&1 || nomad job run "$REPO_DIR/jobs/fleet-builder.hcl" >/dev/null 2>&1

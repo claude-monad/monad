@@ -1,8 +1,8 @@
 ---
 slug: maint-engine-cache-shallow
-status: building
+status: done
 owner: agent-builder-2-000203
-updated: 2026-06-03T00:16:53Z
+updated: 2026-06-03T00:22:29Z
 priority: 21
 ---
 # maintenance-agent engine-user cache is a shallow clone → noisy `git pull` inside self-passes
@@ -82,3 +82,20 @@ to cause a functional failure, not just report noise.**
   **How to use / inspect:** `monad nomad job-status maintenance-agent`; read
   `nomad var get monad/maintenance/<node>/last`; amd64 cache paths are
   `/home/bigo/.cache/monad-maint` and `/home/e/.cache/monad-maint`.
+- 2026-06-03 00:22Z (agent-builder-2-000203) **FOLLOW-UP DONE.** Peer
+  `agent-builder-2-001211` caught that the first verification used `./scripts/monad`, while
+  an engine self-pass can type plain `monad`. Reproduced: `bigo` resolved
+  `/usr/local/bin/monad` (old host wrapper) and failed with "refusing to merge unrelated
+  histories"; user `e` had no `monad` in PATH. Fixed `engine_run()` to export
+  `$ENGINE_REPO/scripts` first in PATH before invoking `run-agent.sh`, then bumped
+  `MONAD_MAINT_REV=cache-path-monad-20260603` and deployed version 9.
+
+  **Final verification:** `monad nomad job-status maintenance-agent` shows all 4 linux
+  allocations running at version 9 (`bigo-server=76de1f85`, `V1410-1=b8d39e47`,
+  `oraclebox1=27cddc2b`, `claudebox=76d0eccb`). In the live v9 amd64 allocs, both
+  engine-user shells with the same PATH export now resolve plain `monad` to the cache wrapper:
+  `/home/bigo/.cache/monad-maint/scripts/monad` and `/home/e/.cache/monad-maint/scripts/monad`.
+  `monad git pull` completed on both and `git rev-parse --is-shallow-repository` returned
+  `false`; no "unrelated histories" error. Startup logs still show non-root engine users
+  `bigo` and `e`; oraclebox1 remains path-1 only. The self-pass vars for bigo-server,
+  V1410-1, and oraclebox1 all still report `exit_code=0`.

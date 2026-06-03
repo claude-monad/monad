@@ -246,6 +246,8 @@ def health_summary():
     return {
         "available": True,
         "status": items.get("status", "?"),
+        "raw_status": items.get("raw_status", ""),
+        "acknowledged": items.get("acknowledged", "none"),
         "detail": items.get("detail", ""),
         "stale": items.get("stale", "none"),
         "foreman": items.get("foreman", ""),
@@ -369,12 +371,14 @@ function healthPill(s){s=(s||'').toLowerCase();
   return pill(s||'?','dim');}
 function renderHealth(h){
  if(!h||!h.available)return '<p class="muted" style="padding:12px 14px">fleet/health-summary unavailable (fleet-health-rollup not run yet)</p>';
- const head=`<p style="padding:8px 14px 0">overall ${healthPill(h.status)} <span class="muted">${esc(h.detail)}</span></p>`;
+ const raw=(h.raw_status&&h.raw_status!==h.status)?` <span class="muted">(raw ${healthPill(h.raw_status)} incl. acknowledged)</span>`:'';
+ const head=`<p style="padding:8px 14px 0">overall ${healthPill(h.status)}${raw} <span class="muted">${esc(h.detail)}</span></p>`;
+ const ack=(h.acknowledged&&h.acknowledged!=='none')?`<p class="muted" style="padding:0 14px">acknowledged (owner-gated, excluded from top-line): ${esc(h.acknowledged)}</p>`:'';
  const rows=(h.components||[]).map(c=>
    `<tr><td><code>${esc(c.name)}</code></td><td>${healthPill(c.status)}</td><td class="muted">${esc(c.detail)}</td></tr>`);
  const t=tbl(['component','status','detail'],rows);
  const meta=`<p class="muted" style="padding:0 14px 8px">foreman: ${esc(h.foreman)} · updated ${esc((h.updated||'').replace('T',' ').replace('Z',''))}</p>`;
- return head+t+meta;
+ return head+ack+t+meta;
 }
 function renderForeman(f){
  if(!f||!f.available)return '<p class="muted" style="padding:12px 14px">fleet/status unavailable</p>';

@@ -170,6 +170,11 @@ stale_overload = int(os.environ.get("STALE_OVERLOAD", "3600") or "3600")
 stale_jobs = int(os.environ.get("STALE_JOBS", "7200") or "7200")
 # escalation-capture-health probes captured gh-less GitHub escalations every 10m.
 stale_escalation = int(os.environ.get("STALE_ESCALATION", "3600") or "3600")
+# health-history-trends (every 15m) publishes fleet/health-trend; its `status` folds in
+# WRITER liveness (now vs the latest health_snapshots row), so this component catches a
+# stalled health-history time-series. The var `ts` staleness separately catches the
+# trends job itself dying; ~4x the 15m interval is a generous window.
+stale_trend = int(os.environ.get("STALE_TREND", "3600") or "3600")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
@@ -177,7 +182,8 @@ comps = [("raft", "fleet/raft-health", stale_raft),
          ("backup-restore", "fleet/backup-restore-verify", stale_brv),
          ("engine", "fleet/engine-coverage", stale_engine),
          ("jobs", "fleet/job-hygiene", stale_jobs),
-         ("escalation", "fleet/escalation-health", stale_escalation)]
+         ("escalation", "fleet/escalation-health", stale_escalation),
+         ("health-history", "fleet/health-trend", stale_trend)]
 for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("checkout:" + node, p, stale_co))

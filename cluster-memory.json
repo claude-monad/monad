@@ -20,14 +20,14 @@
     "value": "DONE-2026-06-03T02:10:37Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1780469726.8228903,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T06:55:26Z"
+    "updated": 1780473807.4877028,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T08:03:27Z"
   },
   "health:windesk": {
-    "updated": 1780469731.877703,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T06:55:31Z"
+    "updated": 1780473807.5312312,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T08:03:27Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

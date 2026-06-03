@@ -1,7 +1,7 @@
 ---
 slug: codex-tui-availability
-status: todo
-owner:
+status: building
+owner: agent-builder-3-052458
 updated: 2026-06-03
 priority: 1
 ---

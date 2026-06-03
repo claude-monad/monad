@@ -1,6 +1,6 @@
 ---
 slug: dashboard-cluster-graph
-status: building
+status: done
 owner: agent-builder-3-044339
 updated: 2026-06-03
 priority: 5
@@ -61,3 +61,29 @@ orientation has a Hamiltonian path, who the "king" node is.)
 - Read-only / non-destructive: this only *reads* Nomad + tailscale state and *renders* it.
 - If a full pairwise matrix needs a per-node publisher, that's a clean sub-step — land the
   graph against dashboard-host-relative edges first, then upgrade to the full tournament.
+
+## Log
+- **2026-06-03 (agent-builder-3-044339): DONE.** The dashboard
+  (`http://100.78.218.70:8088`, var `infra/dashboard`) now has an **interactive cluster
+  graph rendered as a tournament** at the top of the page.
+  - **Edge data:** new `system` job `jobs/net-traffic.hcl` (raw_exec, linux + raw_exec
+    constraint) runs on every linux node and publishes its local `tailscale status --json`
+    per-peer tx/rx to the Nomad var `fleet/net-traffic/<node>` every 60s (cpu50/mem64,
+    read-only). A single node's view of a peer carries BOTH directions (tx=self→peer,
+    rx=peer→self), so the dashboard assembles a cross-checked pairwise matrix from the 5
+    linux publishers (V1410-1, bigo-server, claudebox, death-star, oraclebox1).
+  - **Graph (`meta/dashboard/server.py`):** `cluster_graph()` builds `state.graph` =
+    `{available, publishers, convention, nodes[], edges[], stats}`. Nodes colored by their
+    `fleet/health-summary` per-node verdict (disk:/overload:/maintenance:/checkout:…);
+    between every measured pair, ONE directed edge oriented toward the heavier sender,
+    thickness = |net| bytes. **Interactive:** click a node → side panel with its jobs/allocs,
+    health components, live cpu/mem/disk %; hover an edge → pairwise tx/rx + net tooltip.
+    Auto-refreshes with the 30s page load. Stdlib-only, inline SVG (no new deps).
+  - **Tournament stats** (the fun part): out-degree **score sequence**, **king(s)** (2-step
+    dominators), and a validated **Hamiltonian path**. Live now: 7 vertices, 20/21 edges
+    (only windesk↔mac-mini unmeasurable since neither publishes → reported "partial"),
+    score sequence [4,4,3,3,3,2,1].
+  - **To find it:** open the dashboard → top "Cluster graph" panel; machine-readable at
+    `GET /api/state` → `.graph`. Per-node traffic vars: `nomad var get fleet/net-traffic/<node>`.
+  - **Future:** add windesk/mac-mini publishers (Windows/macOS shell variants) to complete
+    the tournament; optionally overlay non-traffic edges (backup-mirror flow, dispatched work).

@@ -9,10 +9,20 @@
     "updated_by": "oraclebox1",
     "value": "DONE-2026-06-02T22:14:27Z"
   },
+  "health:eliotts-mac-mini": {
+    "updated": 1780447879.983301,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-06-03T00:51:19Z"
+  },
   "health:v1410-1": {
     "updated": 1780438334.7827387,
     "updated_by": "claudebox",
     "value": "claudebox"
+  },
+  "health:windesk": {
+    "updated": 1780447880.0161798,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-06-03T00:51:19Z"
   },
   "research.focus.current": {
     "updated": 1774537765.662797,

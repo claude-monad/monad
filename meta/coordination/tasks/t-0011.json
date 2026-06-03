@@ -1,0 +1,10 @@
+{
+  "id": "t-0011",
+  "type": "infra",
+  "scope": "eliotts-mac-mini and windesk advertise no agent_engines; queued ensure-engines tasks to their maintenance queues but neither runs the linux maintenance-agent loop to drain them \u2014 needs an interactive/node-doctor pass on each to run ensure-engines (.sh / .ps1) and log in codex",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

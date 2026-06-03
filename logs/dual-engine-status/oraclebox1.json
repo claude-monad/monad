@@ -1,0 +1,18 @@
+{
+  "node": "oraclebox1",
+  "ts": "2026-06-03T01:48:48Z",
+  "os": "Linux",
+  "ready_engines": [
+    "claude codex"
+  ],
+  "engines": {
+    "claude": {
+      "state": "absent",
+      "latency_s": null
+    },
+    "codex": {
+      "state": "absent",
+      "latency_s": null
+    }
+  }
+}

@@ -9,7 +9,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 | Pri | Project | Why | Status |
 |----:|---------|-----|--------|
 | 1 | [dashboard-resources-engine](projects/dashboard-resources-engine.md) | per-node CPU/mem/disk + overload flags, Claude/Codex toggle, (future) account usage | todo |
-| 1 | [disk-pressure-health](projects/disk-pressure-health.md) | surface low root-disk on keystone/voter nodes (oraclebox1 ~7GB free, bigo-server ~17GB) in the single fleet signal — voter quorum + registry/postgres/backups at risk | building |
+| 1 | [disk-pressure-health](projects/disk-pressure-health.md) | surface low root-disk on keystone/voter nodes (oraclebox1 ~7GB free, bigo-server ~17GB) in the single fleet signal — voter quorum + registry/postgres/backups at risk | done (periodic job disk-pressure-health on oraclebox1, every 15m; vars fleet/disk-health/<node>; rollup disk:<node> components — first catch: eliotts-mac-mini 90.9% disk) |
 | 1 | [shared-registry](projects/shared-registry.md) | a tailnet-wide container registry so images run on every node (not just oraclebox1's localhost:5000) — unblocks everything below | done (100.78.218.70:5000) |
 | 2 | [multiarch-agent-image](projects/multiarch-agent-image.md) | build monad-agent-mesh for amd64+arm64 so v1410-1 & bigo-server can run mesh agents → maintenance agents on the mesh everywhere | done (amd64 verified on v1410-1; image multi-arch in registry) |
 | 6 | [bigo-server-registry-trust](projects/bigo-server-registry-trust.md) | bigo-server dockerd rejects the insecure shared registry (HTTP→HTTPS error) so it can't pull shared images | done (bigo-server trusts 100.78.218.70:5000; pull verified) |

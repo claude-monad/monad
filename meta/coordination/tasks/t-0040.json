@@ -1,0 +1,10 @@
+{
+  "id": "t-0040",
+  "type": "math",
+  "scope": "S581/HYP-2110 follow-up: build the VALID-CONFIG automaton for the n=14 large-owner residual — the constraints making (u_a,k_a,u_b,k_b) an actual G(S') component (owners are co-occurring runner speeds, endpoints turned-safe, every component fits simultaneously). Then check accept(owner-automaton) ∩ valid = ∅. The owner-clock automaton alone is NOT empty (1590 isolated feasible tuples at n=14), so this intersection is the real proof of the residual.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

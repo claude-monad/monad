@@ -1,0 +1,10 @@
+{
+  "id": "t-0041",
+  "type": "math",
+  "scope": "S581/HYP-2110 follow-up: test whether endpoint-validity (a<b in (0,1/2], a=(k_a n+1)/(n u_a) reduced) PLUS the proved resonance D-band |D|<=u_b K_a+u_a K_b already excludes all VALID residual configs at n=14 — i.e. is the cross-relation defect D forced out of the band once the owners are real co-occurring speeds? If yes, the residual closes with the bounded resonance bound alone.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0040"
+}

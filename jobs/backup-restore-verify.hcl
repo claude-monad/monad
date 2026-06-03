@@ -129,14 +129,19 @@ if cmd == "count":
 if cmd == "makespec":
     newpath, specfile = sys.argv[2], sys.argv[3]
     chosen = None
+    # Drain stdin FULLY (do not break on the first match). makespec is fed by
+    # `gunzip -c <dump> | python3 ... makespec` under `set -o pipefail`; breaking early
+    # closes the pipe while gunzip is still writing, so gunzip dies with SIGPIPE (141) and
+    # pipefail propagates 141 as the pipeline status — the caller then misreads a perfectly
+    # replayable dump as "no replayable entry with items". Consuming every line keeps gunzip
+    # at exit 0. The dump is small (~100 KiB) so reading it all is cheap.
     for line in sys.stdin:
         line = line.strip()
         if not line:
             continue
         obj = json.loads(line)
-        if obj.get("Items"):
+        if chosen is None and obj.get("Items"):
             chosen = obj
-            break
     if not chosen:
         print("NOITEMS", file=sys.stderr); sys.exit(1)
     items = chosen["Items"]

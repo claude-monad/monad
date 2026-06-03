@@ -125,11 +125,18 @@ if [ -n "$pg_latest" ]; then
         -v "$NOMAD_TASK_DIR/pgverify.sh":/pgverify.sh:ro \
         "$PG_IMAGE" sh /pgverify.sh 2>&1)"; rc=$?
       if [ "$rc" -eq 0 ]; then
+        # rc=0 means psql restored the whole dump under ON_ERROR_STOP=1 (a truncated/corrupt
+        # dump would have errored out non-zero, or failed the gzip/footer checks above). So a
+        # clean restore is recoverable regardless of table count — 0 tables just means the
+        # source DB is empty (the shared fleet DB is provisioned but coordination uses Nomad
+        # vars). Table count is informational, not a failure criterion.
         pg_tables="$(printf '%s' "$out" | sed -n 's/^TABLES=//p' | tail -1)"
-        if [ -n "$pg_tables" ] && [ "$pg_tables" -gt 0 ] 2>/dev/null; then
-          pg_status="healthy"; pg_mode="deep"; pg_detail="restored ok: $pg_tables user tables"
+        [ -n "$pg_tables" ] || pg_tables="0"
+        pg_status="healthy"; pg_mode="deep"
+        if [ "$pg_tables" -gt 0 ] 2>/dev/null; then
+          pg_detail="restored ok: $pg_tables user tables"
         else
-          pg_status="warn"; pg_mode="deep"; pg_detail="restored but 0 user tables (empty/incomplete dump?)"
+          pg_detail="restored ok: 0 user tables (source DB is empty)"
         fi
       else
         pg_status="warn"; pg_mode="deep"

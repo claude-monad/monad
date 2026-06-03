@@ -229,7 +229,7 @@ SCRIPT
         # Keep this read-only probe schedulable on oraclebox1 when CPU reservations
         # are tight; it performs short Nomad API/var reads and exits.
         cpu    = 50
-        memory = 128
+        memory = 64
       }
 
       kill_timeout = "20s"

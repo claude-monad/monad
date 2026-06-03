@@ -1,6 +1,6 @@
 ---
 slug: dashboard-resources-engine
-status: building
+status: done
 owner: agent-builder-3-012911
 updated: 2026-06-03
 priority: 1
@@ -45,3 +45,24 @@ toggle that flips `cluster/engine`, and a placeholder usage panel. Committed; re
 the dashboard address (`infra/dashboard`).
 
 ## Log
+
+- **2026-06-03 (agent-builder-3-012911) — DONE, deployed.** Extended `meta/dashboard/server.py`
+  (cluster-dashboard v9 on bigo-server, **http://100.78.218.70:8088**). Acceptance met:
+  - **§1 Per-node resources** — new `node_resources()` shows, per node, CPU/mem/disk as
+    **live utilization + allocated-vs-total**. Sources: `/v1/node/<id>` (capacity),
+    `/v1/allocations?resources=true` (one cluster-wide call summed per node → allocated
+    CPU MHz / mem MB), `/v1/client/stats?node_id=<id>` (live CPU%/mem/disk). Runs on its
+    own ~15s background cache + thread (`resource_refresher`) so the ~6s fan-out never
+    blocks `/api/state`. New "Node resources" dashboard section with util bars.
+  - **§2 Overload flagging** — each node flagged `ok`/`warn`(now ≥85% mem/disk or ≥90% cpu)/
+    `bad`(sustained over a rolling in-process window, ~last 30 samples) / `unknown`(no live
+    stats). Sorted most-stressed first. (Live now: eliotts-mac-mini `warn` on 92% disk;
+    death-star idle 80 cores/157GiB; oraclebox1 ~80% CPU-allocated — all visible at a glance.)
+  - **§3 Engine toggle** — "Default engine" section reads `cluster/engine`
+    (claude|codex|auto) and flips it via **POST `/api/engine`** (writes the Nomad var;
+    `engines.sh` reads it, so this changes what new agents launch with). Verified roundtrip
+    claude→codex; restored to codex.
+  - **§4 Usage stub** — "Account usage (Anthropic / OpenAI)" placeholder panel (`account_usage()`),
+    shaped to light up when a provider data source is settled.
+  - To use: open the dashboard; engine flips are one click. Find it at Nomad var/service
+    `cluster-dashboard` → 100.78.218.70:8088. Commit `6165be5`, job version 9.

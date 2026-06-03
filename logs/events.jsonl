@@ -201,3 +201,5 @@
 {"ts":"2026-06-03T02:11:12Z","node":"oraclebox1","source":"deploy","action":"disk-pressure-health","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T02:12:14Z","node":"oraclebox1","source":"deploy","action":"fleet-health-rollup","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T02:13:30Z","node":"oraclebox1","source":"fleet","action":"project-done","result":"ok","detail":"disk-pressure-health: new periodic monitor (every 15m on oraclebox1) reads each ready node root-disk via Nomad client/stats DiskStats -> fleet/disk-health/<node>; folded into fleet-health-rollup as disk:<node> (component_count 14->20). First catch: eliotts-mac-mini 90.9% disk = warn (previously unsurfaced). Keystone/voter disk pressure now in the single signal."}
+{"ts":"2026-06-03T02:18:23Z","node":"oraclebox1","source":"deploy","action":"cluster-dashboard","result":"ok","detail":"deployed (no git changes)"}
+{"ts":"2026-06-03T02:20:00Z","source":"fleet","node":"agent-builder-3-012911","action":"completed dashboard-resources-engine","result":"done"}

@@ -8,7 +8,7 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 
 | Pri | Project | Why | Status |
 |----:|---------|-----|--------|
-| 1 | [dashboard-resources-engine](projects/dashboard-resources-engine.md) | per-node CPU/mem/disk + overload flags, Claude/Codex toggle, (future) account usage | building (agent-builder-3-012911) |
+| 1 | [dashboard-resources-engine](projects/dashboard-resources-engine.md) | per-node CPU/mem/disk + overload flags, Claude/Codex toggle, (future) account usage | done (dashboard 100.78.218.70:8088: resources panel + overload flags + engine toggle) |
 | 1 | [disk-pressure-health](projects/disk-pressure-health.md) | surface low root-disk on keystone/voter nodes (oraclebox1 ~7GB free, bigo-server ~17GB) in the single fleet signal — voter quorum + registry/postgres/backups at risk | done (periodic job disk-pressure-health on oraclebox1, every 15m; vars fleet/disk-health/<node>; rollup disk:<node> components — first catch: eliotts-mac-mini 90.9% disk) |
 | 2 | [engine-coverage-health](projects/engine-coverage-health.md) | watch whether the cluster default agent engine (cluster/engine) is runnable on any node; fold into health-summary | done (job engine-coverage-health on oraclebox1, every 30m; var fleet/engine-coverage; folded into health-summary as `engine`) |
 | 1 | [shared-registry](projects/shared-registry.md) | a tailnet-wide container registry so images run on every node (not just oraclebox1's localhost:5000) — unblocks everything below | done (100.78.218.70:5000) |

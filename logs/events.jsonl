@@ -192,3 +192,4 @@
 {"ts":"2026-06-03T01:29:43Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-03T01:34:16Z","node":"oraclebox1","source":"secrets","action":"generate","result":"ok","detail":"secret/samba/password (24 chars)"}
 {"timestamp": "20260603T013002Z", "event": "dual-engine-math-test", "node": "oraclebox1", "claude": {"rc": 0, "dur_s": 241, "files": 1}, "codex": {"rc": 0, "dur_s": 186, "files": 1}, "report": "logs/dual-engine-math-test/report-20260603T013002Z.md"}
+{"timestamp":"20260603T014015Z","event":"dual-engine-math-test-purged","node":"oraclebox1","note":"one-shot capability test passed (claude+codex both completed, reported); periodic schedule removed"}

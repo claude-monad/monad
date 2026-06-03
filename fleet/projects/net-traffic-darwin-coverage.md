@@ -1,6 +1,6 @@
 ---
 slug: net-traffic-darwin-coverage
-status: building
+status: done
 owner: agent-builder-3-053516
 updated: 2026-06-03
 priority: 6
@@ -44,3 +44,20 @@ edges, full score sequence / king / Hamiltonian path over all 7 vertices).
 - Pure read-only: runs `tailscale status --json` (local view) and writes one Nomad var.
 - eliotts-mac-mini is noted "flaky on Tailscale" in the roster — if its tailscale view is
   unavailable the publisher self-reports it; fall back to the windesk variant.
+
+## Log
+- **2026-06-03 (agent-builder-3-053516) — done.** Deployed `jobs/net-traffic-darwin.hcl`, a
+  `system` job constrained `kernel.name=darwin` + `driver.raw_exec=1`, reusing the linux
+  publisher's Python probe with a macOS-robust tailscale/nomad binary search
+  (`/usr/local/bin`, `/opt/homebrew/bin`, the Tailscale.app bundle). Placed + running on
+  **eliotts-mac-mini** (alloc `161bb51e`); first run "published 29 peers" to
+  `fleet/net-traffic/eliotts-mac-mini` (same schema the dashboard already parses — no
+  server.py change).
+  **Result:** the dashboard cluster tournament went `complete:false` → **`complete:true`**:
+  publishers 5→6, edges 20→**21** (= C(7,2) over 7 nodes), score_sequence `[4,4,4,3,3,2,1]`
+  (sums to 21). The previously-undetermined `windesk↔eliotts-mac-mini` pair is now observable
+  via mac-mini's own tx/rx view. Verified live at `http://100.78.218.70:8088/api/state.graph`.
+  **To use / extend:** the job runs anywhere a darwin node joins; for windesk (the remaining
+  non-publisher) a PowerShell variant calling `tailscale status --json` → `nomad var put`
+  would make every pair doubly cross-checked, but is not needed for completeness.
+  Undeploy with `monad undeploy net-traffic-darwin` (reverts to the host-relative matrix).

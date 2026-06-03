@@ -1,0 +1,10 @@
+{
+  "id": "t-0060",
+  "type": "math",
+  "scope": "S585/HYP-2120 follow-up (Lemma A discrepancy bound): the all-lonely measure = Σ_{m∈Λ=ker(v)} Π ĝ(m_i), a theta over the relation lattice; constant term (1−2δ)^k, corrections graded O(δ^length). To prove circuit-free ⇒ meas(good)>0, bound the tail Σ_{m≠0,|·|} |Π ĝ(m_i)| < (1−2δ)^k when λ1(Λ)≥4. Missing ingredient = a count of length-L relations in Λ (lattice point-count / number of length-L additive configs in S). NOTE: connect to opus-S576/HYP-2112 'circuit-to-gap functional G(v)=Φ(C) (Lemma G)' — likely the same circuit-graded structure.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

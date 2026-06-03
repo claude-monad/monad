@@ -226,7 +226,9 @@ SCRIPT
       }
 
       resources {
-        cpu    = 100
+        # Keep this read-only probe schedulable on oraclebox1 when CPU reservations
+        # are tight; it performs short Nomad API/var reads and exits.
+        cpu    = 50
         memory = 128
       }
 

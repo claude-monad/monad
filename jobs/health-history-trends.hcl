@@ -236,12 +236,44 @@ if [ -n "$CURD" ] && [ -n "$STD" ]; then
   fi
 fi
 
-# A short human detail line.
+# --- writer liveness: is health-history still INSERTing into the time-series? -------------
+# $NEWEST is max(snapshot_ts) over the window (e.g. "2026-06-03 04:00:22+00"). The writer
+# (jobs/health-history.hcl) snapshots every 15m; if it stalls while Postgres stays up the
+# series freezes and this digest silently computes "now" over old data. Derive the lag of
+# the latest snapshot vs wall-clock and fold it into the var's top-level status so the single
+# signal (via the fleet-health-rollup `health-history` component) catches a dead writer.
+WRITER_STATUS=unknown
+WLAG=unknown
+NEWEST_EPOCH="$(date -u -d "$NEWEST" +%s 2>/dev/null || true)"
+NOW_EPOCH="$(date -u +%s)"
+if [ -n "$NEWEST_EPOCH" ] && [ "$ROWS" -gt 0 ] 2>/dev/null; then
+  WLAG=$(( (NOW_EPOCH - NEWEST_EPOCH) / 60 ))   # minutes since the latest snapshot
+  [ "$WLAG" -lt 0 ] && WLAG=0
+  # writer runs every 15m: healthy <=35m (>2 missed cycles tolerated), warn <=90m, else critical.
+  if   [ "$WLAG" -le 35 ]; then WRITER_STATUS=healthy
+  elif [ "$WLAG" -le 90 ]; then WRITER_STATUS=warn
+  else                          WRITER_STATUS=critical
+  fi
+elif [ "$ROWS" = "0" ]; then
+  WRITER_STATUS=critical   # no rows in the whole window: the series is empty/frozen
+fi
+
+# Top-line status = worst of (this run = healthy) and writer liveness, so the var honestly
+# means "is this trend signal trustworthy & fresh?" (the rollup verdicts on this field).
+STATUS=healthy
+case "$WRITER_STATUS" in warn) STATUS=warn ;; critical) STATUS=critical ;; esac
+
+# A short human detail line; lead with the writer problem when the series is stale.
 DETAIL="$TREND: now $CURS/$CURD-degraded vs start $STS/$STD over $ROWS snaps/$WIN h; flaps=$FLAPS"
+if [ "$WRITER_STATUS" = "warn" ] || [ "$WRITER_STATUS" = "critical" ]; then
+  DETAIL="health-history writer $WRITER_STATUS: latest snapshot $NEWEST ($WLAG""m old) — trend may be stale; $DETAIL"
+fi
 
 nomad var put -force "$HVAR" \
   ts="$NOW" \
-  status=healthy \
+  status="$STATUS" \
+  writer_status="$WRITER_STATUS" \
+  writer_lag_min="$WLAG" \
   window_hours="$WIN" \
   rows="$ROWS" \
   span_hours="$SPAN" \

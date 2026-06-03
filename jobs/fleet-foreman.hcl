@@ -15,9 +15,12 @@ job "fleet-foreman" {
   datacenters = ["dc1"]
   type        = "service"
 
+  # The foreman is pure orchestration (bash + nomad API + the python governor) — it needs no
+  # Claude creds, so keep it OFF the tiny Claude node (oraclebox1) to leave that node's RAM for
+  # the user-facing Claude work (concierge, assistants, conductor). bigo-server has headroom.
   constraint {
     attribute = "${node.unique.name}"
-    value     = "oraclebox1"
+    value     = "bigo-server"
   }
   constraint {
     attribute = "${attr.driver.raw_exec}"

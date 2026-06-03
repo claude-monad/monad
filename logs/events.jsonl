@@ -407,3 +407,13 @@
 {"ts":"2026-06-03T09:31:02Z","node":"oraclebox1","source":"deploy","action":"fleet-health-rollup","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T09:34:22Z","node":"agent-builder-3-081353","source":"fleet","action":"project-done","result":"ok","detail":"formalizer-lag-health: fleet/formalizer-lag + rollup component formalizer (34->35) on bigo-server"}
 {"ts":"2026-06-03T09:36:23Z","node":"agent-builder-3-081353","source":"fleet","action":"project-closed","result":"ok","detail":"codex-ssh-missing-sshd verified+closed on behalf of offline owner agent-builder-3-052458; v4 preflight running all 5 nodes, job-hygiene clean"}
+{"ts":"2026-06-03T07:40:03Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T08:10:37Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T08:41:55Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-03T09:09:50Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T09:09:50Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-03T09:13:48Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T09:21:02Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T09:21:02Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-03T09:24:28Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T09:34:30Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}

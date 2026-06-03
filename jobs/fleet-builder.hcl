@@ -13,14 +13,21 @@ job "fleet-builder" {
 
   parameterized {
     payload       = "optional"
-    meta_optional = ["agent_name", "engine", "role", "timeout"]
+    meta_optional = ["agent_name", "engine", "role", "timeout", "node"]
   }
 
-  # Where the image registry, engine creds, and docker live. Expands once shared-registry +
-  # multiarch images exist (then builders can run on any node).
+  # Default placement target (overridden by the foreman's `-meta node=` from the governor).
+  meta {
+    node = "death-star"
+  }
+
+  # Placement is governed by scripts/llm-scheduler.py: the foreman calls `place` to pick the
+  # least-loaded engine-capable node and passes it as -meta node=<name>. This is how we keep
+  # the tiny oraclebox1 from being buried while death-star (80 cores) sits idle. Defaults to
+  # death-star (the codex workhorse) if no node meta is supplied.
   constraint {
     attribute = "${node.unique.name}"
-    value     = "oraclebox1"
+    value     = "${NOMAD_META_node}"
   }
 
   group "builder" {

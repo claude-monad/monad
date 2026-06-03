@@ -38,8 +38,8 @@ job "nfs-storage" {
           set -euo pipefail
 
           # Config — override via Nomad meta or env
-          EXPORT_PATH="${NFS_EXPORT_PATH:-/srv/samba/public}"
-          TAILSCALE_CIDR="${NFS_TAILSCALE_CIDR:-100.64.0.0/10}"
+          EXPORT_PATH="$${NFS_EXPORT_PATH:-/srv/samba/public}"
+          TAILSCALE_CIDR="$${NFS_TAILSCALE_CIDR:-100.64.0.0/10}"
 
           log() { echo "[nfs-storage $(date '+%H:%M:%S')] $*"; }
 
@@ -52,7 +52,7 @@ job "nfs-storage" {
           elif ! grep -q "$TAILSCALE_CIDR" /etc/exports 2>/dev/null; then
             # Path exists but wrong network — update in place
             log "Updating export network for $EXPORT_PATH"
-            sed -i "\|^${EXPORT_PATH}|c\\${EXPECTED}" /etc/exports
+            sed -i "\|^$${EXPORT_PATH}|c\\$${EXPECTED}" /etc/exports
             exportfs -ra
           else
             log "Exports already correct"

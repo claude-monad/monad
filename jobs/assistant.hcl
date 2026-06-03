@@ -49,20 +49,15 @@ job "assistant" {
 
     network { mode = "host" }
 
+    # raw_exec on the host (no Docker image) — runs as the node's Claude-credentialed user via
+    # rc-session-host.sh. This is what lets an assistant run on death-star/claudebox/etc., not
+    # just oraclebox1, now that Claude creds + CLI are portable to every node.
     task "session" {
-      driver = "docker"
+      driver = "raw_exec"
 
       config {
-        image      = "localhost:5000/monad-agent-mesh:latest"
-        network_mode = "host"
-        # Isolated tree: clone fresh, then run the RC session in this assistant's purpose dir.
-        entrypoint = ["/bin/bash", "-c",
-          "set -e; [ -e /work/.git ] || git clone --depth 50 \"$REPO_URL\" /work; exec bash /work/scripts/rc-session.sh"]
-        volumes = [
-          "/home/ubuntu/.claude:/home/ubuntu/.claude",
-          "/home/ubuntu/.claude.json:/home/ubuntu/.claude.json",
-          "/usr/bin/nomad:/usr/local/bin/nomad:ro",
-        ]
+        command = "/bin/bash"
+        args    = ["-c", "W=/tmp/assistant-${NOMAD_META_name}-monad; if [ -d \"$W/.git\" ]; then git -C \"$W\" fetch -q origin main && git -C \"$W\" reset --hard -q origin/main || true; else rm -rf \"$W\"; git clone -q --depth 1 https://github.com/eliott-monad/monad \"$W\"; fi; exec bash \"$W/scripts/rc-session-host.sh\""]
       }
 
       template {
@@ -75,10 +70,8 @@ job "assistant" {
         RC_NAME    = "${NOMAD_META_name}"
         RC_MODEL   = "${NOMAD_META_model}"
         RC_EFFORT  = "${NOMAD_META_effort}"
-        RC_CWD     = "/work/assistants/${NOMAD_META_name}"
         REPO_URL   = "https://github.com/eliott-monad/monad"
-        NOMAD_ADDR = "http://100.125.210.126:4646"
-        PATH       = "/work/scripts:/home/ubuntu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        NOMAD_ADDR = "http://100.75.75.39:4646"
       }
 
       resources {

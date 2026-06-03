@@ -12,9 +12,14 @@ job "concierge" {
   type        = "service"
   priority    = 80
 
+  # raw_exec on a Linux host (no Docker image) — runs as the node's Claude-credentialed user.
   constraint {
-    attribute = "${node.unique.name}"
-    value     = "oraclebox1"
+    attribute = "${attr.kernel.name}"
+    value     = "linux"
+  }
+  constraint {
+    attribute = "${attr.driver.raw_exec}"
+    value     = "1"
   }
 
   group "concierge" {
@@ -35,19 +40,14 @@ job "concierge" {
 
     network { mode = "host" }
 
+    # raw_exec: clone monad fresh, then rc-session-host.sh runs rc-session.sh as the host's
+    # Claude-credentialed user. No node-local Docker image → runs on any Claude-ready node.
     task "concierge" {
-      driver = "docker"
+      driver = "raw_exec"
 
       config {
-        image      = "localhost:5000/monad-agent-mesh:latest"
-        network_mode = "host"
-        entrypoint = ["/bin/bash", "-c",
-          "set -e; [ -e /work/.git ] || git clone --depth 50 \"$REPO_URL\" /work; exec bash /work/scripts/rc-session.sh"]
-        volumes = [
-          "/home/ubuntu/.claude:/home/ubuntu/.claude",
-          "/home/ubuntu/.claude.json:/home/ubuntu/.claude.json",
-          "/usr/bin/nomad:/usr/local/bin/nomad:ro",
-        ]
+        command = "/bin/bash"
+        args    = ["-c", "W=/tmp/concierge-monad; if [ -d \"$W/.git\" ]; then git -C \"$W\" fetch -q origin main && git -C \"$W\" reset --hard -q origin/main || true; else rm -rf \"$W\"; git clone -q --depth 1 https://github.com/eliott-monad/monad \"$W\"; fi; exec bash \"$W/scripts/rc-session-host.sh\""]
       }
 
       # GH token (for assistant.sh git push) + brain-controllable model/effort override.
@@ -63,10 +63,8 @@ job "concierge" {
 
       env {
         RC_NAME    = "concierge"
-        RC_CWD     = "/work/assistants/concierge"
         REPO_URL   = "https://github.com/eliott-monad/monad"
-        NOMAD_ADDR = "http://100.125.210.126:4646"
-        PATH       = "/work/scripts:/home/ubuntu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        NOMAD_ADDR = "http://100.75.75.39:4646"
       }
 
       resources {

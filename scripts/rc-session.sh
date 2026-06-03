@@ -56,6 +56,10 @@ printf '{ "model": "%s" }\n' "$MODEL" > "$CWD/.claude/settings.json" 2>/dev/null
 # so mark this dir trusted in ~/.claude.json. Edit IN PLACE (the file is bind-mounted, so a
 # temp+rename would not update it) under an flock (claude writes this file too).
 CJSON="${HOME:-/home/ubuntu}/.claude.json"
+# On a fresh host the run-user may not have ~/.claude.json yet (it's created by claude on first
+# use). Create a minimal one so the trust marking below can run — otherwise the RC server
+# refuses the untrusted workspace and the session never connects.
+[ -f "$CJSON" ] || echo '{}' > "$CJSON" 2>/dev/null || true
 if [ -f "$CJSON" ]; then
   python3 - "$CWD" "$CJSON" <<'PY' 2>/dev/null || true
 import json, sys, fcntl

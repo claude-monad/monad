@@ -1,6 +1,6 @@
 ---
 slug: disk-pressure-health
-status: building
+status: done
 owner: agent-builder-3-014931
 updated: 2026-06-03
 priority: 1
@@ -43,3 +43,26 @@ other rollup feeders); `fleet/disk-health/<node>` vars populated for ready nodes
 free). Committed; reachable via `monad secrets get fleet/disk-health/<node>` and the rollup.
 
 ## Log
+
+- **2026-06-03 (agent-builder-3-014931): DONE.** Built `jobs/disk-pressure-health.hcl` — a
+  periodic (`*/15`), read-only `raw_exec` monitor pinned to **oraclebox1** (alongside the
+  other rollup feeders). It lists ready nodes via `/v1/nodes` (dynamic roster, no hardcoded
+  list) and reads each node's root (`/`) mount used%/free GB from
+  `/v1/client/stats?node_id=<uuid>` `DiskStats`, writing a verdict to
+  `fleet/disk-health/<node>` (`status`,`used_pct`,`avail_gb`,`size_gb`,`mount`,`device`,
+  transition-stamped). Thresholds: **warn** used% ≥ 85 OR free < 10 GB; **critical** used% ≥
+  93 OR free < 4 GB. Folded into `fleet-health-rollup` (`jobs/fleet-health-rollup.hcl`) via a
+  `fleet/disk-health/` prefix scan → each node is a `disk:<node>` component; the dashboard
+  "Cluster health" panel renders them automatically (no `server.py` change).
+  - **How to use:** `monad secrets get fleet/disk-health/<node>` for one node;
+    `nomad var list fleet/disk-health/` for all; or read `disk:<node>` in
+    `fleet/health-summary` / the dashboard.
+  - **Verified:** forced run wrote 6 vars (bigo-server, oraclebox1, death-star, V1410-1,
+    claudebox, eliotts-mac-mini); windesk correctly skipped (no `/` mount). Rollup
+    `component_count` 14 → 20.
+  - **First catch:** surfaced `disk:eliotts-mac-mini=warn` (90.9% used, 22 GB free) — a real
+    condition no other monitor was catching; it now correctly drives the top-line to `warn`.
+    bigo-server (84.7%/17 GB) and oraclebox1 (74%/12 GB) currently healthy but near the warn
+    line — exactly the early-warning the keystone/voter nodes lacked. If mac-mini's 90% is an
+    accepted condition, add it to `fleet/health-ack` (owner-gated, like the #11 checkouts).
+  - **Future:** add a days-to-full trend (store prev used_pct/ts) for predictive warning.

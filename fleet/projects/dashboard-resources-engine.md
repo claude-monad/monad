@@ -1,8 +1,8 @@
 ---
 slug: dashboard-resources-engine
-status: todo
-owner: ""
-updated: ""
+status: building
+owner: agent-builder-3-012911
+updated: 2026-06-03
 priority: 1
 ---
 # Dashboard: per-node resources, overload detection, engine toggle, account usage

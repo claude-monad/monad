@@ -1,0 +1,10 @@
+{
+  "id": "t-0015",
+  "type": "infra",
+  "scope": "math-engine-test capability run (oraclebox1): claude session OK with a real Lonely-Runner finding; CODEX exits rc=0 but run-agent --quiet returns EMPTY output ('(no output)'). Fix run-agent.sh codex path: 'codex exec --quiet/-o' final-message capture (codex-cli 0.114.0) so codex sessions report their result, not just exit 0.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

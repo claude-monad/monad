@@ -229,6 +229,31 @@ def foreman_status():
     }
 
 
+def health_summary():
+    """Read the fleet-health-rollup var (fleet/health-summary): the single rollup
+    of the scattered per-monitor verdicts (raft/registry/checkout)."""
+    data = _nomad("/v1/var/fleet/health-summary") or {}
+    items = data.get("Items") or {}
+    if not items:
+        return {"available": False, "components": []}
+    comps = []
+    for pair in (items.get("components", "") or "").split(";"):
+        if not pair or "=" not in pair:
+            continue
+        name, st = pair.split("=", 1)
+        det = items.get("d_" + name.replace(":", "_"), "")
+        comps.append({"name": name, "status": st, "detail": det})
+    return {
+        "available": True,
+        "status": items.get("status", "?"),
+        "detail": items.get("detail", ""),
+        "stale": items.get("stale", "none"),
+        "foreman": items.get("foreman", ""),
+        "updated": items.get("ts", ""),
+        "components": comps,
+    }
+
+
 def state():
     return {
         "generated": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
@@ -239,6 +264,7 @@ def state():
         "events": events(),
         "backlog": backlog(),
         "foreman_status": foreman_status(),
+        "health_summary": health_summary(),
     }
 
 
@@ -249,6 +275,7 @@ _cache = {
     "generated": "warming…", "nomad_addr": NOMAD_ADDR,
     "nodes": [], "jobs": [], "peers": [], "events": [], "backlog": [],
     "foreman_status": {"available": False, "active_projects": [], "blocked_projects": []},
+    "health_summary": {"available": False, "components": []},
 }
 _cache_lock = threading.Lock()
 STATE_SECS = int(os.environ.get("STATE_SECS", "10"))
@@ -335,6 +362,20 @@ function projectRows(rows){
  return tbl(['project','status','owner','updated'],rows.map(p=>
    `<tr><td><code>${esc(p.slug)}</code></td><td>${statusPill(p.status)}</td><td>${esc(p.owner)}</td><td class="muted">${esc((p.updated||'').replace('T',' ').replace('Z',''))}</td></tr>`));
 }
+function healthPill(s){s=(s||'').toLowerCase();
+  if(s==='healthy'||s==='ok')return pill(s,'ok');
+  if(s==='warn'||s==='stale')return pill(s,'warn');
+  if(s==='critical')return pill(s,'bad');
+  return pill(s||'?','dim');}
+function renderHealth(h){
+ if(!h||!h.available)return '<p class="muted" style="padding:12px 14px">fleet/health-summary unavailable (fleet-health-rollup not run yet)</p>';
+ const head=`<p style="padding:8px 14px 0">overall ${healthPill(h.status)} <span class="muted">${esc(h.detail)}</span></p>`;
+ const rows=(h.components||[]).map(c=>
+   `<tr><td><code>${esc(c.name)}</code></td><td>${healthPill(c.status)}</td><td class="muted">${esc(c.detail)}</td></tr>`);
+ const t=tbl(['component','status','detail'],rows);
+ const meta=`<p class="muted" style="padding:0 14px 8px">foreman: ${esc(h.foreman)} · updated ${esc((h.updated||'').replace('T',' ').replace('Z',''))}</p>`;
+ return head+t+meta;
+}
 function renderForeman(f){
  if(!f||!f.available)return '<p class="muted" style="padding:12px 14px">fleet/status unavailable</p>';
  const b=f.backlog||{};
@@ -367,6 +408,7 @@ async function load(){
  const back=tbl(['#','project','status','why'],s.backlog.map(b=>
    `<tr><td>${esc(b.pri)}</td><td><b>${esc(b.project)}</b></td><td>${statusPill(b.status)}</td><td class="muted">${esc(b.why)}</td></tr>`));
  document.getElementById('app').innerHTML=
+   `<section class="full"><h2>Cluster health</h2>${renderHealth(s.health_summary)}</section>`+
    `<section><h2>Nodes</h2>${nodes}</section>`+
    `<section><h2>Mesh peers</h2>${peers}</section>`+
    `<section class="full"><h2>Fleet foreman</h2>${renderForeman(s.foreman_status)}</section>`+

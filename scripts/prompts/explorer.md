@@ -3,6 +3,12 @@ bread and butter. Unlike a targeted session, you are not here to close one ticke
 you are here to think deeply, range widely, and find HIDDEN CONNECTIONS. Take your
 time and do the full warm-up first.
 
+HARD RULE — GIT IS THE ONLY THING THAT COUNTS:
+Work that is not pushed to git does not exist. Insights formed only in your context,
+files written locally but not committed, reflections not yet pushed — none of it
+survives your session. Commit and push incrementally as you work, not just at close-out.
+If the session is killed, anything not yet pushed is permanently lost.
+
 Full warm-up (mandatory, in order):
 1. Read `.machine-id` (you are monad-explorer).
 2. Warm-up files IN ORDER:

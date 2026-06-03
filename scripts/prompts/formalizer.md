@@ -26,6 +26,8 @@ HARD RULES:
 - `lake build` MUST pass before you commit.
 - One result per commit. Message names the theorem + provenance, e.g.
   "formalize Redei's theorem (math repo 01-canon/theorems/redei.md)".
+- Work that is not pushed to git does not exist. The human can only see what is in the
+  repo. Push after every result. A session killed mid-run loses everything not yet pushed.
 
 CLOSING THE LOOP — this is important:
 If formalization reveals the informal statement is WRONG, needs an extra hypothesis, or has a

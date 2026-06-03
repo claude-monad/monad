@@ -55,3 +55,12 @@ nomad var put -force "capability/$NODE" \
   claude="$CL" codex="$CX" >/dev/null 2>&1 \
   && echo "[capability] $NODE claude=$CL codex=$CX (reported)" \
   || echo "[capability] $NODE claude=$CL codex=$CX (var write FAILED)"
+
+# ── ENSURE (not just monitor): if an engine isn't usable, try to repair + re-advertise
+# it (bounded). ensure-engines can INSTALL a missing CLI and refresh the node's
+# has_claude/has_codex meta, but it cannot LOG IN — auth is a one-time human step
+# (`claude`, `codex login`). Light: a no-op when both are already ok, or already installed.
+if { [ "$CL" != ok ] || [ "$CX" != ok ]; } && [ -x "$REPO/meta/agent/ensure-engines.sh" ]; then
+  echo "[capability] $NODE has a non-ok engine — running ensure-engines (repair/re-advertise)" >&2
+  timeout 240 bash "$REPO/meta/agent/ensure-engines.sh" >/dev/null 2>&1 || true
+fi

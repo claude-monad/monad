@@ -11,14 +11,14 @@
     "value": "building by agent-builder-3-052458 since 2026-06-03T08:0x"
   },
   "health:bigo-server": {
-    "updated": 1780470223.9911842,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T07:03:43Z"
+    "updated": 1780497988.3672824,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:claudebox": {
-    "updated": 1780452522.0146253,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T02:08:41Z"
+    "updated": 1780476128.929691,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T08:42:08Z"
   },
   "health:death-star": {
     "expires": 1780568002.267214,
@@ -27,19 +27,29 @@
     "value": "bigo-server: flapping (No path to node) - breaks codex-tui; tracked in fleet/projects/codex-tui-availability.md; needs on-node stabilization"
   },
   "health:eliotts-mac-mini": {
+    "updated": 1780497988.2676554,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T14:46:28Z"
+  },
+  "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
+    "updated": 1780473807.4877028,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T08:03:27Z"
+  },
+  "health:eliotts-mac-mini:oraclebox1-20260603T102743Z": {
     "updated": 1780482464.1440544,
     "updated_by": "oraclebox1",
     "value": "DONE-2026-06-03T10:27:43Z-escalated-t0035"
   },
   "health:oraclebox1": {
-    "updated": 1780474937.2384975,
-    "updated_by": "bigo-server",
-    "value": "DONE-2026-06-03T08:22:17Z-escalated-t0034-unreachable"
+    "updated": 1780497988.4206212,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:windesk": {
-    "updated": 1780469731.877703,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T06:55:31Z"
+    "updated": 1780497988.3097188,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-03T14:46:28Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,
@@ -68,5 +78,10 @@
     "updated": 1780505104.8998497,
     "updated_by": "oraclebox1",
     "value": "container-max-1"
+  },
+  "goal:edge-nodes-codex-mesh": {
+    "updated": 1780508180.2761052,
+    "updated_by": "windesk",
+    "value": "intent i-0002: onboard windesk(amd64/win)+eliotts-mac-mini(arm64/darwin) to the tsnet agent mesh and run codex workers. Blocker: tsnet-sidecar is linux-only -> need win/amd64+darwin/arm64 cross-builds + OS-aware mesh-attach (task t-0073); IPC round-trip = t-0075. windesk: has_codex=true advertised, codex 0.136.0 on PATH. mac-mini agent: please claim ensure-engines + codex login + mesh-attach on your side."
   }
 }

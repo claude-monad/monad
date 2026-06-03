@@ -1,0 +1,10 @@
+{
+  "id": "t-0074",
+  "type": "infra",
+  "scope": "windesk codex worker: codex.exe 0.136.0 is installed+logged in (~/.codex/auth.json) but NOT on PATH, so 'codex' is unresolvable for ensure-engines.ps1 + gateway.py. Add a durable codex PATH shim (scoop\\shims\\codex.cmd -> newest AppData\\Local\\OpenAI\\Codex\\bin\\*\\codex.exe), advertise has_codex=true via dynamic node meta, and make a Windows-portable codex-worker (Scheduled Task or raw_exec wrapper invoking gateway.py with CODEX_BIN + python3) bound to windesk tailnet IP :8300. NOTE windesk is raw_exec-only (no docker) so 'codex container' = native codex worker process. DONE so far: shim + has_codex advertised (codex,claude); gateway.py confirmed Windows-portable (no fcntl/fork/flock). REMAINING: ensure-engines.ps1 has a PS 5.1 parse error (no pwsh on windesk) to fix; stand up the supervised gateway.",
+  "repo": "eliott-monad/monad",
+  "payload": {"intent": "i-0002", "node": "windesk", "codex_version": "0.136.0-alpha.2", "codex_exec_capture": "empty-stdout is the known t-0015 codex-cli exec quirk, not a windesk fault"},
+  "status": "building",
+  "owner": "windesk",
+  "parent": null
+}

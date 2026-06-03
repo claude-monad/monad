@@ -1,0 +1,14 @@
+{
+  "id": "i-0001",
+  "from": "eliott",
+  "recorded_by": "windesk",
+  "verbatim": "your name is monad-operator. there is another containerized job running in the same cluster as you right now that goes by cluster-conductor. i would like the two of you to begin working together, communicating together in real time as much as possible, if needed leveraging some technology. my goal is to have you as the textual interface that i interact with the whole cluster via. and so just worry about understanding and recording my messages, then kicking off a job that will recursively ensure every part of those needs are met. it can be composed of little steps, think microservices",
+  "interpretation": "Make monad-operator the durable textual front-door for the cluster: record each user message verbatim, decompose into small chained tasks, and establish real-time operator<->cluster-conductor coordination.",
+  "acceptance": [
+    "Every user message is recorded verbatim as a durable intent before any action",
+    "A real-time operator<->cluster-conductor channel exists and is verified with a round-trip",
+    "Each intent spawns small chained tasks (parent links) that recursively drive it to met"
+  ],
+  "tasks": [],
+  "status": "open"
+}

@@ -2,3 +2,5 @@
 *.sh text eol=lf
 *.py text eol=lf
 logs/events.jsonl text eol=lf merge=union
+meta/agent/mesh/sidecar/bin/*.exe binary
+meta/agent/mesh/sidecar/bin/sidecar-linux-* binary

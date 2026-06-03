@@ -66,7 +66,9 @@ job "health-history" {
         image   = "postgres:16-alpine"
         command = "/bin/bash"
         args    = ["/local/snapshot.sh"]
-        volumes = ["local:/local"]
+        # Nomad's docker driver auto-mounts the task dirs (/local, /secrets, /alloc), so
+        # /local/snapshot.sh and the rendered secrets/pg.env env are available without an
+        # explicit volume (an explicit local:/local would be a "Duplicate mount point").
       }
 
       # Postgres password -> env var, rendered from the Nomad var store (never in git/logs).

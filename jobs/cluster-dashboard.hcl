@@ -66,7 +66,7 @@ SCRIPT
 
       env {
         NOMAD_ADDR    = "http://100.75.75.39:4646"
-        DASH_RELEASE  = "2026-06-03T02-30-00Z-resources-engine"
+        DASH_RELEASE  = "2026-06-03T04-40-00Z-health-trend"
         # Chattable node gateways (conductor is built-in). name=url, comma-separated.
         GATEWAYS      = "claudebox=http://100.87.219.108:8201"
       }

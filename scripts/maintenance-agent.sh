@@ -88,7 +88,20 @@ detect_engine_user() {
   done
   [ -n "$ENGINE_USER" ] || return 0
   ENGINE_REPO="$ENGINE_HOME/.cache/monad-maint"
-  if su - "$ENGINE_USER" -c "set -e; if [ -d '$ENGINE_REPO/.git' ]; then git -C '$ENGINE_REPO' fetch --depth 1 origin main -q && git -C '$ENGINE_REPO' reset --hard origin/main -q; else mkdir -p '$ENGINE_HOME/.cache'; git clone --depth 1 https://github.com/eliott-monad/monad '$ENGINE_REPO' -q; fi" 2>/dev/null && [ -f "$ENGINE_REPO/meta/agent/run-agent.sh" ]; then
+  if su - "$ENGINE_USER" -c "
+    set -e
+    if [ -d '$ENGINE_REPO/.git' ]; then
+      if git -C '$ENGINE_REPO' rev-parse --is-shallow-repository 2>/dev/null | grep -q '^true$'; then
+        git -C '$ENGINE_REPO' fetch --unshallow origin main -q
+      else
+        git -C '$ENGINE_REPO' fetch origin main -q
+      fi
+      git -C '$ENGINE_REPO' reset --hard origin/main -q
+    else
+      mkdir -p '$ENGINE_HOME/.cache'
+      git clone https://github.com/eliott-monad/monad '$ENGINE_REPO' -q
+    fi
+  " 2>/dev/null && [ -f "$ENGINE_REPO/meta/agent/run-agent.sh" ]; then
     DROP_PRIV=1; AGENT_REPO="$ENGINE_REPO"
     log "engine runs as non-root user '$ENGINE_USER' (engines: $DROP_ENGINES) from $ENGINE_REPO"
     event "maintenance" "engine-user" "ok" "$ENGINE_USER engines=$DROP_ENGINES"

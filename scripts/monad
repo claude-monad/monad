@@ -72,6 +72,12 @@ Livestream:
   monad stream dashboard            Print dashboard URL
   monad stream key <platform> <key> Set a stream key (youtube, twitch)
 
+Codex workers (no remote-control; reach via tailnet gateway / tmux SSH):
+  monad codex ask <node> <text>     Ask a codex worker (text gateway, door 1)
+  monad codex connect <node>        Attach to its interactive tmux session (door 2)
+  monad codex status <node>         Show a codex worker's gateway health
+  monad codex list                  List deployed codex-worker allocations
+
 Health:
   monad doctor                      Run node-doctor health check now
   monad doctor --cluster            Run cluster-wide watchdog check
@@ -437,6 +443,63 @@ cmd_stream() {
         *)
             err "Unknown stream subcommand: $subcmd"
             echo "Available: status, go-live, stop, dashboard, key"
+            return 1
+            ;;
+    esac
+}
+
+# ─── Codex worker commands ─────────────────────────────────────────────────
+# Codex CLI has no `remote-control`; reach codex workers via their tailnet
+# gateway (door 1) or an interactive tmux session over Tailscale SSH (door 2).
+# See codex-worker/README.md.
+
+CODEX_PORT="${CODEX_PORT:-8300}"
+
+_codex_ip() {
+    local node="$1"
+    [ -z "$node" ] && return 1
+    # already an IP?
+    case "$node" in
+        100.*|[0-9]*.[0-9]*.[0-9]*.[0-9]*) echo "$node"; return 0 ;;
+    esac
+    tailscale ip -4 "$node" 2>/dev/null | head -1
+}
+
+cmd_codex() {
+    local subcmd="${1:-}"; shift || true
+    case "$subcmd" in
+        ask)
+            local node="${1:-}"; shift || true
+            local text="$*"
+            [ -z "$node" ] || [ -z "$text" ] && { err "Usage: monad codex ask <node> <text>"; return 1; }
+            local ip; ip="$(_codex_ip "$node")"
+            [ -z "$ip" ] && { err "Cannot resolve tailnet IP for '$node'"; return 1; }
+            curl -s --max-time 620 -X POST "http://${ip}:${CODEX_PORT}/ask" \
+                ${CODEX_TOKEN:+-H "Authorization: Bearer $CODEX_TOKEN"} \
+                --data-binary "$text" || { err "Cannot reach codex gateway at ${ip}:${CODEX_PORT}"; return 1; }
+            ;;
+        connect)
+            local node="${1:-}"
+            [ -z "$node" ] && { err "Usage: monad codex connect <node>"; return 1; }
+            log "Attaching to codex tmux session on $node (Ctrl-b d to detach)..."
+            exec ssh "$node" -t 'tmux attach -t codex-worker || codex'
+            ;;
+        status)
+            local node="${1:-}"
+            [ -z "$node" ] && { err "Usage: monad codex status <node>"; return 1; }
+            local ip; ip="$(_codex_ip "$node")"
+            [ -z "$ip" ] && { err "Cannot resolve tailnet IP for '$node'"; return 1; }
+            curl -s --max-time 15 "http://${ip}:${CODEX_PORT}/health" | python3 -m json.tool 2>/dev/null \
+                || { err "Cannot reach codex gateway at ${ip}:${CODEX_PORT}"; return 1; }
+            ;;
+        list)
+            log "Codex worker allocations:"
+            nomad job status codex-worker 2>/dev/null | sed -n '/Allocations/,$p' \
+                || warn "codex-worker job not deployed (deploy jobs/codex-worker.hcl)"
+            ;;
+        *)
+            err "Unknown codex subcommand: $subcmd"
+            echo "Available: ask <node> <text>, connect <node>, status <node>, list"
             return 1
             ;;
     esac
@@ -912,6 +975,7 @@ main() {
         node-drain)       cmd_node_drain "$@" ;;
         node-eligibility) cmd_node_eligibility "$@" ;;
         stream)           cmd_stream "$@" ;;
+        codex)            cmd_codex "$@" ;;
         doctor)           cmd_doctor "$@" ;;
         memory)           "$REPO_DIR/scripts/cluster-memory.sh" "$@" ;;
         secrets)          cmd_secrets "$@" ;;

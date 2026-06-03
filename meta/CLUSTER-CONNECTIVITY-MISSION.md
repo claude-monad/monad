@@ -102,6 +102,23 @@ human session) contend on the shared credential and can stall conductor calls. O
 the conductor as the sole live consumer, or stagger the other jobs. Robust fix (queued):
 a single warm `--input-format stream-json` backend behind both doors.
 
+## Codex workers (deployed 2026-06-03)
+
+Some nodes run **OpenAI Codex** instead of Claude. Codex has no `remote-control`
+command (that is Claude-Code-specific), so codex workers can't be attached from the
+Claude app. They get the cluster's model-agnostic connectivity instead — **two doors,
+one codex brain**, mirroring the conductor:
+
+- **Door 1 — text gateway** (`codex-worker/gateway.py`, port **8300** on the node's
+  tailnet IP): `monad codex ask <node> '<text>'` or
+  `curl -s -X POST http://<node-ip>:8300/ask -d '...'`. Continuity-preserving.
+- **Door 2 — interactive**: a live `codex` TUI in tmux, attached over Tailscale SSH:
+  `monad codex connect <node>`.
+
+Supervised by `jobs/codex-worker.hcl` (`system` job, runs on every node tagged
+`meta.codex = "true"`). See `codex-worker/README.md`. As of 2026-06-03, `bigo-server`
+is back online and runs codex.
+
 ## Per-machine tasks (each node works toward full connectivity + uptime)
 
 Measured continuously by the `cluster-uptime` Nomad periodic job →

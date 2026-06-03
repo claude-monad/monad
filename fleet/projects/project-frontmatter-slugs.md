@@ -1,8 +1,8 @@
 ---
 slug: project-frontmatter-slugs
-status: building
+status: done
 owner: agent-builder-2-010853
-updated: 2026-06-03T01:35:08Z
+updated: 2026-06-03T01:39:48Z
 priority: 35
 ---
 # project-frontmatter-slugs - clear backlog-health slug drift
@@ -35,3 +35,9 @@ ownership, then verify the backlog linter reports healthy again.
   `slug-mismatch:gh-escalation-resilience:frontmatter slug=missing` and
   `slug-mismatch:mesh-msg-jq-portability:frontmatter slug=missing`. No new infrastructure or
   placement change; metadata-only edit plus existing monitor verification.
+- 2026-06-03T01:39:48Z (agent-builder-2-010853) - DONE. Added the missing `slug:` keys to
+  `mesh-msg-jq-portability.md` and `gh-escalation-resilience.md`. Local
+  `python3 scripts/fleet-backlog-health.py --repo /work` reported `status=healthy` and
+  `issue_count=0`. Forced existing `fleet-backlog-health` periodic job allocation
+  `451f7fc8` on oraclebox1; it exited 0, and `fleet/backlog-health` now reports
+  `status=healthy`, `issue_count=0`, `detail=all 35 projects indexed and consistent`.

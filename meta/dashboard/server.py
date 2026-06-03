@@ -19,6 +19,7 @@ Env:
   REFRESH_SECS  git pull interval (default 60)
   EVENT_STREAM_SECS  event-stream check interval (default 5)
 """
+import concurrent.futures
 import json
 import os
 import re
@@ -26,6 +27,7 @@ import subprocess
 import threading
 import time
 import urllib.request
+from collections import deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 NOMAD_ADDR = os.environ.get("NOMAD_ADDR", "http://100.75.75.39:4646").rstrip("/")
@@ -107,10 +109,10 @@ def chat_route(target, text):
     return r.get("reply") or json.dumps(r)
 
 
-def _nomad(path):
+def _nomad(path, timeout=8):
     """GET a Nomad API path, returning parsed JSON or None on failure."""
     try:
-        with urllib.request.urlopen(f"{NOMAD_ADDR}{path}", timeout=8) as r:
+        with urllib.request.urlopen(f"{NOMAD_ADDR}{path}", timeout=timeout) as r:
             return json.loads(r.read().decode())
     except Exception:
         return None
@@ -346,6 +348,218 @@ def capabilities():
     return sorted(out, key=lambda x: x["node"])
 
 
+# ── per-node resources + overload detection ────────────────────────────────────
+# allocated-vs-total + live utilization for CPU / memory / disk, from the Nomad API:
+#   /v1/node/<id>              → NodeResources (capacity)
+#   /v1/node/<id>/allocations  → running allocs' AllocatedResources (reserved)
+#   /v1/client/stats?node_id=… → live CPU% / memory / disk (server proxies to client)
+# A node is flagged stressed NOW if mem or disk ≥ STRESS_PCT or CPU ≥ STRESS_CPU_PCT,
+# and SUSTAINED if it has stayed over threshold across the last ~STRESS_WINDOW samples
+# (a short in-process rolling poll, ~5min at the 10s state refresh).
+STRESS_PCT = int(os.environ.get("STRESS_PCT", "85"))          # mem/disk threshold
+STRESS_CPU_PCT = int(os.environ.get("STRESS_CPU_PCT", "90"))  # cpu threshold
+STRESS_WINDOW = int(os.environ.get("STRESS_WINDOW", "30"))    # samples kept per node
+STRESS_MIN_SAMPLES = int(os.environ.get("STRESS_MIN_SAMPLES", "6"))  # min before "sustained"
+_util_hist = {}  # node name -> deque[(cpu_pct, mem_pct, disk_pct)]
+_util_hist_lock = threading.Lock()
+
+
+def _alloc_by_node():
+    """Sum running allocations' CPU(MHz)/mem(MB) per NodeID in ONE cluster-wide call
+    (`?resources=true` embeds AllocatedResources in the stubs), instead of a slow
+    per-node /allocations fetch."""
+    out = {}
+    for a in (_nomad("/v1/allocations?resources=true", timeout=8) or []):
+        if a.get("ClientStatus") != "running":
+            continue
+        nid = a.get("NodeID")
+        if not nid:
+            continue
+        cpu = mem = 0
+        for _t, tr in ((a.get("AllocatedResources", {}) or {}).get("Tasks", {}) or {}).items():
+            cpu += (tr.get("Cpu", {}) or {}).get("CpuShares", 0) or 0
+            mem += (tr.get("Memory", {}) or {}).get("MemoryMB", 0) or 0
+        c, m = out.get(nid, (0, 0))
+        out[nid] = (c + cpu, m + mem)
+    return out
+
+
+def _node_resource(n, alloc_map):
+    nid = n.get("ID")
+    name = n.get("Name", "?")
+    detail = _nomad(f"/v1/node/{nid}", timeout=3) or {}
+    nr = detail.get("NodeResources", {}) or {}
+    cpu_total = (nr.get("Cpu", {}) or {}).get("CpuShares") or 0
+    cores = (nr.get("Cpu", {}) or {}).get("TotalCpuCores") or 0
+    mem_total_mb = (nr.get("Memory", {}) or {}).get("MemoryMB") or 0
+
+    cpu_alloc, mem_alloc = alloc_map.get(nid, (0, 0))
+
+    stats = _nomad(f"/v1/client/stats?node_id={nid}", timeout=3) or {}
+    cpu_pct = mem_pct = disk_pct = None
+    mem_used_mb = None
+    cpus = stats.get("CPU") or []
+    if cpus:
+        cpu_pct = round(sum((c.get("TotalPercent") or 0) for c in cpus) / len(cpus), 1)
+    mem = stats.get("Memory") or {}
+    if mem.get("Total"):
+        mem_pct = round(100.0 * (mem.get("Used", 0) or 0) / mem["Total"], 1)
+        mem_used_mb = round((mem.get("Used", 0) or 0) / 1048576)
+        mem_total_mb = round(mem["Total"] / 1048576)  # live total is authoritative
+    disk_used = disk_size = None
+    dstats = stats.get("DiskStats") or []
+    root = next((d for d in dstats if d.get("Mountpoint") == "/"), None)
+    if root is None and dstats:
+        root = max(dstats, key=lambda x: x.get("Size", 0) or 0)
+    if root:
+        disk_pct = round(root.get("UsedPercent", 0) or 0, 1)
+        disk_used = root.get("Used")
+        disk_size = root.get("Size")
+
+    return {
+        "node": name,
+        "status": n.get("Status", "?"),
+        "cores": cores,
+        "cpu": {"alloc": cpu_alloc, "total": cpu_total,
+                "alloc_pct": round(100.0 * cpu_alloc / cpu_total, 1) if cpu_total else None,
+                "util_pct": cpu_pct},
+        "mem": {"alloc_mb": mem_alloc, "total_mb": mem_total_mb, "used_mb": mem_used_mb,
+                "alloc_pct": round(100.0 * mem_alloc / mem_total_mb, 1) if mem_total_mb else None,
+                "util_pct": mem_pct},
+        "disk": {"used": disk_used, "total": disk_size, "util_pct": disk_pct},
+    }
+
+
+def node_resources():
+    nlist = _nomad("/v1/nodes") or []
+    if not nlist:
+        return []
+    alloc_map = _alloc_by_node()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+        results = list(ex.map(lambda n: _node_resource(n, alloc_map), nlist))
+
+    with _util_hist_lock:
+        for r in results:
+            cpu_p, mem_p, disk_p = r["cpu"]["util_pct"], r["mem"]["util_pct"], r["disk"]["util_pct"]
+            if cpu_p is None and mem_p is None and disk_p is None:
+                r["stress"] = "unknown"
+                r["stress_reason"] = "no live stats (client unreachable)"
+                continue
+            h = _util_hist.setdefault(r["node"], deque(maxlen=STRESS_WINDOW))
+            h.append((cpu_p, mem_p, disk_p))
+
+            now = []
+            if mem_p is not None and mem_p >= STRESS_PCT:
+                now.append(f"mem {mem_p:.0f}%")
+            if disk_p is not None and disk_p >= STRESS_PCT:
+                now.append(f"disk {disk_p:.0f}%")
+            if cpu_p is not None and cpu_p >= STRESS_CPU_PCT:
+                now.append(f"cpu {cpu_p:.0f}%")
+
+            sustained = []
+            if len(h) >= STRESS_MIN_SAMPLES:
+                cpus_h = [s[0] for s in h if s[0] is not None]
+                mems_h = [s[1] for s in h if s[1] is not None]
+                disks_h = [s[2] for s in h if s[2] is not None]
+                if mems_h and all(v >= STRESS_PCT for v in mems_h):
+                    sustained.append("mem")
+                if disks_h and all(v >= STRESS_PCT for v in disks_h):
+                    sustained.append("disk")
+                if cpus_h and all(v >= STRESS_CPU_PCT for v in cpus_h):
+                    sustained.append("cpu")
+
+            if sustained:
+                r["stress"] = "bad"
+                r["stress_reason"] = ("sustained " + "+".join(sustained)
+                                      + f" ≥thr over {len(h)} samples")
+            elif now:
+                r["stress"] = "warn"
+                r["stress_reason"] = "high: " + ", ".join(now)
+            else:
+                r["stress"] = "ok"
+                r["stress_reason"] = ""
+
+    # most-stressed first (bad > warn > ok > unknown), then by name
+    rank = {"bad": 0, "warn": 1, "ok": 2, "unknown": 3}
+    return sorted(results, key=lambda x: (rank.get(x.get("stress"), 9), x["node"]))
+
+
+# node_resources() fans out 3 Nomad calls per node and can take ~20s when a client is
+# flaky, so it gets its own slower cache + thread — the main /api/state snapshot must
+# never block on it (and this also drives the rolling-overload history at a steady rate).
+RES_SECS = int(os.environ.get("RES_SECS", "15"))
+_res_cache = []
+_res_lock = threading.Lock()
+
+
+def resource_refresher():
+    global _res_cache
+    while True:
+        try:
+            r = node_resources()
+            with _res_lock:
+                _res_cache = r
+        except Exception:
+            pass
+        time.sleep(RES_SECS)
+
+
+def cached_resources():
+    with _res_lock:
+        return _res_cache
+
+
+# ── engine toggle (cluster-wide default: claude | codex | auto) ─────────────────
+# engines.sh reads this var, so flipping it changes what new agents launch with.
+ENGINE_VALID = ("claude", "codex", "auto")
+
+
+def engine_config():
+    items = (_nomad("/v1/var/cluster/engine") or {}).get("Items") or {}
+    return {
+        "engine": items.get("engine", "auto"),
+        "set_by": items.get("set_by", ""),
+        "updated": items.get("updated", ""),
+        "valid": list(ENGINE_VALID),
+    }
+
+
+def set_engine(engine):
+    """Write cluster/engine. Raises ValueError on a bad value, RuntimeError on API fail."""
+    engine = (engine or "").strip().lower()
+    if engine not in ENGINE_VALID:
+        raise ValueError(f"engine must be one of {ENGINE_VALID}")
+    payload = {"Path": "cluster/engine", "Items": {
+        "engine": engine, "set_by": "dashboard",
+        "updated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}}
+    req = urllib.request.Request(
+        f"{NOMAD_ADDR}/v1/var/cluster/engine",
+        data=json.dumps(payload).encode(), method="PUT",
+        headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=8) as r:
+            r.read()
+    except Exception as e:
+        raise RuntimeError(f"Nomad var write failed: {e}")
+    return engine_config()
+
+
+def account_usage():
+    """Placeholder for Anthropic (Claude) + OpenAI (Codex) account usage/limits.
+    A real source (CLI /usage output, provider APIs, or session-metric parsing) is not
+    yet settled — see fleet project dashboard-resources-engine §4. Stubbed but shaped so
+    a panel can render now and light up when data is wired."""
+    return {
+        "available": False,
+        "note": "account usage/limits not yet wired — see fleet project "
+                "dashboard-resources-engine §4 (sources TBD)",
+        "providers": [
+            {"provider": "anthropic", "label": "Claude (Anthropic)", "status": "not wired"},
+            {"provider": "openai", "label": "Codex (OpenAI)", "status": "not wired"},
+        ],
+    }
+
+
 def state():
     return {
         "generated": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
@@ -358,6 +572,9 @@ def state():
         "foreman_status": foreman_status(),
         "health_summary": health_summary(),
         "capabilities": capabilities(),
+        "resources": cached_resources(),
+        "engine": engine_config(),
+        "usage": account_usage(),
     }
 
 
@@ -370,6 +587,9 @@ _cache = {
     "foreman_status": {"available": False, "active_projects": [], "blocked_projects": []},
     "health_summary": {"available": False, "components": []},
     "capabilities": [],
+    "resources": [],
+    "engine": {"engine": "auto", "set_by": "", "updated": "", "valid": list(ENGINE_VALID)},
+    "usage": {"available": False, "providers": []},
 }
 _cache_lock = threading.Lock()
 STATE_SECS = int(os.environ.get("STATE_SECS", "10"))
@@ -423,6 +643,15 @@ tr:last-child td{border-bottom:0}
 .ok{background:#1a3326;color:#3fb950}.warn{background:#3a2d12;color:#d29922}
 .bad{background:#3a1a1f;color:#f85149}.dim{background:#21262d;color:#8b949e}
 .full{grid-column:1/-1}
+.bw{position:relative;background:#21262d;border-radius:5px;height:16px;min-width:120px;overflow:hidden}
+.bf{position:absolute;left:0;top:0;bottom:0;border-radius:5px}
+.bf.ok{background:#238636}.bf.warn{background:#9e6a03}.bf.bad{background:#b62324}.bf.dim{background:#30363d}
+.bl{position:relative;z-index:1;font:11px ui-monospace,monospace;line-height:16px;padding-left:6px;color:#e6edf3}
+.sub{font-size:11px;color:#7d8590;margin-top:3px}
+button.eng{font:13px inherit;background:#0d1117;color:#c9d1d9;border:1px solid #30363d;border-radius:6px;padding:5px 12px;cursor:pointer;text-transform:capitalize}
+button.eng.on{background:#1f6feb;border-color:#1f6feb;color:#fff;font-weight:600}
+button.eng:disabled{cursor:default}
+#eng-msg{font-size:12px;color:#7d8590}
 code{font:12px ui-monospace,monospace;color:#a5d6ff}
 .ev{font:12px ui-monospace,monospace}
 #chat{margin:18px 20px 0;background:#161b22;border:1px solid #30363d;border-radius:8px}
@@ -505,6 +734,59 @@ function renderForeman(f){
    `<tr><td>${esc(b.todo)}</td><td>${esc(b.claimed)}</td><td>${esc(b.building)}</td><td>${esc(b.review)}</td><td>${esc(b.blocked)}</td><td>${esc(b.done)}</td></tr>`]);
  return `${top}${counts}<h2>Active projects</h2>${projectRows(f.active_projects)}<h2>Blocked projects</h2>${projectRows(f.blocked_projects)}`;
 }
+function utilClass(p){if(p==null)return 'dim';if(p>=85)return 'bad';if(p>=70)return 'warn';return 'ok';}
+function bar(p){if(p==null)return '<span class="muted">—</span>';
+ const c=utilClass(p);
+ return `<div class="bw"><div class="bf ${c}" style="width:${Math.min(100,p)}%"></div><span class="bl">${p.toFixed(0)}%</span></div>`;}
+function fmtMB(mb){if(mb==null)return '—';return mb>=1024?(mb/1024).toFixed(1)+' GiB':mb+' MiB';}
+function fmtBytes(b){if(b==null)return '—';const g=b/1073741824;return g>=1?g.toFixed(1)+' GiB':(b/1048576).toFixed(0)+' MiB';}
+function fmtMHz(m){if(m==null)return '—';return m>=1000?(m/1000).toFixed(1)+' GHz':m+' MHz';}
+function stressPill(s){
+ if(s==='bad')return pill('overloaded','bad');
+ if(s==='warn')return pill('high','warn');
+ if(s==='unknown')return pill('no stats','dim');
+ return pill('ok','ok');}
+function renderResources(rs){
+ if(!rs||!rs.length)return '<p class="muted" style="padding:12px 14px">no resource data (Nomad client stats unavailable)</p>';
+ const rows=rs.map(r=>{
+  const cpu=r.cpu||{},mem=r.mem||{},disk=r.disk||{};
+  const reason=r.stress_reason?` <span class="muted">${esc(r.stress_reason)}</span>`:'';
+  return `<tr>
+   <td><b>${esc(r.node)}</b>${r.cores?` <span class="muted">${esc(r.cores)} cores</span>`:''}<br>${stressPill(r.stress)}${reason}</td>
+   <td>${bar(cpu.util_pct)}<div class="sub">alloc ${fmtMHz(cpu.alloc)} / ${fmtMHz(cpu.total)}${cpu.alloc_pct!=null?` (${cpu.alloc_pct.toFixed(0)}%)`:''}</div></td>
+   <td>${bar(mem.util_pct)}<div class="sub">used ${fmtMB(mem.used_mb)} / ${fmtMB(mem.total_mb)} · alloc ${fmtMB(mem.alloc_mb)}${mem.alloc_pct!=null?` (${mem.alloc_pct.toFixed(0)}%)`:''}</div></td>
+   <td>${bar(disk.util_pct)}<div class="sub">${fmtBytes(disk.used)} / ${fmtBytes(disk.total)}</div></td>
+  </tr>`;});
+ return tbl(['node','cpu (live · allocated)','memory (live · allocated)','disk /'],rows);
+}
+function renderEngine(e){
+ if(!e)return '';
+ const cur=(e.engine||'auto').toLowerCase();
+ const btns=(e.valid||['claude','codex','auto']).map(v=>
+   `<button class="eng${v===cur?' on':''}" data-eng="${esc(v)}"${v===cur?' disabled':''}>${esc(v)}</button>`).join('');
+ const meta=`<span class="muted">current: <b>${esc(cur)}</b>${e.set_by?` · set by ${esc(e.set_by)}`:''}${e.updated?` · ${esc(e.updated.replace('T',' ').replace('Z',''))}`:''}</span>`;
+ return `<div style="padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+   <span class="muted">new agents launch with:</span>${btns}<span id="eng-msg"></span></div>
+   <p class="muted" style="padding:0 14px 10px">${meta}<br>Flips <code>cluster/engine</code>; <code>engines.sh</code> reads it, so this changes the engine new agents start with (running agents keep theirs).</p>`;
+}
+function renderUsage(u){
+ if(!u)return '';
+ const rows=(u.providers||[]).map(p=>
+   `<tr><td><b>${esc(p.label)}</b></td><td>${statusPill(p.status)}</td><td class="muted">—</td></tr>`);
+ const t=tbl(['account','status','headroom'],rows);
+ return t+`<p class="muted" style="padding:0 14px 10px">${esc(u.note||'')}</p>`;
+}
+function wireEngine(){
+ document.querySelectorAll('button.eng').forEach(b=>b.onclick=async()=>{
+  const eng=b.dataset.eng,msg=document.getElementById('eng-msg');
+  document.querySelectorAll('button.eng').forEach(x=>x.disabled=true);
+  if(msg)msg.textContent='setting '+eng+'…';
+  try{const r=await(await fetch('api/engine',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({engine:eng})})).json();
+   if(r.error){if(msg)msg.textContent='error: '+r.error;}
+   else{if(msg)msg.textContent='✓ now '+r.engine;load();}
+  }catch(e){if(msg)msg.textContent='network error';}
+ });
+}
 function connectEvents(){
  if(eventStreamStarted||!window.EventSource)return;
  eventStreamStarted=true;
@@ -534,6 +816,9 @@ async function load(){
        `<tr><td><b>${esc(c.node)}</b></td><td>${capPill(c.claude)}</td><td>${capPill(c.codex)}</td><td class="muted">${esc((c.ts||'').replace('T',' ').replace('Z',''))}</td></tr>`))
    : '<p class="muted" style="padding:12px 14px">no capability reports yet — the cluster-capability job runs every 6h (force one with <code>nomad job periodic force cluster-capability</code>). ✓=ran a real autonomous math session; ran-empty/error/absent = honest failure.</p>';
  document.getElementById('app').innerHTML=
+   `<section class="full"><h2>Node resources — live utilization · allocated (CPU / memory / disk)</h2>${renderResources(s.resources)}</section>`+
+   `<section><h2>Default engine</h2>${renderEngine(s.engine)}</section>`+
+   `<section><h2>Account usage (Anthropic / OpenAI)</h2>${renderUsage(s.usage)}</section>`+
    `<section class="full"><h2>Node capabilities — autonomous math session (claude / codex)</h2>${caps}</section>`+
    `<section class="full"><h2>Cluster health</h2>${renderHealth(s.health_summary)}</section>`+
    `<section><h2>Nodes</h2>${nodes}</section>`+
@@ -542,6 +827,7 @@ async function load(){
    `<section class="full"><h2>Backlog</h2>${back}</section>`+
    `<section><h2>Jobs</h2>${jobs}</section>`+
    `<section class="full"><h2>Recent events</h2><div id="events-body">${renderEvents(s.events)}</div></section>`;
+ wireEngine();
  connectEvents();
 }
 load();setInterval(load,STATE_REFRESH_MS);
@@ -632,6 +918,21 @@ class Handler(BaseHTTPRequestHandler):
             self._send(404, "not found", "text/plain")
 
     def do_POST(self):
+        if self.path.rstrip("/") == "/api/engine":
+            try:
+                n = int(self.headers.get("Content-Length", "0") or 0)
+                body = json.loads(self.rfile.read(n) or "{}")
+            except Exception:
+                self._send(400, json.dumps({"error": "bad json"}), "application/json")
+                return
+            try:
+                cfg = set_engine(body.get("engine"))
+                self._send(200, json.dumps(cfg), "application/json")
+            except ValueError as e:
+                self._send(400, json.dumps({"error": str(e)}), "application/json")
+            except Exception as e:
+                self._send(502, json.dumps({"error": str(e)[:400]}), "application/json")
+            return
         if self.path.rstrip("/") == "/api/chat":
             try:
                 n = int(self.headers.get("Content-Length", "0") or 0)
@@ -660,6 +961,7 @@ def main():
     # STATE_SECS. _cache starts as a valid empty shape so the first request and the
     # page never error while data is still being gathered.
     threading.Thread(target=state_refresher, daemon=True).start()
+    threading.Thread(target=resource_refresher, daemon=True).start()
     print(f"[dashboard] serving on :{PORT} (nomad={NOMAD_ADDR}, repo={REPO_DIR})", flush=True)
     ThreadingHTTPServer(("0.0.0.0", PORT), Handler).serve_forever()
 

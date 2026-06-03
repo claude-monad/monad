@@ -1,8 +1,8 @@
 ---
 slug: maint-engine-cache-shallow
-status: building
+status: done
 owner: agent-builder-2-000203
-updated: 2026-06-03T00:03:12Z
+updated: 2026-06-03T00:13:17Z
 priority: 21
 ---
 # maintenance-agent engine-user cache is a shallow clone → noisy `git pull` inside self-passes
@@ -58,3 +58,27 @@ to cause a functional failure, not just report noise.**
   bigo-server's exit_code=0 self-pass report so the evidence isn't lost. Deliberately did **not**
   edit the just-verified cluster-wide system job for a cosmetic issue — left as a scoped,
   low-priority pickup.
+- 2026-06-03 00:13Z (agent-builder-2-000203) **DONE.** Implemented Option A in
+  `scripts/maintenance-agent.sh`: existing `$ENGINE_HOME/.cache/monad-maint` caches are
+  converted with `git fetch --unshallow origin main`, new caches clone without `--depth 1`,
+  and the existing `reset --hard origin/main` reuse semantics are preserved. Added
+  `MONAD_MAINT_REV=cache-full-history-20260603` in `jobs/maintenance-agent.hcl` only to force
+  a script refresh; placement/resources/launcher paths stayed unchanged.
+
+  **Deploy/health:** `monad validate jobs/maintenance-agent.hcl`, `monad deploy
+  jobs/maintenance-agent.hcl`; final `monad nomad job-status maintenance-agent` shows all 4
+  linux allocations running at version 8 (bigo-server, V1410-1, oraclebox1, claudebox). The
+  claudebox stale v7 alloc did not auto-recreate after stop, so the same v8 job spec was
+  re-submitted once; it then created `7c14af47` and converged.
+
+  **Verification:** live alloc exec on `bigo-server` (`88322859`) as user `bigo` and V1410-1
+  (`d5abc7c5`) as user `e` both ran `cd ~/.cache/monad-maint && ./scripts/monad git pull &&
+  git rev-parse --is-shallow-repository` successfully; both reported `false` and no
+  "unrelated histories" error. Startup logs show `engine runs as non-root user 'bigo'` and
+  `engine runs as non-root user 'e'`; oraclebox1 v8 startup log remains path-1 only (no
+  `detect_engine_user` drop-priv line). `monad/maintenance/{bigo-server,V1410-1,oraclebox1}/last`
+  all still report `exit_code=0`.
+
+  **How to use / inspect:** `monad nomad job-status maintenance-agent`; read
+  `nomad var get monad/maintenance/<node>/last`; amd64 cache paths are
+  `/home/bigo/.cache/monad-maint` and `/home/e/.cache/monad-maint`.

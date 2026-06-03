@@ -1,0 +1,10 @@
+{
+  "id": "t-0031",
+  "type": "math",
+  "scope": "S579/HYP-2101 follow-up (b): make the conjectural H^1 obstruction precise. Compute the intersection poset / characteristic polynomial of the certificate line arrangement {L_i} and test whether the apex flat is the UNIQUE non-transversal stratum (codim-0 forbidder) across q=3,5,7,11,13.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0030"
+}

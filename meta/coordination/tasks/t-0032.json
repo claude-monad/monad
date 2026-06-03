@@ -1,0 +1,10 @@
+{
+  "id": "t-0032",
+  "type": "math",
+  "scope": "S579/HYP-2101 follow-up (c): feed the apex whole-line section to the THM-396 pinch/shield route as the (q,q) shield (HYP-2063 open (b)). Check the apex 1/2-safe position and its sheaf degeneracy are the same object as the binding pair (q,q) partner in the n=14 shield.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0030"
+}

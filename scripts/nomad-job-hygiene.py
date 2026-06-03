@@ -92,7 +92,8 @@ def job_is_failing(job_id):
     detail, _ = status_json(job_id)
     if detail is None:
         return False
-    latest = latest_desired_run_allocs(info.get("Type") or "", detail.get("Allocations") or [])
+    latest = latest_desired_run_allocs(
+        info.get("Type") or "", detail.get("Allocations") or [], info.get("Version"))
     return any((a.get("ClientStatus") or "").lower() == "failed" for a in latest)
 
 
@@ -121,10 +122,19 @@ def status_json(job_id):
         return None, "invalid status json: %s" % exc
 
 
-def latest_desired_run_allocs(job_type, allocations):
+def latest_desired_run_allocs(job_type, allocations, current_version=None):
+    """Latest desired-run alloc per group/node.
+
+    When ``current_version`` is given, allocs from *superseded* job versions are ignored:
+    a terminal failed alloc from an older version (e.g. a node later excluded by a constraint
+    change) lingers with DesiredStatus=run until Nomad GC, and must not be read as a current
+    unhealthy alloc. Only the current version reflects the job's present desired state.
+    """
     latest = {}
     for alloc in allocations or []:
         if alloc.get("DesiredStatus") != "run":
+            continue
+        if current_version is not None and alloc.get("JobVersion") != current_version:
             continue
         if job_type == "system":
             key = "%s/%s" % (alloc.get("NodeID", ""), alloc.get("TaskGroup", ""))
@@ -181,7 +191,8 @@ def check(repo):
         if detail is None:
             issues.append("%s alloc_status_error=%s" % (spec["id"], err or "unknown"))
             continue
-        latest = latest_desired_run_allocs(spec["type"], detail.get("Allocations") or [])
+        latest = latest_desired_run_allocs(
+            spec["type"], detail.get("Allocations") or [], info.get("Version"))
         unhealthy = [a for a in latest if (a.get("ClientStatus") or "").lower() not in OK_ALLOC_STATUSES]
         if unhealthy:
             labels = [alloc_label(a) for a in unhealthy[:8]]

@@ -44,8 +44,8 @@ PROTECTED = ("cluster-conductor", "fleet-foreman", "maintenance-agent", "storage
              "node-doctor", "cluster-watchdog", "monad-sync")
 
 
-def api(path):
-    with urllib.request.urlopen(NOMAD.rstrip("/") + path, timeout=15) as r:
+def api(path, timeout=8):
+    with urllib.request.urlopen(NOMAD.rstrip("/") + path, timeout=timeout) as r:
         return json.load(r)
 
 
@@ -71,12 +71,19 @@ def node_load():
         if n.get("Status") != "ready":
             continue
         nid, name = n["ID"], n["Name"]
-        d = api(f"/v1/node/{nid}")
+        # Tolerate a slow/unreachable node: skip it rather than crash the whole pass (this runs
+        # every 5 min as a job — one hung node must not take the governor down).
+        try:
+            d = api(f"/v1/node/{nid}")
+            allocs = api(f"/v1/node/{nid}/allocations")
+        except Exception as e:
+            print(f"# warn: skipping {name} ({e})", file=sys.stderr)
+            continue
         nr = d.get("NodeResources", {})
         tot_cpu = nr.get("Cpu", {}).get("CpuShares", 0) or nr.get("Processors", {}).get("Topology", {}).get("TotalCompute", 0)
         tot_mem = nr.get("Memory", {}).get("MemoryMB", 0)
         a_cpu = a_mem = agents = 0
-        for al in api(f"/v1/node/{nid}/allocations"):
+        for al in allocs:
             if al.get("ClientStatus") != "running":
                 continue
             ar = al.get("AllocatedResources", {}) or {}

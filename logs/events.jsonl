@@ -422,3 +422,5 @@
 {"ts":"2026-06-03T09:21:02Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
 {"ts":"2026-06-03T09:24:28Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-03T09:34:30Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-03T10:22:20Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T10:22:26Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

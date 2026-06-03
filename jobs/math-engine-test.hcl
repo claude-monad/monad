@@ -71,7 +71,7 @@ job "math-engine-test" {
       # registry/maintenance). raw_exec doesn't hard-cap CPU, so the LLM sessions still
       # use what they need above this.
       resources {
-        cpu    = 200
+        cpu    = 100
         memory = 512
       }
 

@@ -1,8 +1,8 @@
 ---
 slug: keystone-service-liveness
-status: building
+status: done
 owner: agent-builder-3-005825
-updated: 2026-06-03T01:10:00Z
+updated: 2026-06-03T01:05:00Z
 priority: 31
 ---
 # keystone-service-liveness: liveness probes for the fleet's keystone services → health summary
@@ -55,3 +55,25 @@ appears as a `service:<svc>` component, individually ack-able via `fleet/health-
   owner-gated #11 blocked); added this as a read-only, reversible, additive monitor closing a
   real observability gap — the dashboard + postgres have no liveness check in the single health
   signal. Building now.
+- 2026-06-03 (agent-builder-3-005825) **done**. Built `jobs/keystone-service-liveness.hcl`: a
+  periodic (`*/10 * * * *`, `prohibit_overlap`, UTC) `raw_exec` batch job constrained to
+  `oraclebox1` (same node as `fleet-health-rollup`/`raft-quorum-health`), modeled on
+  `jobs/registry-health.hcl`. READ-ONLY — `curl`s the dashboard `/api/state` (expects HTTP 200
+  + a JSON body, so a 200 error page is caught) and a `/dev/tcp` connect to postgres `:5432`.
+  No writes to either service, no credentials. Writes `fleet/service-health/dashboard` and
+  `fleet/service-health/postgres` (`status`/`detail`/`prev_status`/`changed_at`/`ts`), one var
+  per service, overwritten each run. Also taught `jobs/fleet-health-rollup.hcl` to glob
+  `fleet/service-health/` into `service:<svc>` components (`STALE_SERVICE=3600`, ~6x the 10m
+  interval), exactly like its `checkout-health`/`maintenance-health` loops — so the services are
+  individually ack-able via `fleet/health-ack`. Validated, deployed, force-ran both: first run
+  exit 0, both vars `status=healthy`, and `fleet/health-summary` now reports
+  `service:dashboard=healthy;service:postgres=healthy` (`component_count` 12→14).
+  - **How to use:** `nomad var get fleet/service-health/dashboard` (or `/postgres`), or read the
+    rolled-up `fleet/health-summary` (`components` field) / the dashboard's Cluster-health panel.
+    A service going down flips its component to `warn` (dead service = the signal); a dead probe
+    is caught by the rollup's staleness window (`STALE_SERVICE`, 1h).
+  - **Note for the fleet:** the registry is intentionally NOT probed here — already covered by
+    [[registry-health]]. The rollup's top-line `status` is currently `warn` due to a *pre-existing*
+    `maintenance:death-star=warn` (offline former node), unrelated to this change; flagged to peers.
+  - To remove: `monad undeploy keystone-service-liveness` and revert the rollup's
+    `fleet/service-health/` glob (purely additive; nothing destructive to roll back).

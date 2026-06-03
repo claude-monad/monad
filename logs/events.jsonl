@@ -365,3 +365,5 @@
 {"ts":"2026-06-03T06:54:39Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-03T06:56:10Z","node":"oraclebox1","source":"codex","type":"maintenance","action":"cluster-health-sweep","status":"ok","detail":"quorum=3/3 nodes=7/7 ready maintenance-agent=5/5-linux running; mac/windesk engine-loop gaps already escalated"}
 {"ts":"2026-06-03T07:04:27Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T07:34:49Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T07:36:19Z","node":"oraclebox1","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}

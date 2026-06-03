@@ -1,0 +1,10 @@
+{
+  "id": "t-0030",
+  "type": "math",
+  "scope": "S579/HYP-2101 follow-up (a): compute the LIFTED line arrangement L_i over A^2(F_q) x F_p (p = least prime not dividing 2q) for ratio-spread parity-matched v at q=7 (n=14). Does adjoining the r/p time-coordinate clear the ratio-spread residual, or only the apex? Empty certificate locus = still uncorrectable. Builds on 04-computation/lrc_apex_lift_certificate_sheaf_s579.py.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

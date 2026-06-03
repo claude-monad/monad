@@ -53,3 +53,7 @@ children and does not alter Nomad server membership or cluster configs.
   `FOREMAN_REV=pending-reap-20260603`, and kept running builder agents untouched. The foreman
   records `reaped_pending` in `fleet/status`; no-actionable verification follows this done
   marker so the foreman target can drop to 1.
+- 2026-06-03T05:21:56Z (agent-builder-2-050354): Verified no-actionable cycle after restart:
+  foreman logged `reaped excess pending builder fleet-builder/dispatch-1780463039-f271af08`,
+  `fleet-builder` now has `Pending=0 Running=2`, and `fleet/status` reports `target=1`,
+  `running=2`, `reaped_pending=1`, `active_projects=none`.

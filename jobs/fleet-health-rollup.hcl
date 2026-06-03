@@ -70,6 +70,7 @@ job "fleet-health-rollup" {
         STALE_CHECKOUT = "28800"
         STALE_MAINT    = "7200"
         STALE_SERVICE  = "3600"
+        STALE_ENGINE   = "7200"
       }
 
       config {
@@ -142,11 +143,15 @@ stale_svc  = int(os.environ.get("STALE_SERVICE", "3600") or "3600")
 # disk-pressure-health (disk-pressure-health.md) probes host root-disk every 15m, one
 # var per node; ~4x the interval gives a generous staleness window.
 stale_disk = int(os.environ.get("STALE_DISK", "3600") or "3600")
+# engine-coverage-health (engine-coverage-health.md) probes agent-engine coverage every
+# 30m into one var; ~4x the interval gives a generous staleness window.
+stale_engine = int(os.environ.get("STALE_ENGINE", "7200") or "7200")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
          ("backup", "fleet/backup-health", stale_bak),
-         ("backup-restore", "fleet/backup-restore-verify", stale_brv)]
+         ("backup-restore", "fleet/backup-restore-verify", stale_brv),
+         ("engine", "fleet/engine-coverage", stale_engine)]
 for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("checkout:" + node, p, stale_co))

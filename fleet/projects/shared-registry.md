@@ -58,6 +58,16 @@ is verified.
   `jobs/registry-seed-agent-image.hcl`), which proves it trusts the registry (insecure-reg
   push over HTTP fails otherwise).
 
+**Backups & restore** (see [[registry-backup]])
+- `jobs/registry-backup.hcl` — periodic batch (`30 5 * * *` UTC, `prohibit_overlap`), pinned
+  to bigo-server, read-only mounts `/opt/monad-registry` and writes a verified, gzip'd tar to
+  **`/opt/monad-registry-backups/registry-<UTC>.tar.gz`** (keep 3). A free-space preflight
+  skips the run if the disk lacks headroom, so a backup can never fill the disk and break
+  cluster-wide pulls. Run one now: `nomad job periodic force registry-backup`.
+- Restore (with the registry stopped so nothing writes the store):
+  `tar -xzf /opt/monad-registry-backups/registry-<UTC>.tar.gz -C /opt/monad-registry`,
+  then redeploy `jobs/registry.hcl`.
+
 **Integration**
 - `meta/agent/mesh/build-image.sh` already resolves `infra/registry` (with `localhost:5000`
   fallback) — pushes go to the shared registry automatically.

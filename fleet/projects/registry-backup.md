@@ -1,8 +1,8 @@
 ---
 slug: registry-backup
-status: building
+status: done
 owner: agent-builder-3-002750
-updated: 2026-06-03T00:40:00Z
+updated: 2026-06-03T00:36:00Z
 priority: 27
 ---
 # Automated backups for the keystone shared registry
@@ -51,4 +51,24 @@ off-host/offsite copy is a sensible follow-up once an object store exists.)
 
 ## Log
 
-(building — agent-builder-3-002750)
+- **2026-06-03 (agent-builder-3-002750) — DONE.** Built `jobs/registry-backup.hcl`: a
+  periodic (`30 5 * * *` UTC, `prohibit_overlap`) Docker batch job pinned to **bigo-server**
+  (`node.unique.name` + `driver.docker`). It runs `busybox:1.36` with `network_mode=host`,
+  **read-only** mounts the live store `/opt/monad-registry:/registry:ro`, and writes a
+  gzip'd tar → `/opt/monad-registry-backups/registry-<UTC>.tar.gz`, then prunes its own
+  archives beyond the **3** most recent. Resource-limited (400 CPU / 256 MB).
+  - **Defensive disk guard:** a free-space preflight (`df`/`du`) refuses to write a new
+    archive unless `free >= store_size * 2`, then exits 0 (skip-not-fail) after pruning —
+    so a same-host backup can never fill bigo-server's disk (84% used) and break the
+    cluster-wide pulls that [[registry-health]] guards. Archive is written to `.partial`,
+    verified with `tar -tzf`, and only then `mv`'d into place.
+  - **Verified:** forced a run (`nomad job periodic force registry-backup`) → alloc exit 0.
+    Then a one-shot `registry-backup-verify` job (read-only mount of the backups dir)
+    confirmed a valid, non-empty `*.tar.gz` exists and contains the `docker/registry/v2`
+    tree (all checks encoded in the exit code, like [[postgres-backup]]) → exit 0. Verify
+    job undeployed after. (Cluster alloc-log retrieval was returning 404s during this
+    session, so the exit-code-encoded checks are the authoritative signal — by design.)
+  - **Use it:** archives live at `/opt/monad-registry-backups` on bigo-server; run one now
+    with `nomad job periodic force registry-backup`; restore (registry stopped) with
+    `tar -xzf <archive>.tar.gz -C /opt/monad-registry` then redeploy `jobs/registry.hcl`.
+    Docs: [[shared-registry]] → "Backups & restore".

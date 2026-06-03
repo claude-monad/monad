@@ -15,14 +15,19 @@ job "assistant" {
   parameterized {
     payload       = "optional"
     meta_required = ["name"]
-    meta_optional = ["model", "effort"]
+    meta_optional = ["model", "effort", "node"]
   }
 
-  # oraclebox1 holds the Claude creds + the agent image (localhost registry). Generalizes
-  # once creds are portable to other nodes (project agent-mesh-cred-portability).
+  # Placement is governor-driven (assistant.sh asks llm-scheduler `place --engine claude` and
+  # passes -meta node=<chosen>). Now that Claude creds are portable to every node, assistants
+  # can run on the least-loaded Claude-ready node instead of always burying the tiny oraclebox1.
+  # Defaults to oraclebox1 if no node meta is supplied.
+  meta {
+    node = "oraclebox1"
+  }
   constraint {
     attribute = "${node.unique.name}"
-    value     = "oraclebox1"
+    value     = "${NOMAD_META_node}"
   }
 
   group "session" {

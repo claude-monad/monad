@@ -51,7 +51,7 @@ job "assistant" {
         network_mode = "host"
         # Isolated tree: clone fresh, then run the RC session in this assistant's purpose dir.
         entrypoint = ["/bin/bash", "-c",
-          "set -e; [ -e /work/.git ] || git clone --depth 50 \"$REPO_URL\" /work; exec /work/scripts/rc-session.sh"]
+          "set -e; [ -e /work/.git ] || git clone --depth 50 \"$REPO_URL\" /work; exec bash /work/scripts/rc-session.sh"]
         volumes = [
           "/home/ubuntu/.claude:/home/ubuntu/.claude",
           "/home/ubuntu/.claude.json:/home/ubuntu/.claude.json",

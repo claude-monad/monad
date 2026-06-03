@@ -41,7 +41,7 @@ job "concierge" {
         image      = "localhost:5000/monad-agent-mesh:latest"
         network_mode = "host"
         entrypoint = ["/bin/bash", "-c",
-          "set -e; [ -e /work/.git ] || git clone --depth 50 \"$REPO_URL\" /work; exec /work/scripts/rc-session.sh"]
+          "set -e; [ -e /work/.git ] || git clone --depth 50 \"$REPO_URL\" /work; exec bash /work/scripts/rc-session.sh"]
         volumes = [
           "/home/ubuntu/.claude:/home/ubuntu/.claude",
           "/home/ubuntu/.claude.json:/home/ubuntu/.claude.json",

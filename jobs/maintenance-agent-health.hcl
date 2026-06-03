@@ -70,11 +70,20 @@ job "maintenance-agent-health" {
         data        = <<-SCRIPT
 #!/usr/bin/env python3
 # read-only maintenance-agent health -> fleet/maintenance-health/<node>
-import json, os, subprocess, datetime
+import json, os, subprocess, datetime, urllib.request
 
 now = datetime.datetime.now(datetime.timezone.utc)
 now_s = now.strftime("%Y-%m-%dT%H:%M:%SZ")
 STALE = int(os.environ.get("STALE_SELFPASS", "21600") or "21600")
+NADDR = os.environ.get("NOMAD_ADDR", "http://127.0.0.1:4646").rstrip("/")
+
+def api(path):
+    # robust JSON read of the Nomad HTTP API (CLI -t templates vary by version)
+    try:
+        with urllib.request.urlopen(NADDR + path, timeout=20) as r:
+            return json.load(r)
+    except Exception:
+        return None
 
 def run(args, timeout=25):
     try:
@@ -113,30 +122,18 @@ def age_secs(ts):
             continue
     return None
 
-# node id -> name
+# node id -> name (Nomad HTTP API)
 id2name = {}
-r = run(["nomad", "node", "status", "-t",
-         "{{range .}}{{.ID}}|{{.Name}}{{println}}{{end}}"])
-if r.returncode == 0:
-    for line in r.stdout.splitlines():
-        line = line.strip()
-        if "|" in line:
-            i, n = line.split("|", 1)
-            id2name[i.strip()] = n.strip()
+for n in (api("/v1/nodes") or []):
+    if n.get("ID"):
+        id2name[n["ID"]] = n.get("Name", n["ID"])
 
 # maintenance-agent allocs that are currently running -> node names
 running_nodes = set()
-r = run(["nomad", "job", "allocs", "-t",
-         "{{range .}}{{.NodeID}}|{{.ClientStatus}}{{println}}{{end}}",
-         "maintenance-agent"])
-if r.returncode == 0:
-    for line in r.stdout.splitlines():
-        line = line.strip()
-        if "|" not in line:
-            continue
-        nid, st = line.split("|", 1)
-        if st.strip() == "running":
-            running_nodes.add(id2name.get(nid.strip(), nid.strip()))
+for a in (api("/v1/job/maintenance-agent/allocations") or []):
+    if a.get("ClientStatus") == "running":
+        nid = a.get("NodeID", "")
+        running_nodes.add(id2name.get(nid, nid))
 
 # nodes that have ever written a self-pass report
 last_nodes = set()

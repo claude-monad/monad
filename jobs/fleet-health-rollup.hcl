@@ -82,6 +82,7 @@ job "fleet-health-rollup" {
         STALE_ENGINE   = "7200"
         STALE_JOBS     = "7200"
         STALE_ESCALATION = "3600"
+        STALE_OFFSITE  = "129600"
         # health-summary-node-severity (#40): nodes whose local resource pressure is
         # cluster-critical (Raft voters + the keystone-service host). A disk:/overload:
         # component on a node NOT in this list is capped at `warn` for the HEADLINE
@@ -175,6 +176,9 @@ stale_escalation = int(os.environ.get("STALE_ESCALATION", "3600") or "3600")
 # stalled health-history time-series. The var `ts` staleness separately catches the
 # trends job itself dying; ~4x the 15m interval is a generous window.
 stale_trend = int(os.environ.get("STALE_TREND", "3600") or "3600")
+# offsite-keystone-backups (daily ~07:10) mirrors the keystone backups off-node to MinIO and
+# publishes fleet/offsite-backup; ~36h covers a fully-missed daily run without false "stale".
+stale_offsite = int(os.environ.get("STALE_OFFSITE", "129600") or "129600")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
@@ -183,6 +187,7 @@ comps = [("raft", "fleet/raft-health", stale_raft),
          ("engine", "fleet/engine-coverage", stale_engine),
          ("jobs", "fleet/job-hygiene", stale_jobs),
          ("escalation", "fleet/escalation-health", stale_escalation),
+         ("offsite-backup", "fleet/offsite-backup", stale_offsite),
          ("health-history", "fleet/health-trend", stale_trend)]
 for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]

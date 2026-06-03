@@ -179,8 +179,13 @@ stale_trend = int(os.environ.get("STALE_TREND", "3600") or "3600")
 # offsite-keystone-backups (daily ~07:10) mirrors the keystone backups off-node to MinIO and
 # publishes fleet/offsite-backup; ~36h covers a fully-missed daily run without false "stale".
 stale_offsite = int(os.environ.get("STALE_OFFSITE", "129600") or "129600")
+# formalizer-lag-health (formalizer-lag-health.md) probes the commit-driven formalization
+# pipeline (cursor vs math HEAD + watcher/formalizer job state) every 20m into one var;
+# ~4.5x the interval is a generous staleness window.
+stale_formalizer = int(os.environ.get("STALE_FORMALIZER", "5400") or "5400")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
+         ("formalizer", "fleet/formalizer-lag", stale_formalizer),
          ("registry", "fleet/registry-health", stale_reg),
          ("backup", "fleet/backup-health", stale_bak),
          ("backup-restore", "fleet/backup-restore-verify", stale_brv),

@@ -135,14 +135,25 @@ ensure() {
   reap_excess_pending_builders "$have" "$want"
   [ "$REAPED_PENDING" -eq 0 ] || have="$(active_builders)"
 
-  local dispatched=0 i engine name
+  local dispatched=0 i engine name node sched
+  sched="$REPO_DIR/scripts/llm-scheduler.py"
   for i in $(seq $((have+1)) "$want"); do
-    engine=$([ $((i % 2)) -eq 0 ] && echo codex || echo claude)
+    # Builders are codex by default (cluster default + codex runs on the idle giant). The
+    # governor picks the least-loaded codex-capable node; if it returns QUEUE every capable
+    # node is at capacity, so we STOP dispatching this cycle rather than overload anything.
+    engine=codex
+    node="$(python3 "$sched" place --engine "$engine" --mem 512 --quiet 2>/dev/null)"
+    if [ "$node" = "QUEUE" ]; then
+      log "governor: no capacity for a $engine builder right now — holding (backpressure)"
+      break
+    elif [ -z "$node" ]; then
+      # Governor unavailable (no python3 / error) — don't stall the fleet; use the codex giant.
+      node="death-star"; log "governor unavailable — defaulting builder to $node"
+    fi
     name="agent-builder-$i-$(date +%H%M%S)"
-    # -detach: register the child and return immediately (don't block monitoring placement;
-    # a capacity-blocked child just stays Pending and is counted by active_builders next cycle).
-    if nomad job dispatch -detach -meta "agent_name=$name" -meta "engine=$engine" fleet-builder >/dev/null 2>&1; then
-      log "dispatched builder $name (engine=$engine)"; dispatched=$((dispatched+1))
+    # -detach: register the child and return immediately (don't block monitoring placement).
+    if nomad job dispatch -detach -meta "agent_name=$name" -meta "engine=$engine" -meta "node=$node" fleet-builder >/dev/null 2>&1; then
+      log "dispatched builder $name (engine=$engine, node=$node via governor)"; dispatched=$((dispatched+1))
     else
       log "dispatch failed for $name"
     fi

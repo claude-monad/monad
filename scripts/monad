@@ -980,6 +980,7 @@ main() {
         memory)           "$REPO_DIR/scripts/cluster-memory.sh" "$@" ;;
         secrets)          cmd_secrets "$@" ;;
         storage)          cmd_storage "$@" ;;
+        sched)            NOMAD_ADDR="$NOMAD_ADDR" python3 "$REPO_DIR/scripts/llm-scheduler.py" "$@" ;;
         events)           cmd_events "$@" ;;
         gh)               cmd_gh "$@" ;;
         help|--help|-h|"")usage ;;

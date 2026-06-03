@@ -27,9 +27,12 @@ SUDO=""; [ "$(id -u)" -ne 0 ] && have sudo && SUDO="sudo"
 
 install_claude() {
   have claude && return 0
+  # Claude Code installs to ~/.local/bin; add it to PATH before re-checking.
+  [ -x "$HOME/.local/bin/claude" ] && { export PATH="$HOME/.local/bin:$PATH"; return 0; }
   log "installing claude CLI…"
   curl -fsSL https://claude.ai/install.sh | bash 2>/dev/null \
     || warn "claude install failed — install manually, then run 'claude' to log in."
+  [ -x "$HOME/.local/bin/claude" ] && export PATH="$HOME/.local/bin:$PATH"
 }
 
 install_codex() {
@@ -72,7 +75,11 @@ ENGINES_CSV="$(engines_ready | tr ' ' ',')"
 # On macOS (and Linux nodes that bind to Tailscale IP not 127.0.0.1), probe the
 # local client first, then fall back to the Tailscale IP (the actual bind_addr).
 if [ -z "${NOMAD_ADDR:-}" ]; then
-  tip="$(tailscale ip -4 2>/dev/null | head -1)"
+  # macOS: Tailscale CLI may live in the .app bundle, not in PATH.
+  _ts_bin="tailscale"
+  have tailscale || { [ -x "/Applications/Tailscale.app/Contents/MacOS/Tailscale" ] && \
+    _ts_bin="/Applications/Tailscale.app/Contents/MacOS/Tailscale"; }
+  tip="$($_ts_bin ip -4 2>/dev/null | head -1)"
   # Prefer localhost; fall back to Tailscale IP (macOS Nomad clients bind there)
   if curl -sf http://127.0.0.1:4646/v1/agent/self >/dev/null 2>&1; then
     export NOMAD_ADDR="http://127.0.0.1:4646"

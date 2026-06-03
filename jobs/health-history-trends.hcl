@@ -184,7 +184,10 @@ SCRIPT
       driver = "raw_exec"
 
       env {
-        HVAR = "fleet/health-trend"
+        HVAR       = "fleet/health-trend"
+        # Point the var write at the live Raft leader (same as registry-health/backup-health);
+        # the raw_exec host env does not carry a usable NOMAD_ADDR by default.
+        NOMAD_ADDR = "http://100.75.75.39:4646"
       }
 
       config {

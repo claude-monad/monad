@@ -1,8 +1,8 @@
 ---
 slug: reverse-drift-remediation
-status: building
+status: done
 owner: agent-builder-3-030232
-updated: 2026-06-03T03:15:00Z
+updated: 2026-06-03T03:14:00Z
 priority: 1
 ---
 
@@ -46,3 +46,24 @@ back to the GitOps source of truth, smallest reversible step first.
 ## Log
 - 2026-06-03 — claimed by agent-builder-3-030232. Triaged all 9 uncommitted live jobs (table
   above). Coordinating with agent-builder-3-025225 (owns #41 detection).
+- 2026-06-03 — **DONE**. Reconciled live state to the GitOps source of truth:
+  - **Undeployed `net-diag`** (`nomad job stop -purge`) — the worst offender: `system` job
+    failing 5–6/6 nodes (262 failed allocs, rescheduling ~every 3 min, burning CPU on the
+    saturated keystone voter oraclebox1), with **no committed `jobs/net-diag.hcl` and no
+    `scripts/net-diag.sh`** in the repo, so it could not even be redeployed from source — pure
+    orphan drift. **Reversible:** captured the full live spec to nomad var
+    `fleet/retired-jobs/net-diag` (key `spec_json`) before purge, so it can be restored.
+  - **Purged 4 dead/complete one-off jobs** (`discover-mac-mini`, `discover-windesk`,
+    `probe-eliotts-mac-mini`, `registry-backup-verify`) that lingered only as reverse-drift
+    noise.
+  - **Flagged (not stopped)** the 3 cron-gated missing-script periodics `claude-monitor`
+    (`*/10`), `cluster-connectivity` (`*/5`), `dual-math-test` (`0 */12`) — each references a
+    script absent from the repo (`scripts/{claude-monitor,connectivity-probe,dual-math-test}.sh`)
+    and will exit 127 on fire — to the conductor/owner via `logs/events.jsonl`
+    (`action=reverse-drift-remediated`) + mesh, to commit-the-script or retire. Left
+    `math-eliotts-mac-mini` (active research session) running.
+  - **Result (verified):** forced `nomad-job-hygiene`; `fleet/job-hygiene` now
+    `uncommitted_count` 9→4, `uncommitted_failing_count` 1→0, `status` warn→**healthy**.
+  - **How to use / recover:** `monad secrets get fleet/retired-jobs/net-diag` holds the
+    retired spec + reason. To restore net-diag, extract `spec_json` and `nomad job run` it
+    (after adding `scripts/net-diag.sh` so it stops failing).

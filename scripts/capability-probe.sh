@@ -26,11 +26,19 @@ export NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
 NODE="$(hostname)"
 PROMPT='In ONE short line state a true fact about tournaments or the Lonely Runner Conjecture, then on a second line write exactly: CAPABLE'
 
-probe() {  # $1=engine -> echoes a state word
-  local eng="$1" out rc o
+probe() {  # $1=engine -> echoes a state word (HONEST: detects run-agent's silent fallback)
+  local eng="$1" out rc o chosen errf
   command -v "$eng" >/dev/null 2>&1 || { echo "absent"; return; }
-  out="$(timeout 240 bash "$RA" --engine "$eng" --quiet --timeout 200 "$PROMPT" 2>&1)"; rc=$?
+  errf="$(mktemp)"
+  # --print-engine logs the engine run-agent actually CHOSE to stderr. run-agent falls back
+  # to another ready engine if the requested one isn't ready — so if chosen != requested,
+  # THIS engine is not actually usable here (e.g. codex requested, claude run). Report that
+  # honestly instead of crediting a fallback as success.
+  out="$(timeout 240 bash "$RA" --engine "$eng" --print-engine --quiet --timeout 200 "$PROMPT" 2>"$errf")"; rc=$?
+  chosen="$(grep -oE 'engine=[a-z]+' "$errf" | head -1 | cut -d= -f2)"; rm -f "$errf"
   [ "$rc" = 124 ] && { echo "timeout"; return; }
+  [ -z "$chosen" ] && { echo "not-ready"; return; }          # run-agent found no ready engine
+  [ "$chosen" != "$eng" ] && { echo "not-ready"; return; }   # fell back to a different engine
   [ "$rc" != 0 ] && { echo "error-rc$rc"; return; }
   o="$(printf '%s' "$out" | tr -d '[:space:]')"
   [ -z "$o" ] && { echo "ran-empty"; return; }

@@ -8,6 +8,7 @@
 #   - fleet/registry-health        (registry-health, every 6h)
 #   - fleet/backup-health          (backup-health, every 30m)
 #   - fleet/checkout-health/<node> (agent-checkout-health, every 6h, per node)
+#   - fleet/job-hygiene            (nomad-job-hygiene, every 30m)
 # To answer "is the cluster healthy?" you had to read 5+ vars, and a monitor that
 # silently dies still reads "healthy" (its var freezes). This rolls them into one
 # fleet/health-summary: overall status (worst component), per-component breakdown,
@@ -71,6 +72,7 @@ job "fleet-health-rollup" {
         STALE_MAINT    = "7200"
         STALE_SERVICE  = "3600"
         STALE_ENGINE   = "7200"
+        STALE_JOBS     = "7200"
       }
 
       config {
@@ -149,12 +151,16 @@ stale_engine = int(os.environ.get("STALE_ENGINE", "7200") or "7200")
 # node-overload-health (node-overload-health.md) probes per-node CPU/mem saturation every
 # 15m, one var per node; ~4x the interval gives a generous staleness window.
 stale_overload = int(os.environ.get("STALE_OVERLOAD", "3600") or "3600")
+# nomad-job-hygiene (nomad-job-hygiene.md) probes committed long-running job drift every
+# 30m into one var; ~4x the interval gives a generous staleness window.
+stale_jobs = int(os.environ.get("STALE_JOBS", "7200") or "7200")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
          ("backup", "fleet/backup-health", stale_bak),
          ("backup-restore", "fleet/backup-restore-verify", stale_brv),
-         ("engine", "fleet/engine-coverage", stale_engine)]
+         ("engine", "fleet/engine-coverage", stale_engine),
+         ("jobs", "fleet/job-hygiene", stale_jobs)]
 for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("checkout:" + node, p, stale_co))

@@ -21,14 +21,20 @@ job "mesh-conversation" {
   }
 
   meta {
-    node   = "death-star"
     engine = "codex"
     greet  = ""
   }
 
+  # Place on any codex-ready node (node meta IS interpolated in constraints, unlike dispatch
+  # meta). Overload is prevented by the governor's admission control (mesh-convo.sh checks
+  # `place` before dispatch) + Nomad's spread scheduler + the llm-governor backstop.
   constraint {
-    attribute = "${node.unique.name}"
-    value     = "${NOMAD_META_node}"
+    attribute = "${meta.has_codex}"
+    value     = "true"
+  }
+  constraint {
+    attribute = "${attr.driver.raw_exec}"
+    value     = "1"
   }
 
   group "agent" {

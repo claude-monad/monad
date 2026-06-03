@@ -12,10 +12,11 @@ job "concierge" {
   type        = "service"
   priority    = 80
 
-  # raw_exec on a Linux host (no Docker image) — runs as the node's Claude-credentialed user.
+  # raw_exec on a Claude-ready Linux host (no Docker image) — runs as the node's
+  # Claude-credentialed user. has_claude (node meta) ensures creds+CLI are present.
   constraint {
-    attribute = "${attr.kernel.name}"
-    value     = "linux"
+    attribute = "${meta.has_claude}"
+    value     = "true"
   }
   constraint {
     attribute = "${attr.driver.raw_exec}"

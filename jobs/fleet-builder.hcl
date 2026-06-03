@@ -16,18 +16,13 @@ job "fleet-builder" {
     meta_optional = ["agent_name", "engine", "role", "timeout", "node"]
   }
 
-  # Default placement target (overridden by the foreman's `-meta node=` from the governor).
-  meta {
-    node = "death-star"
-  }
-
-  # Placement is governed by scripts/llm-scheduler.py: the foreman calls `place` to pick the
-  # least-loaded engine-capable node and passes it as -meta node=<name>. This is how we keep
-  # the tiny oraclebox1 from being buried while death-star (80 cores) sits idle. Defaults to
-  # death-star (the codex workhorse) if no node meta is supplied.
+  # Place on any codex-ready node (node meta IS interpolated in constraints; dispatch meta is
+  # NOT — so the foreman's -meta node= can't drive a constraint). The foreman still calls the
+  # governor's `place` for ADMISSION (it holds when capacity is QUEUE); Nomad's spread scheduler
+  # then keeps builders off the most-loaded node, so the tiny oraclebox1 isn't buried.
   constraint {
-    attribute = "${node.unique.name}"
-    value     = "${NOMAD_META_node}"
+    attribute = "${meta.has_codex}"
+    value     = "true"
   }
 
   group "builder" {

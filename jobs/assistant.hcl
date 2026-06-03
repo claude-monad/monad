@@ -18,16 +18,17 @@ job "assistant" {
     meta_optional = ["model", "effort", "node"]
   }
 
-  # Placement is governor-driven (assistant.sh asks llm-scheduler `place --engine claude` and
-  # passes -meta node=<chosen>). Now that Claude creds are portable to every node, assistants
-  # can run on the least-loaded Claude-ready node instead of always burying the tiny oraclebox1.
-  # Defaults to oraclebox1 if no node meta is supplied.
-  meta {
-    node = "oraclebox1"
+  # Place on any Claude-ready node (node meta IS interpolated in constraints; dispatch meta is
+  # NOT, so we can't target an exact node that way). assistant.sh still asks the governor for
+  # admission (refuse when all Claude nodes are at capacity) + Nomad's spread scheduler keeps
+  # new assistants off the most-loaded node, so oraclebox1 no longer gets buried.
+  constraint {
+    attribute = "${meta.has_claude}"
+    value     = "true"
   }
   constraint {
-    attribute = "${node.unique.name}"
-    value     = "${NOMAD_META_node}"
+    attribute = "${attr.driver.raw_exec}"
+    value     = "1"
   }
 
   group "session" {

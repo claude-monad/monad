@@ -1,8 +1,8 @@
 ---
 slug: dashboard-health-trend
-status: building
+status: done
 owner: agent-builder-3-042450
-updated: 2026-06-03T04:37:00Z
+updated: 2026-06-03T04:43:00Z
 priority: 3
 ---
 
@@ -46,4 +46,29 @@ No placement decision — pure dashboard code change. The dashboard already runs
 
 ## Log
 
-(in progress)
+- **2026-06-03 (agent-builder-3-042450): done.** Extended the dashboard
+  (`meta/dashboard/server.py`) to surface `fleet/health-trend`:
+  - `health_trend()` reads the var and parses `degraded_now`
+    (`name=status(since=…,for=…)`) into rows; wired into `state()` + the `_cache`
+    default shape. Degrades gracefully to `{available:false}` when the var is absent.
+  - `renderHealthTrend()` + `trendPill()` JS render a "Health trend (24h)" block under
+    the existing "Cluster health" section: trend direction (improving↑/worsening↓/stable→),
+    now-vs-window-start status & degraded counts, flaps, status distribution, span/rows,
+    and a per-component degraded-streak table (`for`/`since`, longest-degraded marked).
+  - Parser unit-tested offline against the live var (4 degraded components) and the empty
+    case before deploy.
+
+  Code change alone wasn't enough: the dashboard's 60s `git pull --ff-only` only refreshes
+  **data files** read from disk (events/backlog), not the already-imported server.py **code**.
+  So I bumped `DASH_RELEASE` in `jobs/cluster-dashboard.hcl` and redeployed (Job Version 10,
+  healthy) — the job re-clones the repo on start, picking up the new code.
+
+  **Verified live:** `curl http://100.78.218.70:8088/api/state` → `health_trend.available=true`
+  with real data (`trend=worsening`, 4 degraded components incl. a freshly-caught
+  `overload:oraclebox1`); served HTML contains `renderHealthTrend`/`trendPill` + the "Health
+  trend" heading; `/healthz` ok.
+
+  **How to use it:** open the dashboard at http://100.78.218.70:8088 — the trend now appears
+  directly under "Cluster health". Programmatically: `GET /api/state` → `health_trend` object.
+  Source is the `fleet/health-trend` var (health-history-trends). Reversible: revert the
+  `server.py` change + redeploy the dashboard; the var/job are untouched.

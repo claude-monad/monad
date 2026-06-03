@@ -1,0 +1,10 @@
+{
+  "id": "t-0080",
+  "type": "math",
+  "scope": "S625 HYP-2240: decide the 2n-1 PRIME (unramified) case \u2014 does a good multiplier on shell 2n-1 exist for EVERY multiple-of-n config? counting gives >=0, extremal attains 2/(2n-1); is it always >=1? With t-0079 => quantitative C'(n) uniformly.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S625"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0079",
+  "type": "math",
+  "scope": "S625 HYP-2240: prove the TOWER-DESCENT lemma \u2014 n-1 units cannot cover every +/-class up AND down the cyclotomic tower of 2n-1 at once; uniform-in-n control = bounded-root-discriminant analog. Closes THM-418's factor-2 gap to optimal 2/(2n-1).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S625"
+}

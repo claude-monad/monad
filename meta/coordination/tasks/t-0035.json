@@ -1,0 +1,10 @@
+{
+  "id": "t-0035",
+  "type": "infra",
+  "scope": "eliotts-mac-mini disk pressure: Nomad reports host disk 208GiB/228GiB used (~91%) with only ~32GiB free; node is ready/eligible but maintenance-agent is Linux-only, so run local node-doctor/safe cleanup and assess macOS maintenance equivalent.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

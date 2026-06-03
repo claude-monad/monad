@@ -17,7 +17,9 @@
 #   --quiet                      emit only the agent's final message (normalized)
 #   --print-engine               print the chosen engine to stderr before running
 #
-# Env: MONAD_ENGINE (=engine), MONAD_ENGINE_PREFERENCE, CLAUDE_HOME, CODEX_HOME.
+# Env: MONAD_ENGINE (=engine), MONAD_ENGINE_PREFERENCE, CLAUDE_HOME, CODEX_HOME,
+#      MONAD_CODEX_EFFORT (minimal|low|medium|high — codex reasoning depth; agents
+#      that need to think hard, e.g. formalization, set this to "high").
 # Exit code is the agent's exit code (124 = timed out).
 set -uo pipefail
 

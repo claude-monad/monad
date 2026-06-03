@@ -44,6 +44,16 @@ case "$cmd" in
     [ -n "$purpose" ] || die "a purpose is required: assistant.sh spawn <slug> \"<purpose>\""
     nomad var get "assistants/$slug" >/dev/null 2>&1 && die "assistant '$slug' already exists (remove it first or pick another slug)"
 
+    # Admission control: assistants are Claude sessions and run on the Claude node (oraclebox1,
+    # the smallest box). Ask the governor before spawning — if it returns QUEUE the Claude node
+    # is at capacity, and spawning anyway would overload it (the cardinal sin). Refuse instead.
+    if [ "${ASSISTANT_FORCE:-}" != "1" ]; then
+      place="$(python3 "$REPO_DIR/scripts/llm-scheduler.py" place --engine claude --mem 512 --quiet 2>/dev/null)"
+      if [ -z "$place" ] || [ "$place" = "QUEUE" ]; then
+        die "the Claude node is at capacity — refusing to spawn '$slug' (would overload it). Remove an assistant first ('assistant.sh list' / 'remove <slug>'), or set ASSISTANT_FORCE=1 to override."
+      fi
+    fi
+
     # 1) purpose dir (the assistant's personality) → commit + push so its session can clone it
     dir="$REPO_DIR/assistants/$slug"; mkdir -p "$dir"
     cat > "$dir/CLAUDE.md" <<EOF

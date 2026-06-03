@@ -93,6 +93,10 @@ engine_exec_argv() {
       ;;
     codex)
       printf '%s\n' codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check -C "$cwd"
+      # Reasoning effort. When MONAD_CODEX_EFFORT is set (minimal|low|medium|high),
+      # pin codex's reasoning depth. Formalization/research agents set this to "high"
+      # so they think as hard as possible; left unset, codex uses its own default.
+      [ -n "${MONAD_CODEX_EFFORT:-}" ] && printf '%s\n' -c "model_reasoning_effort=\"${MONAD_CODEX_EFFORT}\""
       [ -n "$last" ] && printf '%s\n' -o "$last"
       ;;
     *) return 1 ;;

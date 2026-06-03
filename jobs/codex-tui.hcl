@@ -9,17 +9,32 @@ job "codex-tui" {
   type        = "service"
   priority    = 70
 
-  # death-star: idle (80 cores) + codex-ready, so the TUI is always-up and off the saturated
-  # oraclebox1. Reach it at http://100.96.31.66:8090.
+  # NOT hard-pinned to one node: death-star is flaky, and a single-node pin + count=1 meant any
+  # death-star blip took the whole TUI down with nowhere to reschedule (browser then sees
+  # network errors talking to a dead :8090). The TUI's launch script needs a node with a
+  # non-root codex-credentialed user (~/.codex/auth.json) that also has a ~/monad checkout —
+  # in practice death-star and oraclebox1 (both ubuntu). `has_codex=true` alone is NOT enough
+  # (claudebox/v1410-1 advertise it but the script can't find usable creds there → crash-loop).
+  # So allow exactly those two and prefer idle death-star (off the saturated oraclebox1) via
+  # affinity; fail over to oraclebox1 when death-star is down. Reach it at
+  # http://<host-tailscale-ip>:8090 — service addr in infra/codex-tui.
+  # FOLLOW-ON (fleet/projects/codex-tui-availability.md): make the launch script node-portable
+  # (root/snap creds + clone monad) so any has_codex node can host it.
   constraint {
     attribute = "${node.unique.name}"
+    operator  = "regexp"
+    value     = "^(death-star|oraclebox1)$"
+  }
+  affinity {
+    attribute = "${node.unique.name}"
     value     = "death-star"
+    weight    = 100
   }
 
   group "tui" {
     count = 1
+    # Auto-replace a lost/failed alloc forever (the whole point: survive a node going down).
     reschedule {
-      attempts       = 0
       delay          = "15s"
       delay_function = "exponential"
       max_delay      = "2m"

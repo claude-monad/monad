@@ -46,7 +46,7 @@ EVENT_STREAM_SECS = int(os.environ.get("EVENT_STREAM_SECS", "5"))
 # expose the same gateway on :8200 once node-chat-gateway is deployed there. Mesh
 # agents (agent-* tailnet peers) are reachable async via their sidecar (POST :8472/msg).
 CHAT_TIMEOUT = int(os.environ.get("CHAT_TIMEOUT", "300"))
-CONDUCTOR_URL = os.environ.get("CONDUCTOR_URL", "http://100.125.210.126:8200").rstrip("/")
+CONDUCTOR_URL = os.environ.get("CONDUCTOR_URL", "http://100.75.75.39:8200").rstrip("/")
 # name -> gateway base url. Extend via env GATEWAYS="name=url,name=url".
 GATEWAYS = {"conductor": CONDUCTOR_URL}
 for _kv in os.environ.get("GATEWAYS", "").split(","):

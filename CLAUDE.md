@@ -207,6 +207,16 @@ powered by Claude Code instances running as Nomad batch jobs.
 - **Purpose**: turn *novel* results from the informal math repo into machine-checked,
   sorry-free Lean proofs. Its `sync-candidates.sh` pulls targets from `eliottcassidy2000/math`
   into `candidates/`; the `math-formalizer` agent formalizes them.
+- **Delegated to automated codex, driven by commits** (see `meta/FORMALIZATION-POLICY.md`):
+  because the Lean work is a self-contained repo, formalization is delegated to **codex at
+  max reasoning effort**. **Every commit to the informal math repo** triggers it —
+  `formalize-watch` (`scripts/formalize-watch.sh`) detects the moved HEAD and forces a
+  `math-formalizer` run (or, if one is already active, leaves the new commits in the
+  `monad/formalize/inbox` var for the running session). So math-lean is **always** up to date.
+- **Dual mandate**: the codex formalizer doesn't just transcribe — it *equally* mines the
+  mathematics it touches (implications, extensions, connections between results), keeping that
+  thinking in a scratch `exploration/` area of math-lean and forwarding genuinely new results
+  to the informal repo, where they become new formalization candidates. The loop feeds itself.
 - **Feedback loop**: if a result resists formalization (wrong, under-specified, or a
   counterexample appears), the formalizer opens a court case back in the informal repo — so
   formalization actively reconciles the research, it is not a one-way sink.
@@ -219,7 +229,7 @@ powered by Claude Code instances running as Nomad batch jobs.
 | `math-researcher` | Every 6h | Max account 1 node | Deep research — proves theorems, explores connections, writes up results. Day-of-week rotation covers the full research frontier. |
 | `math-quick-compute` | Every 2h | Max account 2 node | Pure computation — runs scripts, extends sequences, generates data. No theorizing, just crunch numbers. |
 | `math-reviewer` | Daily 3 AM | Max account 3 node | Quality control — verifies results against MISTAKES.md, opens court cases for dubious claims, synthesizes daily progress, coordinates other agents. |
-| `math-formalizer` | Every 4h | Pro account node | Formalization — turns informally-proved results into sorry-free Lean 4 proofs in `eliott-monad/math-lean`. Closes the loop: a failed formalization becomes a court case. |
+| `math-formalizer` | **On every math-repo commit** (+ 4h safety-net) | **codex-ready node** (`has_codex`) | Formalization — **automated codex at max reasoning effort**. Turns informally-proved results into sorry-free Lean 4 proofs in `eliott-monad/math-lean`, AND equally mines their mathematical implications/extensions/connections back into the informal repo. Closes the loop: a failed formalization becomes a court case; new ideas become new candidates. See `meta/FORMALIZATION-POLICY.md`. |
 
 The agents use the math repo's built-in coordination:
 - **Session letters** via `agents/processor.py --send` — structured handoff between sessions
@@ -254,7 +264,7 @@ machine with the right account.
 | Max 1 | Max ($200/mo) | `bigo-server` | math-researcher (deep sessions, needs long context) |
 | Max 2 | Max ($200/mo) | `death-star` | math-quick-compute (heavy computation) |
 | Max 3 | Max ($200/mo) | `bigo-server-oracle` | math-reviewer (daily QC, needs full history) |
-| Pro | Pro ($20/mo) | `windesk` + others | node-doctor (short maintenance) + math-formalizer (light Lean sessions) |
+| Pro | Pro ($20/mo) | `windesk` + others | node-doctor (short maintenance). *(math-formalizer moved off Claude — it now runs on **codex**, see `meta/FORMALIZATION-POLICY.md`.)* |
 
 ### How It Works
 

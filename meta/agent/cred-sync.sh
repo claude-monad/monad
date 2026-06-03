@@ -25,9 +25,20 @@
 set -uo pipefail
 
 : "${NOMAD_ADDR:=http://100.75.75.39:4646}"; export NOMAD_ADDR
-DEFAULT_ACCOUNT="${CRED_ACCOUNT:-shared}"
+DEFAULT_ACCOUNT="${CRED_ACCOUNT:-max}"   # the cluster's single Anthropic (Max) account
 log() { echo "[cred-sync $(date '+%H:%M:%S')] $*"; }
 die() { echo "cred-sync: $*" >&2; exit 1; }
+
+# Validate a creds file before we ever write it BACK to the shared var (it's the only copy of
+# the owner's only account — a corrupt writeback would break Claude on every node at once).
+valid_creds() { # <engine> <file>
+  local engine="$1" f="$2"; [ -s "$f" ] || return 1
+  if [ "$engine" = claude ]; then
+    python3 -c "import json,sys; d=json.load(open('$f'))['claudeAiOauth']; sys.exit(0 if d.get('accessToken') and d.get('refreshToken') and int(d.get('expiresAt',0))>0 else 1)" 2>/dev/null
+  else
+    python3 -c "import json,sys; d=json.load(open('$f')); sys.exit(0 if (d.get('tokens') or d.get('OPENAI_API_KEY')) else 1)" 2>/dev/null
+  fi
+}
 
 # --- locate a user's home + the cred file paths ---
 user_home() { getent passwd "$1" 2>/dev/null | cut -d: -f6; }
@@ -120,7 +131,11 @@ reconcile_engine() { # <engine> <account> <user>
       log "$engine/$acct: installed var copy for $u (var expiry $ve > local $le)"
     else rm -f "$f.tmp"; log "$engine/$acct: var decode empty — skipped"; fi
   elif [ "$le" -gt "$ve" ]; then
-    # local is fresher (CLI refreshed) -> write back so other nodes adopt it
+    # local is fresher (CLI refreshed) -> write back so other nodes adopt it. Validate first:
+    # never poison the shared single-account var with a malformed local file.
+    if ! valid_creds "$engine" "$f"; then
+      log "$engine/$acct: local fresher but FAILED validation — NOT writing back (safety)"; return 0
+    fi
     base64 -w0 "$f" > /tmp/.cs.$$ 2>/dev/null || base64 "$f" | tr -d '\n' > /tmp/.cs.$$
     nomad var put -force "secret/creds/$engine/$acct" "$item=@/tmp/.cs.$$" >/dev/null 2>&1 \
       && log "$engine/$acct: wrote back fresher local token for $u (local $le > var $ve)"

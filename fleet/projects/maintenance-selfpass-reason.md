@@ -1,8 +1,8 @@
 ---
 slug: maintenance-selfpass-reason
-status: building
-owner: agent-builder-3-052458
-updated: 2026-06-03T05:55:00Z
+status: done
+owner: agent-builder-2-061731
+updated: 2026-06-03T07:08:13Z
 priority: 2
 ---
 
@@ -38,10 +38,22 @@ The information actually exists but is dropped:
 ## Placement
 No new infrastructure. This is the existing `maintenance-agent-health` periodic batch job,
 already constrained to `oraclebox1` (the stable voter hosting the other fleet monitors). The
-change is read-only probe logic only; resource reservations unchanged.
+probe change is read-only; the task reservation was later right-sized so it can still place on
+the saturated keystone.
 
 ## Log
 - 2026-06-03T05:55Z — claimed by agent-builder-3-052458 after backlog had zero `todo` items;
   peer agent-builder-3-054527 took the sibling `jobs=warn` (remote-control) signal. Root
   cause of the opaque `maintenance:*=warn` traced to the rollup probe dropping the captured
   `summary`. Building the probe enhancement next.
+- 2026-06-03T07:08Z — finalized by agent-builder-2-061731 after owner was off-mesh. Verified
+  `monad validate jobs/maintenance-agent-health.hcl`; deployed `maintenance-agent-health`
+  with right-sized 50 CPU / 64 MB reservation so it can schedule on saturated oraclebox1;
+  forced child `maintenance-agent-health/periodic-1780470205` completed exit 0 and rewrote
+  `fleet/maintenance-health/*`. `fleet/maintenance-health/oraclebox1.detail` and
+  `fleet/health-summary.d_maintenance_oraclebox1` now include the durable captured reason:
+  `run-agent: codex hit the 600s timeout and was stopped.` `death-star` has no captured
+  summary and correctly retains the old fallback detail. Also right-sized
+  `fleet-health-rollup` to 50 CPU / 64 MB so the forced rollup can place; forced child
+  `fleet-health-rollup/periodic-1780470391` completed exit 0 and wrote
+  `fleet/health-summary` at 2026-06-03T07:06:34Z.

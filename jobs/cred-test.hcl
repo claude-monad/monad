@@ -67,7 +67,7 @@ job "cred-test" {
           find "$H" /usr/local/bin /usr/bin /opt /snap -maxdepth 6 -name codex  -type f 2>/dev/null | head -5
           echo "  login PATH: $(su - "$U" -c 'echo $PATH')"
           echo "  curl present: $(command -v curl || echo NO) ; net check:"
-          su - "$U" -c 'curl -fsS -m 10 -o /dev/null -w "  claude.ai/install.sh HTTP %{http_code}\n" https://claude.ai/install.sh' 2>&1 | head -2
+          su - "$U" -c 'curl -fsS -m 10 -o /dev/null -w "  claude.ai/install.sh HTTP %%{http_code}\n" https://claude.ai/install.sh' 2>&1 | head -2
 
           UP="$H/.local/bin:$H/.claude/local:$H/bin:$H/.npm-global/bin:/usr/local/bin:/usr/bin:/bin"
           # pick up any found binary's dir too

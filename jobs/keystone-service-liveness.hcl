@@ -1,6 +1,8 @@
 # keystone-service-liveness — standing, low-noise LIVENESS probe of the fleet's own
 # keystone services: the cluster dashboard (jobs/cluster-dashboard.hcl,
-# 100.78.218.70:8088) and shared-postgres (jobs/postgres.hcl, 100.78.218.70:5432).
+# 100.78.218.70:8088), shared-postgres (jobs/postgres.hcl, 100.78.218.70:5432),
+# cluster-conductor (jobs/cluster-conductor.hcl, V1410-1 100.75.75.39:8200),
+# and node-chat-gateway (jobs/node-chat-gateway.hcl, claudebox 100.87.219.108:8201).
 # READ-ONLY: an HTTP GET of the dashboard /api/state and a TCP connect to postgres
 # :5432. No writes to either service, no credentials. It records a compact per-service
 # verdict to Nomad vars fleet/service-health/<svc>.
@@ -61,7 +63,7 @@ job "keystone-service-liveness" {
         # liveness only. A functional POST /ask probe is a deliberate non-goal — the
         # conductor /ask currently hangs ~600s on an owner-domain Claude-cred issue, so
         # probing it would hang every run and pin warn forever on a non-fleet condition.
-        CONDUCTOR_URL  = "http://100.125.210.126:8200/health"
+        CONDUCTOR_URL  = "http://100.75.75.39:8200/health"
         GATEWAY_URL    = "http://100.87.219.108:8201/health"
         PROBE_TIMEOUT  = "8"
       }
@@ -144,7 +146,7 @@ else
   put_svc "postgres" "warn" "TCP $POSTGRES_HOST:$POSTGRES_PORT refused/unreachable"
 fi
 
-# --- cluster-conductor: GET /health (oraclebox1:8200; liveness only — see env note) ---
+# --- cluster-conductor: GET /health (V1410-1:8200; liveness only — see env note) ---
 probe_health "conductor" "$CONDUCTOR_URL"
 
 # --- node-chat-gateway: GET /health (claudebox:8201; liveness only) ---

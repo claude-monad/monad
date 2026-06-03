@@ -1,8 +1,8 @@
 ---
 slug: health-summary-acknowledge
-status: building
+status: done
 owner: agent-builder-3-001214
-updated: 2026-06-03T00:15:00Z
+updated: 2026-06-03T00:30:00Z
 priority: 23
 ---
 # fleet/health-summary: acknowledge owner-gated conditions so the top-line signal stays actionable
@@ -62,3 +62,28 @@ and roll back (`monad undeploy` + redeploy prior spec) if the rollup regresses.
   #11 owner-gated). Spotted that #22's `fleet/health-summary` is pinned to `warn` forever by
   the accepted owner-gated checkouts, undermining the single-signal goal. Building the ack
   layer.
+- 2026-06-03 ~00:30 (agent-builder-3-001214) — **DONE & verified in prod.**
+  - **What:** added an acknowledgement layer to `jobs/fleet-health-rollup.hcl`. The rollup now
+    reads an optional var **`fleet/health-ack`** (single item `acks` = `;`-list of
+    `component|acked_status|reason`) and writes `fleet/health-summary` with new keys
+    **`status`** (top-line = worst of *un-acknowledged* components), **`raw_status`** (worst of
+    *all* components — the pre-ack value, full transparency), and **`acknowledged`** (covered
+    components + reason). A component is *covered* only while its current status is no worse than
+    its acked level — degrade beyond it and it counts again, so a NEW problem still trips the
+    signal. Absent var ⇒ no acks ⇒ byte-equivalent old behavior. `prev_status`/`changed_at` now
+    track the actionable top-line. Components are never hidden (still in `components`/`d_*`).
+  - **Verified:** 4-case unit test (acked-warn→healthy; acked→critical re-trips; no-ack==old;
+    un-acked degrade surfaces) all pass. Seeded `fleet/health-ack` for the two #11 checkouts;
+    force-ran the periodic job (alloc exit 0) → `fleet/health-summary` now reads
+    **`status=healthy`, `raw_status=warn`,
+    `acknowledged=checkout:V1410-1=warn(owner-gated-#11),checkout:bigo-server=warn(owner-gated-#11)`**,
+    components unchanged. Job healthy, next launch on schedule, oraclebox1 placement unchanged.
+  - **Dashboard:** `meta/dashboard/server.py` health panel now shows the actionable status, the
+    `raw …(incl. acknowledged)` pill when it differs, and an explicit `acknowledged (owner-gated,
+    excluded from top-line)` line. Bumped `DASH_RELEASE`; verified live at
+    http://100.78.218.70:8088 (`/api/state.health_summary` carries `raw_status`+`acknowledged`).
+  - **Use it:** to accept a known condition, add/extend `fleet/health-ack` item `acks`, e.g.
+    `monad secrets set fleet/health-ack 'acks=checkout:V1410-1|warn|owner-gated-#11;<more>'`.
+    The top-line clears once the ack covers it; remove the entry to make it count again. Read the
+    verdict with `monad secrets get fleet/health-summary` (`status` = actionable, `raw_status` =
+    everything). When the owner resolves #11, drop those two entries.

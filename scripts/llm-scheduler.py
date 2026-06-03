@@ -46,9 +46,17 @@ AGENT_JOBS = ("assistant", "fleet-builder", "concierge", "remote-control", "rc-s
 SHEDDABLE = ("fleet-builder", "agent-builder", "agent-compute", "agent-research")
 
 
-def api(path, timeout=8):
-    with urllib.request.urlopen(NOMAD.rstrip("/") + path, timeout=timeout) as r:
-        return json.load(r)
+def api(path, timeout=10, retries=1):
+    # Retry once on a transient blip — death-star (the routing target) is across the tailnet and
+    # occasionally slow; skipping it would defeat the point of routing work there.
+    for attempt in range(retries + 1):
+        try:
+            with urllib.request.urlopen(NOMAD.rstrip("/") + path, timeout=timeout) as r:
+                return json.load(r)
+        except Exception:
+            if attempt == retries:
+                raise
+            time.sleep(0.5)
 
 
 def load_policy():

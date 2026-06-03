@@ -20,6 +20,7 @@ import urllib.parse
 import os
 import sys
 import socket
+import signal
 import time
 import html
 from pathlib import Path
@@ -547,6 +548,101 @@ setInterval(refreshCluster, 30000);
 
 # ─── Main ────────────────────────────────────────────────────────────────────
 
+def _listening_socket_inodes(port):
+    """Return socket inodes listening on port from Linux /proc tables."""
+    wanted = ("%04X" % int(port)).upper()
+    inodes = set()
+    for table in ("/proc/net/tcp", "/proc/net/tcp6"):
+        try:
+            lines = Path(table).read_text().splitlines()[1:]
+        except Exception:
+            continue
+        for line in lines:
+            fields = line.split()
+            if len(fields) < 10:
+                continue
+            local_addr, state, inode = fields[1], fields[3], fields[9]
+            if state != "0A":
+                continue
+            try:
+                local_port = local_addr.rsplit(":", 1)[1].upper()
+            except Exception:
+                continue
+            if local_port == wanted:
+                inodes.add(inode)
+    return inodes
+
+
+def _cmdline_for_pid(pid):
+    try:
+        raw = (Path("/proc") / str(pid) / "cmdline").read_bytes()
+    except Exception:
+        return ""
+    return raw.replace(b"\x00", b" ").decode(errors="replace").strip()
+
+
+def _pid_has_socket_inode(pid, inodes):
+    fd_dir = Path("/proc") / str(pid) / "fd"
+    try:
+        entries = list(fd_dir.iterdir())
+    except Exception:
+        return False
+    for entry in entries:
+        try:
+            target = os.readlink(entry)
+        except Exception:
+            continue
+        if target.startswith("socket:[") and target[8:-1] in inodes:
+            return True
+    return False
+
+
+def cleanup_stale_account_manager_listener(port):
+    """Terminate stale account-manager.py processes holding this port on Linux."""
+    if os.name != "posix" or not Path("/proc/net/tcp").exists():
+        return []
+    inodes = _listening_socket_inodes(port)
+    if not inodes:
+        return []
+
+    current = os.getpid()
+    victims = []
+    for proc in Path("/proc").iterdir():
+        if not proc.name.isdigit():
+            continue
+        pid = int(proc.name)
+        if pid == current:
+            continue
+        cmdline = _cmdline_for_pid(pid)
+        if "account-manager.py" not in cmdline:
+            continue
+        if _pid_has_socket_inode(pid, inodes):
+            victims.append(pid)
+
+    for pid in victims:
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+        except PermissionError as e:
+            print(f"[account-manager] WARN: cannot terminate stale listener pid={pid}: {e}")
+
+    deadline = time.time() + 3
+    for pid in victims:
+        while time.time() < deadline:
+            if not Path("/proc", str(pid)).exists():
+                break
+            time.sleep(0.1)
+        if Path("/proc", str(pid)).exists():
+            try:
+                os.kill(pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            except PermissionError as e:
+                print(f"[account-manager] WARN: cannot kill stale listener pid={pid}: {e}")
+    return victims
+
+
 def main():
     port = PORT
     for arg in sys.argv[1:]:
@@ -556,6 +652,11 @@ def main():
             port = int(arg)
         except ValueError:
             pass
+
+    if os.environ.get("ACCOUNT_MANAGER_CLEAN_STALE") == "1":
+        victims = cleanup_stale_account_manager_listener(port)
+        if victims:
+            print(f"[account-manager] cleaned stale listener(s) on port {port}: {victims}")
 
     class ThreadedServer(http.server.ThreadingHTTPServer):
         daemon_threads = True

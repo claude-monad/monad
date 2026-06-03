@@ -43,9 +43,10 @@ EOT
       }
 
       env {
-        ACCOUNT_MANAGER_PORT = "${NOMAD_PORT_http}"
-        NOMAD_ADDR           = "http://100.87.219.108:4646"
-        HOME                 = "/root"
+        ACCOUNT_MANAGER_PORT        = "${NOMAD_PORT_http}"
+        ACCOUNT_MANAGER_CLEAN_STALE = "1"
+        NOMAD_ADDR                  = "http://100.87.219.108:4646"
+        HOME                        = "/root"
       }
 
       resources {

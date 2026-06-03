@@ -28,6 +28,14 @@
 # ALL components) and the full `components`/`d_*` breakdown are unchanged, and
 # covered components are listed under `acknowledged`. No ack var => old behavior.
 #
+# PERIPHERAL SEVERITY CAP (fleet/projects/health-summary-node-severity.md, #40): a
+# PERIPHERAL node's local resource pressure must not force the whole-cluster headline to
+# `critical`. Nodes listed in env KEYSTONE_NODES (Raft voters + the keystone-service host)
+# escalate at full severity; for `disk:<node>` / `overload:<node>` components on any other
+# node, the value used for the top-line `status` is capped at `warn`. Nothing is hidden:
+# `raw_status`, `components`, and every `d_*` keep TRUE severity, and any reduction is
+# listed in the `peripheral_capped` item (e.g. disk:eliotts-mac-mini=critical->warn).
+#
 # The embedded probe is Python (clean JSON/var parsing). It contains no ${...}
 # sequences, so Nomad HCL2 does not try to interpolate it.
 job "fleet-health-rollup" {
@@ -73,6 +81,11 @@ job "fleet-health-rollup" {
         STALE_SERVICE  = "3600"
         STALE_ENGINE   = "7200"
         STALE_JOBS     = "7200"
+        # health-summary-node-severity (#40): nodes whose local resource pressure is
+        # cluster-critical (Raft voters + the keystone-service host). A disk:/overload:
+        # component on a node NOT in this list is capped at `warn` for the HEADLINE
+        # `status` only -- its true severity still shows in raw_status/components/d_*.
+        KEYSTONE_NODES = "v1410-1,oraclebox1,claudebox,bigo-server"
       }
 
       config {
@@ -266,10 +279,29 @@ for name, path, thresh in comps:
 # raw_status = worst of ALL components (the pre-ack behavior, full transparency).
 raw_status = overall
 
+# health-summary-node-severity (#40): a PERIPHERAL node's local resource pressure must
+# not force the whole-cluster headline to `critical`. Nodes in KEYSTONE_NODES (the Raft
+# voters + the keystone-service host) escalate at full severity; for `disk:<node>` /
+# `overload:<node>` components on any OTHER node, the value used for the HEADLINE `status`
+# is capped at `warn`. True severity is untouched in results[] (raw_status/components/d_*);
+# any reduction is recorded in `peripheral_capped` so it is explicit and auditable.
+keystone = set(n.strip() for n in (os.environ.get("KEYSTONE_NODES", "") or "").split(",") if n.strip())
+WARN = "warn"
+capped_notes = []  # "disk:eliotts-mac-mini=critical->warn(peripheral)"
+def headline_status(n):
+    eff = results[n]
+    if ":" in n:
+        kind, node = n.split(":", 1)
+        if kind in ("disk", "overload") and node not in keystone and rank(eff) > rank(WARN):
+            capped_notes.append("%s=%s->%s(peripheral)" % (n, eff, WARN))
+            return WARN
+    return eff
+
 # Top-line `status` = worst of components NOT covered by an ack. A component is
 # covered only while its current status is no worse than its acked level; if it
 # degrades beyond what was accepted (or it's un-acked), it counts toward the
-# top-line so a NEW problem still surfaces.
+# top-line so a NEW problem still surfaces. The peripheral cap (#40) is applied to
+# each component's headline contribution before this worst-of fold.
 def covered(n):
     a = acks.get(n)
     return a is not None and rank(results[n]) <= rank(a[0])
@@ -278,8 +310,10 @@ status = "healthy"
 for n, _, _ in comps:
     if covered(n):
         continue
-    if rank(results[n]) > rank(status):
-        status = results[n]
+    hs = headline_status(n)
+    if rank(hs) > rank(status):
+        status = hs
+peripheral_capped_str = ",".join(capped_notes) if capped_notes else "none"
 
 # acknowledged: components currently covered by an ack, with their reason.
 ack_listed = []
@@ -322,6 +356,7 @@ args = ["nomad", "var", "put", "-force", HVAR,
         "status=" + status,
         "raw_status=" + raw_status,
         "acknowledged=" + acknowledged_str,
+        "peripheral_capped=" + peripheral_capped_str,
         "detail=" + detail,
         "components=" + components_str,
         "component_count=" + str(len(comps)),
@@ -338,8 +373,9 @@ for n, _, _ in comps:
 r = run(args)
 if r.returncode != 0:
     print("[health-rollup] WARN: nomad var put failed: %s" % r.stderr.strip())
-print("[health-rollup] status=%s raw=%s components=[%s] stale=%s ack=%s" % (
-    status, raw_status, components_str, ",".join(stale_list) or "none", acknowledged_str))
+print("[health-rollup] status=%s raw=%s components=[%s] stale=%s ack=%s capped=%s" % (
+    status, raw_status, components_str, ",".join(stale_list) or "none", acknowledged_str,
+    peripheral_capped_str))
 SCRIPT
       }
 

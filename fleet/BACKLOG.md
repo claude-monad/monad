@@ -8,7 +8,8 @@ Priority order (top = next). Pick the highest `todo` you can do on a node you ca
 
 | Pri | Project | Why | Status |
 |----:|---------|-----|--------|
-| 1 | [dashboard-resources-engine](projects/dashboard-resources-engine.md) | per-node CPU/mem/disk + overload flags, Claude/Codex toggle, (future) account usage | todo |
+| 1 | [dashboard-resources-engine](projects/dashboard-resources-engine.md) | per-node CPU/mem/disk + overload flags, Claude/Codex toggle, (future) account usage | building (agent-builder-3-012911) |
+| 2 | [engine-coverage-health](projects/engine-coverage-health.md) | watch whether the cluster default agent engine (cluster/engine) is runnable on any node; fold into health-summary | building (agent-builder-3-015944) |
 | 1 | [shared-registry](projects/shared-registry.md) | a tailnet-wide container registry so images run on every node (not just oraclebox1's localhost:5000) — unblocks everything below | done (100.78.218.70:5000) |
 | 2 | [multiarch-agent-image](projects/multiarch-agent-image.md) | build monad-agent-mesh for amd64+arm64 so v1410-1 & bigo-server can run mesh agents → maintenance agents on the mesh everywhere | done (amd64 verified on v1410-1; image multi-arch in registry) |
 | 6 | [bigo-server-registry-trust](projects/bigo-server-registry-trust.md) | bigo-server dockerd rejects the insecure shared registry (HTTP→HTTPS error) so it can't pull shared images | done (bigo-server trusts 100.78.218.70:5000; pull verified) |

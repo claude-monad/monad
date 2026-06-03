@@ -547,7 +547,7 @@ cmd_doctor() {
             ;;
         ""|--local)
             log "Running local node-doctor..."
-            "$REPO_DIR/scripts/node-doctor.sh"
+            bash "$REPO_DIR/scripts/node-doctor.sh"
             ;;
         *)
             err "Unknown flag: $flag"

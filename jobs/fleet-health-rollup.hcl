@@ -69,6 +69,7 @@ job "fleet-health-rollup" {
         STALE_BACKUP   = "7200"
         STALE_CHECKOUT = "28800"
         STALE_MAINT    = "7200"
+        STALE_SERVICE  = "3600"
       }
 
       config {
@@ -135,6 +136,9 @@ stale_bak  = int(os.environ.get("STALE_BACKUP", "7200") or "7200")
 stale_brv  = int(os.environ.get("STALE_BACKUP_RESTORE", "129600") or "129600")
 stale_co   = int(os.environ.get("STALE_CHECKOUT", "28800") or "28800")
 stale_mt   = int(os.environ.get("STALE_MAINT", "7200") or "7200")
+# keystone-service-liveness (#31) probes the dashboard + postgres every 10m, one var
+# per service; ~6x the interval gives a generous staleness window.
+stale_svc  = int(os.environ.get("STALE_SERVICE", "3600") or "3600")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
@@ -149,6 +153,13 @@ for p in sorted(list_paths("fleet/checkout-health/")):
 for p in sorted(list_paths("fleet/maintenance-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("maintenance:" + node, p, stale_mt))
+# keystone-service-liveness (#31) publishes one var per keystone service
+# (dashboard, postgres), like checkout-health/maintenance-health; surface each as a
+# service:<svc> component so the fleet's OWN services are part of the single signal
+# (and individually ack-able via fleet/health-ack).
+for p in sorted(list_paths("fleet/service-health/")):
+    svc = p.rsplit("/", 1)[-1]
+    comps.append(("service:" + svc, p, stale_svc))
 
 # The monitors use inconsistent status words; normalize to one 4-state scale so
 # the rollup (and the dashboard) speak a single vocabulary.

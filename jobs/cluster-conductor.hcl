@@ -55,7 +55,7 @@ job "cluster-conductor" {
         image        = "ghcr.io/eliott-monad/monad-conductor:latest"
         network_mode = "host"
         # GHCR pull auth — templated from the encrypted Nomad variable so the
-        # package can stay private (no committed credentials).
+# package can stay private (no committed credentials).
         auth {
           username = "eliottcassidy2000"
           password = "${GHCR_TOKEN}"
@@ -85,15 +85,18 @@ job "cluster-conductor" {
 
       env {
         NOMAD_ADDR        = "http://100.125.210.126:4646"
+        CONDUCTOR_BIND    = "0.0.0.0"
         CONDUCTOR_WORKDIR = "/work"
         CONDUCTOR_PORT    = "8200"
         MONAD_REPO_DIR    = "/work"
+        # Bind all host interfaces so Nomad's default-interface health check and
+        # Tailscale callers both reach the same gateway.
         # ENABLE_REMOTE_CONTROL=1 keeps the app-facing session alive (default)
       }
 
       resources {
-        cpu    = 500
-        memory = 1024
+        cpu    = 300
+        memory = 768
       }
     }
   }

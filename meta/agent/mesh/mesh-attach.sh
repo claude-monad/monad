@@ -26,7 +26,12 @@ case "$(uname -m)" in
   aarch64|arm64)  ARCH=arm64 ;;
   *)              ARCH="$(uname -m)" ;;
 esac
-SHARED_BIN="/mnt/deathstar/bin/tsnet-sidecar-$ARCH"
+# Prebuilt sidecar on shared storage. Clients see it at /mnt/deathstar; the storage node
+# (death-star) has the same tree locally at /srv/samba/public. Use whichever exists.
+SHARED_BIN=""
+for d in /mnt/deathstar/bin /srv/samba/public/bin; do
+  [ -x "$d/tsnet-sidecar-$ARCH" ] && { SHARED_BIN="$d/tsnet-sidecar-$ARCH"; break; }
+done
 
 # Already attached?
 if curl -sf --max-time 3 "http://127.0.0.1:$LOCAL_PORT/whoami" >/dev/null 2>&1; then

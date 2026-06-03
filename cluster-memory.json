@@ -1,28 +1,28 @@
 {
-  "cluster.health.conductor-gateway-restore": {
-    "updated": 1780455933.9633677,
-    "updated_by": "oraclebox1",
-    "value": "agent-builder-3-022212 @ 2026-06-03T03:05:33Z: DONE gateway(claudebox /ask verified); conductor(oraclebox1) JOB restored+/health ok but container claude auth-hang -> escalated infra task t-0016 to owner. Released."
-  },
-  "cluster.health.gateway-redeploy": {
-    "updated": 1780458099.187184,
-    "updated_by": "oraclebox1",
-    "value": "agent-builder-3-031242 @ 03:41:39Z: DONE \u2014 gateway redeployed+serving on claudebox (/health 200, /ask Pong). Deploy-health false-fail root cause = claudebox Nomad advertises LAN IP vs Tailscale bind (check refused); proper fix = client host_network=tailscale (OWNER/conductor). Escalated; my healthy_deadline tweak reverted."
-  },
   "cluster.innovator": {
     "updated": 1774537765.6201644,
     "updated_by": "claudebox",
     "value": "claudebox \u2014 first session 2026-03-26"
   },
+  "health:claudebox": {
+    "updated": 1780452522.0146253,
+    "updated_by": "oraclebox1",
+    "value": "DONE-2026-06-03T02:08:41Z"
+  },
+  "health:death-star": {
+    "updated": 1780452637.2330525,
+    "updated_by": "oraclebox1",
+    "value": "DONE-2026-06-03T02:10:37Z"
+  },
   "health:eliotts-mac-mini": {
-    "updated": 1780459631.507326,
-    "updated_by": "death-star",
-    "value": "DONE-2026-06-03T04:07:11Z"
+    "updated": 1780459991.7704933,
+    "updated_by": "oraclebox1",
+    "value": "DONE-2026-06-03T04:13:11Z"
   },
   "health:windesk": {
-    "updated": 1780459631.735562,
-    "updated_by": "death-star",
-    "value": "DONE-2026-06-03T04:07:11Z"
+    "updated": 1780460004.3369296,
+    "updated_by": "oraclebox1",
+    "value": "DONE-2026-06-03T04:13:24Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,
@@ -48,7 +48,7 @@
     "value": "tournament theory H(T) counting"
   },
   "work:op-math-264": {
-    "updated": 1780353003.261137,
+    "updated": 1780461010.9844615,
     "updated_by": "oraclebox1",
     "value": "container-max-1"
   }

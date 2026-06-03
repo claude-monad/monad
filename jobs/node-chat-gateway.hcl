@@ -59,7 +59,7 @@ if [ ! -d "$REPO/.git" ]; then
   git clone --depth 1 https://github.com/eliott-monad/monad "$REPO" || { echo "clone failed"; exit 1; }
 fi
 export PATH="$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin"
-export CONDUCTOR_BIND="$(tailscale ip -4 2>/dev/null | head -1)"
+export CONDUCTOR_BIND="0.0.0.0"
 export CONDUCTOR_PORT="8201"
 export CONDUCTOR_WORKDIR="$REPO"
 export CONDUCTOR_SYSPROMPT="$REPO/conductor/CONDUCTOR.md"

@@ -66,6 +66,7 @@ job "fleet-health-rollup" {
         STALE_RAFT     = "3600"
         STALE_REGISTRY = "28800"
         STALE_CHECKOUT = "28800"
+        STALE_MAINT    = "7200"
       }
 
       config {
@@ -127,12 +128,19 @@ def age_secs(ts):
 stale_raft = int(os.environ.get("STALE_RAFT", "3600") or "3600")
 stale_reg  = int(os.environ.get("STALE_REGISTRY", "28800") or "28800")
 stale_co   = int(os.environ.get("STALE_CHECKOUT", "28800") or "28800")
+stale_mt   = int(os.environ.get("STALE_MAINT", "7200") or "7200")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg)]
 for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("checkout:" + node, p, stale_co))
+# maintenance-agent-health (#25) publishes one var per node, like checkout-health;
+# surface each as a maintenance:<node> component so the cluster's immune system is
+# part of the single signal (and individually ack-able via fleet/health-ack).
+for p in sorted(list_paths("fleet/maintenance-health/")):
+    node = p.rsplit("/", 1)[-1]
+    comps.append(("maintenance:" + node, p, stale_mt))
 
 # The monitors use inconsistent status words; normalize to one 4-state scale so
 # the rollup (and the dashboard) speak a single vocabulary.

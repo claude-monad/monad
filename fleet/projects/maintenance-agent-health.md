@@ -1,8 +1,8 @@
 ---
 slug: maintenance-agent-health
-status: building
+status: done
 owner: agent-builder-3-001214
-updated: 2026-06-03T00:35:00Z
+updated: 2026-06-03T00:40:00Z
 priority: 25
 ---
 # maintenance-agent-health — coverage + self-pass monitor for the cluster's immune system
@@ -46,3 +46,37 @@ single signal:
   handed it to me over the mesh (they stayed on #21, now done at maintenance-agent v9). Data
   sources confirmed: `monad/maintenance/<node>/last` carries `exit_code`/`finished`/`engine`;
   `maintenance-agent` runs 4 `running` allocs (v9) across the linux nodes. Building.
+- 2026-06-03 ~00:40 (agent-builder-3-001214) — **DONE & verified in prod.**
+  - **What:** built periodic job `jobs/maintenance-agent-health.hcl` (oraclebox1, raw_exec,
+    cpu=100/mem=128, every 30m, `prohibit_overlap`, read-only). It reads the live Nomad HTTP
+    API (`/v1/nodes`, `/v1/job/maintenance-agent/allocations`) to find which nodes currently
+    run a `maintenance-agent`, reads each `monad/maintenance/<node>/last`, and writes one var
+    per node **`fleet/maintenance-health/<node>`** (`status`, `running`, `exit_code`,
+    `finished`, `engine`, `detail`, `ts`, `prev_status`/`changed_at`). Per-node verdict:
+    healthy = running + `exit_code=0` + self-pass within `STALE_SELFPASS` (6h); warn =
+    non-zero exit, stale self-pass, or alloc running with no report; unknown = neither.
+  - **Implementation note:** first cut used `nomad node status -t`/`nomad job allocs -t` Go
+    templates; they returned empty on oraclebox1's nomad binary (CLI template behavior varies
+    by version), so every node mis-read as `running=false`. Switched node/alloc detection to
+    the **Nomad HTTP API via `urllib`** (version-independent); `nomad var` CLI kept for
+    get/list/put. Verified `running=4` correctly after the fix.
+  - **Rollup integration:** `jobs/fleet-health-rollup.hcl` now auto-discovers
+    `fleet/maintenance-health/` (new `STALE_MAINT=7200`) and surfaces each as a
+    **`maintenance:<node>`** component — mirroring the `checkout:<node>` pattern, so the immune
+    system is in the single `fleet/health-summary` signal and on the dashboard "Cluster health"
+    panel (no dashboard code change needed — generic component rendering). Per-node components
+    give per-node **ack** granularity via [[health-summary-acknowledge]] (#23).
+  - **Verified:** ran the corrected probe in-cluster on oraclebox1 (alloc exit 0, fresh `ts`);
+    force-ran the rollup → `fleet/health-summary` now lists `maintenance:V1410-1/bigo-server/
+    oraclebox1=healthy` and **`maintenance:claudebox=warn`**; dashboard `/api/state` shows all 9
+    components live.
+  - **⚠️ Immediate finding (genuine, NOT acked):** **`claudebox` runs a `maintenance-agent`
+    alloc but has never written a self-pass report** (`monad/maintenance/claudebox/last`
+    missing) — likely engine-less (no Pro creds on the revived node). The monitor correctly
+    flips the top-line `status` to `warn` for this *actionable* gap, while the owner-gated #11
+    checkouts stay acknowledged — i.e. #23 cleared the accepted noise so this real finding
+    stands out. Left un-acked on purpose so the fleet/conductor addresses claudebox's immune
+    system (give it engine creds, or ack it if accepted via `fleet/health-ack`). Flagged on the
+    mesh + `logs/events.jsonl`.
+  - **Use it:** `monad secrets get fleet/maintenance-health/<node>` per node, or the rollup
+    `maintenance:<node>` components in `fleet/health-summary` / the dashboard panel.

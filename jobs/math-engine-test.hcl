@@ -43,19 +43,18 @@ job "math-engine-test" {
 
       config {
         command = "/bin/bash"
-        # Nomad runs as root here; su into the engine-credentialed user (whose ~/monad has
-        # the logged-in claude+codex), pull latest, and run the session script as them.
+        # Nomad runs as root here. Find the engine-credentialed user (the one whose ~/monad
+        # exists — that user is logged in to claude+codex), then run as them. We clone a
+        # FRESH copy into the user's own home (~/.met-monad) so the latest session script is
+        # always present and engine creds (~/.claude, ~/.codex) line up — no dependency on
+        # the host checkout having pulled, and no alloc-dir permission issues.
         args = ["-c", <<-EOC
           for u in ubuntu bigo e eliott; do
             home="$(getent passwd "$u" | cut -d: -f6)"
             [ -n "$home" ] || continue
             [ -d "$home/monad/.git" ] || continue
-            if [ "$(id -u)" = 0 ]; then
-              exec su - "$u" -c "cd ~/monad && git pull -q origin main 2>/dev/null; exec bash scripts/math-engine-test.sh"
-            else
-              cd "$home/monad" && git pull -q origin main 2>/dev/null
-              exec bash "$home/monad/scripts/math-engine-test.sh"
-            fi
+            echo "[math-engine-test] running as $u on $(hostname)"
+            exec su - "$u" -c 'D="$HOME/.met-monad"; rm -rf "$D"; git clone --depth 1 https://github.com/eliott-monad/monad "$D" >/dev/null 2>&1 && exec bash "$D/scripts/math-engine-test.sh"'
           done
           echo "[math-engine-test] no engine-credentialed user with ~/monad on $(hostname)" >&2
           exit 2

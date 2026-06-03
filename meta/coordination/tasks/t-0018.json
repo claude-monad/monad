@@ -1,0 +1,10 @@
+{
+  "id": "t-0018",
+  "type": "infra",
+  "scope": "cluster-conductor on oraclebox1: containerized 'claude --print' hangs (fresh AND --resume; 1s cpu / 431s wall, /ask 600s-timeouts) though JOB is running + /health 200 + remote-control session up. Likely mounted ~/.claude token needs refresh / re-login on oraclebox1, or container claude auth issue. node-chat-gateway on claudebox (native claude) works fine, so it's container-claude-on-oraclebox1 specific. Needs owner/conductor: refresh Claude auth in the conductor container (re-login on oraclebox1 host /home/ubuntu/.claude, then redeploy jobs/cluster-conductor.hcl). Do NOT have fleet builders poke the shared Max account creds.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

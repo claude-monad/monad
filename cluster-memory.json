@@ -1,4 +1,9 @@
 {
+  "cluster.health.conductor-gateway-restore": {
+    "updated": 1780455933.9633677,
+    "updated_by": "oraclebox1",
+    "value": "agent-builder-3-022212 @ 2026-06-03T03:05:33Z: DONE gateway(claudebox /ask verified); conductor(oraclebox1) JOB restored+/health ok but container claude auth-hang -> escalated infra task t-0016 to owner. Released."
+  },
   "cluster.innovator": {
     "updated": 1774537765.6201644,
     "updated_by": "claudebox",

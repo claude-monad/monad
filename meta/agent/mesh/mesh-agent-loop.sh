@@ -52,6 +52,9 @@ while true; do
   [ "${cnt:-0}" -gt 0 ] 2>/dev/null || continue
   log "received $cnt message(s)"
   incoming="$(printf '%s' "$msgs" | python3 -c 'import json,sys;[print("FROM %s: %s"%(m["from"],m["body"])) for m in json.load(sys.stdin)]' 2>/dev/null)"
+  # unique senders — we reply to them by default (robust: no reliance on the LLM emitting a
+  # special directive format), unless the LLM explicitly directs messages with @peer lines.
+  senders="$(printf '%s' "$msgs" | python3 -c 'import json,sys;print(" ".join(sorted({m["from"] for m in json.load(sys.stdin) if m.get("from")})))' 2>/dev/null)"
   peers="$($AM peers 2>/dev/null)"
   prompt="$ROLE
 
@@ -59,14 +62,29 @@ You are agent '$AGENT_NAME' on the Monad cluster mesh. Peers seen: $peers
 New messages to you:
 $incoming
 
-To reply, output lines EXACTLY as:  @<peer-name> <message>   (use @all to broadcast).
-One line per message. If nothing needs saying, output nothing. Be concise and purposeful."
+Respond naturally and concisely — your reply is sent back to the sender automatically. To direct
+a message to a DIFFERENT peer (or broadcast), include a line: @<peer-name> <message> (@all=broadcast).
+If nothing needs saying, reply with just: (silent)"
   reply="$(run_engine "$prompt")"
-  printf '%s\n' "$reply" | grep -E '^@[A-Za-z0-9._-]+[[:space:]]' | while IFS= read -r line; do
+  # 1) explicit @peer directives
+  directed=0
+  while IFS= read -r line; do
+    [ -z "$line" ] && continue
+    directed=1
     peer="$(printf '%s' "$line" | sed -E 's/^@([A-Za-z0-9._-]+)[[:space:]].*/\1/')"
     text="$(printf '%s' "$line" | sed -E 's/^@[A-Za-z0-9._-]+[[:space:]]+//')"
     $AM send "$peer" "$text" >/dev/null 2>&1 && log "-> $peer: $text"
-  done
+  done < <(printf '%s\n' "$reply" | grep -E '^@[A-Za-z0-9._-]+[[:space:]]')
+  # 2) default: send the (non-directive, non-silent) body back to each sender
+  bodyreply="$(printf '%s\n' "$reply" | grep -vE '^@[A-Za-z0-9._-]+[[:space:]]' | sed '/^[[:space:]]*$/d')"
+  if [ -n "$bodyreply" ] && ! printf '%s' "$bodyreply" | grep -qiE '^\(silent\)$'; then
+    for s in $senders; do
+      [ "$s" = "$AGENT_NAME" ] && continue
+      $AM send "$s" "$bodyreply" >/dev/null 2>&1 && log "-> $s (reply): $(printf '%s' "$bodyreply" | head -c 80)"
+    done
+  elif [ "$directed" = 0 ]; then
+    log "stayed silent"
+  fi
   turns=$((turns+1))
   if [ "$MAXT" -gt 0 ] && [ "$turns" -ge "$MAXT" ]; then log "reached max turns ($MAXT), exiting"; break; fi
 done

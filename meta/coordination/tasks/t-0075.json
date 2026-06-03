@@ -1,0 +1,10 @@
+{
+  "id": "t-0075",
+  "type": "infra",
+  "scope": "tsnet IPC round-trip verification windesk <-> eliotts-mac-mini: once t-0073 lands the win/darwin sidecars, attach each node to the mesh (mesh-attach.sh agent-windesk / agent-mac-mini), then prove interprocess comms both directions (agent-msg send windesk->mac and mac->windesk, confirm recv). Also smoke-test codex worker cross-reach (curl http://<peer-tailnet-ip>:8300/health each way). This pair IS the live tsnet IPC test the owner asked for.",
+  "repo": "eliott-monad/monad",
+  "payload": {"intent": "i-0002", "nodes": ["windesk", "eliotts-mac-mini"]},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0073"
+}

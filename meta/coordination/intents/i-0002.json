@@ -1,0 +1,16 @@
+{
+  "id": "i-0002",
+  "from": "eliott",
+  "recorded_by": "windesk",
+  "verbatim": "coordinate with the cluster a new goal: allow agents to run on windesk and the mac mini. so work with those two in particular. this is a good way to test the interprocess communication via tsnet. im running this same command on manually created workers on windesk and the mini.  but they should at least be able to run codex containers well",
+  "interpretation": "Onboard the two non-Linux edge nodes (windesk = amd64/Windows, eliotts-mac-mini = arm64/darwin; both raw_exec-only, NO docker) as first-class agent nodes: (1) they join the tsnet agent mesh so agents on them are reachable peers and operator<->node IPC works over tsnet, and (2) they can run codex worker workloads well. Use the windesk<->mac-mini pair specifically as the live test of tsnet interprocess communication. The cross-cutting enabler is that the tsnet-sidecar is currently Linux-only; windows/amd64 and darwin/arm64 builds + an OS-aware mesh-attach are needed before either node can join.",
+  "acceptance": [
+    "tsnet-sidecar binaries exist for windows/amd64 (.exe) and darwin/arm64, and mesh-attach selects+launches the right one per OS (not just per arch)",
+    "windesk and eliotts-mac-mini each attach to the agent mesh (agent-msg whoami returns a mesh name + tailnet IP on each)",
+    "a tsnet IPC round-trip is verified between windesk and the mac mini (agent-msg send/recv succeeds both directions)",
+    "windesk advertises has_codex=true and can run a codex worker (codex exec headless succeeds; gateway answers on the node tailnet IP :8300)",
+    "eliotts-mac-mini advertises has_codex=true and can run a codex worker (codex installed+logged in; gateway answers on its tailnet IP :8300)"
+  ],
+  "tasks": ["t-0073", "t-0074", "t-0075", "t-0004", "t-0005", "t-0019", "t-0035"],
+  "status": "active"
+}

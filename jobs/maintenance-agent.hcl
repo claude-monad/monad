@@ -83,9 +83,10 @@ job "maintenance-agent" {
       env {
         MAINT_INTERVAL = "1800"   # self-maintenance pass cadence (s)
         POLL           = "60"     # delegated-queue poll cadence (s)
+        SELF_TIMEOUT   = "900"    # self-pass wall-clock budget; oraclebox1 Codex hit 600s
         MONAD_ENGINE   = "auto"   # claude|codex|auto
         NOMAD_ADDR     = "http://100.75.75.39:4646"
-        MONAD_MAINT_REV = "roster-dynamic-20260603" # bump for script-only refreshes
+        MONAD_MAINT_REV = "self-timeout-20260603" # bump for script-only refreshes
       }
 
       # Mostly an idle poller (60s sleep loop); LLM self-passes burst above this

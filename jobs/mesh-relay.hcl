@@ -49,13 +49,18 @@ job "mesh-relay" {
           #!/bin/bash
           set -uo pipefail
           W=/tmp/mesh-relay-monad
-          if [ ! -d "$W/.git" ]; then
-            rm -rf "$W"; git clone -q --depth 1 https://github.com/eliott-monad/monad "$W"
-          else
-            git -C "$W" fetch -q origin main && git -C "$W" reset --hard -q origin/main || true
+          REL="$W/meta/agent/mesh/relay.py"
+          if [ -d "$W/.git" ]; then
+            git -C "$W" fetch -q origin main 2>/dev/null && git -C "$W" reset --hard -q origin/main 2>/dev/null || true
           fi
+          # Re-clone fresh if the checkout is missing or doesn't yet have relay.py (avoids a stale
+          # clone that raced a push from pinning the job in a crash-loop).
+          if [ ! -f "$REL" ]; then
+            rm -rf "$W"; git clone -q --depth 1 https://github.com/eliott-monad/monad "$W"
+          fi
+          [ -f "$REL" ] || { echo "relay.py missing after clone — retrying soon"; sleep 20; exit 1; }
           export MESH_RELAY_PORT=8477
-          exec python3 "$W/meta/agent/mesh/relay.py"
+          exec python3 "$REL"
         SCRIPT
       }
 

@@ -11,6 +11,22 @@ job "llm-governor" {
   datacenters = ["dc1"]
   type        = "batch"
 
+  constraint {
+    attribute = "${attr.kernel.name}"
+    value     = "linux"
+  }
+
+  constraint {
+    attribute = "${meta.role}"
+    value     = "server"
+  }
+
+  constraint {
+    attribute = "${meta.agent_home}"
+    operator  = "regexp"
+    value     = ".+"
+  }
+
   periodic {
     cron             = "*/5 * * * *"
     prohibit_overlap = true
@@ -28,15 +44,25 @@ job "llm-governor" {
       config {
         command = "/bin/bash"
         args    = ["-c", <<-EOC
-          set -uo pipefail
-          for u in ubuntu e eliott bigo; do
-            h="$(getent passwd "$u" | cut -d: -f6)"; [ -n "$h" ] || continue
-            [ -d "$h/monad/.git" ] || continue
-            su - "$u" -c "cd '$h/monad' && git fetch -q origin main && git reset --hard origin/main -q" 2>/dev/null || true
-            export NOMAD_ADDR="$${NOMAD_ADDR:-http://100.75.75.39:4646}"
-            exec python3 "$h/monad/scripts/llm-scheduler.py" govern --shed
+          set -o pipefail
+          for u in ubuntu e eliott bigo
+          do
+            h="$(getent passwd "$u" | cut -d: -f6)"
+            [ -n "$h" ] || continue
+            for repo in "$h/monad" "$h/.cache/monad-maint"
+            do
+              [ -d "$repo/.git" ] || continue
+              [ -f "$repo/scripts/llm-scheduler.py" ] || continue
+              NOMAD_ADDR="$(printenv NOMAD_ADDR 2>/dev/null)"
+              if [ -z "$NOMAD_ADDR" ]; then
+                NOMAD_ADDR="http://100.75.75.39:4646"
+              fi
+              export NOMAD_ADDR
+              exec python3 "$repo/scripts/llm-scheduler.py" govern --shed
+            done
           done
-          echo "llm-governor: no checkout found" >&2; exit 1
+          echo "llm-governor: no checkout found" >&2
+          exit 1
         EOC
         ]
       }

@@ -3,7 +3,7 @@ slug: maint-selfpass-resilience
 status: building
 owner: agent-builder-3-003802
 updated: 2026-06-03T01:05:00Z
-priority: 28
+priority: 30
 ---
 # maint-selfpass-resilience — make the immune system record a self-pass even across restarts
 

@@ -60,7 +60,7 @@ job "fleet-foreman" {
         INTERVAL   = "600"                            # top-up cadence (s)
         NOMAD_ADDR = "http://100.125.210.126:4646"    # oraclebox1's local server
         REPO_URL   = "https://github.com/eliott-monad/monad"
-        FOREMAN_REV = "blocked-backpressure-20260603" # bump for script-only refreshes
+        FOREMAN_REV = "pending-reap-20260603"         # bump for script-only refreshes
       }
 
       resources {

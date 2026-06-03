@@ -44,6 +44,34 @@ active_builders() {
     END { if (!found) print 0 }'
 }
 
+pending_builder_children() {
+  nomad job status fleet-builder 2>/dev/null | awk '
+    $1 ~ /^fleet-builder\/dispatch-/ && $2 == "pending" { print $1 }'
+}
+
+REAPED_PENDING=0
+reap_excess_pending_builders() {
+  local have="$1" want="$2" excess child
+  REAPED_PENDING=0
+  excess=$((have - want))
+  [ "$excess" -gt 0 ] || return 0
+
+  while IFS= read -r child; do
+    [ -n "$child" ] || continue
+    [ "$REAPED_PENDING" -lt "$excess" ] || break
+    if nomad job stop -detach -purge -yes "$child" >/dev/null 2>&1; then
+      log "reaped excess pending builder $child"
+      REAPED_PENDING=$((REAPED_PENDING + 1))
+    else
+      log "WARN: failed to reap pending builder $child"
+    fi
+  done <<EOF
+$(pending_builder_children)
+EOF
+
+  [ "$REAPED_PENDING" -eq 0 ] || sleep 2
+}
+
 # Count project statuses across fleet/projects/*.md -> sets globals B_TODO B_BUILDING ...
 front_value() {
   local key="$1" f="$2"
@@ -104,6 +132,8 @@ ensure() {
   # Always keep at least 1 builder alive to pick up new todos.
   local want="$N" actionable=$((B_TODO + B_CLAIMED + B_BUILDING + B_REVIEW))
   [ "$actionable" -eq 0 ] && want=1
+  reap_excess_pending_builders "$have" "$want"
+  [ "$REAPED_PENDING" -eq 0 ] || have="$(active_builders)"
 
   local dispatched=0 i engine name
   for i in $(seq $((have+1)) "$want"); do
@@ -123,6 +153,7 @@ ensure() {
   # record fleet status (machine-readable, one place to look)
   nomad var put -force fleet/status \
     running="$now" target="$want" dispatched_this_cycle="$dispatched" \
+    reaped_pending="$REAPED_PENDING" \
     backlog_todo="$B_TODO" backlog_building="$B_BUILDING" \
     backlog_claimed="$B_CLAIMED" backlog_review="$B_REVIEW" \
     backlog_blocked="$B_BLOCKED" backlog_done="$B_DONE" \
@@ -130,7 +161,7 @@ ensure() {
     blocked_projects="${B_BLOCKED_PROJECTS:-none}" \
     updated="$(date -u +%Y-%m-%dT%H:%M:%SZ)" >/dev/null 2>&1 || true
 
-  event "foreman-cycle" "ok" "builders=$now/$want dispatched=$dispatched | $backlog"
+  event "foreman-cycle" "ok" "builders=$now/$want dispatched=$dispatched reaped_pending=$REAPED_PENDING | $backlog"
 }
 
 ensure

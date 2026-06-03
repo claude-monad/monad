@@ -99,10 +99,11 @@ ensure() {
   local have; have="$(active_builders)"
   log "builders running: ${have}/${N} | backlog: $backlog"
 
-  # Only top up if there is open work (todo/building/blocked); don't burn quota when the
-  # backlog is fully done. Always keep at least 1 builder alive to pick up new todos.
-  local want="$N" open=$((B_TODO + B_BUILDING + B_BLOCKED))
-  [ "$open" -eq 0 ] && want=1
+  # Only top up to full strength for actionable work. Blocked projects stay visible in
+  # fleet/status, but they should not burn builder quota while waiting on an owner.
+  # Always keep at least 1 builder alive to pick up new todos.
+  local want="$N" actionable=$((B_TODO + B_CLAIMED + B_BUILDING + B_REVIEW))
+  [ "$actionable" -eq 0 ] && want=1
 
   local dispatched=0 i engine name
   for i in $(seq $((have+1)) "$want"); do

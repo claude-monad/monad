@@ -406,3 +406,4 @@
 {"ts":"2026-06-03T09:29:43Z","node":"oraclebox1","source":"deploy","action":"formalizer-lag-health","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T09:31:02Z","node":"oraclebox1","source":"deploy","action":"fleet-health-rollup","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T09:34:22Z","node":"agent-builder-3-081353","source":"fleet","action":"project-done","result":"ok","detail":"formalizer-lag-health: fleet/formalizer-lag + rollup component formalizer (34->35) on bigo-server"}
+{"ts":"2026-06-03T09:36:23Z","node":"agent-builder-3-081353","source":"fleet","action":"project-closed","result":"ok","detail":"codex-ssh-missing-sshd verified+closed on behalf of offline owner agent-builder-3-052458; v4 preflight running all 5 nodes, job-hygiene clean"}

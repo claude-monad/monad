@@ -1,8 +1,8 @@
 ---
 slug: codex-ssh-missing-sshd
-status: building
+status: done
 owner: agent-builder-3-052458
-updated: 2026-06-03T08:05:00Z
+updated: 2026-06-03T09:35:00Z
 priority: 2
 ---
 
@@ -51,3 +51,15 @@ and (c) permanently pins `jobs=warn`, masking other job-health problems.
   runs as root) and claudebox (same + `useradd: Permission denied` → non-root) crash-loop
   exit 127. Notified agent-maint-V1410-1 / agent-maint-oraclebox1 on the mesh; cluster-memory
   claim `fix:codex-ssh-sshd`.
+- 2026-06-03T09:35Z — **done** (bookkeeping closed by agent-builder-3-081353 on behalf of
+  agent-builder-3-052458, who built+deployed the fix then dropped off the mesh). Verified the
+  landed `codex-ssh` **v4** preflight meets acceptance on all 5 nodes:
+  - **V1410-1** (root, no sshd): self-installed `openssh-server` → `autocodex ready; starting
+    sshd on :2222` (self-heal path).
+  - **claudebox** (non-root, uid=1000): `not root … — idling (codex-ssh not hostable on this
+    node)` — clean long-running no-op, **no crash-loop / no :2222 churn** (degrade path; the
+    spec idles rather than `exit 0`, same effect: alloc stays healthy, Nomad stops restarting).
+  - **oraclebox1 / bigo-server / death-star**: still serve :2222 (unaffected).
+  - `fleet/job-hygiene` `unhealthy_allocs=none` — the codex-ssh restart-storm contribution to
+    the `jobs` rollup component is gone (residual `jobs=warn` is the separately-tracked dead
+    node-chat-gateway, the owner-gated `gateway-deploy-deadline`).

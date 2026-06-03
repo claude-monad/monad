@@ -46,9 +46,11 @@ job "dual-engine-math-test" {
         HOME              = "/home/ubuntu"
       }
 
+      # raw_exec CPU is a soft scheduling reservation (not a hard cap), so keep it
+      # small — oraclebox1 is a 2000 MHz box already busy with fleet jobs.
       resources {
-        cpu    = 2000
-        memory = 2048
+        cpu    = 300
+        memory = 1024
       }
 
       kill_timeout = "30s"

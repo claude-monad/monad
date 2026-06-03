@@ -18,6 +18,17 @@ GIT="git -C $REPO_DIR"
 
 die() { echo "assistant: $*" >&2; exit 1; }
 slug_ok() { printf '%s' "$1" | grep -Eq '^[a-z0-9][a-z0-9-]{1,30}$'; }
+# Push the repo, retrying against the fast-moving fleet (rebase onto origin, then push).
+push_repo() {
+  local i
+  for i in 1 2 3 4 5; do
+    $GIT fetch -q origin 2>/dev/null
+    $GIT rebase -q origin/main 2>/dev/null || { $GIT rebase --abort 2>/dev/null; sleep 1; continue; }
+    $GIT push -q origin main 2>/dev/null && return 0
+    sleep 1
+  done
+  return 1
+}
 
 cmd="${1:-}"; shift || true
 case "$cmd" in
@@ -46,8 +57,7 @@ conversation; keep useful context in this directory's files if helpful.
 EOF
     $GIT add "assistants/$slug/CLAUDE.md" >/dev/null 2>&1 || true
     $GIT commit -q -m "assistant: spawn $slug" >/dev/null 2>&1 || true
-    $GIT pull --rebase -q 2>/dev/null || true
-    $GIT push -q 2>/dev/null || echo "assistant: warning — push failed; session will clone what's on origin" >&2
+        push_repo || echo "assistant: warning — push failed; session clones what is on origin" >&2
 
     # 2) dispatch the persistent session job
     out="$(nomad job dispatch -meta "name=$slug" -meta "model=$model" -meta "effort=$effort" assistant 2>&1)"
@@ -83,7 +93,7 @@ EOF
     if [ -d "$REPO_DIR/assistants/$slug" ]; then
       $GIT rm -r -q "assistants/$slug" >/dev/null 2>&1 || rm -rf "$REPO_DIR/assistants/$slug"
       $GIT commit -q -m "assistant: remove $slug" >/dev/null 2>&1 || true
-      $GIT pull --rebase -q 2>/dev/null || true; $GIT push -q 2>/dev/null || true
+          push_repo || true
     fi
     nomad var purge "assistants/$slug" >/dev/null 2>&1 || true
     echo "removed assistant '$slug'."

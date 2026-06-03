@@ -77,7 +77,7 @@ job "assistant" {
 
       resources {
         cpu    = 200
-        memory = 1024
+        memory = 512
       }
 
       kill_timeout = "10s"

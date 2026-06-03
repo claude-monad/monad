@@ -325,6 +325,27 @@ def health_summary():
     }
 
 
+def capabilities():
+    """Per-node engine capability matrix from Nomad vars `capability/<node>` (written by
+    the cluster-capability sysbatch job). Honest: each node actually ran claude+codex."""
+    stubs = _nomad("/v1/vars?prefix=capability/") or []
+    out = []
+    for s in stubs:
+        path = s.get("Path", "")
+        if not path.startswith("capability/"):
+            continue
+        full = _nomad("/v1/var/" + path) or {}
+        it = full.get("Items", {})
+        out.append({
+            "node": it.get("node", path.split("/")[-1]),
+            "claude": it.get("claude", "?"),
+            "codex": it.get("codex", "?"),
+            "user": it.get("user", ""),
+            "ts": it.get("ts", ""),
+        })
+    return sorted(out, key=lambda x: x["node"])
+
+
 def state():
     return {
         "generated": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
@@ -336,6 +357,7 @@ def state():
         "backlog": backlog(),
         "foreman_status": foreman_status(),
         "health_summary": health_summary(),
+        "capabilities": capabilities(),
     }
 
 
@@ -347,6 +369,7 @@ _cache = {
     "nodes": [], "jobs": [], "peers": [], "events": [], "backlog": [],
     "foreman_status": {"available": False, "active_projects": [], "blocked_projects": []},
     "health_summary": {"available": False, "components": []},
+    "capabilities": [],
 }
 _cache_lock = threading.Lock()
 STATE_SECS = int(os.environ.get("STATE_SECS", "10"))
@@ -502,7 +525,16 @@ async function load(){
    :'<p class="muted" style="padding:12px 14px">no mesh peers visible (tailscale status unavailable on host)</p>';
  const back=tbl(['#','project','status','why'],s.backlog.map(b=>
    `<tr><td>${esc(b.pri)}</td><td><b>${esc(b.project)}</b></td><td>${statusPill(b.status)}</td><td class="muted">${esc(b.why)}</td></tr>`));
+ const capPill=(x)=>{x=x||'?';
+   if(x==='ok')return pill('✓ ok','ok');
+   if(x==='absent'||x==='not-authed'||x==='?')return pill(x==='?'?'untested':x,'dim');
+   return pill(x,'bad');};   // ran-empty / error-rcN / timeout = honest failure
+ const caps=(s.capabilities&&s.capabilities.length)
+   ? tbl(['node','claude session','codex session','last tested'],s.capabilities.map(c=>
+       `<tr><td><b>${esc(c.node)}</b></td><td>${capPill(c.claude)}</td><td>${capPill(c.codex)}</td><td class="muted">${esc((c.ts||'').replace('T',' ').replace('Z',''))}</td></tr>`))
+   : '<p class="muted" style="padding:12px 14px">no capability reports yet — the cluster-capability job runs every 6h (force one with <code>nomad job periodic force cluster-capability</code>). ✓=ran a real autonomous math session; ran-empty/error/absent = honest failure.</p>';
  document.getElementById('app').innerHTML=
+   `<section class="full"><h2>Node capabilities — autonomous math session (claude / codex)</h2>${caps}</section>`+
    `<section class="full"><h2>Cluster health</h2>${renderHealth(s.health_summary)}</section>`+
    `<section><h2>Nodes</h2>${nodes}</section>`+
    `<section><h2>Mesh peers</h2>${peers}</section>`+

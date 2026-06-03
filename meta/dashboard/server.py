@@ -527,7 +527,7 @@ async function load(){
    `<tr><td>${esc(b.pri)}</td><td><b>${esc(b.project)}</b></td><td>${statusPill(b.status)}</td><td class="muted">${esc(b.why)}</td></tr>`));
  const capPill=(x)=>{x=x||'?';
    if(x==='ok')return pill('✓ ok','ok');
-   if(x==='absent'||x==='not-authed'||x==='?')return pill(x==='?'?'untested':x,'dim');
+   if(x==='absent'||x==='not-authed'||x==='not-ready'||x==='?')return pill(x==='?'?'untested':x,'dim');
    return pill(x,'bad');};   // ran-empty / error-rcN / timeout = honest failure
  const caps=(s.capabilities&&s.capabilities.length)
    ? tbl(['node','claude session','codex session','last tested'],s.capabilities.map(c=>

@@ -124,12 +124,31 @@ for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("checkout:" + node, p, stale_co))
 
-# rank for "worst wins"
-RANK = {"healthy": 0, "ok": 0, "unknown": 1, "stale": 2, "warn": 2, "critical": 3}
+# The monitors use inconsistent status words; normalize to one 4-state scale so
+# the rollup (and the dashboard) speak a single vocabulary.
+NORM = {"healthy": "healthy", "ok": "healthy",
+        "warn": "warn", "unhealthy": "warn", "stale": "warn",
+        "critical": "critical",
+        "unknown": "unknown", "none": "unknown", "": "unknown"}
+RANK = {"healthy": 0, "unknown": 1, "warn": 2, "critical": 3}
+def norm(s):
+    return NORM.get((s or "").lower(), "unknown")
 def rank(s):
     return RANK.get(s, 1)
 
-results = {}   # name -> effective status
+def synth_detail(items):
+    # prefer an explicit detail; else compose one from common monitor fields
+    d = (items.get("detail") or "").strip()
+    if d:
+        return d[:140]
+    bits = []
+    for k in ("origin_ok", "key_files_ok", "behind", "dirty", "disk_used_pct",
+              "leader_present", "voter_count"):
+        if k in items:
+            bits.append("%s=%s" % (k, items[k]))
+    return " ".join(bits)[:140]
+
+results = {}   # name -> normalized status
 details = {}   # name -> short detail
 stale_list = []
 overall = "healthy"
@@ -140,24 +159,19 @@ for name, path, thresh in comps:
         eff = "unknown"
         det = "missing var " + path
     else:
-        raw = (items.get("status") or "unknown").lower()
         a = age_secs(items.get("ts"))
         if a is not None and a > thresh:
-            eff = "stale"
-            det = "monitor stale: last ts %s (%dm old > %dm)" % (
+            eff = "warn"   # stale monitor = degraded coverage
+            det = "STALE monitor: last ts %s (%dm old > %dm threshold)" % (
                 items.get("ts", "?"), a // 60, thresh // 60)
             stale_list.append(name)
         else:
-            eff = raw
-            det = items.get("detail", "")[:120]
+            eff = norm(items.get("status"))
+            det = synth_detail(items)
     results[name] = eff
     details[name] = det
     if rank(eff) > rank(overall):
         overall = eff
-
-# normalize overall label
-if overall == "ok":
-    overall = "healthy"
 
 # foreman context (informational, not part of the verdict)
 fs = var_items("fleet/status") or {}
@@ -166,13 +180,13 @@ foreman = "running=%s/%s todo=%s building=%s blocked=%s" % (
     fs.get("backlog_building", "?"), fs.get("backlog_blocked", "?"))
 
 # human summary line
-bad = [n for n in results if rank(results[n]) >= 2]
-if overall in ("healthy",):
+nothealthy = [n for n, _, _ in comps if results[n] != "healthy"]
+if overall == "healthy":
     detail = "all %d components healthy" % len(comps)
-elif overall == "unknown":
-    detail = "some components unreadable: " + ", ".join(n for n in results if results[n] == "unknown")
 else:
-    detail = "degraded: " + ", ".join("%s=%s" % (n, results[n]) for n in bad)
+    detail = "%s: " % overall + ", ".join("%s=%s" % (n, results[n]) for n in nothealthy)
+    if stale_list:
+        detail += " | stale: " + ",".join(stale_list)
 
 components_str = ";".join("%s=%s" % (n, results[n]) for n, _, _ in comps)
 

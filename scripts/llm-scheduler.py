@@ -38,10 +38,12 @@ DEFAULT_POLICY = {
 AGENT_JOBS = ("assistant", "fleet-builder", "concierge", "remote-control", "rc-session",
               "math-researcher", "math-quick-compute", "math-reviewer", "math-formalizer",
               "lrc-", "agent-")
-# Never shed these even if a node is hot (control plane / system).
-PROTECTED = ("cluster-conductor", "fleet-foreman", "maintenance-agent", "storage-mount",
-             "codex-ssh", "codex-tui", "agent-mesh", "account-manager", "net-traffic",
-             "node-doctor", "cluster-watchdog", "monad-sync")
+# Jobs the governor may force-stop to relieve a hot node. ONLY ephemeral builders / ad-hoc
+# agents — NEVER persistent user-facing sessions (concierge/assistant/remote-control count
+# toward the cap so a full node refuses NEW work, but they are never killed) and NEVER the
+# control plane. If a node is over cap purely from persistent sessions, the governor flags it
+# and placement refuses new work — it does not kill what the owner is using.
+SHEDDABLE = ("fleet-builder", "agent-builder", "agent-compute", "agent-research")
 
 
 def api(path, timeout=8):
@@ -188,8 +190,7 @@ def cmd_govern(a):
         allocs = api(f"/v1/node/{r['id']}/allocations")
         sheddable = sorted(
             [al for al in allocs if al.get("ClientStatus") == "running"
-             and any(s in al.get("JobID", "") for s in AGENT_JOBS)
-             and not any(p in al.get("JobID", "") for p in PROTECTED)],
+             and any(s in al.get("JobID", "") for s in SHEDDABLE)],
             key=lambda al: al.get("CreateTime", 0), reverse=True)
         need = max(r["agents"] - r["max_agents"], 0)
         for al in sheddable[:need]:

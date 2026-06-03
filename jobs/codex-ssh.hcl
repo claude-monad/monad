@@ -52,15 +52,17 @@ job "codex-ssh" {
           set -uo pipefail
           U=autocodex
           log() { echo "[codex-ssh $(date '+%H:%M:%S')] $*"; }
+          # On a system job, a task that exits (even 0) is restarted by the restart policy, so a
+          # plain `exit` would still restart-storm + pin the alloc `pending`. To cleanly degrade
+          # on a node that can't host sshd, idle the alloc as a healthy long-running no-op.
+          skip() { log "$* — idling (codex-ssh not hostable on this node)"; exec sleep infinity; }
 
           # --- preflight: self-heal or cleanly degrade (never crash-loop) ---
           # This job needs root (to create the autocodex user) and the openssh-server `sshd`
-          # binary. On nodes lacking either (e.g. V1410-1/claudebox), exit 0 cleanly so Nomad
-          # marks the alloc complete instead of restart-storming exit 127 on a missing binary
-          # or permission error.
+          # binary. On nodes lacking either (e.g. V1410-1/claudebox), idle cleanly instead of
+          # restart-storming exit 127 on a missing binary or permission error.
           if [ "$(id -u)" != 0 ]; then
-            log "not root (uid=$(id -u)) — cannot create $U / manage sshd; skipping codex-ssh on this node"
-            exit 0
+            skip "not root (uid=$(id -u)) — cannot create $U / manage sshd"
           fi
           SSHD="$(command -v sshd 2>/dev/null || echo /usr/sbin/sshd)"
           if ! [ -x "$SSHD" ]; then
@@ -75,8 +77,7 @@ job "codex-ssh" {
             SSHD="$(command -v sshd 2>/dev/null || echo /usr/sbin/sshd)"
           fi
           if ! [ -x "$SSHD" ]; then
-            log "openssh-server unavailable after install attempt — skipping codex-ssh on this node"
-            exit 0
+            skip "openssh-server unavailable after install attempt"
           fi
           # ensure host keys exist (a fresh install or minimal image may have none)
           ls /etc/ssh/ssh_host_*_key >/dev/null 2>&1 || ssh-keygen -A >/dev/null 2>&1 || true

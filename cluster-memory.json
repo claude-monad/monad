@@ -15,14 +15,14 @@
     "value": "claudebox \u2014 first session 2026-03-26"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1780457196.1484692,
+    "updated": 1780459631.507326,
     "updated_by": "death-star",
-    "value": "death-star"
+    "value": "DONE-2026-06-03T04:07:11Z"
   },
   "health:windesk": {
-    "updated": 1780457196.1310337,
+    "updated": 1780459631.735562,
     "updated_by": "death-star",
-    "value": "death-star"
+    "value": "DONE-2026-06-03T04:07:11Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

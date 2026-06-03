@@ -34,6 +34,7 @@ job "mesh-conversation" {
   group "agent" {
     count = 1
     reschedule {
+      attempts       = 0
       delay          = "15s"
       delay_function = "exponential"
       max_delay      = "2m"

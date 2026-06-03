@@ -8,11 +8,13 @@ job "math-formalizer" {
     time_zone        = "America/Denver"
   }
 
-  # Formalization is light/short — run it on the Pro account node so it never competes
-  # with the Max research/compute/reviewer agents for quota.
+  # Formalization is delegated to automated codex work (see meta/FORMALIZATION-POLICY.md),
+  # so this must land on a node with a ready codex engine. codex has its own rate-limit pool,
+  # independent of the Max/Pro Claude accounts, so it never competes with the Claude research
+  # agents for quota.
   constraint {
-    attribute = "${meta.claude_account}"
-    value     = "pro"
+    attribute = "${meta.has_codex}"
+    value     = "true"
   }
 
   group "formalizer" {
@@ -23,22 +25,26 @@ job "math-formalizer" {
 
       config {
         command = "/bin/bash"
-        args    = ["-c", "exec ${MONAD_REPO_DIR:-/home/${USER:-bigo}/monad}/scripts/formalizer-session.sh 0"]
+        args    = ["-c", "exec $${MONAD_REPO_DIR:-/home/$${USER:-bigo}/monad}/scripts/formalizer-session.sh 0"]
       }
 
       env {
-        LEAN_REPO_URL    = "https://github.com/eliott-monad/math-lean.git"
-        MATH_REPO_URL    = "https://github.com/eliottcassidy2000/math.git"
-        GIT_AUTHOR_NAME  = "monad-formalizer"
-        GIT_AUTHOR_EMAIL = "monad@cluster.local"
+        LEAN_REPO_URL     = "https://github.com/eliott-monad/math-lean.git"
+        MATH_REPO_URL     = "https://github.com/eliottcassidy2000/math.git"
+        GIT_AUTHOR_NAME   = "monad-formalizer"
+        GIT_AUTHOR_EMAIL  = "monad@cluster.local"
+        MONAD_ENGINE      = "codex"   # delegate formalization to codex
+        MONAD_CODEX_EFFORT = "high"   # think as hard as possible
       }
 
+      # Heavier than before: the agent both formalizes AND does genuine mathematical
+      # exploration (implications, extensions, connections) within the session.
       resources {
-        cpu    = 1000
-        memory = 2048
+        cpu    = 2000
+        memory = 4096
       }
 
-      kill_timeout = "10s"
+      kill_timeout = "30s"
     }
 
     restart {

@@ -1,8 +1,8 @@
 ---
 slug: vars-restore-verify-sigpipe
-status: building
+status: done
 owner: agent-builder-3-052458
-updated: 2026-06-03T07:24:00Z
+updated: 2026-06-03T07:28:00Z
 priority: 2
 ---
 
@@ -50,3 +50,14 @@ there) — no placement change, no keystone-CPU impact.
 - 2026-06-03 — filed + claimed by agent-builder-3-052458 after draining the backlog with the
   fleet (keystone-periodic-cpu-budget done by agent-builder-3-061735). Diagnosed the
   SIGPIPE+pipefail false-warn on bigo-server.
+- 2026-06-03 — **DONE.** Fixed `jobs/backup-restore-verify.hcl` `makespec` to drain stdin
+  fully (record first items-bearing entry, keep consuming) instead of `break`ing early — so
+  the upstream `gunzip` never gets SIGPIPE/141 under `pipefail`. `monad validate` + `monad
+  deploy` (job version bumped). Forced run (`nomad job periodic force backup-restore-verify`,
+  alloc 5ef7455a on bigo-server, exit 0) now reports `fleet/backup-restore-verify`
+  `status=healthy`, `vars_status=healthy` `vars_mode=deep`, `vars_detail="restored ok: 115
+  vars, round-trip sha match"`. Forced `fleet-health-rollup` → `fleet/health-summary`
+  component `backup-restore=healthy` (was `warn`). Remaining `critical` headline is unrelated
+  (`overload:oraclebox1`, `disk:eliotts-mac-mini`). To re-verify: `nomad var get
+  fleet/backup-restore-verify` (look for `vars_status=healthy` + sha match). Script-only,
+  reversible, idempotent; job stays pinned to bigo-server.

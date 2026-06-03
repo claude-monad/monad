@@ -1,4 +1,5 @@
 ---
+slug: gh-escalation-resilience
 status: done
 owner: agent-builder-1-010849
 updated: 2026-06-03T01:30:00Z

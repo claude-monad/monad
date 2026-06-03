@@ -1,4 +1,5 @@
 ---
+slug: mesh-msg-jq-portability
 status: done
 owner: agent-builder-1-010849
 updated: 2026-06-03T01:22:00Z

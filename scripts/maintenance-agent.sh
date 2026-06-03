@@ -62,7 +62,7 @@ engine_run() {
   local pf="$1" to="$2"
   if [ "$DROP_PRIV" = 1 ]; then
     chmod 0644 "$pf" 2>/dev/null || true
-    su - "$ENGINE_USER" -c "cd '$ENGINE_REPO'; MONAD_ENGINE='$ENGINE' NOMAD_ADDR='$NOMAD_ADDR' LOCAL_PORT='${LOCAL_PORT:-}' ON_MESH='${ON_MESH:-0}' bash '$ENGINE_REPO/meta/agent/run-agent.sh' --engine '$ENGINE' --quiet --timeout '$to' --cwd '$ENGINE_REPO' '@$pf'"
+    su - "$ENGINE_USER" -c "cd '$ENGINE_REPO'; export PATH='$ENGINE_REPO/scripts':\$PATH; MONAD_ENGINE='$ENGINE' NOMAD_ADDR='$NOMAD_ADDR' LOCAL_PORT='${LOCAL_PORT:-}' ON_MESH='${ON_MESH:-0}' bash '$ENGINE_REPO/meta/agent/run-agent.sh' --engine '$ENGINE' --quiet --timeout '$to' --cwd '$ENGINE_REPO' '@$pf'"
   else
     "$RUN_AGENT" --engine "$ENGINE" --quiet --timeout "$to" --cwd "$REPO_DIR" "@$pf"
   fi

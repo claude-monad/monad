@@ -46,7 +46,7 @@ AGENT_JOBS = ("assistant", "fleet-builder", "concierge", "remote-control", "rc-s
 SHEDDABLE = ("fleet-builder", "agent-builder", "agent-compute", "agent-research")
 
 
-def api(path, timeout=10, retries=1):
+def api(path, timeout=15, retries=2):
     # Retry once on a transient blip — death-star (the routing target) is across the tailnet and
     # occasionally slow; skipping it would defeat the point of routing work there.
     for attempt in range(retries + 1):

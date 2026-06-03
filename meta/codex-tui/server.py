@@ -21,6 +21,24 @@ if os.environ.get("CODEX_HOME"):
 
 SESSIONS = {}          # chat name -> codex session id (UUID)
 LOCK = threading.Lock()
+# Persist the name->session-id map so a tui restart (alloc reschedule, node move) keeps
+# conversation continuity — e.g. the 'lrc' tracker session survives without re-priming.
+STATE = os.environ.get("CODEX_TUI_STATE", os.path.join(WORKDIR, "sessions.json"))
+try:
+    with open(STATE) as f:
+        SESSIONS.update(json.load(f))
+    print(f"[codex-tui] restored {len(SESSIONS)} session(s) from {STATE}", flush=True)
+except Exception:
+    pass
+
+def save_sessions():
+    try:
+        tmp = STATE + ".tmp"
+        with open(tmp, "w") as f:
+            json.dump(SESSIONS, f)
+        os.replace(tmp, STATE)
+    except Exception:
+        pass
 # `codex exec` accepts -C (cwd); `codex exec resume` does NOT (it keeps the session's cwd).
 COMMON = ["--dangerously-bypass-approvals-and-sandbox", "--skip-git-repo-check"]
 
@@ -42,6 +60,7 @@ def run_codex(name, message):
     if m:
         with LOCK:
             SESSIONS[name] = m.group(1)
+            save_sessions()
     reply = ""
     try:
         with open(last) as f:

@@ -56,6 +56,9 @@ job "codex-ssh" {
           id "$U" >/dev/null 2>&1 || useradd -m -s /bin/bash "$U"
           echo "$U ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/autocodex && chmod 440 /etc/sudoers.d/autocodex
           H="$(getent passwd "$U" | cut -d: -f6)"
+          # sshd StrictModes: HOME + ~/.ssh must be owned by the user and not group/world-writable,
+          # or pubkey auth is silently rejected. Enforce it (the user may have pre-existed home-less).
+          mkdir -p "$H"; chown "$U:$U" "$H"; chmod 0755 "$H"
           install -d -m 700 -o "$U" -g "$U" "$H/.ssh"
 
           KP="$NOMAD_TASK_DIR/key.pub"

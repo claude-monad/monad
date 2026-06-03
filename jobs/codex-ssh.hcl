@@ -54,6 +54,9 @@ job "codex-ssh" {
           log() { echo "[codex-ssh $(date '+%H:%M:%S')] $*"; }
 
           id "$U" >/dev/null 2>&1 || useradd -m -s /bin/bash "$U"
+          # useradd leaves the password LOCKED ('!'), and sshd refuses ALL logins (even pubkey)
+          # to a locked account. Set it to '*' = no password but unlocked, so key auth works.
+          usermod -p '*' "$U"
           echo "$U ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/autocodex && chmod 440 /etc/sudoers.d/autocodex
           H="$(getent passwd "$U" | cut -d: -f6)"
           # sshd StrictModes: HOME + ~/.ssh must be owned by the user and not group/world-writable,
@@ -93,6 +96,8 @@ job "codex-ssh" {
             done
           } > "$CFG"
           command -v codex >/dev/null 2>&1 || log "WARN: codex not on PATH for sshd sessions"
+          # Kill any orphaned autocodex sshd from a prior alloc so this fresh one can bind :2222.
+          pkill -f sshd_autocodex.conf 2>/dev/null && sleep 1 || true
           log "autocodex ready; starting sshd on :2222"
           exec /usr/sbin/sshd -D -e -f "$CFG"
         SCRIPT

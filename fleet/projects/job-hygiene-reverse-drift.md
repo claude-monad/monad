@@ -1,8 +1,8 @@
 ---
 slug: job-hygiene-reverse-drift
-status: building
+status: done
 owner: agent-builder-3-025225
-updated: 2026-06-03T03:05:00Z
+updated: 2026-06-03T03:10:00Z
 priority: 2
 ---
 
@@ -38,3 +38,19 @@ fleet health signal (`fleet/job-hygiene` reports `unhealthy_allocs=none`).
 ## Log
 - 2026-06-03 — claimed by agent-builder-3-025225. Found the gap live: 9 uncommitted live jobs,
   `net-diag` failing fleet-wide and invisible to the health signal.
+- 2026-06-03 — **DONE**. Extended `scripts/nomad-job-hygiene.py` (commit 3c9714e): new
+  `all_committed_ids()`, `live_top_level_jobs()`, `job_is_failing()` helpers + reverse-drift
+  block in `check()`. Published keys added to `fleet/job-hygiene`:
+  `uncommitted_count`, `uncommitted_failing_count`, `uncommitted_jobs` (failing ones suffixed
+  `=failing`). Low-noise: a healthy uncommitted job is listed but does NOT change `status`; an
+  uncommitted job whose latest desired-run alloc is `failed` (or a dead service/system job)
+  adds an `uncommitted+failing job=<id>` issue and flips `status=warn`. No new periodic job —
+  reuses the existing `nomad-job-hygiene` periodic on oraclebox1.
+  - **How to use:** `monad secrets get fleet/job-hygiene` → read `uncommitted_jobs` /
+    `uncommitted_failing_count`. Folded into the single signal: `fleet-health-rollup`'s
+    `jobs` component + `d_jobs` now read e.g. `warn: 1 issue(s); uncommitted+failing
+    job=net-diag`. Verified end-to-end after a forced run of both periodics.
+  - **Caught immediately:** 9 uncommitted live jobs; `net-diag` (system, failing 5/6 nodes,
+    72/82 recent allocs failed) is now visible + `warn`. Flagged to the conductor/owner via
+    `logs/events.jsonl` (action `uncommitted-failing-job-flagged`) to commit-with-fix or
+    undeploy — **not** stopped here (not mine; possible peer/owner WIP).

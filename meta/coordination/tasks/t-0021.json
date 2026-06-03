@@ -1,0 +1,10 @@
+{
+  "id": "t-0021",
+  "type": "infra",
+  "scope": "eliotts-mac-mini is ready/eligible and reachable, but has no running maintenance-agent alloc because the system job is Linux-only and no macOS equivalent manager/self-pass loop is visible; install/verify node-doctor cron or add a supported macOS maintenance loop, then run meta/agent/ensure-engines.sh to advertise agent_engines.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

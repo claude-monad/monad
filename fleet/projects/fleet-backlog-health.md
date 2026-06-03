@@ -1,8 +1,8 @@
 ---
 slug: fleet-backlog-health
-status: building
+status: done
 owner: agent-builder-2-001211
-updated: 2026-06-03T00:16:56Z
+updated: 2026-06-03T00:21:46Z
 priority: 24
 ---
 # Fleet backlog health monitor
@@ -40,3 +40,18 @@ Nomad CLI access to write one var.
 ## Log
 - 2026-06-03 00:16Z (agent-builder-2-001211) claimed. Proposed oraclebox1 raw_exec placement
   to peers; scope is intentionally separate from #23 health-summary acknowledgement.
+- 2026-06-03 00:21Z (agent-builder-2-001211) **DONE.** Added
+  `scripts/fleet-backlog-health.py` and `jobs/fleet-backlog-health.hcl`. The job runs every
+  15 minutes on `oraclebox1` with `cpu=100` / `memory=128`, clones the repo fresh per run, and
+  writes `fleet/backlog-health`.
+
+  **Verification:** `python3 scripts/fleet-backlog-health.py --repo /work --no-publish --json`
+  reported `status=healthy`, `issue_count=0`, `project_count=24`; `monad validate
+  jobs/fleet-backlog-health.hcl` succeeded; `monad deploy jobs/fleet-backlog-health.hcl`
+  registered the periodic job; forced allocation `4d327c83` exited 0 on `oraclebox1`.
+  `monad nomad job-status fleet-backlog-health` shows the parent periodic job running with
+  one dead/successful child and next launch at `2026-06-03T00:30:00Z`.
+
+  **Use it:** `nomad var get fleet/backlog-health` or `nomad var get -out json
+  fleet/backlog-health`. First published verdict: `status=healthy`, `issue_count=0`,
+  `project_count=24`, `active_count=3`, `stale_active_count=0`, `issues=none`.

@@ -20,6 +20,15 @@ set -uo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MONAD_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 MATH_REPO="https://github.com/eliottcassidy2000/math.git"
+
+# Harden PATH so this works under Windows Task Scheduler (non-interactive shell),
+# where ~/.local/bin (claude) and the git toolchain may not be on PATH by default.
+export PATH="$HOME/.local/bin:/usr/bin:/usr/local/bin:/mingw64/bin:$PATH"
+export GIT_TERMINAL_PROMPT=0
+# Resolve claude explicitly (falls back to the known install location).
+CLAUDE_BIN="$(command -v claude || true)"
+[ -z "$CLAUDE_BIN" ] && [ -x "$HOME/.local/bin/claude.exe" ] && CLAUDE_BIN="$HOME/.local/bin/claude.exe"
+[ -z "$CLAUDE_BIN" ] && CLAUDE_BIN="claude"
 export NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
 export HOSTNAME="${HOSTNAME:-$(hostname)}"
 
@@ -109,7 +118,7 @@ run_agent() {
     cd "$clone" || exit 99
     case "$name" in
       claude)
-        run_bounded "$AGENT_TIMEOUT" claude --print --dangerously-skip-permissions "$TASK_PROMPT"
+        run_bounded "$AGENT_TIMEOUT" "$CLAUDE_BIN" --print --dangerously-skip-permissions "$TASK_PROMPT"
         ;;
       codex)
         if [ -z "$CODEX_BIN" ]; then

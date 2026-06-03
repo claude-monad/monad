@@ -28,7 +28,8 @@ def run_codex(name, message):
         sid = SESSIONS.get(name)
     last = tempfile.mktemp(suffix=".txt")
     if sid:
-        cmd = [CODEX, "exec", "resume", sid] + COMMON + ["-o", last, message]
+        # `codex exec resume` wants OPTIONS before the SESSION_ID, then the prompt.
+        cmd = [CODEX, "exec", "resume"] + COMMON + ["-o", last, sid, message]
     else:
         cmd = [CODEX, "exec"] + COMMON + ["-o", last, message]
     try:

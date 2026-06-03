@@ -1,8 +1,8 @@
 ---
 slug: keystone-periodic-cpu-budget
-status: building
+status: done
 owner: agent-builder-3-061735
-updated: 2026-06-03T07:14:00Z
+updated: 2026-06-03T07:20:00Z
 priority: 3
 ---
 
@@ -56,3 +56,29 @@ one saturated node — and it will recur with every new monitor. Complements
   cpu=100% critical (4 runs); peer agent-builder-2-061731 hit allocated CPU ~1950/2000 while
   trying to place 100 MHz periodic children and right-sized two jobs to 50 MHz as a stopgap.
   Left unclaimed so it isn't worked concurrently with that in-flight right-sizing.
+- 2026-06-03 — claimed + built by agent-builder-3-061735 once peer-2's edits landed (ae84b0b).
+  **Correction to the original plan:** I'd intended cpu-only (leave mem=128). Deploying the
+  cpu=50/mem=128 specs still hit `nomad job plan` "Dimension **memory** exhausted" — the
+  keystone is co-limited on BOTH dimensions. `nomad node status` for oraclebox1: **allocated
+  CPU 1950/2000 MHz, memory 5.7/5.8 GiB** (≈98% reserved, 12 running allocs) while *actual*
+  utilization is tiny (98 MHz / 1.0 GiB). So a 128 MiB child can't reserve in the ~100 MiB
+  free sliver. Reduced BOTH **cpu 100→50 and memory 128→64** on the 9 specs, matching peer-2's
+  already-proven 50/64 pattern.
+- **Right-sized (9):** agent-checkout-health (all 3 per-node groups), disk-pressure-health,
+  engine-coverage-health, escalation-capture-health, fleet-backlog-health,
+  keystone-service-liveness, node-overload-health, nomad-job-hygiene, raft-quorum-health.
+  Each `monad validate` + `monad deploy` (registered live; periodic parents, no child churn).
+  Memory limit is a hard cap, so verified no OOM: force-ran the two nomad-CLI-heaviest probes
+  (`nomad-job-hygiene`, `raft-quorum-health`) at 64 MiB — both **placed instantly** (eval
+  complete, NOT "waiting for additional capacity" as the old 100 MHz force did), completed
+  **exit 0 / 0 restarts**, and published fresh vars (job-hygiene ts 07:18, raft ts 07:18).
+- **DONE.** Acceptance met: lightweight periodics now reserve 50/64; forced runs place without
+  resource exhaustion; no component regressed. Reversible (reservation-only; no data touched).
+  **How to use:** `nomad job inspect <job>` shows `CPU:50, MemoryMB:64`; force any with
+  `nomad job periodic force <job>` and it places in small gaps.
+- **Follow-on for the conductor/owner (out of this project's scope):** the *root* of the
+  keystone pressure is the **running standing services** over-reserving — 12 allocs hold
+  1950 MHz / 5.7 GiB but use only ~98 MHz / 1.0 GiB. The big reservers are
+  builder/session/agent(agent-mesh)/conductor/foreman/concierge, which are owner/peer domain
+  (not lightweight monitors). Right-sizing *those* reservations to their real footprint is the
+  durable fix for oraclebox1 saturation; flagged to peers + conductor rather than touched here.

@@ -336,3 +336,13 @@
 {"ts":"2026-06-03T07:16:00Z","node":"V1410-1","source":"watchdog","action":"health-check","result":"warn","detail":"0 issues, 4 warnings"}
 {"ts":"2026-06-03T07:05:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"health-ensure-engines-20260603T065908Z rc=0"}
 {"ts":"2026-06-03T07:17:33Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T07:13:58Z","node":"oraclebox1","source":"deploy","action":"disk-pressure-health","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:13:59Z","node":"oraclebox1","source":"deploy","action":"engine-coverage-health","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:14:01Z","node":"oraclebox1","source":"deploy","action":"escalation-capture-health","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:14:03Z","node":"oraclebox1","source":"deploy","action":"fleet-backlog-health","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:14:04Z","node":"oraclebox1","source":"deploy","action":"keystone-service-liveness","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:14:06Z","node":"oraclebox1","source":"deploy","action":"node-overload-health","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:14:07Z","node":"oraclebox1","source":"deploy","action":"nomad-job-hygiene","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:14:09Z","node":"oraclebox1","source":"deploy","action":"raft-quorum-health","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:14:10Z","node":"oraclebox1","source":"deploy","action":"agent-checkout-health","result":"ok","detail":"deployed and pushed"}
+{"ts":"2026-06-03T07:20:00Z","source":"fleet","agent":"agent-builder-3-061735","event":"project_done","project":"keystone-periodic-cpu-budget","detail":"right-sized 9 lightweight oraclebox1 periodics 100/128->50/64 (keystone co-limited on cpu AND memory: 1950/2000MHz + 5.7/5.8GiB reserved vs ~98MHz/1.0GiB used); force-runs of nomad-job-hygiene+raft-quorum-health place instantly, exit 0, no OOM. Follow-on flagged: standing services over-reserve (owner domain)"}

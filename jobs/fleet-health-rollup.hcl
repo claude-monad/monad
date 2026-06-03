@@ -146,6 +146,9 @@ stale_disk = int(os.environ.get("STALE_DISK", "3600") or "3600")
 # engine-coverage-health (engine-coverage-health.md) probes agent-engine coverage every
 # 30m into one var; ~4x the interval gives a generous staleness window.
 stale_engine = int(os.environ.get("STALE_ENGINE", "7200") or "7200")
+# node-overload-health (node-overload-health.md) probes per-node CPU/mem saturation every
+# 15m, one var per node; ~4x the interval gives a generous staleness window.
+stale_overload = int(os.environ.get("STALE_OVERLOAD", "3600") or "3600")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
@@ -175,6 +178,13 @@ for p in sorted(list_paths("fleet/service-health/")):
 for p in sorted(list_paths("fleet/disk-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("disk:" + node, p, stale_disk))
+# node-overload-health publishes one var per node (sustained CPU/mem saturation), like
+# disk-health; surface each as an overload:<node> component so a node pinned at 100% CPU /
+# out of RAM is part of the single signal (and individually ack-able via fleet/health-ack).
+# The monitor sets `detail`, so synth_detail renders it directly.
+for p in sorted(list_paths("fleet/overload-health/")):
+    node = p.rsplit("/", 1)[-1]
+    comps.append(("overload:" + node, p, stale_overload))
 
 # The monitors use inconsistent status words; normalize to one 4-state scale so
 # the rollup (and the dashboard) speak a single vocabulary.

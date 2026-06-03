@@ -62,9 +62,11 @@ events update from a Server-Sent Events stream every few seconds.
 | `REPO_DIR` | repo root | where to read repo files / git-pull |
 | `REFRESH_SECS` | `60` | repo git-pull interval |
 | `EVENT_STREAM_SECS` | `5` | event-stream file check interval |
+| `CONDUCTOR_URL` | `http://100.75.75.39:8200` | cluster-conductor chat gateway base URL |
+| `GATEWAYS` | empty | extra `name=url` chat gateways, comma-separated |
 
 ## Run locally
 ```bash
-NOMAD_ADDR=http://100.125.210.126:4646 REPO_DIR=/path/to/monad python3 meta/dashboard/server.py
+NOMAD_ADDR=http://100.75.75.39:4646 REPO_DIR=/path/to/monad python3 meta/dashboard/server.py
 # then open http://localhost:8088
 ```

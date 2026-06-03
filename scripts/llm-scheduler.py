@@ -38,15 +38,25 @@ DEFAULT_POLICY = {
 AGENT_JOBS = ("assistant", "fleet-builder", "concierge", "remote-control", "rc-session",
               "math-researcher", "math-quick-compute", "math-reviewer", "math-formalizer",
               "lrc-", "agent-")
-# Never shed these even if a node is hot (control plane / system).
-PROTECTED = ("cluster-conductor", "fleet-foreman", "maintenance-agent", "storage-mount",
-             "codex-ssh", "codex-tui", "agent-mesh", "account-manager", "net-traffic",
-             "node-doctor", "cluster-watchdog", "monad-sync")
+# Jobs the governor may force-stop to relieve a hot node. ONLY ephemeral builders / ad-hoc
+# agents — NEVER persistent user-facing sessions (concierge/assistant/remote-control count
+# toward the cap so a full node refuses NEW work, but they are never killed) and NEVER the
+# control plane. If a node is over cap purely from persistent sessions, the governor flags it
+# and placement refuses new work — it does not kill what the owner is using.
+SHEDDABLE = ("fleet-builder", "agent-builder", "agent-compute", "agent-research")
 
 
-def api(path):
-    with urllib.request.urlopen(NOMAD.rstrip("/") + path, timeout=15) as r:
-        return json.load(r)
+def api(path, timeout=15, retries=2):
+    # Retry once on a transient blip — death-star (the routing target) is across the tailnet and
+    # occasionally slow; skipping it would defeat the point of routing work there.
+    for attempt in range(retries + 1):
+        try:
+            with urllib.request.urlopen(NOMAD.rstrip("/") + path, timeout=timeout) as r:
+                return json.load(r)
+        except Exception:
+            if attempt == retries:
+                raise
+            time.sleep(0.5)
 
 
 def load_policy():
@@ -71,12 +81,19 @@ def node_load():
         if n.get("Status") != "ready":
             continue
         nid, name = n["ID"], n["Name"]
-        d = api(f"/v1/node/{nid}")
+        # Tolerate a slow/unreachable node: skip it rather than crash the whole pass (this runs
+        # every 5 min as a job — one hung node must not take the governor down).
+        try:
+            d = api(f"/v1/node/{nid}")
+            allocs = api(f"/v1/node/{nid}/allocations")
+        except Exception as e:
+            print(f"# warn: skipping {name} ({e})", file=sys.stderr)
+            continue
         nr = d.get("NodeResources", {})
         tot_cpu = nr.get("Cpu", {}).get("CpuShares", 0) or nr.get("Processors", {}).get("Topology", {}).get("TotalCompute", 0)
         tot_mem = nr.get("Memory", {}).get("MemoryMB", 0)
         a_cpu = a_mem = agents = 0
-        for al in api(f"/v1/node/{nid}/allocations"):
+        for al in allocs:
             if al.get("ClientStatus") != "running":
                 continue
             ar = al.get("AllocatedResources", {}) or {}
@@ -181,8 +198,7 @@ def cmd_govern(a):
         allocs = api(f"/v1/node/{r['id']}/allocations")
         sheddable = sorted(
             [al for al in allocs if al.get("ClientStatus") == "running"
-             and any(s in al.get("JobID", "") for s in AGENT_JOBS)
-             and not any(p in al.get("JobID", "") for p in PROTECTED)],
+             and any(s in al.get("JobID", "") for s in SHEDDABLE)],
             key=lambda al: al.get("CreateTime", 0), reverse=True)
         need = max(r["agents"] - r["max_agents"], 0)
         for al in sheddable[:need]:

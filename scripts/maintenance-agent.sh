@@ -46,6 +46,20 @@ event() { # type action status detail
 
 ready_engines() { engines_ready 2>/dev/null; }
 
+DEFAULT_ROSTER="V1410-1, bigo-server, claudebox, death-star, eliotts-mac-mini, oraclebox1, windesk"
+cluster_roster() {
+  local names
+  names="$(nomad node status 2>/dev/null |
+    awk 'NR > 1 && NF >= 8 && $1 !~ /^==>/ && $7 == "eligible" && $8 == "ready" { print $4 }' |
+    sort -f |
+    awk 'NF { printf "%s%s", (seen++ ? ", " : ""), $0 }')"
+  if [ -n "$names" ]; then
+    printf '%s' "$names"
+  else
+    printf '%s' "$DEFAULT_ROSTER"
+  fi
+}
+
 # --- engine-as-credentialed-user (amd64/root path) --------------------------------
 # Set by detect_engine_user() below. When this agent runs as root with no host checkout
 # (the alloc-clone fallback on V1410-1/bigo-server), claude refuses
@@ -151,15 +165,16 @@ $(nomad var list -out=terse "$QUEUE_LC/" 2>/dev/null | grep "^$QUEUE_LC/")"
 }
 
 self_maintenance() {
-  local pf rc
+  local pf rc roster
+  roster="$(cluster_roster)"
   pf="$(mktemp)"
   cat > "$pf" <<EOF
 You are the maintenance agent for node "$NODE" in the Monad Nomad cluster.
 Your repo (GitOps source of truth) is at: $AGENT_REPO  (use the 'monad' CLI; NOMAD_ADDR is set).
 
-STANDING MANDATE — read $AGENT_REPO/meta/CLUSTER-HEALTH.md. You are responsible NOT just for
-"$NODE" but for the constant health of the WHOLE roster (v1410-1, oraclebox1, claudebox,
-eliotts-mac-mini, windesk). Do a cluster-health sweep and report concisely (<14 lines):
+STANDING MANDATE - read $AGENT_REPO/meta/CLUSTER-HEALTH.md. You are responsible NOT just for
+"$NODE" but for the constant health of the live Nomad roster: $roster. Do a cluster-health
+sweep and report concisely (<14 lines):
 
 A. SELF (cheap, always safe):
    - disk: clean obviously-safe junk (old logs in logs/, /tmp, 'docker system prune -f' if docker is idle) ONLY if disk pressure is real.
@@ -191,6 +206,7 @@ Messages addressed to you since last pass: ${inbox:-[none]}
 If a peer asked you something or a cross-node issue needs coordinating, reply to them.
 EOF
   fi
+  log "self-maintenance roster: $roster"
   log "self-maintenance pass (engine=$ENGINE user=${ENGINE_USER:-$(id -un)})"
   event "maintenance" "self-pass" "start" ""
   local out; out="$(engine_run "$pf" "${SELF_TIMEOUT:-600}" 2>&1)"; rc=$?

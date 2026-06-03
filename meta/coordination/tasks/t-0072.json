@@ -1,0 +1,10 @@
+{
+  "id": "t-0072",
+  "type": "math",
+  "scope": "S620 HYP-2190 H-apex: for even n locate the depth-charge concentration point and confirm it is the apex t=1/2; relate H_depth minimization to THM-404 doubling-rigidity and HYP-2140 2-adic seam. Show the AP minimizes H_depth (depth entropy) while MAXIMIZING S543 H-matrix entropy (the duality).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S620"
+}

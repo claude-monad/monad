@@ -9,6 +9,9 @@
 #   agent-msg send <peer> <message…> -> send a message to peer <peer>
 #   agent-msg recv                   -> drain + print messages sent to this agent
 set -uo pipefail
+# Auto-discover the local sidecar port if not provided (mesh-attach writes this on attach),
+# so any agent/delegated task can reach the mesh without env propagation.
+[ -z "${LOCAL_PORT:-}" ] && [ -f /tmp/monad-mesh.env ] && . /tmp/monad-mesh.env 2>/dev/null || true
 L="http://127.0.0.1:${LOCAL_PORT:-8473}"
 
 # JSON-encode one string (no surrounding quotes) in pure bash, so `send` works on nodes

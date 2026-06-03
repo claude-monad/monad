@@ -269,6 +269,16 @@ while true; do
     detect_engine_user
     sleep "$POLL"; continue
   fi
+  # Keep this agent ON the mesh so it (and its delegated LLM tasks) can coordinate. If the
+  # sidecar dropped or never attached (e.g. the binary only just landed on shared storage),
+  # re-attach. This is what keeps every node's agents in active communication.
+  if [ "${ON_MESH:-0}" != 1 ] || ! curl -sf --max-time 3 "http://127.0.0.1:${LOCAL_PORT:-8473}/whoami" >/dev/null 2>&1; then
+    if p="$("$REPO_DIR/meta/agent/mesh/mesh-attach.sh" "$MESH_NAME" 2>/dev/null)"; then
+      export LOCAL_PORT="$p"; ON_MESH=1
+      log "(re)attached to mesh as $MESH_NAME (local api :$p)"
+      event "mesh" "attach" "ok" "$MESH_NAME"
+    fi
+  fi
   drain_queue || true
   now="$(date +%s)"
   if [ $(( now - last_self )) -ge "$INTERVAL" ]; then

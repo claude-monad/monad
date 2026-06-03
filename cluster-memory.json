@@ -25,10 +25,9 @@
     "value": "DONE-2026-06-03T04:13:11Z"
   },
   "health:oraclebox1": {
-    "expires": 1780556544.0398772,
-    "updated": 1780470144.039876,
+    "updated": 1780474937.2384975,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-03T07:02:24Z"
+    "value": "DONE-2026-06-03T08:22:17Z-escalated-t0034-unreachable"
   },
   "health:windesk": {
     "updated": 1780460004.3369296,

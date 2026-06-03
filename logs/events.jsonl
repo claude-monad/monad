@@ -349,3 +349,10 @@
 {"ts":"2026-06-03T07:18:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-03T07:20:22Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"v1410-health-bigo-engines-20260603T071735Z"}
 {"ts":"2026-06-03T07:23:16Z","node":"bigo-server","source":"health-sweep","type":"maintenance","action":"delegated-task","status":"ok","detail":"v1410-health-bigo-engines-20260603T071735Z rc=0 — agent_engines=claude advertised & verified on leader; codex not logged in (has_codex=false)"}
+{"ts":"2026-06-03T07:23:42Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"v1410-health-bigo-engines-20260603T071735Z rc=0"}
+{"ts":"2026-06-03T07:49:21Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T07:50:36Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T08:13:15Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"refresh-engines-1780474362"}
+{"ts":"2026-06-03T08:13:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"refresh-engines-1780474362 rc=0"}
+{"ts":"2026-06-03T08:21:01Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T08:22:19Z","node":"bigo-server","type":"health-sweep","detail":"cluster sweep: self healthy (claude=ready, disk 87%/14G free, maint-agent running); quorum 2/3 (V1410-1 leader + claudebox voter); oraclebox1 DOWN+unreachable, escalated t-0034"}

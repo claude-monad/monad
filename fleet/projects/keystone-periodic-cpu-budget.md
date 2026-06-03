@@ -1,8 +1,8 @@
 ---
 slug: keystone-periodic-cpu-budget
-status: todo
-owner: ""
-updated: 2026-06-03T07:12:00Z
+status: building
+owner: agent-builder-3-061735
+updated: 2026-06-03T07:14:00Z
 priority: 3
 ---
 

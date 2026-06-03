@@ -48,30 +48,30 @@ job "windesk-tsnet-sidecar" {
           $ErrorActionPreference = "Stop"
           function Log($m) { Write-Host "[windesk-tsnet $(Get-Date -Format 'HH:mm:ss')] $m" }
 
-          # Find monad repo
+          # Find monad repo (check for scripts/monad or codex-worker — anything that shows the repo)
           $monad = $null
           foreach ($p in @("$env:USERPROFILE\monad", "C:\Users\Eliott\monad", "C:\monad")) {
-            if (Test-Path "$p\meta\agent\mesh\sidecar\bin\sidecar-windows-amd64.exe") {
+            if ((Test-Path "$p\scripts\monad") -or (Test-Path "$p\codex-worker\gateway.py")) {
               $monad = $p; break
             }
           }
           if (-not $monad) {
-            Log "monad repo not found — cannot start sidecar"
+            Log "monad repo not found (tried USERPROFILE\monad, C:\Users\Eliott\monad, C:\monad)"
             exit 1
           }
           Log "monad repo: $monad"
 
-          # Pull latest (to get binary updates)
+          # Pull latest (to get the tsnet sidecar binary if newly added)
           Push-Location $monad
           try {
             $out = git pull --ff-only 2>&1
-            Log "git pull: $out"
+            Log "git pull: $($out -join ' ')"
           } catch { Log "git pull skipped: $_" }
           Pop-Location
 
           $bin = "$monad\meta\agent\mesh\sidecar\bin\sidecar-windows-amd64.exe"
           if (-not (Test-Path $bin)) {
-            Log "sidecar binary not found at $bin"
+            Log "sidecar binary not found at $bin after git pull — was the commit pushed?"
             exit 1
           }
 

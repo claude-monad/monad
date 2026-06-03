@@ -7,7 +7,7 @@
 #   - nomad-vars-backup  -> /opt/monad-vars-backups        (live: Raft on this node)
 # A bigo-server disk loss / node death therefore destroys the live data AND its only
 # backups at once. This job mirrors each local backup dir off-node to the existing
-# MinIO object store on death-star (100.96.31.66:9000, bucket `backups`, the same store
+# MinIO object store on death-star (100.96.31.66:9000, bucket `monad`, the same store
 # backup-mac-mini / backup-windesk already use) so an off-node recovery copy exists.
 #
 # READ-ONLY w.r.t. the source: it only reads /opt/monad-*-backups and PUSHES copies.
@@ -55,7 +55,7 @@ job "offsite-keystone-backups" {
       env {
         MINIO_URL     = "http://100.96.31.66:9000"
         ALIAS         = "monad-offsite"
-        REMOTE_PREFIX = "backups/keystone"
+        REMOTE_PREFIX = "monad/backups/keystone"
         # offsite freshness warning: daily backups should have a <36h-old newest copy
         WARN_AGE_S    = "129600"
         NOMAD_ADDR    = "http://100.75.75.39:4646"

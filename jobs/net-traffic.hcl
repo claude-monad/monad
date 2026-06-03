@@ -41,7 +41,10 @@ job "net-traffic" {
 
       env {
         NODE_NAME  = "${node.unique.name}"
-        NOMAD_ADDR = "http://127.0.0.1:4646"
+        # Write via a Nomad server's HTTP API (the live leader, same addr the dashboard
+        # uses). Not every node's local agent listens on 127.0.0.1:4646, but all clients
+        # can reach the server over the tailnet and var writes forward to the leader.
+        NOMAD_ADDR = "http://100.75.75.39:4646"
         INTERVAL   = "60"
       }
 

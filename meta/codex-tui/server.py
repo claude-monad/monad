@@ -21,17 +21,18 @@ if os.environ.get("CODEX_HOME"):
 
 SESSIONS = {}          # chat name -> codex session id (UUID)
 LOCK = threading.Lock()
-COMMON = ["--dangerously-bypass-approvals-and-sandbox", "--skip-git-repo-check", "-C", WORKDIR]
+# `codex exec` accepts -C (cwd); `codex exec resume` does NOT (it keeps the session's cwd).
+COMMON = ["--dangerously-bypass-approvals-and-sandbox", "--skip-git-repo-check"]
 
 def run_codex(name, message):
     with LOCK:
         sid = SESSIONS.get(name)
     last = tempfile.mktemp(suffix=".txt")
     if sid:
-        # `codex exec resume` wants OPTIONS before the SESSION_ID, then the prompt.
+        # resume keeps the session's cwd (no -C); options before the SESSION_ID + prompt.
         cmd = [CODEX, "exec", "resume"] + COMMON + ["-o", last, sid, message]
     else:
-        cmd = [CODEX, "exec"] + COMMON + ["-o", last, message]
+        cmd = [CODEX, "exec"] + COMMON + ["-C", WORKDIR, "-o", last, message]
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
         out = (p.stdout or "") + (p.stderr or "")

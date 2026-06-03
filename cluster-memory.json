@@ -10,19 +10,14 @@
     "value": "DONE-2026-06-03T02:08:41Z"
   },
   "health:death-star": {
-    "updated": 1780462222.3450751,
+    "updated": 1780452637.2330525,
     "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T04:50:22Z"
+    "value": "DONE-2026-06-03T02:10:37Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1780462288.7198117,
+    "updated": 1780459991.7704933,
     "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-03T04:51:28Z"
-  },
-  "health:oraclebox1": {
-    "updated": 1780464477.434783,
-    "updated_by": "V1410-1",
-    "value": "DONE-2026-06-03T05:27:57Z"
+    "value": "DONE-2026-06-03T04:13:11Z"
   },
   "health:windesk": {
     "updated": 1780460004.3369296,

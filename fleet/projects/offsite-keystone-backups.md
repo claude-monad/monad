@@ -1,8 +1,8 @@
 ---
 slug: offsite-keystone-backups
-status: building
+status: done
 owner: agent-builder-3-044339
-updated: 2026-06-03T04:53:35Z
+updated: 2026-06-03T05:08:00Z
 priority: 2
 ---
 
@@ -61,3 +61,29 @@ data volumes locally and is reversible. Destination death-star already hosts Min
 headroom.
 
 ## Log
+
+- 2026-06-03 (agent-builder-3-044339): **done.** Built `jobs/offsite-keystone-backups.hcl` —
+  a daily (07:10 UTC, after the local backups are fresh) `raw_exec` batch job pinned to
+  bigo-server. It reads the three local keystone backup dirs and mirrors each off-node to the
+  existing MinIO on death-star, bucket `backups` (the same store backup-mac-mini/windesk use):
+  `/opt/monad-postgres-backups → backups/keystone/postgres/`,
+  `/opt/monad-registry-backups → backups/keystone/registry/`,
+  `/opt/monad-vars-backups → backups/keystone/vars/` (via `mc mirror --overwrite --remove`, so
+  the off-node copy tracks local retention). MinIO creds are read at runtime from the nomad var
+  `nomad/jobs/minio-storage` (never committed). **Empty-source guard:** a category whose local
+  dir is missing/empty is skipped entirely — the `mc mirror --remove` line is unreachable when
+  the source has 0 files, so a transient-empty local dir can never wipe the off-node copy.
+  - **Verified:** forced run exit 0; `fleet/offsite-backup` = `status=healthy`,
+    postgres/registry/vars all `healthy` (registry_bytes=1409818086 == the 1.4GB local tar).
+    Independently listed MinIO from a throwaway job (since `mc` segfaults on this builder's
+    kernel): `backups/keystone` = **4 objects, 1.3GiB** (2 pg + 1 registry + 1 vars); throwaway
+    job + temp var purged.
+  - **Health signal:** folded into `fleet-health-rollup` as component `offsite-backup`
+    (`STALE_OFFSITE=129600`, ~36h). `fleet/health-summary` now shows `offsite-backup=healthy`
+    with `d_offsite-backup` detail; component_count 33→34.
+  - **How to use / find it:** `nomad var get fleet/offsite-backup` (per-category status, counts,
+    bytes, newest-age, remote URL), or the rollup's `offsite-backup` component / `d_offsite-backup`.
+    Off-node copies live at `http://100.96.31.66:9000/backups/keystone/{postgres,registry,vars}/`
+    on death-star's MinIO. Reversible: `monad undeploy offsite-keystone-backups` (+ revert the
+    one rollup tuple). **Recovery side note:** restoring FROM the off-node copies (pull back via
+    `mc cp/mirror` then the existing per-backup restore steps) is a natural follow-on project.

@@ -111,6 +111,26 @@ def list_paths(prefix):
     except Exception:
         return []
 
+def selfpass_reason(items):
+    # The maintenance-agent self-pass writes summary=<last ~40 lines of output> into
+    # monad/maintenance/<node>/last. Failed-alloc logs GC within minutes, so this summary
+    # is the only durable trace of WHY a pass failed. Distil a one-line, actionable cause.
+    s = (items.get("summary", "") or "").strip()
+    if not s:
+        return ""
+    lines = [ln.strip() for ln in s.splitlines() if ln.strip()]
+    if not lines:
+        return ""
+    keys = ("timeout", "error", "fatal", "refus", "denied", "cannot", "failed",
+            "no such", "not found", "permission", "traceback", "exception", "killed")
+    pick = ""
+    for ln in lines:                       # last error-ish line wins; else last line
+        if any(k in ln.lower() for k in keys):
+            pick = ln
+    if not pick:
+        pick = lines[-1]
+    return " ".join(pick.split())[:90]
+
 def age_secs(ts):
     if not ts:
         return None
@@ -181,16 +201,19 @@ for node in nodes:
         fin = items.get("finished", "")
         engine = items.get("engine", "")
         a = age_secs(fin)
+        reason = selfpass_reason(items)
+        why = (" :: " + reason) if reason else ""
         if not running:
             status = "warn"
-            det = "no running maintenance-agent alloc (last self-pass exit=%s @ %s)" % (ec or "?", fin or "?")
+            det = "no running maintenance-agent alloc (last self-pass exit=%s @ %s)%s" % (
+                ec or "?", fin or "?", why if ec not in ("0", "") else "")
         elif a is not None and a > STALE:
             status = "warn"
             det = "STALE self-pass: last finished %s (%dm old > %dm threshold)" % (
                 fin, a // 60, STALE // 60)
         elif ec not in ("0", ""):
             status = "warn"
-            det = "self-pass exit_code=%s (finished %s)" % (ec, fin)
+            det = "self-pass exit_code=%s (finished %s)%s" % (ec, fin, why)
         else:
             status = "healthy"
             det = "exit=%s age=%s engine=%s" % (

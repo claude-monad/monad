@@ -3,3 +3,5 @@ epoch,metric,value
 1780472176,mem_pct,86
 1780482269,disk_pct,72
 1780482269,mem_pct,68
+1780506262,disk_pct,75
+1780506262,mem_pct,82

@@ -1,0 +1,10 @@
+{
+  "id": "t-0037",
+  "type": "infra",
+  "scope": "Run codex in monad-agent-mesh container on windesk + eliotts-mac-mini (see meta/CODEX-ON-WIN-MAC.md). Per node: install Linux-container runtime, trust insecure registry 100.78.218.70:5000, codex login, docker pull+run agent-mesh image as agent-rc-<node>, verify codex rc=0 AND the node appears as a tsnet mesh peer (agent-msg peers). Doubles as the cross-platform tsnet IPC test. Report status via cluster-msg to claudebox.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

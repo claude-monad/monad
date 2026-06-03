@@ -1,0 +1,10 @@
+{
+  "id": "t-0073",
+  "type": "infra",
+  "scope": "tsnet IPC enabler: cross-build meta/agent/mesh/sidecar for windows/amd64 (tsnet-sidecar-windows-amd64.exe) and darwin/arm64 (tsnet-sidecar-darwin-arm64) on a Go-capable linux node (GOOS/GOARCH, golang container), publish to shared storage death-star:/srv/samba/public/bin (clients see /mnt/deathstar/bin), and extend meta/agent/mesh/mesh-attach.sh to pick the binary by OS+ARCH (not just arch) and launch it natively per-OS (Windows has no nohup/tmux; macOS darwin binary not the linux one). Unblocks windesk + mac-mini joining the mesh.",
+  "repo": "eliott-monad/monad",
+  "payload": {"intent": "i-0002", "build_node": "V1410-1", "publish_to": "death-star:/srv/samba/public/bin", "nodes": ["windesk", "eliotts-mac-mini"], "note": "cluster-conductor accepted ownership 2026-06-03 via :8200/ask round-trip; building on V1410-1 (amd64,docker,leader) GOOS=windows/amd64 + darwin/arm64. (renumbered from t-0070 which collided with an S620 math task)"},
+  "status": "claimed",
+  "owner": "cluster-conductor",
+  "parent": null
+}

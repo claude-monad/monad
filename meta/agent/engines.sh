@@ -40,13 +40,22 @@ engine_bin() { case "$1" in claude) echo claude ;; codex) echo codex ;; *) retur
 
 engine_available() {
   local b; b="$(engine_bin "$1")" || return 1
-  command -v "$b" >/dev/null 2>&1
+  command -v "$b" >/dev/null 2>&1 && return 0
+  # Claude Code installs to ~/.local/bin which may not be in PATH in non-login shells.
+  [ "$1" = "claude" ] && [ -x "$HOME/.local/bin/claude" ]
 }
 
 # Authed = credentials present. We do NOT spend a token probing on every call.
 engine_authed() {
   case "$1" in
-    claude) [ -f "${CLAUDE_HOME:-$HOME/.claude}/.credentials.json" ] ;;
+    claude)
+      # File-based creds (Linux / older Claude Code versions).
+      [ -f "${CLAUDE_HOME:-$HOME/.claude}/.credentials.json" ] && return 0
+      # macOS keychain: Claude Code stores creds as "Claude Code-credentials" on macOS.
+      [ "$(uname -s)" = "Darwin" ] && command -v security >/dev/null 2>&1 && \
+        security find-generic-password -s "Claude Code-credentials" >/dev/null 2>&1
+      ;;
+
     codex)
       # Standard home, plus the snap-confined home (snap remaps $HOME to
       # ~/snap/codex/current, so a snap-installed codex stores auth.json there,

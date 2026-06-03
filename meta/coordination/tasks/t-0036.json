@@ -1,0 +1,11 @@
+{
+  "id": "t-0036",
+  "type": "infra",
+  "scope": "oraclebox1 regression: Tailscale ping to 100.125.210.126 timed out from V1410-1, nomad server members marks oraclebox1 failed, nomad node status marks oraclebox1 down, and maintenance-agent allocs on oraclebox1 are lost. Quorum is currently intact with V1410-1 and claudebox alive. Needs local/power/tailscale/nomad recovery; V1410-1 avoided blind remote restart. Renumbered from local t-0035 during merge because upstream already used t-0035.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "resolved",
+  "owner": "V1410-1",
+  "resolution": "Recovered by 2026-06-03T11:13Z live check: oraclebox1 is alive as a Nomad server voter, Nomad client 73795fbb is ready/eligible, Tailscale is active, agent_engines=claude,codex, and maintenance-agent alloc 0e334a35 is running. No remote restart was needed.",
+  "parent": null
+}

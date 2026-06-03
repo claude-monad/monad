@@ -1,0 +1,10 @@
+{
+  "id": "t-0026",
+  "type": "infra",
+  "scope": "windesk: C:\\Users\\Eliott\\monad is too dirty to fast-forward safely during health sweep; untracked logs plus meta/coordination/intent.sh and meta/coordination/intents/ blocked git pull, so ensure-engines.ps1 remains stale/broken and agent_engines metadata is still missing. Review/stash/commit local work, fast-forward, then run powershell -NoProfile -ExecutionPolicy Bypass -File meta\\agent\\ensure-engines.ps1 with local NOMAD_ADDR=http://100.94.210.54:4646.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

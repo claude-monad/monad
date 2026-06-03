@@ -30,8 +30,13 @@ client {
   servers = ["SERVER_IP:4647"]
 
   meta {
-    role     = "worker"
-    location = "unknown"
+    role           = "worker"
+    location       = "unknown"
+    # Set claude_account to the account logged in on this node (max-1, max-2, max-3, pro)
+    claude_account = "pro"
+    # Set math_agent = "true" on nodes that are registered math research agents
+    # (windesk, mac-mini). This enables math-agent-relay and math-pro-sessions jobs.
+    math_agent     = "false"
   }
 }
 

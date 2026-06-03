@@ -44,14 +44,17 @@ case "$cmd" in
     [ -n "$purpose" ] || die "a purpose is required: assistant.sh spawn <slug> \"<purpose>\""
     nomad var get "assistants/$slug" >/dev/null 2>&1 && die "assistant '$slug' already exists (remove it first or pick another slug)"
 
-    # Admission control: assistants are Claude sessions and run on the Claude node (oraclebox1,
-    # the smallest box). Ask the governor before spawning — if it returns QUEUE the Claude node
-    # is at capacity, and spawning anyway would overload it (the cardinal sin). Refuse instead.
+    # Governor-driven placement + admission control: ask llm-scheduler for the least-loaded
+    # Claude-ready node. Now that creds are portable, this can be death-star/claudebox/etc., not
+    # just the tiny oraclebox1. QUEUE means every Claude node is at capacity → refuse rather than
+    # overload (the cardinal sin). The chosen node is passed to the job as -meta node=.
+    node="oraclebox1"
     if [ "${ASSISTANT_FORCE:-}" != "1" ]; then
       place="$(python3 "$REPO_DIR/scripts/llm-scheduler.py" place --engine claude --mem 512 --quiet 2>/dev/null)"
       if [ -z "$place" ] || [ "$place" = "QUEUE" ]; then
-        die "the Claude node is at capacity — refusing to spawn '$slug' (would overload it). Remove an assistant first ('assistant.sh list' / 'remove <slug>'), or set ASSISTANT_FORCE=1 to override."
+        die "all Claude-ready nodes are at capacity — refusing to spawn '$slug' (would overload). Remove an assistant first ('assistant.sh list' / 'remove <slug>'), or set ASSISTANT_FORCE=1 to override."
       fi
+      node="$place"
     fi
 
     # 1) purpose dir (the assistant's personality) → commit + push so its session can clone it
@@ -69,8 +72,9 @@ EOF
     $GIT commit -q -m "assistant: spawn $slug" >/dev/null 2>&1 || true
         push_repo || echo "assistant: warning — push failed; session clones what is on origin" >&2
 
-    # 2) dispatch the persistent session job
-    out="$(nomad job dispatch -meta "name=$slug" -meta "model=$model" -meta "effort=$effort" assistant 2>&1)"
+    # 2) dispatch the persistent session job on the governor-chosen node
+    out="$(nomad job dispatch -meta "name=$slug" -meta "model=$model" -meta "effort=$effort" -meta "node=$node" assistant 2>&1)"
+    echo "assistant: placing '$slug' on $node (via governor)"
     jobid="$(printf '%s' "$out" | grep -oE 'Dispatched Job ID = \S+' | awk '{print $NF}')"
     [ -n "$jobid" ] || die "dispatch failed: $out"
 

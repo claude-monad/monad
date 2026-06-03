@@ -1,0 +1,10 @@
+{
+  "id": "t-0025",
+  "type": "infra",
+  "scope": "eliotts-mac-mini: Nomad raw_exec one-shot could not find a monad checkout in HOME, Documents, or /Users/* paths, so it cannot run node-doctor/ensure-engines or advertise agent_engines. Install/verify the local monad checkout and node-doctor cron on the Mac, then run meta/agent/ensure-engines.sh against local NOMAD_ADDR=http://100.113.252.45:4646.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

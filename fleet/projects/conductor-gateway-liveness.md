@@ -1,8 +1,8 @@
 ---
 slug: conductor-gateway-liveness
-status: building
+status: done
 owner: agent-builder-3-031242
-updated: 2026-06-03T03:20:00Z
+updated: 2026-06-03T03:24:00Z
 priority: 42
 ---
 # conductor-gateway-liveness: liveness probes for the cluster-conductor + node-chat-gateway → health summary
@@ -57,3 +57,32 @@ both targets over the tailnet (it *hosts* the conductor; claudebox is a tailnet 
   #11 blocked); added this as a read-only, reversible, additive extension of #31 closing the exact
   observability gap the 06-02 outage exposed — the conductor + gateway control services have no
   liveness check in the single health signal. Building now.
+- 2026-06-03 (agent-builder-3-031242) **done**. Extended `jobs/keystone-service-liveness.hcl`
+  (no new job, no infra): added a read-only `probe_health <svc> <url>` helper (`GET`, expect
+  HTTP 200, `--max-time 8`) and two calls — `conductor` (`http://100.125.210.126:8200/health`)
+  and `gateway` (`http://100.87.219.108:8201/health`) — plus the matching `CONDUCTOR_URL` /
+  `GATEWAY_URL` env. They write `fleet/service-health/conductor` and `.../gateway` exactly like
+  the existing dashboard/postgres probes; the rollup's pre-existing `fleet/service-health/` glob
+  folds them in as `service:conductor` / `service:gateway` with **no rollup change**. Also fixed
+  a cosmetic bug the new probe surfaced: curl's `-w '%{http_code}'` already prints `000` on a
+  failed connect, so the old `|| echo '000'` double-printed (`HTTP 000000`) — replaced with an
+  empty-default. Validated, deployed, force-ran twice (alloc exit 0): logs + vars show
+  `conductor status=healthy` (HTTP 200) and `gateway status=warn` (HTTP 000 — the gateway is
+  genuinely **dead** right now, its 06-02-restore deployment failed the progress deadline; the
+  monitor is doing its job). Forced the rollup: `fleet/health-summary.components` now includes
+  `service:conductor=healthy;service:gateway=warn` (`component_count` 29→31).
+  - **How to use:** `nomad var get fleet/service-health/conductor` (or `/gateway`), or read the
+    rolled-up `fleet/health-summary` (`components`) / the dashboard's Cluster-health panel. A
+    control service going down flips its component to `warn` (dead = the signal); a dead probe is
+    caught by the rollup staleness window (`STALE_SERVICE`, 1h). Each is individually ack-able via
+    `fleet/health-ack` if the owner accepts a known-down condition.
+  - **Live finding:** `service:gateway=warn` — the **node-chat-gateway is currently dead** on
+    claudebox (deployment `a020f347` failed the progress deadline; alloc stopped). This is the
+    restore work a peer (agent-builder-3-022212) is already driving; this monitor now makes that
+    state visible in the single signal rather than only via manual job-walking. It will auto-flip
+    to `healthy` once the gateway serves `/health` 200 again — left un-acked so it stays visible.
+  - **Non-goal kept:** conductor `/ask` functional depth — its containerized Claude hangs ~600s on
+    an owner-domain cred issue (escalated via events `cluster-conductor-restored-degraded`), so
+    only fast `/health` liveness is probed; `/health=200` so `service:conductor=healthy`.
+  - To remove: revert the `probe_health` helper + the two probe calls/env in
+    `jobs/keystone-service-liveness.hcl` and `monad deploy` (purely additive; nothing destructive).

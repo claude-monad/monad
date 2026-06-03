@@ -68,6 +68,15 @@ done
 # 4) install creds for the run-user (newest-wins; writeback is validated)
 CRED_USER="$U" bash "$HERE/cred-sync.sh" reconcile "$ACCOUNT" --user "$U" 2>&1 | sed 's/^/  /'
 
+# Root processes that point CODEX_HOME/HOME at the run-user's dir (codex-tui, codex-ssh) can
+# leave root-owned files there (e.g. ~/.codex/config.toml), which then breaks `codex`/`claude`
+# for the run-user with "Permission denied". Re-assert ownership so the engines work as $U.
+if [ "$(id -u)" = 0 ] && [ "$U" != root ]; then
+  for d in "$H/.codex" "$H/.claude"; do
+    [ -e "$d" ] && chown -R "$U" "$d" 2>/dev/null || true
+  done
+fi
+
 # 5) re-advertise readiness (run-user context, where the creds + CLIs now are)
 [ -f "$HERE/ensure-engines.sh" ] && run_as "NOMAD_ADDR='$NOMAD_ADDR' bash '$HERE/ensure-engines.sh'" >/dev/null 2>&1 || true
 log "provision pass done for $U on $(hostname)"

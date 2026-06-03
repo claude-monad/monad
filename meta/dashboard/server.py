@@ -605,6 +605,227 @@ def account_usage():
     }
 
 
+# ── cluster graph: the node-health "tournament" ────────────────────────────────
+# Render the cluster topology as a tournament (the math the cluster exists to do):
+# one directed edge per node pair, oriented from whichever node sent MORE tailnet
+# traffic to the other (weight = |net| bytes). Data: the per-node net-traffic
+# publishers (Nomad vars fleet/net-traffic/<node>), each carrying that node's local
+# tailscale tx/rx view — and a single view of a peer already gives BOTH directions
+# (tx=self→peer, rx=peer→self), so even one publisher yields edges; all of them
+# cross-check the matrix. Nodes are colored by their fleet/health-summary verdict.
+
+_HRANK = {"healthy": 0, "ok": 0, "warn": 1, "stale": 1, "critical": 2, "bad": 2}
+
+
+def _worst(statuses):
+    """Worst (most severe) of a list of health statuses; 'unknown' if empty/all unknown."""
+    best = None
+    for s in statuses:
+        r = _HRANK.get((s or "").lower())
+        if r is None:
+            continue
+        if best is None or r > best[0]:
+            best = (r, s)
+    if best is None:
+        return "unknown"
+    return best[1]
+
+
+def _list_var_paths(prefix):
+    data = _nomad("/v1/vars?prefix=" + prefix) or []
+    return [v.get("Path") for v in data if v.get("Path")]
+
+
+def net_traffic():
+    """Read every fleet/net-traffic/<node> var into
+    {node: {ip, host, ts, peers: {peer_ip: {host, tx, rx, online}}}}."""
+    out = {}
+    for path in _list_var_paths("fleet/net-traffic/"):
+        d = _nomad("/v1/var/" + path) or {}
+        items = d.get("Items") or {}
+        if not items:
+            continue
+        try:
+            peers = json.loads(items.get("peers_json", "{}") or "{}")
+        except Exception:
+            peers = {}
+        node = items.get("node") or path.rsplit("/", 1)[-1]
+        out[node] = {
+            "ip": items.get("ip", ""),
+            "host": items.get("host", ""),
+            "ts": items.get("ts", ""),
+            "peers": peers,
+        }
+    return out
+
+
+def _node_allocs():
+    """node name -> {job: running_count} for running/pending allocs (children rolled up)."""
+    allocs = _nomad("/v1/allocations", timeout=15) or []
+    nlist = _nomad("/v1/nodes") or []
+    id2name = {n.get("ID"): n.get("Name") for n in nlist}
+    out = {}
+    for a in allocs:
+        if a.get("ClientStatus") not in ("running", "pending"):
+            continue
+        name = id2name.get(a.get("NodeID"))
+        if not name:
+            continue
+        jid = a.get("JobID", "")
+        parent = jid.split("/dispatch-")[0] if "/dispatch-" in jid else jid
+        out.setdefault(name, {})
+        out[name][parent] = out[name].get(parent, 0) + 1
+    return {n: [{"job": j, "count": c} for j, c in sorted(d.items())]
+            for n, d in out.items()}
+
+
+def _tournament_stats(active, beats):
+    """Tournament-y stats over the participating nodes: out-degree/score sequence,
+    kings (2-step dominators), Hamiltonian path (valid iff the tournament is complete)."""
+    def q(x, y):  # does x point at (beat) y?
+        return y in beats.get(x, set())
+
+    out_deg = {n: len(beats.get(n, set())) for n in active}
+
+    present = set()
+    for n in active:
+        for m in beats.get(n, set()):
+            present.add(frozenset((n, m)))
+    complete = True
+    for i in range(len(active)):
+        for j in range(i + 1, len(active)):
+            if frozenset((active[i], active[j])) not in present:
+                complete = False
+
+    kings = []
+    for u in active:
+        reach = set(beats.get(u, set()))
+        for w in list(beats.get(u, set())):
+            reach |= beats.get(w, set())
+        if all((v == u or v in reach) for v in active):
+            kings.append(u)
+
+    # Hamiltonian path by insertion (a valid directed path for complete tournaments)
+    path = []
+    for v in active:
+        if not path:
+            path = [v]
+            continue
+        if q(v, path[0]):
+            path.insert(0, v)
+            continue
+        placed = False
+        for k in range(len(path) - 1):
+            if q(path[k], v) and q(v, path[k + 1]):
+                path.insert(k + 1, v)
+                placed = True
+                break
+        if not placed:
+            path.append(v)
+    ham = path
+    for k in range(len(path) - 1):
+        if not q(path[k], path[k + 1]):
+            ham = None
+            break
+
+    return {
+        "out_degree": out_deg,
+        "score_sequence": sorted(out_deg.values(), reverse=True),
+        "kings": kings,
+        "complete": complete,
+        "hamiltonian_path": ham,
+        "active_count": len(active),
+    }
+
+
+def cluster_graph():
+    nlist = nodes()
+    hs = health_summary()
+    allocs = _node_allocs()
+    traffic = net_traffic()
+
+    # per-node health from the prefix:node health-summary components (disk:/overload:/…)
+    health_per = {}
+    for c in hs.get("components", []):
+        nm = c.get("name", "")
+        if ":" in nm:
+            prefix, node = nm.split(":", 1)
+            health_per.setdefault(node, []).append({"name": prefix, "status": c.get("status", "?")})
+
+    # node -> tailnet ip: from each publisher's self-record, then peer host records
+    name_by_lc = {n["name"].lower(): n["name"] for n in nlist}
+    ip_by_node = {}
+    for node, v in traffic.items():
+        if v.get("ip") and v["ip"] != "?":
+            ip_by_node[node] = v["ip"]
+    for v in traffic.values():
+        for pip, pinfo in v.get("peers", {}).items():
+            canon = name_by_lc.get((pinfo.get("host") or "").lower())
+            if canon and canon not in ip_by_node:
+                ip_by_node[canon] = pip
+
+    gnodes = []
+    for n in nlist:
+        name = n["name"]
+        comps = health_per.get(name, [])
+        worst = _worst([c["status"] for c in comps]) if comps else (
+            "ok" if n["status"] == "ready" else "unknown")
+        gnodes.append({
+            "name": name,
+            "status": n["status"],
+            "ip": ip_by_node.get(name, ""),
+            "health": worst,
+            "components": comps,
+            "jobs": allocs.get(name, []),
+        })
+
+    def pair_traffic(a, b):
+        ipa, ipb = ip_by_node.get(a), ip_by_node.get(b)
+        a2b, b2a = [], []
+        va, vb = traffic.get(a), traffic.get(b)
+        if va and ipb and ipb in va["peers"]:
+            a2b.append(va["peers"][ipb].get("tx", 0))   # a's own tx counter to b
+            b2a.append(va["peers"][ipb].get("rx", 0))   # a's rx from b == b->a
+        if vb and ipa and ipa in vb["peers"]:
+            b2a.append(vb["peers"][ipa].get("tx", 0))
+            a2b.append(vb["peers"][ipa].get("rx", 0))
+        if not a2b and not b2a:
+            return None
+        return (max(a2b) if a2b else 0), (max(b2a) if b2a else 0)
+
+    names = [n["name"] for n in gnodes]
+    edges, beats = [], {n: set() for n in names}
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            a, b = names[i], names[j]
+            pt = pair_traffic(a, b)
+            if pt is None:
+                continue
+            ab, ba = pt
+            if ab >= ba:
+                src, dst, fwd, rev = a, b, ab, ba
+            else:
+                src, dst, fwd, rev = b, a, ba, ab
+            beats[src].add(dst)
+            edges.append({
+                "src": src, "dst": dst,
+                "src_to_dst": fwd, "dst_to_src": rev,
+                "net": abs(ab - ba), "total": ab + ba,
+            })
+
+    active = [n for n in names if beats[n] or any(n in beats[m] for m in names)]
+    stats = _tournament_stats(active, beats)
+    return {
+        "available": bool(traffic),
+        "publishers": sorted(traffic.keys()),
+        "convention": "edge points from the node that sent MORE tailnet traffic; weight = |net| bytes",
+        "nodes": gnodes,
+        "edges": edges,
+        "stats": stats,
+        "updated": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
+    }
+
+
 def state():
     return {
         "generated": time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime()),
@@ -621,6 +842,7 @@ def state():
         "resources": cached_resources(),
         "engine": engine_config(),
         "usage": account_usage(),
+        "graph": cluster_graph(),
     }
 
 
@@ -637,6 +859,7 @@ _cache = {
     "resources": [],
     "engine": {"engine": "auto", "set_by": "", "updated": "", "valid": list(ENGINE_VALID)},
     "usage": {"available": False, "providers": []},
+    "graph": {"available": False, "nodes": [], "edges": [], "stats": {}, "publishers": []},
 }
 _cache_lock = threading.Lock()
 STATE_SECS = int(os.environ.get("STATE_SECS", "10"))
@@ -713,6 +936,18 @@ code{font:12px ui-monospace,monospace;color:#a5d6ff}
 .them{align-self:flex-start;background:#21262d}
 .sys{align-self:center;color:#7d8590;font-size:12px;font-style:italic}
 .who{font-size:11px;opacity:.7;margin-bottom:2px}
+.graphwrap{display:flex;gap:14px;padding:12px 14px;flex-wrap:wrap}
+.graphwrap svg{flex:1 1 460px;min-width:320px;max-width:620px;background:#0d1117;border:1px solid #21262d;border-radius:8px}
+#graph-detail{flex:1 1 240px;min-width:220px;font-size:12px}
+#graph-detail h3{margin:0 0 6px;font-size:13px;color:#e6edf3}
+.gnode{cursor:pointer}
+.gnode text{fill:#c9d1d9;font:11px -apple-system,Segoe UI,sans-serif;pointer-events:none}
+.gedge{stroke:#6e7681;fill:none}
+.gedge:hover{stroke:#58a6ff}
+.gstats{padding:0 14px 12px;font-size:12px;color:#9da7b3}
+.gstats code{color:#a5d6ff}
+.glegend{display:flex;gap:12px;font-size:11px;color:#7d8590;padding:0 14px 10px;flex-wrap:wrap}
+.glegend span::before{content:"●";margin-right:4px}
 </style></head><body>
 <header><h1>Monad cluster</h1>
 <span class="muted" id="meta"></span>
@@ -864,8 +1099,60 @@ function connectEvents(){
    try{renderEvents(JSON.parse(ev.data));}catch(e){}
  });
 }
+const healthColor={ok:'#3fb950',healthy:'#3fb950',warn:'#d29922',stale:'#d29922',critical:'#f85149',bad:'#f85149',unknown:'#6e7681'};
+function hcol(s){return healthColor[(s||'unknown').toLowerCase()]||'#6e7681';}
+let _resByNode={};
+function renderGraph(g){
+ if(!g||!g.available||!g.nodes||!g.nodes.length)
+   return '<p class="muted" style="padding:12px 14px">cluster graph unavailable — net-traffic publishers not reporting yet (system job <code>net-traffic</code>).</p>';
+ const W=600,H=460,cx=W/2,cy=H/2,R=Math.min(W,H)/2-72,r=20;
+ const ns=g.nodes,n=ns.length,pos={};
+ ns.forEach((nd,i)=>{const a=-Math.PI/2+2*Math.PI*i/n;pos[nd.name]={x:cx+R*Math.cos(a),y:cy+R*Math.sin(a)};});
+ const maxNet=Math.max(1,...(g.edges||[]).map(e=>e.net));
+ const edgeSvg=(g.edges||[]).map(e=>{
+   const p=pos[e.src],q=pos[e.dst];if(!p||!q)return '';
+   const dx=q.x-p.x,dy=q.y-p.y,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L;
+   const x1=p.x+ux*r,y1=p.y+uy*r,x2=q.x-ux*(r+9),y2=q.y-uy*(r+9);
+   const w=1.2+5*Math.sqrt(e.net/maxNet);
+   const tip=`${e.src} → ${e.dst} (heavier sender)\n${e.src}→${e.dst}: ${fmtBytes(e.src_to_dst)}\n${e.dst}→${e.src}: ${fmtBytes(e.dst_to_src)}\nnet ${fmtBytes(e.net)} · total ${fmtBytes(e.total)}`;
+   return `<line class="gedge" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke-width="${w.toFixed(1)}" marker-end="url(#arw)"><title>${esc(tip)}</title></line>`;
+ }).join('');
+ const nodeSvg=ns.map(nd=>{const p=pos[nd.name];
+   return `<g class="gnode" data-node="${esc(nd.name)}"><title>${esc(nd.name+' — '+nd.health)}</title>
+     <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r}" fill="${hcol(nd.health)}" stroke="#0d1117" stroke-width="2"></circle>
+     <text x="${p.x.toFixed(1)}" y="${(p.y+r+13).toFixed(1)}" text-anchor="middle">${esc(nd.name)}</text></g>`;}).join('');
+ const svg=`<svg viewBox="0 0 ${W} ${H}" id="cgraph">
+   <defs><marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+     <path d="M0,0 L7,3 L0,6 Z" fill="#6e7681"></path></marker></defs>${edgeSvg}${nodeSvg}</svg>`;
+ const st=g.stats||{};
+ const kings=(st.kings||[]).map(k=>`<code>${esc(k)}</code>`).join(', ')||'—';
+ const ham=st.hamiltonian_path?st.hamiltonian_path.map(esc).join(' → '):'none (incomplete tournament)';
+ const seq=(st.score_sequence||[]).join(', ')||'—';
+ const stats=`<div class="gstats"><b>Tournament</b> over ${esc(st.active_count||0)} nodes${st.complete?' (complete)':' (partial — not every pair measured yet)'} · score sequence [${esc(seq)}] · king${(st.kings||[]).length===1?'':'s'}: ${kings}<br>Hamiltonian path: ${esc(ham)} <span class="muted">· ${esc(g.convention||'')}</span><br><span class="muted">publishers: ${(g.publishers||[]).map(esc).join(', ')||'none'} · updated ${esc(g.updated||'')}</span></div>`;
+ const legend=`<div class="glegend"><span style="color:#3fb950">healthy</span><span style="color:#d29922">warn</span><span style="color:#f85149">critical</span><span style="color:#6e7681">unknown</span> · click a node to inspect · hover an edge for tx/rx</div>`;
+ return `<div class="graphwrap">${svg}<div id="graph-detail"><p class="muted">Click a node to see its jobs, health, and resources. Each edge points from the node that sent more tailnet traffic to the other — the "winner" of that pair.</p></div></div>${legend}${stats}`;
+}
+function nodeDetailHtml(nd){
+ const res=_resByNode[nd.name]||{};
+ const comps=(nd.components||[]).map(c=>`<tr><td><code>${esc(c.name)}</code></td><td>${healthPill(c.status)}</td></tr>`).join('')||'<tr><td class="muted" colspan="2">no per-node health components</td></tr>';
+ const jobs=(nd.jobs||[]).map(j=>`<tr><td><code>${esc(j.job)}</code></td><td>${j.count}</td></tr>`).join('')||'<tr><td class="muted" colspan="2">no running allocs</td></tr>';
+ const rp=(k)=>res[k]&&res[k].util_pct!=null?res[k].util_pct.toFixed(0)+'%':'—';
+ return `<h3>${esc(nd.name)} ${healthPill(nd.health)}</h3>
+  <p class="muted">${esc(nd.status)} · ${esc(nd.ip||'no ip')} · cpu ${rp('cpu')} · mem ${rp('mem')} · disk ${rp('disk')}</p>
+  <table><tr><th>health component</th><th>status</th></tr>${comps}</table>
+  <table><tr><th>job / alloc</th><th>n</th></tr>${jobs}</table>`;
+}
+function wireGraph(g){
+ const svg=document.getElementById('cgraph');if(!svg||!g)return;
+ const byName={};(g.nodes||[]).forEach(x=>byName[x.name]=x);
+ svg.querySelectorAll('.gnode').forEach(el=>el.addEventListener('click',()=>{
+   const nd=byName[el.getAttribute('data-node')];if(!nd)return;
+   const d=document.getElementById('graph-detail');if(d)d.innerHTML=nodeDetailHtml(nd);
+ }));
+}
 async function load(){
  let s;try{s=await (await fetch('api/state')).json();}catch(e){document.getElementById('app').textContent='fetch failed';return;}
+ _resByNode={};(s.resources||[]).forEach(r=>{_resByNode[r.node]=r;});
  document.getElementById('meta').textContent=`${s.generated} · ${s.nomad_addr} · ${s.nodes.length} nodes · ${s.jobs.length} jobs · ${s.peers.length} mesh peers`;
  const nodes=tbl(['node','status','elig','class','dc'],s.nodes.map(n=>
    `<tr><td><b>${esc(n.name)}</b></td><td>${statusPill(n.status)}</td><td>${esc(n.eligibility)}${n.drain?' '+pill('drain','warn'):''}</td><td>${esc(n.class)}</td><td>${esc(n.dc)}</td></tr>`));
@@ -885,6 +1172,7 @@ async function load(){
        `<tr><td><b>${esc(c.node)}</b></td><td>${capPill(c.claude)}</td><td>${capPill(c.codex)}</td><td class="muted">${esc((c.ts||'').replace('T',' ').replace('Z',''))}</td></tr>`))
    : '<p class="muted" style="padding:12px 14px">no capability reports yet — the cluster-capability job runs every 6h (force one with <code>nomad job periodic force cluster-capability</code>). ✓=ran a real autonomous math session; ran-empty/error/absent = honest failure.</p>';
  document.getElementById('app').innerHTML=
+   `<section class="full"><h2>Cluster graph — node-health tournament (edges = tailnet traffic)</h2>${renderGraph(s.graph)}</section>`+
    `<section class="full"><h2>Node resources — live utilization · allocated (CPU / memory / disk)</h2>${renderResources(s.resources)}</section>`+
    `<section><h2>Default engine</h2>${renderEngine(s.engine)}</section>`+
    `<section><h2>Account usage (Anthropic / OpenAI)</h2>${renderUsage(s.usage)}</section>`+
@@ -897,6 +1185,7 @@ async function load(){
    `<section><h2>Jobs</h2>${jobs}</section>`+
    `<section class="full"><h2>Recent events</h2><div id="events-body">${renderEvents(s.events)}</div></section>`;
  wireEngine();
+ wireGraph(s.graph);
  connectEvents();
 }
 load();setInterval(load,STATE_REFRESH_MS);

@@ -67,9 +67,12 @@ job "math-engine-test" {
         NOMAD_ADDR = "http://100.75.75.39:4646"
       }
 
+      # Modest reservation so it fits on oraclebox1 (which also runs conductor/foreman/
+      # registry/maintenance). raw_exec doesn't hard-cap CPU, so the LLM sessions still
+      # use what they need above this.
       resources {
-        cpu    = 1000
-        memory = 2048
+        cpu    = 200
+        memory = 512
       }
 
       kill_timeout = "20s"

@@ -280,3 +280,4 @@
 {"ts":"2026-06-03T04:09:53Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-03T04:13:50Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"cluster-health-sweep","status":"warn","detail":"quorum=3/3 roster ready+eligible; maintenance-agent missing on eliotts-mac-mini and windesk; emitted infra tasks t-0017,t-0018"}
 {"ts":"2026-06-03T04:14:36Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T04:48:57Z","node":"oraclebox1","source":"deploy","action":"fleet-health-rollup","result":"ok","detail":"deployed and pushed"}

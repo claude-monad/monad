@@ -334,3 +334,5 @@
 {"ts":"2026-06-03T07:03:06Z","node":"oraclebox1","source":"deploy","action":"maintenance-agent-health","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T07:08:13Z","source":"fleet","event":"project_done","agent":"agent-builder-2-061731","project":"maintenance-selfpass-reason","detail":"maintenance-agent-health surfaces captured self-pass summaries; oraclebox1 detail now includes Codex timeout reason; forced maintenance probe and fleet-health-rollup completed after right-sizing both jobs to 50cpu/64mem on oraclebox1"}
 {"ts":"2026-06-03T07:16:00Z","node":"V1410-1","source":"watchdog","action":"health-check","result":"warn","detail":"0 issues, 4 warnings"}
+{"ts":"2026-06-03T07:05:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"health-ensure-engines-20260603T065908Z rc=0"}
+{"ts":"2026-06-03T07:17:33Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

@@ -1,8 +1,8 @@
 ---
 slug: nomad-vars-backup
-status: building
+status: done
 owner: agent-builder-3-010856
-updated: 2026-06-03T01:45:00Z
+updated: 2026-06-03T01:52:00Z
 priority: 36
 ---
 # Automated backups for the Nomad variable store (the cluster's own secrets + state)
@@ -58,3 +58,41 @@ owner-provided GPG recipient / age key) is a sensible **owner-gated follow-up**.
 - Docs: the project Log records where dumps live, the schedule, and the restore procedure.
 
 ## Log
+
+- **2026-06-03 (agent-builder-3-010856) — DONE.** Built `jobs/nomad-vars-backup.hcl`: a
+  periodic (`0 6 * * *` UTC, `prohibit_overlap`) **raw_exec + python3** batch job pinned to
+  **bigo-server** (`node.unique.name` + `driver.raw_exec`), alongside the other backups and
+  [[backup-health]] (which already runs python3 there with the `nomad` CLI on PATH).
+  - **What it does:** `nomad var list -out=json` enumerates every variable, then
+    `nomad var get -out=json <path>` fetches each one's **decrypted `Items`** (ACLs are
+    disabled cluster-wide — `ACL.Enabled=false` — so reads need no token). It writes one
+    JSON object per line (the exact `nomad var put -in=json` spec format) to
+    `/opt/monad-vars-backups/nomad-vars-<UTC>.json.gz`, then prunes its own dumps beyond the
+    **14** most recent. Resource-limited (200 CPU / 128 MB).
+  - **Integrity:** every listed path must be dumped or explainably skipped
+    (`got + skipped == listed`, else fail); the gzip is re-read and every line re-parsed,
+    count must match what was written, else the `.partial` is removed and the run fails.
+  - **Secret hygiene:** the dump holds plaintext secrets, so the dir is mode `700` and each
+    file is created `0o600`. v1 stores plaintext on this tailnet-internal, root-restricted
+    node — same posture as [[postgres-backup]]/[[registry-backup]]. At-rest encryption
+    (owner-provided age/GPG key) is a sensible owner-gated follow-up.
+  - **Verified:** forced a run (`nomad job periodic force nomad-vars-backup`) → alloc
+    **exit 0**. A one-shot `nomad-vars-backup-verify` raw_exec job then re-opened the latest
+    dump and asserted it parses, is non-tiny, and contains `secret/fleet` + `infra/postgres`
+    **with non-empty Items** → **exit 0** (verify job purged after). Dump is 13 KB / 71 vars.
+    (Cluster alloc-log retrieval returns 404s, so exit-code-encoded checks are the
+    authoritative signal — same as [[registry-backup]].)
+  - **Folded into the health signal:** extended [[backup-health]] with a `vars` family
+    (`VARS_DIR`/`VARS_GLOB`/`VARS_MIN_BYTES`/`VARS_MAX_AGE_S`); `fleet/backup-health` now
+    reports `vars_status` + folds it into the overall `status`, so a stale/missing vars
+    backup shows up there and in the [[fleet-health-rollup]] `backup=` component + dashboard.
+    Confirmed live: `fleet/backup-health` → `status=healthy`, `vars_status=healthy`,
+    `vars nomad-vars-20260603T014834Z.json.gz age=2m size=13048B count=1`.
+  - **Use it:** dumps live at `/opt/monad-vars-backups` on bigo-server; run one now with
+    `nomad job periodic force nomad-vars-backup`. **Restore** (per variable):
+    ```sh
+    gunzip -c /opt/monad-vars-backups/nomad-vars-<UTC>.json.gz | while IFS= read -r line; do
+      printf '%s' "$line" > /tmp/v.json
+      nomad var put -force -in=json @/tmp/v.json
+    done
+    ```

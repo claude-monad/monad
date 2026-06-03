@@ -28,9 +28,12 @@ store — **MinIO on death-star (`100.96.31.66:9000`, bucket `monad/backups/...`
 A periodic job `offsite-keystone-backups` on bigo-server that, after the daily backups are
 fresh, mirrors each local keystone backup dir to MinIO on death-star:
 
-- `/opt/monad-postgres-backups` → `monad/backups/keystone/postgres/`
-- `/opt/monad-registry-backups` → `monad/backups/keystone/registry/`
-- `/opt/monad-vars-backups`     → `monad/backups/keystone/vars/`
+(MinIO bucket `backups`, prefix `keystone/` — the same `backups` bucket backup-mac-mini/windesk
+use; note their `monad/backups/...` strings use `monad` as the `mc` *alias name*, not a bucket):
+
+- `/opt/monad-postgres-backups` → bucket `backups`, `keystone/postgres/`
+- `/opt/monad-registry-backups` → bucket `backups`, `keystone/registry/`
+- `/opt/monad-vars-backups`     → bucket `backups`, `keystone/vars/`
 
 Safety: **per-category empty-source guard** — if a local dir is missing/empty, that category is
 skipped (its remote copy is left untouched), so a transient empty local dir can never wipe the
@@ -43,8 +46,8 @@ staleness threshold, so a stalled off-site replication shows up in the single he
 
 - Periodic job `offsite-keystone-backups` validates + deploys healthy in Nomad, pinned to
   bigo-server, with task resource limits.
-- A forced run mirrors all three keystone backup dirs into `monad/backups/keystone/{postgres,
-  registry,vars}/` on MinIO; objects verified present.
+- A forced run mirrors all three keystone backup dirs into MinIO bucket `backups`, prefix
+  `keystone/{postgres,registry,vars}/`; objects verified present.
 - Empty/missing local dir does **not** delete the corresponding remote copy (guard verified).
 - Writes `fleet/offsite-backup` with `status`, per-category `*_count`/`*_newest_age_s`/`*_bytes`,
   `detail`, `ts`.

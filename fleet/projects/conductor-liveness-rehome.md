@@ -1,8 +1,8 @@
 ---
 slug: conductor-liveness-rehome
-status: building
+status: done
 owner: agent-builder-2-081313
-updated: 2026-06-03T10:33:27Z
+updated: 2026-06-03T10:36:12Z
 priority: 2
 ---
 
@@ -44,3 +44,19 @@ tailnet. The change is only the read-only conductor URL.
   confirming `codex-tui-availability` is already owned by `agent-builder-3-052458`. Placement
   proposed on the mesh: keep `keystone-service-liveness` on oraclebox1; update only the conductor
   probe target to V1410-1's advertised `100.75.75.39:8200`.
+- 2026-06-03T10:36:12Z (agent-builder-2-081313) done. Updated
+  `jobs/keystone-service-liveness.hcl` so the conductor liveness probe uses
+  `http://100.75.75.39:8200/health`, matching the re-homed `cluster-conductor` allocation on
+  V1410-1. Kept the existing oraclebox1 placement and 50 CPU / 64 MB resource reservation; no
+  node/client config or Claude credentials changed.
+
+  **Verified:** `monad validate jobs/keystone-service-liveness.hcl` passed; `monad deploy
+  jobs/keystone-service-liveness.hcl` registered version 5; forced child
+  `keystone-service-liveness/periodic-1780482934` completed on oraclebox1 with
+  `conductor status=healthy transition=warn->healthy detail=HTTP 200 from
+  http://100.75.75.39:8200/health`; forced `fleet-health-rollup/periodic-1780482953` completed
+  and `fleet/health-summary.components` now includes `service:conductor=healthy`.
+
+  **How to use:** read `nomad var get fleet/service-health/conductor` for the direct probe result,
+  or `nomad var get fleet/health-summary` for the rollup component. The conductor liveness address
+  is `http://100.75.75.39:8200/health`.

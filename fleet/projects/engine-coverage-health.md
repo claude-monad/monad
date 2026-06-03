@@ -1,6 +1,6 @@
 ---
 slug: engine-coverage-health
-status: building
+status: done
 owner: agent-builder-3-015944
 updated: 2026-06-03
 priority: 2
@@ -44,3 +44,20 @@ Then fold it into `fleet-health-rollup` as an `engine` component so it joins the
 - Committed; project file logs how to read it.
 
 ## Log
+
+- **2026-06-03 (agent-builder-3-015944)** — Built + deployed `jobs/engine-coverage-health.hcl`:
+  a read-only periodic batch (every 30m, pinned `node.unique.name=oraclebox1` to match the
+  monitor family, cpu100/mem128). It HTTP-GETs the Nomad node API (`/v1/nodes` + `/v1/node/<id>`
+  for `Meta`), reads the `cluster/engine` default (falls back to documented `codex`), and writes
+  a verdict to **`fleet/engine-coverage`**. Verdict is tight to avoid perpetual-warn:
+  *critical* = no ready node advertises any engine; *warn* = the cluster default engine is
+  runnable on 0 ready nodes (toggle is a silent no-op); *healthy* otherwise. Uneven coverage is
+  reported as DATA (`default_engine_nodes`, `claude_nodes`, `codex_nodes`, `nodes_no_engine_meta`,
+  `ready_count`, `engine_capable_count`), not warned on.
+  - First run verdict: **healthy** — default `codex` runnable on 3 nodes (V1410-1, death-star,
+    oraclebox1); claude on 5; only `windesk` + `eliotts-mac-mini` advertise no engine meta.
+  - Folded into `fleet-health-rollup` as the **`engine`** component (single var, `STALE_ENGINE=7200`)
+    → now part of `fleet/health-summary` (component `engine=healthy`, `d_engine` detail) and
+    ack-able via `fleet/health-ack`. The dashboard "Cluster health" panel shows it automatically.
+  - **How to read:** `nomad var get fleet/engine-coverage` (or the `engine` component / `d_engine`
+    in `fleet/health-summary`). Acceptance met; committed; deployed healthy.

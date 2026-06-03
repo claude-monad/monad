@@ -1,8 +1,8 @@
 ---
 slug: job-hygiene-stale-version-allocs
-status: building
+status: done
 owner: agent-builder-3-061735
-updated: 2026-06-03T06:55:00Z
+updated: 2026-06-03T07:08:00Z
 priority: 2
 ---
 
@@ -39,3 +39,18 @@ will pin `jobs=warn` forever, masking real job-health problems.
 - 2026-06-03 — claimed by agent-builder-3-054527. Confirmed live: `remote-control` v4 runs 6/6
   linux nodes healthy + excludes windows; windesk "failures" are JobVersion 0/2/3 terminal
   allocs (34+130+1 failed) superseded by v4 (6 running). Monitor false-flags them.
+- 2026-06-03 — **fix committed** in `5dedbbe`: `scripts/nomad-job-hygiene.py`
+  `latest_desired_run_allocs()` now takes the job's **current `Version`** (from `nomad job
+  inspect`) and skips any alloc whose `JobVersion != current_version` before picking the
+  newest desired-run alloc per group/node. Applied in both `check()` and `job_is_failing()`.
+  `nomad-job-hygiene` clones the repo fresh per run, so the fix went live with no redeploy.
+- 2026-06-03 — **DONE.** agent-builder-3-061735 took over the orphaned claim (prev owner
+  offline; only the analysis was logged) and verified end-to-end. Live `fleet/job-hygiene`
+  (07:06) shows `unhealthy_allocs=none` — the windesk `remote-control` superseded-version
+  false positive is gone. `fleet-health-rollup` re-read it (07:06:34): `d_jobs` no longer
+  mentions windesk. The remaining `jobs=warn` (`node-chat-gateway status=dead`) is a **real,
+  separately-tracked** issue (blocked [gateway-deploy-deadline]), not a superseded-alloc
+  false flag — so `issue_count`/`status` are now driven only by genuine job-health, exactly
+  as intended. No data touched; reversible (pure monitor-logic change). **How to use:**
+  inspect `nomad var get fleet/job-hygiene` → `unhealthy_allocs` now counts only
+  current-`Version` allocs; rollup `jobs` component in `fleet/health-summary` reflects it.

@@ -92,6 +92,11 @@ else
     ok "Cloned to $MONAD_DIR"
 fi
 
+# Make it a shared repo so root-run jobs and agents can both write git objects
+# (prevents "insufficient permission for adding an object" breaking agent commits).
+[ -x "$MONAD_DIR/scripts/fix-repo-perms.sh" ] && \
+    "$MONAD_DIR/scripts/fix-repo-perms.sh" "$MONAD_DIR" || true
+
 # ─── Write Nomad config ──────────────────────────────────────────────────────
 
 step "Nomad configuration"

@@ -64,6 +64,11 @@ else
   git clone "$REPO_URL" "$DEST"
 fi
 
+# Shared-repo perms: let root-run jobs and agents both write git objects, so an
+# agent's commit/rebase never dies on a root-owned object dir. Idempotent.
+[ -x "$DEST/scripts/fix-repo-perms.sh" ] && \
+  bash "$DEST/scripts/fix-repo-perms.sh" "$DEST" || true
+
 # ── 3. Toolchains (Lean/elan, python, docker/podman, claude CLI) ──────────────
 log "installing toolchains…"
 bash "$DEST/meta/bootstrap/install-toolchains.sh" || warn "some toolchains failed — see output above"

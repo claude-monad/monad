@@ -294,6 +294,14 @@ node-doctor can.
 2. **Nomad server reachability** — can we reach bigo-server:4646?
 3. **Nomad agent health** — is the local agent running and eligible?
 4. **Git state** — is the repo clean, up to date, no conflicts?
+   - **Shared-repo permissions** — the checkout is a *shared working tree*: agents
+     run as the repo owner, but root-run jobs (this cron, monad-sync, Nomad
+     raw_exec) also run git here. Root-created objects would otherwise be
+     root-owned and un-writable, breaking agent `commit`/`rebase` with
+     *"insufficient permission for adding an object to repository database"*.
+     `scripts/fix-repo-perms.sh` (run every doctor pass, and at node setup/join)
+     keeps it a git shared repo (`core.sharedRepository=group`, setgid + group-
+     writable `.git`) so writes by either root or the agent always stay writable.
 5. **Disk space** — with **trend analysis** predicting when disks will fill
 6. **Memory usage** — with trend tracking over time
 7. **Claude CLI availability** — can this node run research jobs?

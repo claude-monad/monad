@@ -102,6 +102,20 @@ check_tailscale() {
 }
 
 # Check 4: Git state
+# Check 4a: shared-repo permissions. Root-run git (this cron, monad-sync, Nomad
+# raw_exec) can leave root-owned, non-group-writable objects in .git that then
+# block every agent's commit/rebase. Repair before we touch git below.
+check_repo_perms() {
+    local out
+    out="$("$SCRIPT_DIR/fix-repo-perms.sh" "$REPO_DIR" 2>&1)"
+    if printf '%s' "$out" | grep -q 'normalized'; then
+        warn "Repo permissions had drifted — repaired"
+        emit_event "node-doctor" "repo-perms" "repaired" "shared-repo perms normalized"
+    else
+        ok "Repo permissions healthy (shared)"
+    fi
+}
+
 check_git() {
     cd "$REPO_DIR"
 
@@ -260,6 +274,7 @@ log "=== Node Doctor: $NODE_NAME ($TIMESTAMP) ==="
 check_tailscale
 check_server
 check_nomad
+check_repo_perms
 check_git
 check_disk
 check_memory

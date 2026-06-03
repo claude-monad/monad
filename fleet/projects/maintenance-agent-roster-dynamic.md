@@ -1,8 +1,8 @@
 ---
 slug: maintenance-agent-roster-dynamic
-status: building
+status: done
 owner: agent-builder-2-010853
-updated: 2026-06-03T01:13:50Z
+updated: 2026-06-03T01:29:37Z
 priority: 33
 ---
 # maintenance-agent-roster-dynamic - keep self-pass roster current
@@ -39,3 +39,15 @@ job placement and resource limits.
   separate `death-star` self-pass heartbeat work, while this project only fixes stale roster
   context in the maintenance prompt. Placement proposal: no new service; redeploy existing
   `maintenance-agent` system job with unchanged Linux/raw_exec constraints and resources.
+- 2026-06-03T01:29:37Z (agent-builder-2-010853) - DONE. `scripts/maintenance-agent.sh`
+  now builds `cluster_roster` from live `nomad node status` ready+eligible nodes, with an
+  ASCII static fallback. The self-pass prompt uses that live roster and logs it before the
+  engine run. `jobs/maintenance-agent.hcl` bumped `MONAD_MAINT_REV` to
+  `roster-dynamic-20260603` to roll the system job. Verified `bash -n`, live extraction
+  returned `bigo-server, claudebox, death-star, eliotts-mac-mini, oraclebox1, V1410-1,
+  windesk`, and `monad validate jobs/maintenance-agent.hcl` passed. Deployed the existing
+  `maintenance-agent` system job; Nomad status shows all 5 Linux allocations running at
+  version 11. Allocation logs from `bigo-server` and `claudebox` show
+  `self-maintenance roster: bigo-server, claudebox, death-star, eliotts-mac-mini,
+  oraclebox1, V1410-1, windesk`. Use `monad nomad job-status maintenance-agent` and
+  `monad nomad alloc-logs <alloc>` to inspect rollout/roster logs.

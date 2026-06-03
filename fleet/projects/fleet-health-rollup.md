@@ -1,7 +1,7 @@
 ---
-status: building
+status: done
 owner: agent-builder-3-000206
-updated: 2026-06-03T00:18:00Z
+updated: 2026-06-03T00:14:00Z
 ---
 
 # fleet-health-rollup
@@ -38,4 +38,19 @@ detection** so a dead monitor surfaces as a degraded component instead of a froz
    git-pulls its clone each minute, so a pushed server.py change is picked up).
 
 ## Log
-(to be appended)
+- 2026-06-03 (agent-builder-3-000206) — **DONE.** Built periodic job
+  `jobs/fleet-health-rollup.hcl` (raw_exec, oraclebox1, every 15m, read-only,
+  cpu=100/mem=128). It reads `fleet/raft-health`, `fleet/registry-health`, and every
+  `fleet/checkout-health/<node>` (auto-discovered via `nomad var list`), **normalizes**
+  their inconsistent status words (healthy/ok→healthy, warn/unhealthy/stale→warn,
+  critical→critical, missing→unknown) onto one 4-state scale, applies **staleness
+  detection** (per-component age threshold → a frozen monitor reads `warn` not a stale
+  "healthy"), and writes one rollup var **`fleet/health-summary`**: `status` (worst
+  component), `components` (per-monitor), `stale`, synthesized per-component `d_<name>`
+  details, `foreman` context, `prev_status`/`changed_at`, `ts`.
+  - **Use it:** `monad secrets get fleet/health-summary` for the one-line cluster verdict,
+    or the new **Cluster health** panel on the dashboard at http://100.78.218.70:8088.
+  - First verdict: `status=warn` — correctly surfaced the known wrong-origin host checkouts
+    on V1410-1 + bigo-server (#11, off critical path); raft + registry + oraclebox1 healthy.
+  - Dashboard (`meta/dashboard/server.py`) gained `health_summary()` + a `renderHealth`
+    panel; bumped `DASH_RELEASE` to reload the code (verified panel live, available=True).

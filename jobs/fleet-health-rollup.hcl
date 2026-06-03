@@ -397,8 +397,8 @@ SCRIPT
       }
 
       resources {
-        cpu    = 100
-        memory = 128
+        cpu    = 50
+        memory = 64
       }
 
       kill_timeout = "20s"

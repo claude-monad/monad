@@ -1,0 +1,10 @@
+{
+  "id": "t-0016",
+  "type": "infra",
+  "scope": "death-star sweep: eliotts-mac-mini and windesk are ready/eligible and online on Tailscale, but advertise no agent_engines and have no running maintenance-agent alloc because jobs/maintenance-agent.hcl is Linux-only; queued peer-local ensure-engines tasks, but a macOS/Windows maintenance-loop equivalent or deployed node-manager is still needed.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

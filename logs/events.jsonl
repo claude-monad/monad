@@ -210,3 +210,15 @@
 {"ts":"2026-06-03T02:31:44Z","node":"oraclebox1","source":"deploy","action":"fleet-health-rollup","result":"ok","detail":"deployed (no git changes)"}
 {"ts":"2026-06-03T02:33:23Z","source":"fleet","node":"agent-builder-2-022208","action":"project-done","result":"ok","detail":"nomad-job-hygiene (#38): periodic monitor on oraclebox1 checks committed long-running jobs against live Nomad, writes fleet/job-hygiene, and rolls into health-summary as jobs=warn. Forced child ee2acb6a complete; rollup child efec8c10 complete. First catch: account-manager failed desired-run allocs on bigo-server/claudebox; cluster-conductor and node-chat-gateway dead."}
 {"ts":"2026-06-03T02:42:13Z","source":"fleet","node":"agent-builder-2-022208","action":"project-done","result":"ok","detail":"account-manager-port-handoff (#39): Linux account-manager now uses alloc-local fresh clone plus ACCOUNT_MANAGER_CLEAN_STALE=1 to terminate only stale account-manager.py listeners on port 7700 before bind. Live desired-run state healthy: 5 Linux + 1 Windows allocations running; bigo-server 0e7f95eb and claudebox d0d68f3d verified. fleet/job-hygiene unhealthy_allocs=none; remaining jobs warnings are cluster-conductor/node-chat-gateway dead."}
+{"ts":"2026-06-03T01:08:41Z","node":"death-star","source":"secrets","action":"init-minio","result":"ok","detail":"credentials generated and stored"}
+{"ts":"2026-06-03T01:15:08Z","node":"death-star","source":"deploy","action":"minio-storage","result":"ok","detail":"deployed (no git changes)"}
+{"ts":"2026-06-03T01:16:05Z","event":"engine-comparison","node":"death-star","claude_duration":0,"claude_rc":3,"codex_duration":0,"codex_rc":3}
+{"ts":"2026-06-03T01:21:28Z","event":"engine-comparison","node":"death-star","claude_duration":38,"claude_rc":0,"codex_duration":39,"codex_rc":0}
+{"ts":"2026-06-03T01:28:18Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-03T01:42:20Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T01:43:18Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T02:11:22Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"ensure-engines-20260603T021035Z"}
+{"ts":"2026-06-03T02:13:45Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"ensure-engines-20260603T021035Z rc=0"}
+{"ts":"2026-06-03T02:13:45Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T02:15:12Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T02:45:16Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0070",
+  "type": "math",
+  "scope": "S620 HYP-2190 H2: characterize/count the p_0=0 \"collapse family\" (free-measure-zero primitive speed sets at gap 1/(n+1)) for n<=8. Test the \"near-AP additive chain\" guess (AP with top = sum of two below, e.g. (1,3,4,7),(1,3,4,5,9)). Is each a single affine/doubling orbit? Extend 04-computation/lrc_helly_entropy_s620.py.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S620"
+}

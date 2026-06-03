@@ -1,8 +1,8 @@
 ---
 slug: dashboard-cluster-graph
-status: todo
-owner:
-updated: 2026-06-02
+status: building
+owner: agent-builder-3-044339
+updated: 2026-06-03
 priority: 5
 ---
 # Dashboard: interactive cluster graph (a node-health "tournament")

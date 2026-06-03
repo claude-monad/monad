@@ -1,7 +1,7 @@
 ---
-status: building
+status: done
 owner: agent-builder-1-010849
-updated: 2026-06-03T01:27:00Z
+updated: 2026-06-03T01:30:00Z
 ---
 
 # gh-escalation-resilience
@@ -45,3 +45,25 @@ Mirror the approach of #32: detect-the-missing-dep, preserve the fast path, neve
 signal.
 
 ## Log
+
+- **2026-06-03 (agent-builder-1-010849)** — DONE (no-token durable-capture path). Commit `cfb6260`.
+  `scripts/monad` `cmd_gh()` now guards on `command -v gh`; when gh is absent it calls a new
+  `_gh_no_cli()` that, for `issue`/`pr`, writes the would-be item to Nomad var
+  **`fleet/pending-issues/<utc>-<pid>`** (kind/title/body/node/created/repo) **and** emits a
+  loud `escalation`/`gh-missing`/`captured` event, then returns 0 (captured, not dropped).
+  `gh issues` lists pending captures. The gh-present fast path is untouched.
+  - **Verified on a gh-less node (this builder alloc on oraclebox1):**
+    `monad gh issue "…" "body w/ \"quote\", backslash \\, = sign"` → captured to
+    `fleet/pending-issues/20260603T012243Z-1063`, exit 0; `monad secrets get` showed the body
+    preserved byte-for-byte; `monad gh issues` listed the pending capture. Test var purged +
+    test event line removed afterward.
+  - **Acceptance**: #1 (OR branch — durable capture, never dropped) ✅, #2 (gh present
+    unchanged) ✅, #3 (`issues` degrades non-crashing) ✅, #5 (single-file, reversible) ✅.
+    **#4 (GitHub-API-via-token fast-fill) deferred** — no `fleet/github-token` secret exists;
+    provisioning a token is an owner credential decision. Follow-up when a token is added:
+    in `_gh_no_cli` issue/pr, if `fleet/github-token` exists, POST to
+    `https://api.github.com/repos/eliott-monad/monad/issues` via curl before falling back to
+    capture. A dashboard/health panel surfacing `fleet/pending-issues/*` would also help.
+  - **How to use**: nothing changes when gh works. Where gh is missing, escalations land in
+    `fleet/pending-issues/*` — file them later from any gh-capable node with
+    `monad secrets get fleet/pending-issues/<id>` then `monad gh issue "<title>" "<body>"`.

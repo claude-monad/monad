@@ -4,7 +4,8 @@
   "scope": "oraclebox1 voter/client is failed/down; V1410-1 could not reach it via tailscale ping or TCP 22/4646/4647/4648. Restore reachability/Nomad server membership; quorum currently survives on V1410-1+claudebox only.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
+  "status": "resolved",
+  "owner": "bigo-server",
+  "resolution": "oraclebox1 recovered: ready Nomad client + alive server (Raft voter/follower under leader V1410-1, quorum 3/3 with claudebox); tailscale ping 108ms; TCP 22/4646/4647/4648 all OPEN; node meta advertises agent_engines=claude,codex has_claude=true has_codex=true. Verified from bigo-server during oraclebox1 engine health sweep 2026-06-03.",
   "parent": null
 }

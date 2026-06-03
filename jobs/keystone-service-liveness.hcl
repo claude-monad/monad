@@ -57,6 +57,12 @@ job "keystone-service-liveness" {
         DASHBOARD_URL  = "http://100.78.218.70:8088/api/state"
         POSTGRES_HOST  = "100.78.218.70"
         POSTGRES_PORT  = "5432"
+        # keystone CONTROL services (conductor-gateway-liveness, #42): GET /health
+        # liveness only. A functional POST /ask probe is a deliberate non-goal — the
+        # conductor /ask currently hangs ~600s on an owner-domain Claude-cred issue, so
+        # probing it would hang every run and pin warn forever on a non-fleet condition.
+        CONDUCTOR_URL  = "http://100.125.210.126:8200/health"
+        GATEWAY_URL    = "http://100.87.219.108:8201/health"
         PROBE_TIMEOUT  = "8"
       }
 
@@ -95,6 +101,24 @@ put_svc() {
   echo "[svc-liveness] $svc status=$st transition=$trans detail=$det"
 }
 
+# probe_health <svc> <url>: GET <url>, expect HTTP 200 (liveness). Read-only.
+probe_health() {
+  local svc="$1" url="$2" code
+  if ! command -v curl >/dev/null 2>&1; then
+    put_svc "$svc" "unknown" "no curl on host"
+    return 0
+  fi
+  # curl -w always prints the code (000 on connection failure), so no `|| echo` is
+  # needed — that would double-print (000000). Default only if curl emits nothing.
+  code="$(curl -s -o /dev/null -w '%%{http_code}' --max-time "$TMO" "$url" 2>/dev/null)"
+  [ -n "$code" ] || code="000"
+  if [ "$code" = "200" ]; then
+    put_svc "$svc" "healthy" "HTTP 200 from $url"
+  else
+    put_svc "$svc" "warn" "$svc unreachable: HTTP $code from $url"
+  fi
+}
+
 # --- dashboard: HTTP GET /api/state, expect 200 + a JSON-ish body ---
 if command -v curl >/dev/null 2>&1; then
   code="$(curl -s -o local/dash.body -w '%%{http_code}' --max-time "$TMO" "$DASHBOARD_URL" 2>/dev/null || echo '000')"
@@ -119,6 +143,12 @@ if timeout "$TMO" bash -c "cat < /dev/null > /dev/tcp/$POSTGRES_HOST/$POSTGRES_P
 else
   put_svc "postgres" "warn" "TCP $POSTGRES_HOST:$POSTGRES_PORT refused/unreachable"
 fi
+
+# --- cluster-conductor: GET /health (oraclebox1:8200; liveness only — see env note) ---
+probe_health "conductor" "$CONDUCTOR_URL"
+
+# --- node-chat-gateway: GET /health (claudebox:8201; liveness only) ---
+probe_health "gateway" "$GATEWAY_URL"
 
 exit 0
 SCRIPT

@@ -1,0 +1,10 @@
+{
+  "id": "t-0020",
+  "type": "infra",
+  "scope": "windesk is ready+eligible and online, but missing agent_engines metadata; maintenance-agent.hcl is Linux raw_exec constrained, so verify Windows maintenance equivalent and engine advertisement",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

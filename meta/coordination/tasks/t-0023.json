@@ -1,0 +1,10 @@
+{
+  "id": "t-0023",
+  "type": "infra",
+  "scope": "windesk: ready/eligible and Tailscale active, but missing maintenance-agent equivalent/agent_engines metadata; verify local maintenance loop and run meta/agent/ensure-engines.sh where supported",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

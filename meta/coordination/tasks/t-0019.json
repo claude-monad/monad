@@ -1,0 +1,10 @@
+{
+  "id": "t-0019",
+  "type": "infra",
+  "scope": "eliotts-mac-mini is ready+eligible and online, but missing agent_engines metadata and has no Linux raw_exec maintenance-agent alloc; verify local maintenance loop/node-doctor equivalent and run ensure-engines",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

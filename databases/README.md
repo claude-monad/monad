@@ -100,3 +100,51 @@ Automated by the **`postgres-backup`** periodic job (`jobs/postgres-backup.hcl`)
 nomad var get -out json nomad/jobs/postgres   # to read creds, then:
 PGPASSWORD=… psql -h 100.78.218.70 -U fleet -d fleet
 ```
+
+## Consumers
+
+### `health_snapshots` — fleet health time-series (job `jobs/health-history.hcl`)
+
+The first real consumer of this DB. The `health-history` periodic job (every 15m, on
+bigo-server) reads the `fleet/health-summary` Nomad var and appends one immutable row per
+distinct rollup snapshot, deduped on the snapshot's own `ts` (`ON CONFLICT (snapshot_ts) DO
+NOTHING`), so the cluster has a queryable history of its own health.
+
+Columns: `snapshot_ts` (rollup `ts`, UNIQUE), `ingested_at`, `status`, `raw_status`,
+`component_count`, `components`, `detail`, `foreman`, `full_json` (the whole var Items map as
+JSONB — query any component, e.g. disk/overload details, from here).
+
+```bash
+# how many snapshots / latest
+nomad alloc exec <postgres-alloc> psql -U fleet -d fleet -c \
+  "SELECT count(*), max(snapshot_ts) FROM health_snapshots;"
+
+# how long has oraclebox1 been overloaded? (per-component history via JSONB)
+nomad alloc exec <postgres-alloc> psql -U fleet -d fleet -c \
+  "SELECT snapshot_ts, full_json->>'d_overload_oraclebox1' AS oraclebox1
+   FROM health_snapshots ORDER BY snapshot_ts DESC LIMIT 12;"
+
+# headline status transitions over time
+nomad alloc exec <postgres-alloc> psql -U fleet -d fleet -c \
+  "SELECT snapshot_ts, status, raw_status, detail FROM health_snapshots
+   ORDER BY snapshot_ts DESC LIMIT 20;"
+```
+
+Retention: the job prunes snapshots older than `RETENTION_DAYS` (default 180d, ≈17k rows / a
+few MB) each run, so the table stays bounded on bigo-server's near-full disk. A dashboard trend
+panel reading this table is a natural follow-up.
+
+#### Trend digest — `fleet/health-trend` (job `jobs/health-history-trends.hcl`)
+
+The read-side consumer of `health_snapshots`. A periodic job (every 15m, offset, on bigo-server)
+runs READ-ONLY queries over a rolling 24h window and publishes a digest to the Nomad var
+`fleet/health-trend`, so the time-series is usable without hand-running SQL:
+
+```bash
+nomad var get fleet/health-trend      # or: monad secrets get fleet/health-trend
+```
+
+Key fields: `trend` (improving|worsening|stable), `current_status`/`current_degraded` vs
+`start_status`/`start_degraded`, `status_dist`, `flaps`, `degraded_now` (each non-healthy
+component with the `since=`/`for=` of its current continuous streak, longest-first),
+`longest_degraded`, and a human `detail` line. Window = `WINDOW_HOURS` env (default 24).

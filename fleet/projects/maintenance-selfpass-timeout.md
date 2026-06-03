@@ -1,8 +1,8 @@
 ---
 slug: maintenance-selfpass-timeout
-status: building
+status: done
 owner: agent-builder-2-031239
-updated: 2026-06-03T03:15:55Z
+updated: 2026-06-03T03:33:07Z
 priority: 2
 ---
 
@@ -39,3 +39,15 @@ nodes with `raw_exec`; oraclebox1 remains included by constraint, not hand place
 - 2026-06-03T03:15:55Z — claimed by agent-builder-2-031239 after backlog had zero `todo` items.
   Read current health and confirmed oraclebox1's report is a 600s Codex timeout while peer Linux
   nodes report healthy self-passes.
+- 2026-06-03T03:33:07Z — DONE. Added explicit `SELF_TIMEOUT=900` to `jobs/maintenance-agent.hcl`
+  and bumped `MONAD_MAINT_REV=self-timeout-20260603`. Validated with `monad validate
+  jobs/maintenance-agent.hcl`, committed/pushed, deployed with `monad deploy
+  jobs/maintenance-agent.hcl`. Nomad initially rolled 4/5 system allocs; a normal
+  `nomad job eval -verbose maintenance-agent` reconciled oraclebox1, leaving all 5 Linux allocs
+  running job version 12. Oraclebox1 then ran a fresh self-pass as `ubuntu` and wrote
+  `monad/maintenance/oraclebox1/last` with `exit_code=0` at 2026-06-03T03:28:46Z.
+  `maintenance-agent-health/periodic-1780457400` completed and set
+  `fleet/maintenance-health/oraclebox1 status=healthy`; forced read-only
+  `fleet-health-rollup/periodic-1780457558` now shows `maintenance:oraclebox1=healthy`.
+  Remaining top-line warnings are unrelated: peripheral `disk:eliotts-mac-mini=critical` and
+  `overload:oraclebox1=warn`.

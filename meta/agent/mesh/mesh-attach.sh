@@ -17,10 +17,25 @@ STATE="${TS_STATE_DIR:-/tmp/tsnet-$NAME}"
 export NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
 
 log() { echo "[mesh-attach] $*" >&2; }
+# Record the live mesh port so any agent on this node can find the sidecar without env
+# propagation (agent-msg reads this when LOCAL_PORT is unset).
+state_write() { printf 'LOCAL_PORT=%s\nMESH_NAME=%s\n' "$LOCAL_PORT" "$NAME" > /tmp/monad-mesh.env 2>/dev/null || true; }
+
+case "$(uname -m)" in
+  x86_64|amd64)   ARCH=amd64 ;;
+  aarch64|arm64)  ARCH=arm64 ;;
+  *)              ARCH="$(uname -m)" ;;
+esac
+# Prebuilt sidecar on shared storage. Clients see it at /mnt/deathstar; the storage node
+# (death-star) has the same tree locally at /srv/samba/public. Use whichever exists.
+SHARED_BIN=""
+for d in /mnt/deathstar/bin /srv/samba/public/bin; do
+  [ -x "$d/tsnet-sidecar-$ARCH" ] && { SHARED_BIN="$d/tsnet-sidecar-$ARCH"; break; }
+done
 
 # Already attached?
 if curl -sf --max-time 3 "http://127.0.0.1:$LOCAL_PORT/whoami" >/dev/null 2>&1; then
-  echo "$LOCAL_PORT"; exit 0
+  state_write; echo "$LOCAL_PORT"; exit 0
 fi
 
 # Pick a docker invocation that works (some nodes need sudo).
@@ -38,8 +53,14 @@ nomad_registry() {
   return 1
 }
 
-# Ensure the sidecar binary for this arch (cache once). Prefer extracting it from the
-# already-built agent image (instant, same arch); fall back to compiling via golang.
+# Ensure the sidecar binary for this arch (cache once). PREFER the prebuilt binary on the
+# shared storage (/mnt/deathstar/bin, NFS-mounted on every node) — no docker/registry/compile.
+if [ ! -x "$BIN" ] && [ -x "$SHARED_BIN" ]; then
+  if cp -f "$SHARED_BIN" "$BIN" 2>/dev/null && chmod +x "$BIN" 2>/dev/null; then
+    log "got sidecar from shared storage ($ARCH)"
+  fi
+fi
+# Fallbacks: extract from the agent image, else compile via golang.
 if [ ! -x "$BIN" ]; then
   if [ -n "${MESH_IMAGE:-}" ]; then
     IMG="$MESH_IMAGE"
@@ -68,7 +89,7 @@ AGENT_NAME="$NAME" TS_AUTHKEY="$AUTHKEY" TS_STATE_DIR="$STATE" \
   nohup "$BIN" >"/tmp/mesh-$NAME.log" 2>&1 &
 
 for _ in $(seq 1 30); do
-  curl -sf --max-time 2 "http://127.0.0.1:$LOCAL_PORT/whoami" >/dev/null 2>&1 && { echo "$LOCAL_PORT"; exit 0; }
+  curl -sf --max-time 2 "http://127.0.0.1:$LOCAL_PORT/whoami" >/dev/null 2>&1 && { state_write; echo "$LOCAL_PORT"; exit 0; }
   sleep 1
 done
 # Didn't come up — likely a wrong-arch binary (e.g. arm64 image extracted on amd64 before

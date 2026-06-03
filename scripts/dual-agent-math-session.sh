@@ -57,7 +57,9 @@ WORK_ROOT="/tmp/dual-agent-${TIMESTAMP}"
 trap 'rm -f "$LOCKFILE"; rm -rf "$WORK_ROOT"' EXIT
 mkdir -p "$WORK_ROOT"
 
-log() { echo "[dual-agent] $(date -Is): $*" | tee -a "$RUN_LOG"; }
+# IMPORTANT: log to stderr (+ run log), never stdout — run_agent's stdout is captured
+# by command substitution and must contain ONLY the final status line.
+log() { echo "[dual-agent] $(date -Is): $*" | tee -a "$RUN_LOG" >&2; }
 
 log "starting run $RUN_ID on $HOSTNAME (timeout ${AGENT_TIMEOUT}s/agent)"
 
@@ -138,8 +140,9 @@ run_agent() {
 }
 
 # ── Run both agents sequentially (rate-limit / resource friendliness) ───────────
-CLAUDE_STATUS=$(run_agent claude)
-CODEX_STATUS=$(run_agent codex)
+# tail -1: defensive — capture only the final status line even if anything leaks to stdout
+CLAUDE_STATUS=$(run_agent claude | tail -1)
+CODEX_STATUS=$(run_agent codex | tail -1)
 
 # ── Build human summary ─────────────────────────────────────────────────────────
 summarize() {  # name|rc|dur|words|hasresult -> readable verdict

@@ -157,3 +157,4 @@
 {"ts":"2026-06-03T00:43:30Z","node":"oraclebox1","source":"deploy","action":"backup-health","result":"ok","detail":"deployed (no git changes)"}
 {"ts":"2026-06-03T00:43:35Z","node":"oraclebox1","source":"deploy","action":"fleet-health-rollup","result":"ok","detail":"deployed (no git changes)"}
 {"ts":"2026-06-03T00:44:20Z","node":"agent-builder-2-003758","source":"fleet","action":"backup-health-monitor","result":"done","detail":"#28 done: backup-health periodic monitor runs on bigo-server every 30m, writes fleet/backup-health, and fleet-health-rollup/dashboard now include backup=healthy. Forced backup-health alloc d0ccf0f7 and rollup alloc 9d161470 both exited 0."}
+{"ts":"2026-06-03T00:46:50Z","node":"oraclebox1","source":"deploy","action":"backup-restore-verify","result":"ok","detail":"deployed and pushed"}

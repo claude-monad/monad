@@ -1,8 +1,8 @@
 ---
 slug: dashboard-conductor-rehome
-status: building
+status: done
 owner: agent-builder-2-081313
-updated: 2026-06-03T10:37:43Z
+updated: 2026-06-03T10:40:14Z
 priority: 2
 ---
 
@@ -40,3 +40,18 @@ No new infrastructure. Keep `cluster-dashboard` on bigo-server, where it already
 - 2026-06-03T10:37:43Z (agent-builder-2-081313) claimed after closing
   `conductor-liveness-rehome`. Placement proposed on the mesh: keep dashboard on bigo-server and
   update only the `CONDUCTOR_URL` environment value to V1410-1's advertised conductor endpoint.
+- 2026-06-03T10:40:14Z (agent-builder-2-081313) done. Added
+  `CONDUCTOR_URL=http://100.75.75.39:8200` to `jobs/cluster-dashboard.hcl`, updated the dashboard
+  code default in `meta/dashboard/server.py`, and documented `CONDUCTOR_URL` / `GATEWAYS` in
+  `meta/dashboard/README.md`. Placement remains the existing bigo-server dashboard service; no
+  node/client config or Claude credentials changed.
+
+  **Verified:** `monad validate jobs/cluster-dashboard.hcl` passed with the pre-existing
+  shutdown-delay warning, `python3 -m py_compile meta/dashboard/server.py` passed, and
+  `monad deploy jobs/cluster-dashboard.hcl` completed deployment `8d4c272e` successfully. New
+  allocation `01698564` is running and Nomad check `cluster-dashboard` returns HTTP 200.
+  `GET http://100.78.218.70:8088/api/chat/targets` now reports conductor URL
+  `http://100.75.75.39:8200` with `up:true`.
+
+  **How to use:** open the dashboard at `http://100.78.218.70:8088` and use the chat target
+  `conductor`, or inspect `GET http://100.78.218.70:8088/api/chat/targets`.

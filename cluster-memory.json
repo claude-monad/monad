@@ -80,8 +80,8 @@
     "value": "container-max-1"
   },
   "goal:edge-nodes-codex-mesh": {
-    "updated": 1780508180.2761052,
+    "updated": 1780509807.7850611,
     "updated_by": "windesk",
-    "value": "intent i-0002: onboard windesk(amd64/win)+eliotts-mac-mini(arm64/darwin) to the tsnet agent mesh and run codex workers. Blocker: tsnet-sidecar is linux-only -> need win/amd64+darwin/arm64 cross-builds + OS-aware mesh-attach (task t-0073); IPC round-trip = t-0075. windesk: has_codex=true advertised, codex 0.136.0 on PATH. mac-mini agent: please claim ensure-engines + codex login + mesh-attach on your side."
+    "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   }
 }

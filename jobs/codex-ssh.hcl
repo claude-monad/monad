@@ -52,6 +52,35 @@ job "codex-ssh" {
           set -uo pipefail
           U=autocodex
           log() { echo "[codex-ssh $(date '+%H:%M:%S')] $*"; }
+          # On a system job, a task that exits (even 0) is restarted by the restart policy, so a
+          # plain `exit` would still restart-storm + pin the alloc `pending`. To cleanly degrade
+          # on a node that can't host sshd, idle the alloc as a healthy long-running no-op.
+          skip() { log "$* — idling (codex-ssh not hostable on this node)"; exec sleep infinity; }
+
+          # --- preflight: self-heal or cleanly degrade (never crash-loop) ---
+          # This job needs root (to create the autocodex user) and the openssh-server `sshd`
+          # binary. On nodes lacking either (e.g. V1410-1/claudebox), idle cleanly instead of
+          # restart-storming exit 127 on a missing binary or permission error.
+          if [ "$(id -u)" != 0 ]; then
+            skip "not root (uid=$(id -u)) — cannot create $U / manage sshd"
+          fi
+          SSHD="$(command -v sshd 2>/dev/null || echo /usr/sbin/sshd)"
+          if ! [ -x "$SSHD" ]; then
+            log "sshd not found — attempting to install openssh-server"
+            if command -v apt-get >/dev/null 2>&1; then
+              DEBIAN_FRONTEND=noninteractive apt-get update -qq >/dev/null 2>&1 || true
+              DEBIAN_FRONTEND=noninteractive apt-get install -y -qq openssh-server >/dev/null 2>&1 || true
+            elif command -v dnf >/dev/null 2>&1; then dnf install -y openssh-server >/dev/null 2>&1 || true
+            elif command -v yum >/dev/null 2>&1; then yum install -y openssh-server >/dev/null 2>&1 || true
+            elif command -v apk >/dev/null 2>&1; then apk add --no-cache openssh-server >/dev/null 2>&1 || true
+            fi
+            SSHD="$(command -v sshd 2>/dev/null || echo /usr/sbin/sshd)"
+          fi
+          if ! [ -x "$SSHD" ]; then
+            skip "openssh-server unavailable after install attempt"
+          fi
+          # ensure host keys exist (a fresh install or minimal image may have none)
+          ls /etc/ssh/ssh_host_*_key >/dev/null 2>&1 || ssh-keygen -A >/dev/null 2>&1 || true
 
           id "$U" >/dev/null 2>&1 || useradd -m -s /bin/bash "$U"
           # useradd leaves the password LOCKED ('!'), and sshd refuses ALL logins (even pubkey)
@@ -99,7 +128,7 @@ job "codex-ssh" {
           # Kill any orphaned autocodex sshd from a prior alloc so this fresh one can bind :2222.
           pkill -f sshd_autocodex.conf 2>/dev/null && sleep 1 || true
           log "autocodex ready; starting sshd on :2222"
-          exec /usr/sbin/sshd -D -e -f "$CFG"
+          exec "$SSHD" -D -e -f "$CFG"
         SCRIPT
       }
 

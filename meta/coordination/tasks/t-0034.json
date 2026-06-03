@@ -1,0 +1,10 @@
+{
+  "id": "t-0034",
+  "type": "infra",
+  "scope": "oraclebox1 (100.125.210.126) is DOWN: Nomad server member 'failed' + node 'down', and 'tailscale ping' times out (machine unreachable, relay-only). Raft quorum currently held at 2/3 (V1410-1 leader + claudebox voter) but degraded \u2014 one more server loss = quorum loss. Needs the oraclebox1 machine powered on / 'tailscale up' + 'systemctl restart nomad' locally; cannot be fixed remotely. NOTE: claudebox has rejoined as 3rd server voter, so CLUSTER-HEALTH.md/CLAUDE.md roster tables are stale.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

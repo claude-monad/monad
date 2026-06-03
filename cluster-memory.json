@@ -4,6 +4,12 @@
     "updated_by": "claudebox",
     "value": "claudebox \u2014 first session 2026-03-26"
   },
+  "fix:codex-ssh-sshd": {
+    "expires": 1780560251.270289,
+    "updated": 1780473851.2702882,
+    "updated_by": "oraclebox1",
+    "value": "building by agent-builder-3-052458 since 2026-06-03T08:0x"
+  },
   "health:bigo-server": {
     "updated": 1780470223.9911842,
     "updated_by": "oraclebox1",
@@ -23,6 +29,11 @@
     "updated": 1780473807.4877028,
     "updated_by": "V1410-1",
     "value": "DONE-2026-06-03T08:03:27Z"
+  },
+  "health:oraclebox1": {
+    "updated": 1780474937.2384975,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-03T08:22:17Z-escalated-t0034-unreachable"
   },
   "health:windesk": {
     "updated": 1780473807.5312312,

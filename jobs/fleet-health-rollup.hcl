@@ -292,7 +292,9 @@ def headline_status(n):
     eff = results[n]
     if ":" in n:
         kind, node = n.split(":", 1)
-        if kind in ("disk", "overload") and node not in keystone and rank(eff) > rank(WARN):
+        # empty KEYSTONE_NODES disables the cap entirely (== prior behavior), so dropping
+        # the env can never accidentally suppress every node's disk/overload cluster-wide.
+        if keystone and kind in ("disk", "overload") and node not in keystone and rank(eff) > rank(WARN):
             capped_notes.append("%s=%s->%s(peripheral)" % (n, eff, WARN))
             return WARN
     return eff

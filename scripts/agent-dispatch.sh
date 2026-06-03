@@ -18,6 +18,22 @@ set -uo pipefail
 ROLE="${1:-${NOMAD_META_ROLE:-${NOMAD_META_role:-}}}"
 SCOPE="${2:-${NOMAD_META_SCOPE:-${NOMAD_META_scope:-}}}"
 [ -n "$ROLE" ] || { echo "usage: agent-dispatch.sh <role> [scope]  (or NOMAD_META_ROLE)" >&2; exit 2; }
+
+# Claude refuses --dangerously-skip-permissions when run as root. If we are root, re-exec
+# as the first non-root user who owns a monad checkout (same logic as maintenance-agent).
+if [ "$(id -u)" = 0 ]; then
+  for u in ubuntu bigo e eliott; do
+    home="$(getent passwd "$u" 2>/dev/null | cut -d: -f6)"
+    [ -n "$home" ] || continue
+    for repo in "$home/monad" "$home/Documents/monad" "$home/Documents/GitHub/monad"; do
+      [ -f "$repo/scripts/agent-dispatch.sh" ] || continue
+      exec su - "$u" -c "NOMAD_META_ROLE='$ROLE' NOMAD_META_SCOPE='${SCOPE:-}' MONAD_REPO_DIR='$repo' exec bash '$repo/scripts/agent-dispatch.sh'"
+    done
+  done
+  echo "[agent-dispatch] running as root but no non-root monad checkout found" >&2
+  exit 1
+fi
+
 DIR="${MONAD_REPO_DIR:-$HOME/monad}/scripts"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 

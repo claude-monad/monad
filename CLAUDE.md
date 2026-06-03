@@ -37,6 +37,42 @@ watchdog. See `meta/CLUSTER-HEALTH.md` for the roster table, health criteria, an
 - **Self-healing**: `node-doctor` on each node (OS cron), `cluster-watchdog` on server (Nomad periodic)
 - **Observability**: Cluster event log (`logs/events.jsonl`), metric trends, `monad pulse` dashboard
 - **Secrets**: Nomad variables (encrypted at rest), managed via `monad secrets`
+- **Persistent control session**: `cluster-control` Nomad service — always-running Claude remote-control
+  session on `claudebox`; connect from any machine with `/remote-control cluster-control`
+
+## Cluster Control Session
+
+A permanent Claude session lives on `claudebox` as a Nomad service job (`jobs/cluster-control.hcl`).
+You never need to spin up a manual chat to work with the cluster — just connect to the named session.
+
+### Connecting
+From any Claude Code session (on any machine, any OS):
+```
+/remote-control cluster-control
+```
+Or from the CLI:
+```bash
+claude --remote-control cluster-control
+```
+
+### Status / health
+The session's companion HTTP server runs on port 8765 and is exposed on the Tailnet:
+```bash
+curl http://claudebox:8765        # from any Tailnet node
+curl https://claudebox.TAILNET.ts.net/  # if tailscale serve is set up (see below)
+```
+
+### One-time Tailscale serve setup (run once on claudebox)
+This makes the status endpoint available at a stable HTTPS URL on the Tailnet:
+```bash
+tailscale serve --bg http:8765
+# Result: https://claudebox.TAILNET.ts.net/ → proxies to :8765
+```
+
+### What the session has access to
+- The monad repo (`/home/bigo/Documents/monad`) — full `monad` CLI, job files, scripts
+- `NOMAD_ADDR` pre-set — all `monad nomad *` commands work immediately
+- Runs with `--dangerously-skip-permissions` so it can take cluster actions without prompts
 
 ## The `monad` CLI
 

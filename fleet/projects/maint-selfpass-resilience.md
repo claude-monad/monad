@@ -1,8 +1,8 @@
 ---
 slug: maint-selfpass-resilience
-status: building
+status: done
 owner: agent-builder-3-003802
-updated: 2026-06-03T01:05:00Z
+updated: 2026-06-03T01:00:00Z
 priority: 30
 ---
 # maint-selfpass-resilience — make the immune system record a self-pass even across restarts
@@ -62,3 +62,32 @@ Make a healthy node record a self-pass **promptly and durably**, without burstin
   no `last`, agent at ~30m elapsed on a freshly-churned alloc. Lane announced to builder-1
   (on backup-restore-verify) and builder-2. health:claudebox claimed via cluster-memory.sh.
   Building.
+- 2026-06-03 ~01:00 (agent-builder-3-003802) — **DONE & verified in prod.**
+  - **What:** `scripts/maintenance-agent.sh` boot now seeds `last_self` from the persisted
+    `monad/maintenance/<node>/last` `finished` time (GNU `date -d … +%s`), with a `WARMUP`
+    floor (`FIRST_PASS_WARMUP`, default 180s) so the first pass fires no sooner than 180s after
+    boot and resumes the real cadence otherwise; never-passed nodes get the 180s warmup instead
+    of a full 30-min wait. Missing/unparseable var ⇒ falls back to the warmup floor (was: full
+    interval). `jobs/maintenance-agent.hcl` `MONAD_MAINT_REV` bumped to
+    `selfpass-resilience-20260603` to roll out (script-only change).
+  - **Rollout:** `monad validate` clean; `monad deploy`; all **5** linux maint allocs rolled to
+    **v10** and `running` (claudebox, oraclebox1, V1410-1, bigo-server, death-star). Boot logs
+    confirm the new path: claudebox + bigo-server both logged `resuming self-pass cadence from
+    last pass at <ts>` (the restart did **not** reset the 30-min clock).
+  - **Proof the gap was real & is closed:** before the change, claudebox's agent ran healthy
+    (engine `claude` ready, `drop_priv=0`) but had **never** survived 30 uninterrupted minutes,
+    so `monad/maintenance/claudebox/last` was missing → `maintenance:claudebox=warn`. It
+    completed a self-pass (`exit_code=0`, finished 00:52:56Z) once left alone; after the
+    redeploy that pass is preserved and the cadence resumes from it. Forced
+    `maintenance-agent-health` + `fleet-health-rollup`: `fleet/maintenance-health/claudebox` →
+    `status=healthy`; **`fleet/health-summary` top-line `status=healthy`** ("all actionable
+    components healthy"), clearing the only non-acknowledged warn (the two `checkout:*` warns
+    remain, owner-gated #11, already acknowledged).
+  - **How to use / tune:** nothing to call — automatic in the standing `maintenance-agent`
+    system job. Override the first-pass delay per-alloc with env `FIRST_PASS_WARMUP=<seconds>`.
+    Roll back by reverting the two files + bumping `MONAD_MAINT_REV`.
+  - **Out of scope (noted):** claudebox's maintenance-agent is **off-mesh** ("sidecar
+    unavailable") because its Nomad runs as user `claude`, which has no docker access (not in
+    docker group, `sudo -n docker` fails) so the tsnet sidecar can't be fetched. Mesh is
+    non-fatal (self-passes don't need it) and the fix is host/owner-gated — left for a future
+    project/owner pass.

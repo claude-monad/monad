@@ -9,9 +9,11 @@ job "codex-tui" {
   type        = "service"
   priority    = 70
 
+  # death-star: idle (80 cores) + codex-ready, so the TUI is always-up and off the saturated
+  # oraclebox1. Reach it at http://100.96.31.66:8090.
   constraint {
     attribute = "${node.unique.name}"
-    value     = "oraclebox1"
+    value     = "death-star"
   }
 
   group "tui" {
@@ -41,13 +43,23 @@ job "codex-tui" {
       driver = "raw_exec"
       config {
         command = "/bin/bash"
-        args    = ["-c", "exec python3 /home/ubuntu/monad/meta/codex-tui/server.py"]
-      }
-      env {
-        CODEX_TUI_PORT    = "8090"
-        CODEX_BIN         = "/home/ubuntu/.local/bin/codex"
-        CODEX_HOME        = "/home/ubuntu/.codex"
-        CODEX_TUI_WORKDIR = "/tmp/codex-tui-work"
+        # Find the user logged into codex (has ~/.codex/auth.json + ~/monad), refresh their
+        # checkout, then run the TUI as root with CODEX_HOME pointed at their creds (so codex
+        # authenticates) and CODEX_BIN the codex on PATH. Node-portable.
+        args = ["-c", <<-EOC
+          for u in e ubuntu bigo eliott; do
+            h="$(getent passwd "$u" | cut -d: -f6)"; [ -n "$h" ] || continue
+            [ -f "$h/.codex/auth.json" ] && [ -d "$h/monad/.git" ] || continue
+            su - "$u" -c "cd '$h/monad' && git fetch -q origin main && git reset --hard origin/main -q" 2>/dev/null || true
+            export CODEX_HOME="$h/.codex"
+            export CODEX_BIN="$(command -v codex || echo /usr/local/bin/codex)"
+            export CODEX_TUI_PORT=8090 CODEX_TUI_WORKDIR=/tmp/codex-tui-work
+            echo "codex-tui: user=$u CODEX_HOME=$CODEX_HOME bin=$CODEX_BIN"
+            exec python3 "$h/monad/meta/codex-tui/server.py"
+          done
+          echo "codex-tui: no codex-credentialed user with ~/monad found" >&2; sleep 120
+        EOC
+        ]
       }
       resources {
         cpu    = 200

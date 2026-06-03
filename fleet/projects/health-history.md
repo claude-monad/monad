@@ -77,5 +77,9 @@ fix: dropped an explicit `local:/local` volume (the docker driver auto-mounts ta
 
 **This activates the previously-empty shared Postgres** (0 user tables → its first consumer).
 
-**Follow-ups (new projects if wanted):** a retention/prune policy (rows are unbounded, ~96/day);
-a dashboard trend panel reading `health_snapshots`; flap-detection alerts on status transitions.
+**Retention (built-in):** the job prunes rows older than `RETENTION_DAYS` env (default 180d,
+≈17k rows / a few MB) each run, so the table stays bounded on bigo-server's near-full disk.
+Latest run (with retention) exit_code=0, table still `rows=1 distinct_ts=1`.
+
+**Follow-ups (new projects if wanted):** a dashboard trend panel reading `health_snapshots`;
+flap-detection alerts on status transitions.

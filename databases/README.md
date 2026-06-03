@@ -130,5 +130,6 @@ nomad alloc exec <postgres-alloc> psql -U fleet -d fleet -c \
    ORDER BY snapshot_ts DESC LIMIT 20;"
 ```
 
-Retention is currently unbounded (rows are a few KB; ~96/day). A retention/prune policy or a
-dashboard trend panel reading this table are natural follow-ups.
+Retention: the job prunes snapshots older than `RETENTION_DAYS` (default 180d, ≈17k rows / a
+few MB) each run, so the table stays bounded on bigo-server's near-full disk. A dashboard trend
+panel reading this table is a natural follow-up.

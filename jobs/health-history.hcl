@@ -60,6 +60,10 @@ job "health-history" {
         PGPORT      = "5432"
         PGDATABASE  = "fleet"
         PGUSER      = "fleet"
+        # Retention: prune snapshots older than this each run, so the table can't grow
+        # unbounded on bigo-server's near-full disk. 180d ≈ 17k rows max (a few MB) —
+        # ample for trend analysis. Set empty/0 to disable.
+        RETENTION_DAYS = "180"
       }
 
       config {
@@ -144,6 +148,13 @@ rc=$?
 if [ "$rc" -ne 0 ]; then
   echo "[health-history] ERROR: insert failed rc=$rc"
   exit "$rc"
+fi
+
+# 3) Retention prune (keep the table bounded; safe — only deletes our own old snapshots).
+if [ -n "$RETENTION_DAYS" ] && [ "$RETENTION_DAYS" != "0" ]; then
+  pruned="$(psql -At -v ON_ERROR_STOP=1 --no-psqlrc \
+    -c "WITH d AS (DELETE FROM health_snapshots WHERE snapshot_ts < now() - interval '$RETENTION_DAYS days' RETURNING 1) SELECT count(*) FROM d;" 2>/dev/null || echo '?')"
+  echo "[health-history] retention: pruned $pruned rows older than $RETENTION_DAYS days"
 fi
 
 # Report current depth (no secrets).

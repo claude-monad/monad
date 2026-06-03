@@ -49,3 +49,11 @@ This change reduces unnecessary builder pressure on that keystone instead of mov
   with `backlog_blocked=1`, `backlog_todo=0`, and `backlog_building=0`. The allocation-less
   pending child `fleet-builder/dispatch-1780456969-4292a3c8` was purged; the two running
   builders were left alone to finish naturally.
+- 2026-06-03T03:45:33Z — correction/verification. The first deploy did not restart the
+  long-running foreman because only the script changed; the old in-memory loop dispatched one
+  more pending builder. Added `FOREMAN_REV=blocked-backpressure-20260603` to
+  `jobs/fleet-foreman.hcl`, validated/deployed job version 3, and confirmed new foreman logs
+  wrote `fleet/status target=1 dispatched_this_cycle=0`. Purged the new allocation-less
+  pending child `fleet-builder/dispatch-1780458180-5c2d1fbf`. Final verification:
+  `fleet-builder` has `Pending=0 Running=2`, and `fleet/status` has `target=1`, `running=2`,
+  `active_projects=none`, `backlog_blocked=2`.

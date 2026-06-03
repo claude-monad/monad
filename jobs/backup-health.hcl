@@ -1,9 +1,10 @@
 # backup-health — standing freshness/presence monitor for retained cluster backups.
 #
 # READ-ONLY against backup artifacts. It inspects the backup directories owned by
-# postgres-backup and registry-backup on bigo-server, then writes one compact Nomad
-# var: fleet/backup-health. Restore verification is separate; this job answers the
-# operational question "did today's backups actually appear and are they non-tiny?"
+# postgres-backup, registry-backup, and nomad-vars-backup on bigo-server, then writes
+# one compact Nomad var: fleet/backup-health. Restore verification is separate; this job
+# answers the operational question "did today's backups actually appear and are they
+# non-tiny?"
 job "backup-health" {
   datacenters = ["dc1"]
   type        = "batch"
@@ -49,6 +50,10 @@ job "backup-health" {
         REGISTRY_GLOB       = "registry-*.tar.gz"
         REGISTRY_MIN_BYTES  = "100"
         REGISTRY_MAX_AGE_S  = "129600"
+        VARS_DIR            = "/opt/monad-vars-backups"
+        VARS_GLOB           = "nomad-vars-*.json.gz"
+        VARS_MIN_BYTES      = "100"
+        VARS_MAX_AGE_S      = "129600"
       }
 
       config {
@@ -177,18 +182,27 @@ reg = check_family(
     env_int("REGISTRY_MIN_BYTES", 100),
     env_int("REGISTRY_MAX_AGE_S", 129600),
 )
+varsb = check_family(
+    "vars",
+    os.environ.get("VARS_DIR", "/opt/monad-vars-backups"),
+    os.environ.get("VARS_GLOB", "nomad-vars-*.json.gz"),
+    env_int("VARS_MIN_BYTES", 100),
+    env_int("VARS_MAX_AGE_S", 129600),
+)
 
-status = worst([pg["postgres_status"], reg["registry_status"]])
+status = worst([pg["postgres_status"], reg["registry_status"], varsb["vars_status"]])
 bad = []
 if pg["postgres_status"] != "healthy":
     bad.append("postgres=" + pg["postgres_detail"])
 if reg["registry_status"] != "healthy":
     bad.append("registry=" + reg["registry_detail"])
+if varsb["vars_status"] != "healthy":
+    bad.append("vars=" + varsb["vars_detail"])
 if bad:
     detail = "; ".join(bad)
 else:
-    detail = "postgres %s; registry %s" % (
-        pg["postgres_detail"], reg["registry_detail"])
+    detail = "postgres %s; registry %s; vars %s" % (
+        pg["postgres_detail"], reg["registry_detail"], varsb["vars_detail"])
 detail = detail[:240]
 
 prev = var_items(HVAR)
@@ -206,6 +220,7 @@ items = {
 }
 items.update(pg)
 items.update(reg)
+items.update(varsb)
 
 args = ["nomad", "var", "put", "-force", HVAR]
 for k in sorted(items):

@@ -22,7 +22,7 @@ job "math-quick-compute" {
 
       config {
         command = "/bin/bash"
-        args    = ["-c", "exec ${MONAD_REPO_DIR:-/home/${USER:-bigo}/monad}/scripts/math-session.sh compute 20"]
+        args    = ["/home/e/monad/scripts/math-session.sh", "compute", "20"]
       }
 
       env {

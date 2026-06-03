@@ -71,4 +71,25 @@ fi
 
 # ─── Run Claude session ──────────────────────────────────────────────────────
 
-claude --print --dangerously-skip-permissions "$PROMPT"
+PROMPT_FILE="$WORK_DIR/prompt.txt"
+printf '%s' "$PROMPT" > "$PROMPT_FILE"
+
+if [ "$(id -u)" = "0" ]; then
+    # Nomad raw_exec runs as root; claude refuses --dangerously-skip-permissions as root.
+    # Drop to a non-root user that has claude installed.
+    RUN_USER=""
+    for u in e bigo ubuntu eliott; do
+        if id "$u" &>/dev/null && su - "$u" -c "command -v claude >/dev/null 2>&1"; then
+            RUN_USER="$u"; break
+        fi
+    done
+    if [ -z "$RUN_USER" ]; then
+        echo "ERROR: no non-root user with claude found" >&2
+        exit 1
+    fi
+    echo "[math-session] dropping privileges to $RUN_USER"
+    chown -R "$RUN_USER" "$WORK_DIR"
+    su - "$RUN_USER" -c "cd '$PWD' && claude --print --dangerously-skip-permissions \"\$(cat '$PROMPT_FILE')\""
+else
+    claude --print --dangerously-skip-permissions "$PROMPT"
+fi

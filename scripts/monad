@@ -91,6 +91,15 @@ Memory (shared cluster state):
   monad memory gc                   Garbage-collect expired entries
   monad memory dump                 Print full cluster memory as JSON
 
+Storage (death-star, 15TB):
+  monad storage status              Show storage health, mounts, buckets
+  monad storage mount               Mount via NFS (Linux/macOS) or SMB (Windows)
+  monad storage unmount             Unmount storage
+  monad storage setup-s3            Install and configure MinIO S3 client
+  monad storage upload <file> [bucket]   Upload a file (default: scratch)
+  monad storage download <path> [dest]   Download a file
+  monad storage ls [bucket/prefix]       List files in a bucket
+
 Events:
   monad events [n]                  Show last n cluster events (default 20)
 
@@ -812,6 +821,80 @@ cmd_pulse() {
     echo ""
 }
 
+# ─── Storage commands ──────────────────────────────────────────────────────
+
+STORAGE_IP="100.96.31.66"
+MINIO_URL="http://${STORAGE_IP}:9000"
+
+_ensure_mc() {
+    if ! command -v mc &>/dev/null; then
+        err "MinIO client (mc) not installed. Run: monad storage setup-s3"
+        return 1
+    fi
+    # Check if alias exists
+    if ! mc alias list monad &>/dev/null 2>&1; then
+        # Try to auto-configure
+        local PASS
+        PASS=$(nomad var get -json nomad/jobs/minio-storage 2>/dev/null \
+            | python3 -c "import sys,json; print(json.load(sys.stdin)['Items']['MINIO_ROOT_PASSWORD'])" 2>/dev/null || true)
+        if [ -n "$PASS" ]; then
+            mc alias set monad "$MINIO_URL" monad-admin "$PASS" &>/dev/null
+        else
+            err "mc alias 'monad' not configured. Run: monad storage setup-s3"
+            return 1
+        fi
+    fi
+}
+
+cmd_storage() {
+    local subcmd="${1:-status}"; shift || true
+
+    case "$subcmd" in
+        status)
+            "$REPO_DIR/scripts/storage-mount.sh" status
+            ;;
+        mount)
+            "$REPO_DIR/scripts/storage-mount.sh" mount
+            ;;
+        unmount)
+            "$REPO_DIR/scripts/storage-mount.sh" unmount
+            ;;
+        setup-s3)
+            "$REPO_DIR/scripts/storage-mount.sh" setup-s3
+            ;;
+        upload)
+            _ensure_mc || return 1
+            local file="${1:?Usage: monad storage upload <file> [bucket]}"
+            local bucket="${2:-scratch}"
+            log "Uploading $file → monad/$bucket/"
+            mc cp "$file" "monad/$bucket/"
+            ok "Uploaded to monad/$bucket/$(basename "$file")"
+            ;;
+        download)
+            _ensure_mc || return 1
+            local path="${1:?Usage: monad storage download <bucket/path> [dest]}"
+            local dest="${2:-.}"
+            log "Downloading monad/$path → $dest"
+            mc cp "monad/$path" "$dest"
+            ok "Downloaded to $dest"
+            ;;
+        ls)
+            _ensure_mc || return 1
+            local prefix="${1:-}"
+            if [ -n "$prefix" ]; then
+                mc ls "monad/$prefix"
+            else
+                mc ls monad/
+            fi
+            ;;
+        *)
+            err "Unknown storage command: $subcmd"
+            echo "  Commands: status, mount, unmount, setup-s3, upload, download, ls"
+            return 1
+            ;;
+    esac
+}
+
 # ─── Main dispatch ──────────────────────────────────────────────────────────
 
 main() {
@@ -832,6 +915,7 @@ main() {
         doctor)           cmd_doctor "$@" ;;
         memory)           "$REPO_DIR/scripts/cluster-memory.sh" "$@" ;;
         secrets)          cmd_secrets "$@" ;;
+        storage)          cmd_storage "$@" ;;
         events)           cmd_events "$@" ;;
         gh)               cmd_gh "$@" ;;
         help|--help|-h|"")usage ;;

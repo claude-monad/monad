@@ -10,6 +10,7 @@
 job "assistant" {
   datacenters = ["dc1"]
   type        = "batch"
+  priority    = 80
 
   parameterized {
     payload       = "optional"

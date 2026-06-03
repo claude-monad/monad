@@ -1,16 +1,19 @@
 # backup-restore-verify — standing, low-noise proof that the cluster's backups
-# actually RESTORE. The fleet makes two keystone backups on bigo-server:
+# actually RESTORE. The fleet makes three keystone backups on bigo-server:
 #   - postgres-backup (#8): /opt/monad-postgres-backups/<db>-<stamp>.sql.gz  (gzip plain SQL)
 #   - registry-backup (#27): /opt/monad-registry-backups/registry-<stamp>.tar.gz (gzip tar)
+#   - nomad-vars-backup (#36): /opt/monad-vars-backups/nomad-vars-<stamp>.json.gz (gzip JSONL)
 # Freshness/size is watched by backup-health-monitor (#28). This is the RECOVERY side:
 # a backup you have never restored is not a backup. Each run test-restores the LATEST of
 # each into a DISPOSABLE target and verifies integrity, writing one verdict var.
 #
-# READ-ONLY w.r.t. live data: it never touches the live DB, the live registry store, or the
-# backup archives themselves. Postgres is restored into a throwaway in-container postgres
-# (initdb in /tmp, unix-socket only, no TCP); the registry tar is extracted to a temp dir
-# (with a free-space preflight so a test-restore can never fill bigo-server's disk) and the
-# temp dir is removed. Result -> Nomad var fleet/backup-restore-verify.
+# READ-ONLY w.r.t. live data: it never touches the live DB, the live registry store, the live
+# vars, or the backup archives themselves. Postgres is restored into a throwaway in-container
+# postgres (initdb in /tmp, unix-socket only, no TCP); the registry tar is extracted to a temp
+# dir (with a free-space preflight so a test-restore can never fill bigo-server's disk) and
+# the temp dir is removed; the vars dump is replayed into a throwaway nomad var path
+# (restore-test/vars-verify/probe) that this job creates and always purges. Result -> Nomad
+# var fleet/backup-restore-verify.
 #
 # Quiet by design: overwrites the single var each run; a status transition is captured in the
 # var (prev_status + changed_at), mirroring jobs/registry-health.hcl.
@@ -51,9 +54,10 @@ job "backup-restore-verify" {
       driver = "raw_exec"
 
       env {
-        PG_BACKUP_DIR  = "/opt/monad-postgres-backups"
-        REG_BACKUP_DIR = "/opt/monad-registry-backups"
-        PG_IMAGE       = "postgres:16-alpine"
+        PG_BACKUP_DIR   = "/opt/monad-postgres-backups"
+        REG_BACKUP_DIR  = "/opt/monad-registry-backups"
+        VARS_BACKUP_DIR = "/opt/monad-vars-backups"
+        PG_IMAGE        = "postgres:16-alpine"
         # require this much free space (KiB) beyond the archive size before extracting the
         # registry tar, so a test-restore never fills the disk registry-health guards (1 GiB).
         EXTRACT_SAFETY_KB = "1048576"
@@ -86,6 +90,70 @@ gunzip -c /dump.sql.gz | su postgres -c "psql -h /tmp -p 5499 -U postgres -d ver
 TABLES=$(su postgres -c "psql -h /tmp -p 5499 -U postgres -d verifydb -tAc \"select count(*) from information_schema.tables where table_schema not in ('pg_catalog','information_schema')\"" 2>/dev/null | tr -d '[:space:]')
 su postgres -c "pg_ctl -D '$PGDATA' -w stop" >/dev/null 2>&1 || true
 echo "TABLES=$TABLES"
+SCRIPT
+      }
+
+      # Helper for the vars dump round-trip. Never prints secret values — only counts and a
+      # sha256 of the chosen entry's Items, so nothing sensitive lands in logs or argv.
+      #   count                 : stdin=JSONL dump -> "COUNT=<n>" (exit!=0 if 0/invalid)
+      #   makespec <path> <file>: stdin=JSONL dump -> write a put-spec at <file> with Path
+      #                           rewritten to <path>, keeping a real entry's Items; prints
+      #                           "SRC=<orig path>" and "SHA=<sha256 of canonical Items>"
+      #   sha                   : stdin=`nomad var get -out=json` -> "SHA=<sha256 of Items>"
+      template {
+        destination = "local/varshelper.py"
+        perms       = "755"
+        data        = <<-SCRIPT
+#!/usr/bin/env python3
+import hashlib, json, sys
+
+def canon_sha(items):
+    canon = json.dumps(items or {}, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(canon.encode("utf-8")).hexdigest()
+
+cmd = sys.argv[1] if len(sys.argv) > 1 else ""
+
+if cmd == "count":
+    n = 0
+    for line in sys.stdin:
+        line = line.strip()
+        if not line:
+            continue
+        obj = json.loads(line)
+        if "Path" not in obj:
+            print("BADLINE", file=sys.stderr); sys.exit(2)
+        n += 1
+    print("COUNT=%d" % n)
+    sys.exit(0 if n > 0 else 1)
+
+if cmd == "makespec":
+    newpath, specfile = sys.argv[2], sys.argv[3]
+    chosen = None
+    for line in sys.stdin:
+        line = line.strip()
+        if not line:
+            continue
+        obj = json.loads(line)
+        if obj.get("Items"):
+            chosen = obj
+            break
+    if not chosen:
+        print("NOITEMS", file=sys.stderr); sys.exit(1)
+    items = chosen["Items"]
+    spec = {"Namespace": "default", "Path": newpath, "Items": items}
+    with open(specfile, "w") as f:
+        json.dump(spec, f)
+    print("SRC=%s" % chosen.get("Path", "?"))
+    print("SHA=%s" % canon_sha(items))
+    sys.exit(0)
+
+if cmd == "sha":
+    obj = json.load(sys.stdin)
+    print("SHA=%s" % canon_sha(obj.get("Items")))
+    sys.exit(0)
+
+print("usage: varshelper.py count|makespec|sha", file=sys.stderr)
+sys.exit(2)
 SCRIPT
       }
 
@@ -193,10 +261,54 @@ if [ -n "$reg_latest" ]; then
   fi
 fi
 
+# ---------------------------------------------------------------- vars restore-verify
+# Round-trip the latest nomad-vars-backup dump (#36): parse it (shallow), then replay one
+# real entry into a throwaway nomad var path, read it back, sha-compare its Items, and purge.
+vars_status="unknown"; vars_detail="no vars backup found"; vars_backup=""; vars_count=""; vars_mode="none"
+vars_probe_path="restore-test/vars-verify/probe"
+vars_latest="$(ls -1t "$VARS_BACKUP_DIR"/nomad-vars-*.json.gz 2>/dev/null | head -1)"
+if [ -n "$vars_latest" ]; then
+  vars_backup="$(basename "$vars_latest")"
+  if ! gunzip -t "$vars_latest" 2>/dev/null; then
+    vars_status="warn"; vars_detail="gzip integrity check FAILED (corrupt/truncated dump)"
+  else
+    # shallow: every JSONL line parses as a {Path,Items} object and there is >=1 var
+    cnt_out="$(gunzip -c "$vars_latest" 2>/dev/null | python3 "$NOMAD_TASK_DIR/varshelper.py" count 2>/dev/null)"; cnt_rc=$?
+    vars_count="$(printf '%s' "$cnt_out" | sed -n 's/^COUNT=//p' | tail -1)"
+    if [ "$cnt_rc" -ne 0 ] || [ -z "$vars_count" ]; then
+      vars_status="warn"; vars_detail="dump failed JSONL parse / zero variables"
+    else
+      vars_status="healthy"; vars_mode="shallow"; vars_detail="gzip ok + $vars_count vars parse"
+      # deep: real put -> get -> sha-compare -> purge round-trip (proves the spec replays)
+      specfile="$(mktemp /tmp/brv-vars.XXXXXX.json)"
+      mk_out="$(gunzip -c "$vars_latest" 2>/dev/null | python3 "$NOMAD_TASK_DIR/varshelper.py" makespec "$vars_probe_path" "$specfile" 2>/dev/null)"; mk_rc=$?
+      exp_sha="$(printf '%s' "$mk_out" | sed -n 's/^SHA=//p' | tail -1)"
+      if [ "$mk_rc" -ne 0 ] || [ -z "$exp_sha" ]; then
+        vars_status="warn"; vars_mode="deep"; vars_detail="no replayable entry with items in dump"
+      elif nomad var put -force -in=json @"$specfile" >/dev/null 2>&1; then
+        got_sha="$(nomad var get -out=json "$vars_probe_path" 2>/dev/null | python3 "$NOMAD_TASK_DIR/varshelper.py" sha 2>/dev/null | sed -n 's/^SHA=//p' | tail -1)"
+        # always purge the throwaway var, regardless of the compare outcome
+        nomad var purge "$vars_probe_path" >/dev/null 2>&1 || true
+        gd="$got_sha"; [ -n "$gd" ] || gd="none"
+        if [ -n "$got_sha" ] && [ "$got_sha" = "$exp_sha" ]; then
+          vars_status="healthy"; vars_mode="deep"; vars_detail="restored ok: $vars_count vars, round-trip sha match"
+        else
+          vars_status="warn"; vars_mode="deep"; vars_detail="round-trip sha MISMATCH (got=$gd want=$exp_sha)"
+        fi
+      else
+        vars_status="warn"; vars_mode="deep"; vars_detail="nomad var put -in=json of dump entry FAILED (spec not replayable)"
+        nomad var purge "$vars_probe_path" >/dev/null 2>&1 || true
+      fi
+      rm -f "$specfile" 2>/dev/null || true
+    fi
+  fi
+fi
+
 # ---------------------------------------------------------------- overall verdict
 status="$pg_status"
 [ "$(rank "$reg_status")" -gt "$(rank "$status")" ] && status="$reg_status"
-detail="pg($pg_status): $pg_detail | registry($reg_status): $reg_detail"
+[ "$(rank "$vars_status")" -gt "$(rank "$status")" ] && status="$vars_status"
+detail="pg($pg_status): $pg_detail | registry($reg_status): $reg_detail | vars($vars_status): $vars_detail"
 
 ca="$changed_at"; trans="(none)"
 if [ "$prev" != "$status" ]; then ca="$now"; trans="$prevlabel->$status"; fi
@@ -207,10 +319,12 @@ nomad var put -force "$HVAR" \
   pg_status="$pg_status" pg_detail="$pg_detail" pg_backup="$pg_backup" pg_tables="$pg_tables" pg_mode="$pg_mode" \
   registry_status="$reg_status" registry_detail="$reg_detail" registry_backup="$reg_backup" \
   registry_repos="$reg_repos" registry_blobs_checked="$reg_blobs" \
+  vars_status="$vars_status" vars_detail="$vars_detail" vars_backup="$vars_backup" \
+  vars_count="$vars_count" vars_mode="$vars_mode" \
   prev_status="$prevlabel" changed_at="$ca" ts="$now" >/dev/null 2>&1 \
   || { echo "[backup-restore-verify] WARN: nomad var put failed"; }
 
-echo "[backup-restore-verify] status=$status pg=$pg_status($pg_mode) registry=$reg_status transition=$trans"
+echo "[backup-restore-verify] status=$status pg=$pg_status($pg_mode) registry=$reg_status vars=$vars_status($vars_mode) transition=$trans"
 echo "[backup-restore-verify] detail: $detail"
 exit 0
 SCRIPT

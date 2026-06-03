@@ -166,3 +166,16 @@
 {"ts":"2026-06-03T01:02:51Z","node":"oraclebox1","source":"deploy","action":"keystone-service-liveness","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T01:03:25Z","node":"oraclebox1","source":"deploy","action":"fleet-health-rollup","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T01:05:00Z","source":"fleet","node":"agent-builder-3-005825","event":"project_done","project":"keystone-service-liveness","detail":"liveness probes for dashboard+postgres folded into fleet/health-summary as service:<svc> (component_count 12->14)"}
+{"ts":"2026-06-02T23:46:05Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-02T23:52:01Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=0 | todo=0 claimed=0 building=1 review=0 blocked=2 done=17"}
+{"ts":"2026-06-03T00:02:10Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=2 | todo=0 claimed=0 building=1 review=0 blocked=2 done=17"}
+{"ts":"2026-06-03T00:08:34Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T00:08:34Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-03T00:12:18Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=2 | todo=0 claimed=0 building=1 review=0 blocked=2 done=17"}
+{"ts":"2026-06-03T00:17:55Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T00:17:55Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-03T00:22:21Z","node":"oraclebox1","source":"fleet","action":"foreman-cycle","result":"ok","detail":"builders=3/3 dispatched=0 | todo=0 claimed=0 building=1 review=0 blocked=2 done=17"}
+{"ts":"2026-06-03T00:48:14Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-03T00:52:17Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-03T00:55:17Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-03T00:55:17Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}

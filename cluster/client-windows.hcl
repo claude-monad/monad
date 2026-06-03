@@ -30,10 +30,13 @@ client {
   servers = ["SERVER_IP:4647"]
 
   meta {
-    role         = "worker"
-    platform     = "windows"
-    location     = "unknown"
-    capabilities = "claude-code,raw-exec"
+    role           = "worker"
+    platform       = "windows"
+    location       = "unknown"
+    capabilities   = "claude-code,raw-exec"
+    claude_account = "pro"
+    # Set math_agent = "true" on windesk to enable math-agent-relay and math-pro-sessions.
+    math_agent     = "false"
   }
 }
 

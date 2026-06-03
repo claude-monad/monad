@@ -15,6 +15,17 @@ NAME="${RC_NAME:?RC_NAME required}"
 MODEL="${RC_MODEL:-}"
 EFFORT="${RC_EFFORT:-}"
 CWD="${RC_CWD:-/work}"
+# Ensure the session's persona dir + CLAUDE.md exist even if the git push of the persona
+# lagged (the clone may not have it yet). Source the purpose from the registry var, which
+# assistant.sh always sets — so an assistant reliably has its personality, not /work's.
+if [ "$CWD" != "/work" ] && [ ! -f "$CWD/CLAUDE.md" ]; then
+  mkdir -p "$CWD" 2>/dev/null || true
+  _purpose="$(nomad var get -item=purpose "assistants/${RC_NAME}" 2>/dev/null || true)"
+  if [ -n "$_purpose" ]; then
+    printf '# Assistant: %s\n\n%s\n\nYou are a persistent, purpose-built assistant reached from the Claude app as "%s". Stay focused on the purpose above.\n' \
+      "$RC_NAME" "$_purpose" "$RC_NAME" > "$CWD/CLAUDE.md" 2>/dev/null || true
+  fi
+fi
 [ -d "$CWD" ] || CWD=/work
 
 # Effort → model alias when an explicit model wasn't given (the brain can set either).

@@ -94,8 +94,8 @@ job "maintenance-agent" {
       # agent always fits on busy nodes (e.g. oraclebox1 also runs conductor/foreman/
       # dashboard/postgres/registry + transient fleet-builders).
       resources {
-        cpu    = 200
-        memory = 512
+        cpu    = 100
+        memory = 256
       }
 
       kill_timeout = "15s"

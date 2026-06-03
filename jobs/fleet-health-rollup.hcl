@@ -130,12 +130,16 @@ def age_secs(ts):
 stale_raft = int(os.environ.get("STALE_RAFT", "3600") or "3600")
 stale_reg  = int(os.environ.get("STALE_REGISTRY", "28800") or "28800")
 stale_bak  = int(os.environ.get("STALE_BACKUP", "7200") or "7200")
+# backup-restore-verify (#29) runs once daily (test-restores are heavy), so it needs a
+# generous staleness window — ~36h covers a fully-missed run without false "stale" trips.
+stale_brv  = int(os.environ.get("STALE_BACKUP_RESTORE", "129600") or "129600")
 stale_co   = int(os.environ.get("STALE_CHECKOUT", "28800") or "28800")
 stale_mt   = int(os.environ.get("STALE_MAINT", "7200") or "7200")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
-         ("backup", "fleet/backup-health", stale_bak)]
+         ("backup", "fleet/backup-health", stale_bak),
+         ("backup-restore", "fleet/backup-restore-verify", stale_brv)]
 for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("checkout:" + node, p, stale_co))

@@ -81,6 +81,7 @@ job "fleet-health-rollup" {
         STALE_SERVICE  = "3600"
         STALE_ENGINE   = "7200"
         STALE_JOBS     = "7200"
+        STALE_ESCALATION = "3600"
         # health-summary-node-severity (#40): nodes whose local resource pressure is
         # cluster-critical (Raft voters + the keystone-service host). A disk:/overload:
         # component on a node NOT in this list is capped at `warn` for the HEADLINE
@@ -167,13 +168,16 @@ stale_overload = int(os.environ.get("STALE_OVERLOAD", "3600") or "3600")
 # nomad-job-hygiene (nomad-job-hygiene.md) probes committed long-running job drift every
 # 30m into one var; ~4x the interval gives a generous staleness window.
 stale_jobs = int(os.environ.get("STALE_JOBS", "7200") or "7200")
+# escalation-capture-health probes captured gh-less GitHub escalations every 10m.
+stale_escalation = int(os.environ.get("STALE_ESCALATION", "3600") or "3600")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
          ("registry", "fleet/registry-health", stale_reg),
          ("backup", "fleet/backup-health", stale_bak),
          ("backup-restore", "fleet/backup-restore-verify", stale_brv),
          ("engine", "fleet/engine-coverage", stale_engine),
-         ("jobs", "fleet/job-hygiene", stale_jobs)]
+         ("jobs", "fleet/job-hygiene", stale_jobs),
+         ("escalation", "fleet/escalation-health", stale_escalation)]
 for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("checkout:" + node, p, stale_co))

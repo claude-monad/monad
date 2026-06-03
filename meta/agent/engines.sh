@@ -23,7 +23,18 @@
 # ── selection policy ──────────────────────────────────────────────────────────
 # Order of preference when "auto" is requested and no explicit engine is pinned.
 # Override per-call with MONAD_ENGINE=claude|codex, or globally via the env.
-: "${MONAD_ENGINE_PREFERENCE:=claude codex}"
+# Cluster-wide default engine, toggleable via the `cluster/engine` Nomad var (the dashboard
+# flips this; also `nomad var put cluster/engine engine=claude|codex|auto`). An explicit
+# MONAD_ENGINE_PREFERENCE in the env always wins. Default: codex first.
+if [ -z "${MONAD_ENGINE_PREFERENCE:-}" ]; then
+  _cluster_engine="$(nomad var get -item=engine cluster/engine 2>/dev/null || true)"
+  case "$_cluster_engine" in
+    claude) MONAD_ENGINE_PREFERENCE="claude codex" ;;
+    *)      MONAD_ENGINE_PREFERENCE="codex claude" ;;   # codex (default) or auto → codex first
+  esac
+  unset _cluster_engine
+fi
+: "${MONAD_ENGINE_PREFERENCE:=codex claude}"
 
 engine_bin() { case "$1" in claude) echo claude ;; codex) echo codex ;; *) return 1 ;; esac; }
 

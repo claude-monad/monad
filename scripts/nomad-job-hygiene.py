@@ -58,6 +58,44 @@ def committed_jobs(repo):
     return jobs
 
 
+def all_committed_ids(repo):
+    """Every job id with a committed jobs/*.hcl, regardless of type."""
+    ids = set()
+    for path in (Path(repo) / "jobs").glob("*.hcl"):
+        job_id = first_match(r'^\s*job\s+"([^"]+)"\s*\{', path.read_text(errors="replace"))
+        if job_id:
+            ids.add(job_id)
+    return ids
+
+
+def live_top_level_jobs():
+    """Top-level live job ids (excludes periodic/dispatch children, which contain '/')."""
+    result = run(["nomad", "job", "status"], timeout=20)
+    if result.returncode != 0:
+        return None
+    ids = set()
+    for line in result.stdout.splitlines()[1:]:
+        cols = line.split()
+        jid = cols[0] if cols else ""
+        if jid and "/" not in jid and jid.lower() != "id":
+            ids.add(jid)
+    return ids
+
+
+def job_is_failing(job_id):
+    """True if a live job's latest desired-run alloc(s) are failed (orphan-and-broken signal)."""
+    info, _ = inspect_job(job_id)
+    if info is None:
+        return False
+    if (info.get("Status") or "").lower() == "dead" and (info.get("Type") or "") in LONG_RUNNING_TYPES:
+        return True
+    detail, _ = status_json(job_id)
+    if detail is None:
+        return False
+    latest = latest_desired_run_allocs(info.get("Type") or "", detail.get("Allocations") or [])
+    return any((a.get("ClientStatus") or "").lower() == "failed" for a in latest)
+
+
 def inspect_job(job_id):
     result = run(["nomad", "job", "inspect", "-json", job_id])
     if result.returncode != 0:
@@ -151,6 +189,23 @@ def check(repo):
             bad_allocs.append(text)
             issues.append(text)
 
+    # Reverse drift: live top-level jobs with NO committed jobs/*.hcl. The GitOps source of
+    # truth is git, so an uncommitted live job is unreviewable and un-redeployable from source.
+    # Low-noise rule: a *healthy* uncommitted job is informational; an uncommitted job that is
+    # *failing* (latest desired-run alloc failed, or a dead service/system job) is a warn.
+    uncommitted = []
+    uncommitted_failing = []
+    live_ids = live_top_level_jobs()
+    if live_ids is not None:
+        committed_ids = all_committed_ids(repo)
+        for jid in sorted(live_ids - committed_ids):
+            if job_is_failing(jid):
+                uncommitted.append("%s=failing" % jid)
+                uncommitted_failing.append(jid)
+                issues.append("uncommitted+failing job=%s" % jid)
+            else:
+                uncommitted.append(jid)
+
     status = "warn" if issues else "healthy"
     detail = "all %d live committed long-running jobs healthy (%d committed missing/optional)" % (
         live, len(missing))
@@ -167,6 +222,9 @@ def check(repo):
         "missing_jobs": summarize(missing, limit=900),
         "stopped_jobs": summarize(stopped, limit=900),
         "unhealthy_allocs": summarize(bad_allocs, limit=900),
+        "uncommitted_count": str(len(uncommitted)),
+        "uncommitted_failing_count": str(len(uncommitted_failing)),
+        "uncommitted_jobs": summarize(uncommitted, limit=900),
     }
 
 

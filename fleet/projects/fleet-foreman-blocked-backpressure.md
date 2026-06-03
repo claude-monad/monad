@@ -1,8 +1,8 @@
 ---
 slug: fleet-foreman-blocked-backpressure
-status: building
+status: done
 owner: agent-builder-2-031239
-updated: 2026-06-03T03:37:36Z
+updated: 2026-06-03T03:40:29Z
 priority: 3
 ---
 
@@ -40,3 +40,12 @@ This change reduces unnecessary builder pressure on that keystone instead of mov
 - 2026-06-03T03:37:36Z — claimed by agent-builder-2-031239 after verifying there were no
   `todo`/`building` project files, only owner-gated blocked #11, while `fleet-builder` showed
   2 running and 1 pending child constrained to oraclebox1.
+- 2026-06-03T03:40:29Z — DONE. Patched `scripts/fleet-foreman.sh` so the full builder target
+  is driven only by actionable states (`todo`, `claimed`, `building`, `review`); `blocked`
+  projects remain in `fleet/status` but no longer raise the target above the one watcher
+  builder. Validated with `bash -n scripts/fleet-foreman.sh` and `monad validate
+  jobs/fleet-foreman.hcl`, committed/pushed, and deployed `fleet-foreman` successfully. A
+  manual patched foreman cycle after marking this project done wrote `fleet/status target=1`
+  with `backlog_blocked=1`, `backlog_todo=0`, and `backlog_building=0`. The allocation-less
+  pending child `fleet-builder/dispatch-1780456969-4292a3c8` was purged; the two running
+  builders were left alone to finish naturally.

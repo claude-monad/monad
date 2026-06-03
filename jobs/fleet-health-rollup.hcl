@@ -6,6 +6,7 @@
 # standing monitors, each writing to its OWN var with nothing tying them together:
 #   - fleet/raft-health            (raft-quorum-health, every 15m)
 #   - fleet/registry-health        (registry-health, every 6h)
+#   - fleet/backup-health          (backup-health, every 30m)
 #   - fleet/checkout-health/<node> (agent-checkout-health, every 6h, per node)
 # To answer "is the cluster healthy?" you had to read 5+ vars, and a monitor that
 # silently dies still reads "healthy" (its var freezes). This rolls them into one
@@ -65,6 +66,7 @@ job "fleet-health-rollup" {
         # monitor's own interval). A component older than this is "stale".
         STALE_RAFT     = "3600"
         STALE_REGISTRY = "28800"
+        STALE_BACKUP   = "7200"
         STALE_CHECKOUT = "28800"
         STALE_MAINT    = "7200"
       }
@@ -127,11 +129,13 @@ def age_secs(ts):
 # component spec: name -> (var path, staleness threshold secs)
 stale_raft = int(os.environ.get("STALE_RAFT", "3600") or "3600")
 stale_reg  = int(os.environ.get("STALE_REGISTRY", "28800") or "28800")
+stale_bak  = int(os.environ.get("STALE_BACKUP", "7200") or "7200")
 stale_co   = int(os.environ.get("STALE_CHECKOUT", "28800") or "28800")
 stale_mt   = int(os.environ.get("STALE_MAINT", "7200") or "7200")
 
 comps = [("raft", "fleet/raft-health", stale_raft),
-         ("registry", "fleet/registry-health", stale_reg)]
+         ("registry", "fleet/registry-health", stale_reg),
+         ("backup", "fleet/backup-health", stale_bak)]
 for p in sorted(list_paths("fleet/checkout-health/")):
     node = p.rsplit("/", 1)[-1]
     comps.append(("checkout:" + node, p, stale_co))

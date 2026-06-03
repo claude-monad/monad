@@ -108,7 +108,10 @@ probe_health() {
     put_svc "$svc" "unknown" "no curl on host"
     return 0
   fi
-  code="$(curl -s -o /dev/null -w '%%{http_code}' --max-time "$TMO" "$url" 2>/dev/null || echo '000')"
+  # curl -w always prints the code (000 on connection failure), so no `|| echo` is
+  # needed — that would double-print (000000). Default only if curl emits nothing.
+  code="$(curl -s -o /dev/null -w '%%{http_code}' --max-time "$TMO" "$url" 2>/dev/null)"
+  [ -n "$code" ] || code="000"
   if [ "$code" = "200" ]; then
     put_svc "$svc" "healthy" "HTTP 200 from $url"
   else

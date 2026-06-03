@@ -333,3 +333,4 @@
 {"ts":"2026-06-03T07:02:26Z","node":"oraclebox1","source":"deploy","action":"maintenance-agent-health","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T07:03:06Z","node":"oraclebox1","source":"deploy","action":"maintenance-agent-health","result":"ok","detail":"deployed and pushed"}
 {"ts":"2026-06-03T07:08:13Z","source":"fleet","event":"project_done","agent":"agent-builder-2-061731","project":"maintenance-selfpass-reason","detail":"maintenance-agent-health surfaces captured self-pass summaries; oraclebox1 detail now includes Codex timeout reason; forced maintenance probe and fleet-health-rollup completed after right-sizing both jobs to 50cpu/64mem on oraclebox1"}
+{"ts":"2026-06-03T07:16:00Z","node":"V1410-1","source":"watchdog","action":"health-check","result":"warn","detail":"0 issues, 4 warnings"}

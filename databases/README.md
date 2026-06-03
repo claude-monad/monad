@@ -100,3 +100,35 @@ Automated by the **`postgres-backup`** periodic job (`jobs/postgres-backup.hcl`)
 nomad var get -out json nomad/jobs/postgres   # to read creds, then:
 PGPASSWORD=… psql -h 100.78.218.70 -U fleet -d fleet
 ```
+
+## Consumers
+
+### `health_snapshots` — fleet health time-series (job `jobs/health-history.hcl`)
+
+The first real consumer of this DB. The `health-history` periodic job (every 15m, on
+bigo-server) reads the `fleet/health-summary` Nomad var and appends one immutable row per
+distinct rollup snapshot, deduped on the snapshot's own `ts` (`ON CONFLICT (snapshot_ts) DO
+NOTHING`), so the cluster has a queryable history of its own health.
+
+Columns: `snapshot_ts` (rollup `ts`, UNIQUE), `ingested_at`, `status`, `raw_status`,
+`component_count`, `components`, `detail`, `foreman`, `full_json` (the whole var Items map as
+JSONB — query any component, e.g. disk/overload details, from here).
+
+```bash
+# how many snapshots / latest
+nomad alloc exec <postgres-alloc> psql -U fleet -d fleet -c \
+  "SELECT count(*), max(snapshot_ts) FROM health_snapshots;"
+
+# how long has oraclebox1 been overloaded? (per-component history via JSONB)
+nomad alloc exec <postgres-alloc> psql -U fleet -d fleet -c \
+  "SELECT snapshot_ts, full_json->>'d_overload_oraclebox1' AS oraclebox1
+   FROM health_snapshots ORDER BY snapshot_ts DESC LIMIT 12;"
+
+# headline status transitions over time
+nomad alloc exec <postgres-alloc> psql -U fleet -d fleet -c \
+  "SELECT snapshot_ts, status, raw_status, detail FROM health_snapshots
+   ORDER BY snapshot_ts DESC LIMIT 20;"
+```
+
+Retention is currently unbounded (rows are a few KB; ~96/day). A retention/prune policy or a
+dashboard trend panel reading this table are natural follow-ups.

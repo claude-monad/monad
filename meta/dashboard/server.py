@@ -37,6 +37,75 @@ REFRESH_SECS = int(os.environ.get("REFRESH_SECS", "60"))
 EVENT_LIMIT = int(os.environ.get("EVENT_LIMIT", "50"))
 EVENT_STREAM_SECS = int(os.environ.get("EVENT_STREAM_SECS", "5"))
 
+# ── chat: talk to Claude instances on the tailnet ──────────────────────────────
+# Each chattable "brain" is a node running the conductor-style chat gateway
+# (conductor/gateway.py): POST <url>/ask {"text": "..."} -> {"reply": "..."}, with
+# per-gateway conversation continuity. The conductor is always target 0; other nodes
+# expose the same gateway on :8200 once node-chat-gateway is deployed there. Mesh
+# agents (agent-* tailnet peers) are reachable async via their sidecar (POST :8472/msg).
+CHAT_TIMEOUT = int(os.environ.get("CHAT_TIMEOUT", "300"))
+CONDUCTOR_URL = os.environ.get("CONDUCTOR_URL", "http://100.125.210.126:8200").rstrip("/")
+# name -> gateway base url. Extend via env GATEWAYS="name=url,name=url".
+GATEWAYS = {"conductor": CONDUCTOR_URL}
+for _kv in os.environ.get("GATEWAYS", "").split(","):
+    if "=" in _kv:
+        _k, _v = _kv.split("=", 1)
+        GATEWAYS[_k.strip()] = _v.strip().rstrip("/")
+MESH_PORT = int(os.environ.get("MESH_PORT", "8472"))
+
+
+def _post_json(url, payload, timeout):
+    data = json.dumps(payload).encode()
+    req = urllib.request.Request(
+        url, data=data, headers={"Content-Type": "application/json"}, method="POST"
+    )
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode() or "{}")
+
+
+def _gateway_up(url):
+    try:
+        with urllib.request.urlopen(url + "/health", timeout=4) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
+def chat_targets():
+    """Discover chattable instances: node gateways (brains) + mesh agents (async)."""
+    out = []
+    for name, url in GATEWAYS.items():
+        out.append({
+            "id": name, "label": name, "url": url,
+            "kind": "brain" if name == "conductor" else "node",
+            "up": _gateway_up(url),
+        })
+    for p in (cached_state().get("peers") or []):
+        if str(p.get("name", "")).startswith("agent-"):
+            out.append({
+                "id": "mesh:" + p["name"], "label": p["name"], "kind": "agent",
+                "ip": p.get("ip"), "up": bool(p.get("online")),
+            })
+    return out
+
+
+def chat_route(target, text):
+    """Send `text` to `target`, return the reply string. Raises on hard failure."""
+    if target.startswith("mesh:"):
+        name = target[5:]
+        peer = next((p for p in (cached_state().get("peers") or [])
+                     if p.get("name") == name), None)
+        if not peer or not peer.get("ip"):
+            raise RuntimeError(f"mesh agent {name} not found")
+        _post_json(f"http://{peer['ip']}:{MESH_PORT}/msg",
+                   {"from": "dashboard", "body": text}, 15)
+        return f"(delivered to {name} — the mesh is asynchronous; its reply lands in that agent's mailbox, not here)"
+    url = GATEWAYS.get(target)
+    if not url:
+        raise RuntimeError(f"unknown target '{target}'")
+    r = _post_json(url + "/ask", {"text": text}, CHAT_TIMEOUT)
+    return r.get("reply") or json.dumps(r)
+
 
 def _nomad(path):
     """GET a Nomad API path, returning parsed JSON or None on failure."""
@@ -333,10 +402,32 @@ tr:last-child td{border-bottom:0}
 .full{grid-column:1/-1}
 code{font:12px ui-monospace,monospace;color:#a5d6ff}
 .ev{font:12px ui-monospace,monospace}
+#chat{margin:18px 20px 0;background:#161b22;border:1px solid #30363d;border-radius:8px}
+#chat .bar{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid #30363d;background:#1c2128}
+#chat select,#chat input,#chat button{font:13px inherit;background:#0d1117;color:#c9d1d9;border:1px solid #30363d;border-radius:6px;padding:7px 9px}
+#chat input{flex:1}
+#chat button{background:#238636;border-color:#238636;color:#fff;cursor:pointer;font-weight:600}
+#chat button:disabled{opacity:.5;cursor:default}
+#log{max-height:360px;overflow:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:82%;padding:8px 11px;border-radius:10px;white-space:pre-wrap;word-break:break-word}
+.me{align-self:flex-end;background:#1f6feb;color:#fff}
+.them{align-self:flex-start;background:#21262d}
+.sys{align-self:center;color:#7d8590;font-size:12px;font-style:italic}
+.who{font-size:11px;opacity:.7;margin-bottom:2px}
 </style></head><body>
 <header><h1>Monad cluster</h1>
 <span class="muted" id="meta"></span>
-<span class="muted">state refresh 30s · event stream · read-only</span></header>
+<span class="muted">state refresh 30s · event stream · live chat</span></header>
+<section id="chat">
+<h2 style="display:flex;justify-content:space-between;align-items:center">Chat with a Claude instance
+<span class="muted" id="chat-meta"></span></h2>
+<div class="bar">
+<select id="target" title="which Claude instance to talk to"></select>
+<input id="msg" placeholder="Message… (Enter to send)" autocomplete="off">
+<button id="send">Send</button>
+</div>
+<div id="log"><div class="msg sys">Pick a target and say hello. <b>conductor</b> is the always-on Claude brain that can inspect and act on the whole cluster. Node gateways and mesh agents appear here as they come online.</div></div>
+</section>
 <main id="app">loading…</main>
 <script>
 const pill=(t,c)=>`<span class="pill ${c}">${t}</span>`;
@@ -422,6 +513,37 @@ async function load(){
  connectEvents();
 }
 load();setInterval(load,STATE_REFRESH_MS);
+
+// ── chat ───────────────────────────────────────────────────────────────────
+const _log=document.getElementById('log');
+function chatAdd(cls,who,text){
+ const d=document.createElement('div');d.className='msg '+cls;
+ d.innerHTML=(who?`<div class="who">${esc(who)}</div>`:'')+esc(text);
+ _log.appendChild(d);_log.scrollTop=_log.scrollHeight;return d;}
+async function loadTargets(){
+ try{const ts=await(await fetch('api/chat/targets')).json();
+  const sel=document.getElementById('target');const cur=sel.value;
+  sel.innerHTML=ts.map(t=>`<option value="${esc(t.id)}">${esc(t.label)} · ${esc(t.kind)}${t.up?'':' (down)'}</option>`).join('');
+  if(cur&&ts.some(t=>t.id===cur))sel.value=cur;
+  document.getElementById('chat-meta').textContent=ts.length+' target'+(ts.length===1?'':'s');
+ }catch(e){}}
+async function chatSend(){
+ const inp=document.getElementById('msg'),btn=document.getElementById('send'),sel=document.getElementById('target');
+ const text=inp.value.trim();if(!text)return;
+ const target=sel.value||'conductor';
+ chatAdd('me','you → '+target,text);inp.value='';btn.disabled=true;inp.disabled=true;
+ const pend=chatAdd('sys','','…'+target+' is thinking');
+ try{
+  const r=await(await fetch('api/chat',{method:'POST',headers:{'content-type':'application/json'},
+    body:JSON.stringify({target,text})})).json();
+  pend.remove();
+  if(r.error)chatAdd('sys','',target+' — error: '+r.error);
+  else chatAdd('them',target,r.reply);
+ }catch(e){pend.remove();chatAdd('sys','','network error: '+e);}
+ btn.disabled=false;inp.disabled=false;inp.focus();}
+document.getElementById('send').onclick=chatSend;
+document.getElementById('msg').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();chatSend();}});
+loadTargets();setInterval(loadTargets,30000);
 </script></body></html>"""
 
 
@@ -470,8 +592,33 @@ class Handler(BaseHTTPRequestHandler):
             self._stream_events()
         elif self.path.startswith("/api/events"):
             self._send(200, json.dumps(events()), "application/json")
+        elif self.path.startswith("/api/chat/targets"):
+            self._send(200, json.dumps(chat_targets()), "application/json")
         elif self.path == "/healthz":
             self._send(200, "ok", "text/plain")
+        else:
+            self._send(404, "not found", "text/plain")
+
+    def do_POST(self):
+        if self.path.rstrip("/") == "/api/chat":
+            try:
+                n = int(self.headers.get("Content-Length", "0") or 0)
+                body = json.loads(self.rfile.read(n) or "{}")
+            except Exception:
+                self._send(400, json.dumps({"error": "bad json"}), "application/json")
+                return
+            target = (body.get("target") or "conductor").strip()
+            text = (body.get("text") or "").strip()
+            if not text:
+                self._send(400, json.dumps({"error": "empty message"}), "application/json")
+                return
+            try:
+                reply = chat_route(target, text)
+                self._send(200, json.dumps({"reply": reply, "target": target}),
+                           "application/json")
+            except Exception as e:
+                self._send(200, json.dumps({"error": str(e)[:400], "target": target}),
+                           "application/json")
         else:
             self._send(404, "not found", "text/plain")
 

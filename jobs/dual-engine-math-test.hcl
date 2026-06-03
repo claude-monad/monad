@@ -46,11 +46,12 @@ job "dual-engine-math-test" {
         HOME              = "/home/ubuntu"
       }
 
-      # raw_exec CPU is a soft scheduling reservation (not a hard cap), so keep it
-      # small — oraclebox1 is a 2000 MHz box already busy with fleet jobs.
+      # raw_exec reservations are soft (not hard caps); the engines use the ~1.3 GiB
+      # of real free RAM regardless. Keep the reservation tiny so it places on the
+      # heavily-loaded oraclebox1 (the only both-engine node with the ubuntu/~monad setup).
       resources {
-        cpu    = 300
-        memory = 1024
+        cpu    = 100
+        memory = 400
       }
 
       kill_timeout = "30s"

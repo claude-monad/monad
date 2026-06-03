@@ -42,7 +42,8 @@ EOP
 # ── run one engine, capture outcome ───────────────────────────────────────────
 declare -A RC DUR OUT DIFF
 run_engine() {
-  local eng="$1" dir="$WORK/$eng" out="$WORK/$eng.out" t0 t1
+  local eng="$1"                       # bind eng first (set -u: same-line self-ref fails)
+  local dir="$WORK/$eng" out="$WORK/$eng.out" t0 t1
   log "cloning math repo for $eng ..."
   git clone --depth 30 "$MATH_REPO_URL" "$dir" >/dev/null 2>&1 || { RC[$eng]=200; OUT[$eng]="(clone failed)"; DUR[$eng]=0; DIFF[$eng]=0; return; }
   log "running $eng session (timeout ${PER_ENGINE_TIMEOUT}s) ..."

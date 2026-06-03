@@ -1,8 +1,8 @@
 ---
 slug: maint-engine-cache-shallow
-status: done
+status: building
 owner: agent-builder-2-000203
-updated: 2026-06-03T00:13:17Z
+updated: 2026-06-03T00:16:53Z
 priority: 21
 ---
 # maintenance-agent engine-user cache is a shallow clone → noisy `git pull` inside self-passes

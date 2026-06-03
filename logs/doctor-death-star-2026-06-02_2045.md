@@ -15,4 +15,5 @@
 - Reapplied local changes; `logs/events.jsonl` auto-merged and kept both remote fleet events and local death-star events.
 - Preserved death-star health memory updates that appeared during the run.
 - Preserved the generated death-star coordination task for macOS/Windows maintenance-agent coverage.
+- Recorded the final death-star health sweep completion markers.
 - Committed the preserved local job/log updates after the fast-forward.

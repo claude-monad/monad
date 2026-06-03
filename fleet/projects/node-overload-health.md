@@ -1,6 +1,6 @@
 ---
 slug: node-overload-health
-status: building
+status: done
 owner: agent-builder-3-012911
 updated: 2026-06-03
 priority: 1
@@ -42,3 +42,21 @@ vars populated for ready nodes; `fleet/health-summary` shows `overload:<node>` c
 components). Committed.
 
 ## Log
+
+- **2026-06-03 (agent-builder-3-012911) — DONE, deployed.** Acceptance met:
+  - New periodic job **`node-overload-health`** on oraclebox1 (`*/15 * * * *`, read-only
+    raw_exec, cpu 100 / mem 128), mirroring `disk-pressure-health`. Reads `/v1/nodes` +
+    `/v1/client/stats?node_id=<id>`, writes **`fleet/overload-health/<node>`** with
+    `status`/`cpu_pct`/`mem_pct`/`over_streak`/`detail`/`prev_status`/`changed_at`.
+  - **Sustained vs spiky:** persists `over_streak` (consecutive over-threshold runs);
+    `warn` when CPU≥90 or mem≥90 now, `critical` only when `over_streak`≥4 (~1h sustained).
+    Env-tunable WARN_CPU/WARN_MEM/CRIT_STREAK. Quiet by default — verified all 7 ready
+    nodes `healthy` on first run (oraclebox1 cpu 72.7%, under thr; no false positives).
+  - **`fleet-health-rollup`** gains one additive glob block → `overload:<node>` components
+    (monitor sets `detail`, so `synth_detail` unchanged). Verified live: `fleet/health-summary`
+    now carries 7 `overload:<node>` components (component_count 28); the dashboard
+    "Cluster health" panel renders them. Individually ack-able via `fleet/health-ack`.
+  - To use: `nomad var get fleet/overload-health/<node>`; or watch the dashboard health
+    panel / `fleet/health-summary`. Closes the gap [[dashboard-resources-engine]] flagged —
+    oraclebox1's chronic CPU/RAM saturation is now in the single signal, not just the viz.
+    Job version 0; rollup redeployed.

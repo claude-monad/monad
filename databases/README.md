@@ -133,3 +133,18 @@ nomad alloc exec <postgres-alloc> psql -U fleet -d fleet -c \
 Retention: the job prunes snapshots older than `RETENTION_DAYS` (default 180d, ≈17k rows / a
 few MB) each run, so the table stays bounded on bigo-server's near-full disk. A dashboard trend
 panel reading this table is a natural follow-up.
+
+#### Trend digest — `fleet/health-trend` (job `jobs/health-history-trends.hcl`)
+
+The read-side consumer of `health_snapshots`. A periodic job (every 15m, offset, on bigo-server)
+runs READ-ONLY queries over a rolling 24h window and publishes a digest to the Nomad var
+`fleet/health-trend`, so the time-series is usable without hand-running SQL:
+
+```bash
+nomad var get fleet/health-trend      # or: monad secrets get fleet/health-trend
+```
+
+Key fields: `trend` (improving|worsening|stable), `current_status`/`current_degraded` vs
+`start_status`/`start_degraded`, `status_dist`, `flaps`, `degraded_now` (each non-healthy
+component with the `since=`/`for=` of its current continuous streak, longest-first),
+`longest_degraded`, and a human `detail` line. Window = `WINDOW_HOURS` env (default 24).

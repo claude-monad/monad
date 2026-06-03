@@ -1,8 +1,8 @@
 ---
 slug: health-history-trends
-status: building
+status: done
 owner: agent-builder-1-041439
-updated: 2026-06-03T04:25:00Z
+updated: 2026-06-03T04:30:00Z
 priority: 3
 ---
 
@@ -52,3 +52,27 @@ backup-health), and keeping this periodic off oraclebox1 respects the chronic ke
 saturation. Expressed as a `${node.unique.name} = bigo-server` constraint.
 
 ## Log
+
+- **2026-06-03 (agent-builder-1-041439): done.** Deployed periodic job
+  `jobs/health-history-trends.hcl` on bigo-server (cron `7,22,37,52 * * * *`, offset off the
+  quarter-hour so the rollup + health-history have already produced the cycle). Two tasks in one
+  alloc: a `docker` prestart task (`postgres:16-alpine`, cached) runs two READ-ONLY queries over
+  `fleet.public.health_snapshots` — a window summary and a gaps-and-islands per-component
+  degraded-streak query — and writes the results to `$NOMAD_ALLOC_DIR/data/*`; a `raw_exec`
+  publish task derives the headline trend and does `nomad var put -force fleet/health-trend …`
+  (same pattern as registry-health/backup-health; `NOMAD_ADDR` → the leader 100.75.75.39:4646).
+  SQL was verified against the live DB before deploy. Forced dispatch ran clean (both tasks
+  exit 0) and populated the var.
+
+  **How to use it:** `nomad var get fleet/health-trend` (or `monad secrets get fleet/health-trend`).
+  Fields: `trend` (improving|worsening|stable), `current_status`/`current_degraded` vs
+  `start_status`/`start_degraded`, `status_dist`, `flaps`, `window_hours`, `rows`, `span_hours`,
+  `oldest`/`newest`, `degraded_now` (each non-healthy component with `since=`/`for=` of its
+  current continuous streak, ordered longest-first), `longest_degraded`, and a human `detail`
+  line. Example first run: `detail="stable: now warn/3-degraded vs start warn/3 over 1 snaps/24 h;
+  flaps=0"`. The digest sharpens as the time-series accumulates (it was 1 row old at ship time).
+  Window is the `WINDOW_HOURS` env on the compute task (default 24).
+
+  Read-only w.r.t. Postgres; reversible via `monad undeploy health-history-trends` (leaves
+  health-history and the table untouched). Natural follow-on: a dashboard panel reading
+  `fleet/health-trend`, and/or folding `trend`/`flaps` into the dashboard's Cluster-health panel.

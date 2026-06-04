@@ -1,0 +1,10 @@
+{
+  "id": "t-0083",
+  "type": "math",
+  "scope": "S629 HYP-2256: implement the RESIDUE-PROFILE enumerator for LRC min M / tight count \u2014 enumerate multisets of residues mod L=lcm(2..2n-1) (the frontier) instead of raw configs; confirm it reproduces S621 counts box-free, push to larger n cheaply, and turn range-stability into the clean finiteness PROOF of THM-411 on the shell-decided part. Frontier-gain DP over (Z/L)-profiles as a route to the uniform quantitative-C bound (HYP-2240).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S629"
+}

@@ -914,3 +914,6 @@
 {"ts":"2026-06-04T18:16:01Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
 {"ts":"2026-06-04T18:16:01Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
 {"ts":"2026-06-04T18:19:05Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T17:49:52Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T18:20:02Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T18:20:36Z","node":"bigo-server","kind":"cluster-health-sweep","quorum":"3/3","detail":"servers V1410-1(leader)+claudebox+oraclebox1 alive; 5 client members ready+eligible except windesk(down, already escalated t-0081); maintenance-agent running on all 5 ready members; self disk 86%/15G free (no prune), git clean, engines claude+codex advertised"}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0081",
+  "type": "math",
+  "scope": "S626 HYP-2245: prove the covering-depth partition function top coefficients in closed form \u2014 p_(n-1)=1/C(n,2) (all runners overlap near t=0: all bad <=> t<1/(n(n-1)), times all deep-overlap points) and p_(n-2), giving the top of Z_S(z) as a clean polynomial. Verified n=3..10.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S626"
+}

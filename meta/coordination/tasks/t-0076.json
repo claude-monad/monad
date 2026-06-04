@@ -1,10 +1,10 @@
 {
   "id": "t-0076",
-  "type": "math",
-  "scope": "S622 HYP-2197: PROVE the residual-empty dichotomy for C'(14) \u2014 every multiple-of-14 config satisfies the twisted-shell dodge (THM-412: some a/m, m<=2n-1=27, all runners off the central band) OR Criterion B' (long safe component). Empirically 0 residual/46000. Constructive route to LRC(14).",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "Develop the results-provenance + shared-graph proposal (databases/PROPOSAL-results-and-graph.md). First slices to claim as sub-tasks: (1) 'results' Postgres schema + 'monad results put|get|verify' over run-in-toolchain.sh + MinIO, seeded from math 04-computation/*.py -> 05-knowledge/results/*.out; (2) results-verify periodic job (Tier-2 re-derive a sample, mark reproduced|MISMATCH); (3) nodes/edges/actions 'graph' schema seeded from COMPLETE_INVARIANT_CATALOG.md/CONCEPT-MAP.md with a small arc-flip orbit-enumeration example. Critique the open questions first (canonicalization, nondeterminism, trust, backend, write-contention).",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S622"
+  "parent": null
 }

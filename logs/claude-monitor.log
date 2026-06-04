@@ -724,3 +724,159 @@ No allocations to restart
 2026-06-04T01:50:06Z concierge: ok (1 running allocation(s))
 2026-06-04T01:50:06Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
 2026-06-04T01:50:06Z monitor pass complete
+2026-06-04T02:20:06Z monitor pass start
+2026-06-04T02:20:06Z codex-tui: ok (1 running allocation(s))
+2026-06-04T02:20:06Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T02:20:06Z concierge: ok (1 running allocation(s))
+2026-06-04T02:20:06Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T02:20:06Z monitor pass complete
+2026-06-04T02:30:08Z monitor pass start
+2026-06-04T02:30:09Z codex-tui: ok (1 running allocation(s))
+2026-06-04T02:30:10Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T02:30:11Z concierge: ok (1 running allocation(s))
+2026-06-04T02:30:13Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T02:30:13Z monitor pass complete
+2026-06-04T02:40:01Z monitor pass start
+2026-06-04T02:40:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T02:40:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T02:40:01Z concierge: ok (1 running allocation(s))
+2026-06-04T02:40:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T02:40:01Z monitor pass complete
+2026-06-04T02:50:07Z monitor pass start
+2026-06-04T02:50:08Z codex-tui: ok (1 running allocation(s))
+2026-06-04T02:50:09Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T02:50:09Z concierge: ok (1 running allocation(s))
+2026-06-04T02:50:11Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T02:50:11Z monitor pass complete
+2026-06-04T03:30:01Z monitor pass start
+2026-06-04T03:30:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T03:30:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T03:30:01Z concierge: ok (1 running allocation(s))
+2026-06-04T03:30:02Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T03:30:02Z monitor pass complete
+2026-06-04T03:40:06Z monitor pass start
+2026-06-04T03:40:06Z codex-tui: ok (1 running allocation(s))
+2026-06-04T03:40:06Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T03:40:06Z concierge: ok (1 running allocation(s))
+2026-06-04T03:40:06Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T03:40:06Z monitor pass complete
+2026-06-04T04:10:00Z monitor pass start
+2026-06-04T04:10:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T04:10:02Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T04:10:03Z concierge: ok (1 running allocation(s))
+2026-06-04T04:10:05Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T04:10:05Z monitor pass complete
+2026-06-04T04:40:00Z monitor pass start
+2026-06-04T04:40:00Z codex-tui: ok (1 running allocation(s))
+2026-06-04T04:40:00Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T04:40:00Z concierge: ok (1 running allocation(s))
+2026-06-04T04:40:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T04:40:01Z monitor pass complete
+2026-06-04T04:50:00Z monitor pass start
+2026-06-04T04:50:00Z codex-tui: ok (1 running allocation(s))
+2026-06-04T04:50:00Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T04:50:00Z concierge: ok (1 running allocation(s))
+2026-06-04T04:50:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T04:50:01Z monitor pass complete
+2026-06-04T05:00:00Z monitor pass start
+2026-06-04T05:00:02Z codex-tui: ok (1 running allocation(s))
+2026-06-04T05:00:03Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T05:00:05Z concierge: ok (1 running allocation(s))
+2026-06-04T05:00:07Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T05:00:07Z monitor pass complete
+2026-06-04T05:10:08Z monitor pass start
+2026-06-04T05:10:09Z codex-tui: ok (1 running allocation(s))
+2026-06-04T05:10:09Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T05:10:10Z concierge: ok (1 running allocation(s))
+2026-06-04T05:10:12Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T05:10:12Z monitor pass complete
+2026-06-04T05:20:06Z monitor pass start
+2026-06-04T05:20:07Z codex-tui: ok (1 running allocation(s))
+2026-06-04T05:20:08Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T05:20:08Z concierge: ok (1 running allocation(s))
+2026-06-04T05:20:10Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T05:20:10Z monitor pass complete
+2026-06-04T05:30:05Z monitor pass start
+2026-06-04T05:30:05Z codex-tui: ok (1 running allocation(s))
+2026-06-04T05:30:06Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T05:30:06Z concierge: ok (1 running allocation(s))
+2026-06-04T05:30:06Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T05:30:06Z monitor pass complete
+2026-06-04T05:40:06Z monitor pass start
+2026-06-04T05:40:06Z codex-tui: ok (1 running allocation(s))
+2026-06-04T05:40:06Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T05:40:06Z concierge: ok (1 running allocation(s))
+2026-06-04T05:40:06Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T05:40:06Z monitor pass complete
+2026-06-04T06:00:02Z monitor pass start
+2026-06-04T06:00:02Z codex-tui: ok (1 running allocation(s))
+2026-06-04T06:00:02Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T06:00:02Z concierge: ok (1 running allocation(s))
+2026-06-04T06:00:03Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T06:00:03Z monitor pass complete
+2026-06-04T06:10:05Z monitor pass start
+2026-06-04T06:10:06Z codex-tui: ok (1 running allocation(s))
+2026-06-04T06:10:06Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T06:10:06Z concierge: ok (1 running allocation(s))
+2026-06-04T06:10:06Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T06:10:06Z monitor pass complete
+2026-06-04T06:30:01Z monitor pass start
+2026-06-04T06:30:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T06:30:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T06:30:01Z concierge: ok (1 running allocation(s))
+2026-06-04T06:30:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T06:30:01Z monitor pass complete
+2026-06-04T06:40:01Z monitor pass start
+2026-06-04T06:40:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T06:40:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T06:40:01Z concierge: ok (1 running allocation(s))
+2026-06-04T06:40:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T06:40:01Z monitor pass complete
+2026-06-04T06:50:01Z monitor pass start
+2026-06-04T06:50:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T06:50:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T06:50:01Z concierge: ok (1 running allocation(s))
+2026-06-04T06:50:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T06:50:01Z monitor pass complete
+2026-06-04T07:00:00Z monitor pass start
+2026-06-04T07:00:00Z codex-tui: ok (1 running allocation(s))
+2026-06-04T07:00:00Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T07:00:00Z concierge: ok (1 running allocation(s))
+2026-06-04T07:00:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T07:00:01Z monitor pass complete
+2026-06-04T07:10:01Z monitor pass start
+2026-06-04T07:10:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T07:10:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T07:10:01Z concierge: ok (1 running allocation(s))
+2026-06-04T07:10:01Z leonhard: blocked; assistant/dispatch-1780450051-bd7375e3 is pinned through assistant to oraclebox1, currently down
+2026-06-04T07:10:01Z monitor pass complete
+2026-06-04T07:20:01Z monitor pass start
+2026-06-04T07:20:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T07:20:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T07:20:01Z concierge: ok (1 running allocation(s))
+2026-06-04T07:20:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T07:20:01Z monitor pass complete
+2026-06-04T07:30:01Z monitor pass start
+2026-06-04T07:30:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T07:30:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T07:30:01Z concierge: ok (1 running allocation(s))
+2026-06-04T07:30:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T07:30:01Z monitor pass complete
+2026-06-04T07:40:01Z monitor pass start
+2026-06-04T07:40:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T07:40:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T07:40:01Z concierge: ok (1 running allocation(s))
+2026-06-04T07:40:02Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T07:40:02Z monitor pass complete
+2026-06-04T07:50:00Z monitor pass start
+2026-06-04T07:50:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T07:50:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T07:50:01Z concierge: ok (1 running allocation(s))
+2026-06-04T07:50:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T07:50:01Z monitor pass complete
+2026-06-04T08:00:01Z monitor pass start
+2026-06-04T08:00:01Z codex-tui: ok (1 running allocation(s))
+2026-06-04T08:00:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-04T08:00:01Z concierge: ok (1 running allocation(s))
+2026-06-04T08:00:02Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-04T08:00:02Z monitor pass complete

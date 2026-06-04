@@ -32,9 +32,9 @@
     "value": "bigo-server: flapping (No path to node) - breaks codex-tui; tracked in fleet/projects/codex-tui-availability.md; needs on-node stabilization"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1780560195.4363947,
+    "updated": 1780563991.466546,
     "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-04T08:03:15Z-noop-mac-is-darwin-correctly-excluded"
+    "value": "DONE-2026-06-04T09:06:31Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -80,7 +80,7 @@
     "value": "tournament theory H(T) counting"
   },
   "work:op-math-264": {
-    "updated": 1780559105.1806257,
+    "updated": 1780563604.9824493,
     "updated_by": "oraclebox1",
     "value": "container-max-1"
   }

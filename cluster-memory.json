@@ -16,9 +16,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1780572076.6701431,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-04T11:21:16Z"
+    "updated": 1780611200.8395915,
+    "updated_by": "V1410-1",
+    "value": "OK-2026-06-04T22:13:20Z leader quorum3/3voters(V1410-1+claudebox+oraclebox1 build2.0.2) 6/7clients-ready engines claude+codex disk6% maint-agent 5/5linux; windesk down 00:55Z already-escalated t-0081"
   },
   "health:bigo-server": {
     "updated": 1780553279.2141423,

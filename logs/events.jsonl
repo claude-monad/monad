@@ -852,3 +852,8 @@
 {"ts":"2026-06-04T13:31:49Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-04T12:31:36Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-04T13:01:46Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T13:34:09Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T13:41:46Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T13:41:46Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T14:04:10Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T14:00:00Z","node":"oraclebox1","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 3/3 (V1410-1 leader, oraclebox1+claudebox voters); 6 nodes ready+eligible except windesk down/offline ~7h (already escalated DONE-13:28Z by peer, no re-stampede); maintenance-agent 5/5 on linux roster, mac-mini absent by design (linux-only constraint); self: disk 77% (no pressure), engines claude+codex ready+advertised, git ff to origin"}

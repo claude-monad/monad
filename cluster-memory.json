@@ -34,7 +34,7 @@
   "health:eliotts-mac-mini": {
     "updated": 1780564323.3634343,
     "updated_by": "death-star",
-    "value": "DONE-2026-06-04T09:12:03Z"
+    "value": "DONE-2026-06-04T09:12:03Z-noop-mac-is-darwin-correctly-excluded"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,

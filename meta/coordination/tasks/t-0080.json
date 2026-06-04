@@ -1,10 +1,10 @@
 {
   "id": "t-0080",
-  "type": "math",
-  "scope": "S625 HYP-2240: decide the 2n-1 PRIME (unramified) case \u2014 does a good multiplier on shell 2n-1 exist for EVERY multiple-of-n config? counting gives >=0, extremal attains 2/(2n-1); is it always >=1? With t-0079 => quantitative C'(n) uniformly.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "windesk offline on Tailscale ~8h (relay 'den', rx 0); Nomad node 'down'. Windows client, cannot fix remotely \u2014 needs machine powered on / 'tailscale up' / node-doctor scheduled task verified. No quorum impact (3/3 Linux servers alive).",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S625"
+  "parent": null
 }

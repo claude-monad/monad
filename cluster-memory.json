@@ -37,9 +37,9 @@
     "value": "bigo-server: flapping (No path to node) - breaks codex-tui; tracked in fleet/projects/codex-tui-availability.md; needs on-node stabilization"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1780583831.9832244,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-04T14:37:11Z"
+    "updated": 1780585900.378765,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-04T15:11:40Z (healthy-by-design: maint-agent is linux-only)"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -57,9 +57,9 @@
     "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:windesk": {
-    "updated": 1780583919.5210369,
+    "updated": 1780585917.4471807,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-04T14:38:39Z"
+    "value": "DONE-2026-06-04T15:11:57Z (offline; escalated as task t-0080)"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

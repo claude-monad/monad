@@ -119,6 +119,32 @@ Supervised by `jobs/codex-worker.hcl` (`system` job, runs on every node tagged
 `meta.codex = "true"`). See `codex-worker/README.md`. As of 2026-06-03, `bigo-server`
 is back online and runs codex.
 
+## GPT app SSH access and math Codex researcher pool (requested 2026-06-04)
+
+The owner wants two additions:
+
+1. Keep about a handful of **containerized, math-specific Codex researchers** online and
+   queryable most of the time, spread onto nodes that can actually host the work.
+2. Standardize **GPT mobile/desktop app SSH integration** so the owner can reach those
+   researchers elegantly from the apps.
+
+Initial `oraclebox1` investigation from the local workstation:
+
+- `100.125.210.126:22` presents `SSH-2.0-Tailscale`.
+- `100.125.210.126:2222` presents `SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16`.
+- Probing port 22 as `oralcle` reaches Tailscale SSH and reports
+  `tailscale: failed to look up local user "oralcle"`.
+
+So the surprising app success on port 22 appears to have used **Tailscale SSH**, while the
+cluster's dedicated app-facing OpenSSH door is the existing `codex-ssh` job on **port 2222**.
+The fleet should build on that dedicated door for steady state: standard user, key auth, endpoint
+roster, and an attach path into the containerized math researcher pool.
+
+Tracked as:
+
+- `fleet/projects/math-codex-research-pool.md`
+- `fleet/projects/codex-app-ssh-standardization.md`
+
 ## Per-machine tasks (each node works toward full connectivity + uptime)
 
 Measured continuously by the `cluster-uptime` Nomad periodic job →

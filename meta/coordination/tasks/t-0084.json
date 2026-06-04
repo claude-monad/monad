@@ -1,0 +1,15 @@
+{
+  "id": "t-0084",
+  "type": "infra",
+  "scope": "Owner request: build an always-on pool of about 4-5 containerized Codex math researchers that can be queried back and forth. Reuse agent-mesh/codex-worker machinery, run with MONAD_ENGINE=codex, spread onto compute-capable has_codex nodes, publish a roster/status, and keep reservations bounded so keystone nodes are not starved. See fleet/projects/math-codex-research-pool.md.",
+  "repo": "eliott-monad/monad",
+  "payload": {
+    "requested_by": "owner",
+    "project": "math-codex-research-pool",
+    "target_pool_size": "4-5",
+    "preferred_engine": "codex"
+  },
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -689,3 +689,7 @@
 {"ts":"2026-06-04T01:50:25Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-04T01:51:52Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-04T02:22:20Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T02:16:05Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T02:46:16Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T02:47:26Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T03:17:37Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

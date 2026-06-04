@@ -1,10 +1,10 @@
 {
   "id": "t-0081",
-  "type": "math",
-  "scope": "S626 HYP-2245: prove the covering-depth partition function top coefficients in closed form \u2014 p_(n-1)=1/C(n,2) (all runners overlap near t=0: all bad <=> t<1/(n(n-1)), times all deep-overlap points) and p_(n-2), giving the top of Z_S(z) as a clean polynomial. Verified n=3..10.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "windesk STATE CHANGED vs t-0076/t-0077: box is NOW Tailscale-reachable (1ms direct pong via 192.168.51.16 at 17:29Z) \u2014 recovered from the 07:29Z offline reports \u2014 but its Nomad CLIENT is still down (heartbeat missed 00:55Z). No Linux-side remote restart possible; needs windesk node-doctor scheduled-task to fire or manual 'nomad agent -config=C:\\nomad\\config\\nomad.hcl'. Restoring it brings back the node + maintenance-agent alloc. Windows maintenance-loop gap tracked in t-0005/t-0020/t-0023.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S626"
+  "parent": null
 }

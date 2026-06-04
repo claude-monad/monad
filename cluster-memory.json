@@ -59,7 +59,7 @@
   "health:windesk": {
     "updated": 1780594163.095406,
     "updated_by": "V1410-1",
-    "value": "DONE-2026-06-04T17:29:23Z still-down-since-00:55Z box-reachable; escalated t-0076/t-0077 (t-0081 dup)"
+    "value": "DONE-2026-06-04T17:29:23Z box NOW reachable (1ms pong) but Nomad client still down since 00:55Z; t-0081 reopened with evolved scope (t-0076/t-0077 said offline, now recovered net-side)"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

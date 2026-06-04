@@ -1,10 +1,10 @@
 {
   "id": "t-0078",
-  "type": "math",
-  "scope": "S622 generalize: does twisted-shell dodge (m<=2n-1) u Criterion B' cover C'(n) for n=15,16,18? Test the m<=2n-1 ceiling + 0-residual dichotomy; ties LRC(n) to pair-sum-sieve modulus 2n-1 (THM-401).",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "windesk (100.94.210.54) offline on Tailscale ~6h (rx 0, Nomad status=down) \u2014 needs the physical Windows box powered on / 'tailscale up'; not remotely fixable",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S622"
+  "parent": null
 }

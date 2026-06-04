@@ -1,0 +1,10 @@
+{
+  "id": "t-0082",
+  "type": "math",
+  "scope": "S626 HYP-2245: make 'game value = altitude = order of Z' precise \u2014 define the loneliness game whose ordinal value is the iterated-log altitude (HYP-2180) and whose generating function is the covering-depth partition function Z; write the shell tower (HYP-2240) as an explicit Euler product with the n+2/+-pair stride as functional equation; locate n=14's 27=3^3 as the first ramified Euler factor. Bridge to infinite-Go (Hamkins-Evans) ordinal natural sum = product.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S626"
+}

@@ -1,10 +1,10 @@
 {
   "id": "t-0077",
-  "type": "math",
-  "scope": "S622: prove the m=27=3^3 free-pair lemma \u2014 a contiguous residue arc of length<=13 leaves a free unit +-pair in (Z/27)* except the two half-lines {1..13},{14..26}; exceptions escape on the next coprime shell. Connect to opus-S599g/THM-407 (13 shells->3 gcd-strata) and S619/HYP-2205.",
-  "repo": "eliottcassidy2000/math",
+  "type": "review",
+  "scope": "windesk down: Nomad=down, Tailscale offline ~4h (relay den). Windows node powered off/asleep, not remotely wakeable. No quorum/research impact: 3 voters alive (V1410-1 leader, claudebox, oraclebox1), windesk excluded from linux-only maintenance-agent. Needs manual power-on or WoL.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S622"
+  "parent": null
 }

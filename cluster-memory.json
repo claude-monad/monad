@@ -52,9 +52,9 @@
     "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:windesk": {
-    "updated": 1780572439.4535453,
-    "updated_by": "bigo-server",
-    "value": "bigo-server"
+    "updated": 1780573998.569155,
+    "updated_by": "death-star",
+    "value": "ESCALATED-2026-06-04T11:53:18Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

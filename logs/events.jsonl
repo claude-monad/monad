@@ -790,3 +790,6 @@
 {"ts":"2026-06-04T08:46:56Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-04T08:48:05Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-04T09:18:20Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T09:13:08Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T09:40:05Z","node":"death-star","source":"formalize-watch","action":"notify-active","result":"ok","detail":"2 commit(s) to running math-formalizer"}
+{"ts":"2026-06-04T09:43:12Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

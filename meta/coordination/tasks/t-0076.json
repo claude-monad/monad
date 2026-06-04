@@ -1,7 +1,7 @@
 {
   "id": "t-0076",
   "type": "infra",
-  "scope": "Develop the results-provenance + shared-graph proposal (databases/PROPOSAL-results-and-graph.md). First slices to claim as sub-tasks: (1) 'results' Postgres schema + 'monad results put|get|verify' over run-in-toolchain.sh + MinIO, seeded from math 04-computation/*.py -> 05-knowledge/results/*.out; (2) results-verify periodic job (Tier-2 re-derive a sample, mark reproduced|MISMATCH); (3) nodes/edges/actions 'graph' schema seeded from COMPLETE_INVARIANT_CATALOG.md/CONCEPT-MAP.md with a small arc-flip orbit-enumeration example. Critique the open questions first (canonicalization, nondeterminism, trust, backend, write-contention).",
+  "scope": "windesk Nomad node down + Tailscale offline (last seen ~32m, tailscale ping times out) as of 2026-06-04T07:29Z. Windows node unreachable at network level \u2014 no on-cluster fix; needs power/network on the box. Quorum unaffected (3 Linux voters). Re-check next sweep; if >24h ping owner.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

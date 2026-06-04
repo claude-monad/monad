@@ -32,9 +32,9 @@
     "value": "bigo-server: flapping (No path to node) - breaks codex-tui; tracked in fleet/projects/codex-tui-availability.md; needs on-node stabilization"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1780557150.3824446,
-    "updated_by": "bigo-server",
-    "value": "DONE-2026-06-04T07:12:30Z"
+    "updated": 1780560195.4363947,
+    "updated_by": "oraclebox1",
+    "value": "DONE-2026-06-04T08:03:15Z-noop-mac-is-darwin-correctly-excluded"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,

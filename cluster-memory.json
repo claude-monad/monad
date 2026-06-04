@@ -57,9 +57,9 @@
     "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:windesk": {
-    "updated": 1780579698.6356368,
+    "updated": 1780583468.4052527,
     "updated_by": "death-star",
-    "value": "DONE-2026-06-04T13:28:18Z"
+    "value": "death-star"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

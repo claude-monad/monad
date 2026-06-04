@@ -52,9 +52,9 @@
     "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:windesk": {
-    "updated": 1780558186.159575,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-04T07:29:46Z-escalated-offline"
+    "updated": 1780572439.4535453,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

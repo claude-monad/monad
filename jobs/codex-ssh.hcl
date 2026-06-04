@@ -1,7 +1,7 @@
 # codex-ssh — on every Linux node, run a dedicated plain sshd on :2222 with an `autocodex`
 # passwordless-sudo user, so the ChatGPT Codex iOS app can SSH in (custom port 2222) and run
 # Codex there. Tailscale SSH on :22 is left untouched (this is a separate sshd on 2222, which
-# Tailscale SSH does not intercept). Key auth only; the app's public key comes from
+# Tailscale SSH does not intercept). The app's public key and optional password hash come from
 # secret/codex-ssh. Codex auth is shared from the node's logged-in codex user.
 
 job "codex-ssh" {
@@ -45,6 +45,16 @@ job "codex-ssh" {
       }
 
       template {
+        destination = "local/password_hash"
+        data        = "{{ with nomadVar \"secret/codex-ssh\" }}{{ .password_hash }}{{ end }}\n"
+      }
+
+      template {
+        destination = "local/password"
+        data        = "{{ with nomadVar \"secret/codex-ssh\" }}{{ .password }}{{ end }}\n"
+      }
+
+      template {
         destination = "local/run.sh"
         perms       = "755"
         data        = <<-SCRIPT
@@ -84,8 +94,23 @@ job "codex-ssh" {
 
           id "$U" >/dev/null 2>&1 || useradd -m -s /bin/bash "$U"
           # useradd leaves the password LOCKED ('!'), and sshd refuses ALL logins (even pubkey)
-          # to a locked account. Set it to '*' = no password but unlocked, so key auth works.
-          usermod -p '*' "$U"
+          # to a locked account. If secret/codex-ssh has password or password_hash, install it;
+          # otherwise set '*' = no password but unlocked, so key auth still works.
+          PW="$(tr -d '\r\n' < "$NOMAD_TASK_DIR/password" 2>/dev/null || true)"
+          PH="$(tr -d '\r\n' < "$NOMAD_TASK_DIR/password_hash" 2>/dev/null || true)"
+          PASSAUTH=no
+          if [ -n "$PW" ]; then
+            printf '%s:%s\n' "$U" "$PW" | chpasswd
+            PASSAUTH=yes
+            log "installed password auth for $U via chpasswd"
+          elif [ -n "$PH" ]; then
+            usermod -p "$PH" "$U"
+            PASSAUTH=yes
+            log "installed password auth for $U via password_hash"
+          else
+            usermod -p '*' "$U"
+            log "no password/password_hash in secret/codex-ssh — password auth disabled"
+          fi
           echo "$U ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/autocodex && chmod 440 /etc/sudoers.d/autocodex
           H="$(getent passwd "$U" | cut -d: -f6)"
           # sshd StrictModes: HOME + ~/.ssh must be owned by the user and not group/world-writable,
@@ -116,7 +141,9 @@ job "codex-ssh" {
           {
             echo "Port 2222"
             echo "PermitRootLogin no"
-            echo "PasswordAuthentication no"
+            echo "PasswordAuthentication $PASSAUTH"
+            echo "KbdInteractiveAuthentication $PASSAUTH"
+            echo "PermitEmptyPasswords no"
             echo "PubkeyAuthentication yes"
             echo "AllowUsers autocodex"
             echo "PidFile $NOMAD_TASK_DIR/sshd.pid"

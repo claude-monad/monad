@@ -273,6 +273,18 @@ The agents use the math repo's built-in coordination:
 - **Session log** in `00-navigation/SESSION-LOG.md` — chronological record of all work
 - **Knowledge base** in `05-knowledge/` — results, hypotheses, variables
 
+### Research frontier dashboard mandate
+
+The dashboard should include a maintained list of the cluster's key theorems, lemmas,
+conjectures, ideas, and research directions. Each entry should record whether it is proven,
+formally verified, partial, computationally supported, disproven, blocked, speculative, or
+unknown; the furthest computation reached; the current best proof candidate and the status of
+each of its pieces; and a brief "bleeding edge" note describing the active angles being worked.
+Seed examples include `H=21` impossibility, `LRC n=14`, unit distance problem `n=21`,
+`A000568`, Schanuel's conjecture connections, twin primes, Goldbach, and any other high-value
+frontier marker the agents discover. Be creative but disciplined: keep the list current,
+source claims to artifacts, and make uncertainty visible.
+
 ### Day-of-Week Research Rotation (math-researcher)
 
 | Day | Focus |

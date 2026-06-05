@@ -1,0 +1,10 @@
+{
+  "id": "t-0090",
+  "type": "infra",
+  "scope": "Eliotts-Mac-mini.local disk pressure: /System/Volumes/Data is 94% used with 14Gi free; logs/ is only 488K, /tmp is empty, and Docker prune was not applicable. Needs operator review for larger safe cleanup targets.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

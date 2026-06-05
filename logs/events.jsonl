@@ -1128,9 +1128,16 @@
 {"ts":"2026-06-05T04:41:58Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-05T05:12:14Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-05T04:55:00Z","node":"death-star","event":"cluster-health-sweep","quorum":"3/3 voters alive V1410-1 leader+claudebox+oraclebox1 build 2.0.2","nodes_ready":"6/7 (windesk Nomad down, t-0081 tracked Win-side)","maint_agent":"5/5 linux running (mac-mini/windesk excluded by kernel=linux)","self":"disk 5% 1.7T free no pressure, git merged origin, engines claude+codex ready","action":"windesk health claim already DONE/released, no Linux-side fix, did not re-stampede"}
+{"ts":"2026-06-05T04:51:49Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-05T05:21:53Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-05T05:23:08Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-05T05:53:12Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-05T05:17:24Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-05T05:47:33Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-05T05:13:31Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-05T05:43:40Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-05T05:48:34Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-05T06:18:43Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-05T05:44:46Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-05T06:14:56Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-05T06:17:03Z","node":"oraclebox1","event":"cluster-health-sweep","quorum":"3/3 voters alive V1410-1 leader+claudebox+oraclebox1 build 2.0.2","nodes_ready":"6/7 (windesk Nomad-down, t-0081 tracked Win-side)","maint_agent":"5/5 linux running (mac-mini/windesk excluded by kernel=linux constraint)","self":"disk 78% 11G free no pressure, git ff'd 4 commits, engines claude+codex ready","action":"claimed+released health:windesk & mac-mini (both non-actionable from linux: mac-mini correctly excluded, windesk tracked by t-0081); no re-stampede"}

@@ -997,6 +997,10 @@
 {"ts":"2026-06-04T21:31:59Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-04T21:40:07Z","node":"death-star","source":"formalize-watch","action":"notify-active","result":"ok","detail":"2 commit(s) to running math-formalizer"}
 {"ts":"2026-06-04T22:02:03Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T22:00:04Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T22:30:14Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T22:31:14Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T23:01:24Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-04T22:03:12Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-04T22:33:17Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-04T22:34:34Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
@@ -1012,3 +1016,42 @@
 {"ts":"2026-06-05T00:09:08Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-05T00:30:07Z","node":"death-star","source":"formalize-watch","action":"notify-active","result":"ok","detail":"1 commit(s) to running math-formalizer"}
 {"ts":"2026-06-05T00:39:12Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T22:33:20Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T23:03:30Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T23:04:28Z","node":"oraclebox1","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 3/3 voters alive (V1410-1 leader + claudebox + oraclebox1, build 2.0.2); nomad clients ready+eligible 6/7 (death-star/claudebox/eliotts-mac-mini/bigo-server/oraclebox1/V1410-1 ready, windesk down since 00:55Z); windesk net-reachable via DERP (65ms pong) but Nomad client down Windows-side, no linux fix, t-0081 open + claim DONE by peer 17:29Z + queue task parked, NOT re-claimed; maint-agent 5/5 running on alive linux members (mac-mini macOS excluded by design, windesk down=no alloc); self: disk 77% 11G free no pressure, engines claude+codex ready+advertised, repo synced w/ origin"}
+{"ts":"2026-06-04T23:02:34Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T23:23:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-04T23:32:49Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T21:00:00Z","node":"bigo-server","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 3/3 voters alive (V1410-1 leader + claudebox + oraclebox1, build 2.0.2 raft v3); nomad clients ready+eligible 6/7 (death-star/claudebox/eliotts-mac-mini/bigo-server/oraclebox1/V1410-1 ready, windesk down since 00:55Z); maint-agent 5/5 running on alive linux nodes (mac-mini macOS excluded by design); windesk left as-is: net-reachable but Windows-side nomad-client-down, t-0081 open + claim DONE by peer 17:29Z, no linux fix; self: ff'd repo to origin/main b423e8e, engines claude+codex ready+advertised, disk 86% (15G free, no pressure)"}
+{"ts":"2026-06-04T23:34:10Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T23:40:05Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"1 commit(s) to running math-formalizer"}
+{"ts":"2026-06-05T00:04:21Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T23:10:00Z","node":"bigo-server","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 3/3 voters alive (V1410-1 leader + claudebox + oraclebox1, build 2.0.2 raft v3); nomad clients ready+eligible 6/7 (death-star/claudebox/eliotts-mac-mini/bigo-server/oraclebox1/V1410-1 ready, windesk down since 00:55Z); maint-agent 5/5 running on alive linux nodes (mac-mini macOS + windesk-down excluded); windesk left as-is: Windows-side nomad-client-down, t-0081 open + claim DONE by peer 17:29Z, no linux fix, NOT re-claimed; self: engines claude+codex ready+advertised, disk 86% 15G free no pressure, repo synced to origin/main"}
+{"ts":"2026-06-04T23:04:53Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T23:18:09Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:18:09Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:24:27Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:24:27Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:25:36Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:25:37Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:31:11Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:31:12Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:36:03Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T23:36:25Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:36:25Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:39:52Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:39:52Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:41:11Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:41:11Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:42:00Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:42:00Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:47:26Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:47:26Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:50:28Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T23:51:11Z","node":"oraclebox1","type":"cluster-health-sweep","quorum":"3/3 voters alive (V1410-1 leader/claudebox/oraclebox1 build 2.0.2 raft v3)","clients":"6/7 ready; windesk down since 00:55Z","maint_agent":"5/5 linux running (oraclebox1/claudebox/death-star/bigo-server/V1410-1); mac-mini linux-excluded not-a-fault","self":"disk 77% 11G free no-pressure, ff'd to origin/main, engines claude+codex ready","windesk":"net-reachable but Nomad client down Windows-side, already-escalated t-0081 owned-by-peer, not stampeding"}
+{"ts":"2026-06-04T23:51:54Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-04T23:52:34Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-04T23:52:34Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-04T23:55:37Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-04T23:57:01Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-05T00:27:29Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

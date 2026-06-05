@@ -47,7 +47,13 @@ job "maintenance-agent" {
           # If raw_exec already runs as a credentialed user, prefer that user's checkout.
           if [ "$(id -u)" != 0 ]; then
             for repo in "$HOME/monad" "$HOME/Documents/monad"; do
-              [ -f "$repo/scripts/maintenance-agent.sh" ] && exec bash "$repo/scripts/maintenance-agent.sh"
+              [ -f "$repo/scripts/maintenance-agent.sh" ] || continue
+              if [ -d "$repo/.git" ] &&
+                 git -C "$repo" diff --quiet 2>/dev/null &&
+                 git -C "$repo" diff --cached --quiet 2>/dev/null; then
+                git -C "$repo" pull --ff-only origin main >/dev/null 2>&1 || true
+              fi
+              exec bash "$repo/scripts/maintenance-agent.sh"
             done
           fi
           # 1) Prefer a credentialed user's host checkout (that user is logged in to the
@@ -59,6 +65,11 @@ job "maintenance-agent" {
             [ -n "$home" ] || continue
             for repo in "$home/monad" "$home/Documents/monad"; do
               [ -f "$repo/scripts/maintenance-agent.sh" ] || continue
+              if [ -d "$repo/.git" ] &&
+                 git -C "$repo" diff --quiet 2>/dev/null &&
+                 git -C "$repo" diff --cached --quiet 2>/dev/null; then
+                git -C "$repo" pull --ff-only origin main >/dev/null 2>&1 || true
+              fi
               if [ "$(id -u)" = 0 ] && [ "$u" != root ]; then
                 exec su - "$u" -c "exec bash '$repo/scripts/maintenance-agent.sh'"
               else

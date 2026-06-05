@@ -11,7 +11,7 @@
 
 ## Warnings
 
-- Git has 6 uncommitted changes
+- Git had 6 uncommitted changes before repair; working tree is clean after commit/push.
 
 ## Actions
 

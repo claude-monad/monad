@@ -1103,3 +1103,5 @@
 {"ts":"2026-06-05T03:17:01Z","node":"death-star","kind":"cluster-health-sweep","detail":"quorum 3/3 voters V1410-1(leader)+claudebox+oraclebox1 build 2.0.2 raft v3; 6/7 nodes ready, windesk Nomad-down since 00:55Z (net recovered, t-0081 reopened Win-side); maint-agent 5/5 running; self disk 5% engines claude+codex ready"}
 {"ts":"2026-06-05T03:07:42Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-05T03:37:52Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-05T03:17:18Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-05T03:47:22Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

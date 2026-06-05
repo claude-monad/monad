@@ -145,12 +145,30 @@ WRAP
             log "no app pubkey in secret/codex-ssh yet — set it to grant access"
           fi
 
-          # Share codex auth from the node's logged-in codex user so `autocodex` can run codex.
+          # Share Codex auth from the node's logged-in Codex user without symlinking the
+          # whole .codex directory. The app-server reads config files under $HOME/.codex;
+          # a symlink into another user's home can make those files unreadable to autocodex.
+          if [ -L "$H/.codex" ]; then
+            rm -f "$H/.codex"
+          fi
+          install -d -m 700 -o "$U" -g "$U" "$H/.codex"
+          touch "$H/.codex/environments.toml"
+          chown "$U:$U" "$H/.codex/environments.toml"
+          chmod 600 "$H/.codex/environments.toml"
           for au in e ubuntu bigo eliott; do
             ah="$(getent passwd "$au" | cut -d: -f6)"; [ -n "$ah" ] || continue
             if [ -f "$ah/.codex/auth.json" ]; then
-              [ -e "$H/.codex" ] || ln -s "$ah/.codex" "$H/.codex"
-              log "codex auth shared from $au"; break
+              cp "$ah/.codex/auth.json" "$H/.codex/auth.json"
+              chown "$U:$U" "$H/.codex/auth.json"
+              chmod 600 "$H/.codex/auth.json"
+              for cf in config.toml AGENTS.md instructions.md; do
+                if [ -f "$ah/.codex/$cf" ]; then
+                  cp "$ah/.codex/$cf" "$H/.codex/$cf"
+                  chown "$U:$U" "$H/.codex/$cf"
+                  chmod 600 "$H/.codex/$cf"
+                fi
+              done
+              log "codex auth copied from $au"; break
             fi
           done
 
@@ -271,6 +289,11 @@ CODEXWRAP
           if ! env HOME="$H" PATH="$H/.local/bin:$H/.local/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/snap/bin" codex app-server --help >/dev/null 2>&1; then
             log "WARN: user-local codex app-server check failed; falling back to any system codex"
           fi
+          # Clear app-server daemons/proxies left behind by older SSH attempts. The Codex App
+          # will start a fresh daemon through SSH when it reconnects.
+          pkill -u "$U" -f "codex app-server" 2>/dev/null || true
+          rm -rf "$H/.codex/app-server-control"
+          install -d -m 700 -o "$U" -g "$U" "$H/.codex/app-server-control"
 
           # Give the app concrete remote project folders to discover/use.
           for spec in \

@@ -1229,3 +1229,14 @@
 {"ts":"2026-06-05T21:25:59Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-05T21:26:05Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
 {"ts":"2026-06-05T21:56:16Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-05T21:59:54Z","node":"oraclebox1","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}
+{"ts":"2026-06-05T22:01:09Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-05T22:31:43Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-05T22:34:01Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-05T22:50:11Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"openai-ios-reference-20260605T225001Z"}
+{"ts":"2026-06-05T22:53:51Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"openai-ios-reference-20260605T225001Z rc=0"}
+{"ts":"2026-06-05T23:04:14Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-05T23:04:14Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=126"}
+{"ts":"2026-06-05T23:34:37Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-05T23:34:38Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=126"}
+{"ts":"2026-06-05T23:36:39Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"health-oraclebox1-selfpass-20260605T233637Z"}

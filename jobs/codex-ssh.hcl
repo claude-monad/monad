@@ -72,7 +72,11 @@ job "codex-ssh" {
           # binary. On nodes lacking either (e.g. V1410-1/claudebox), idle cleanly instead of
           # restart-storming exit 127 on a missing binary or permission error.
           if [ "$(id -u)" != 0 ]; then
-            skip "not root (uid=$(id -u)) — cannot create $U / manage sshd"
+            if command -v sudo >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
+              log "not root (uid=$(id -u)) — re-running setup through passwordless sudo"
+              exec sudo -n -E /bin/bash "$0"
+            fi
+            skip "not root (uid=$(id -u)) and passwordless sudo unavailable — cannot create $U / manage sshd"
           fi
           SSHD="$(command -v sshd 2>/dev/null || echo /usr/sbin/sshd)"
           if ! [ -x "$SSHD" ]; then
@@ -118,6 +122,20 @@ job "codex-ssh" {
           mkdir -p "$H"; chown "$U:$U" "$H"; chmod 0755 "$H"
           install -d -m 700 -o "$U" -g "$U" "$H/.ssh"
 
+          # OpenSSH runs remote commands through the user's shell. Use a small wrapper so
+          # `ssh autocodex@node codex app-server ...` sees the user-local Codex CLI even in
+          # non-interactive shells where bash startup files are not read.
+          SHELL_WRAP=/usr/local/bin/autocodex-shell
+          cat > "$SHELL_WRAP" <<'WRAP'
+#!/bin/sh
+export HOME=/home/autocodex
+export PATH=/home/autocodex/.local/bin:/home/autocodex/.local/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/snap/bin
+exec /bin/bash "$@"
+WRAP
+          chmod 755 "$SHELL_WRAP"
+          grep -qxF "$SHELL_WRAP" /etc/shells 2>/dev/null || echo "$SHELL_WRAP" >> /etc/shells
+          usermod -s "$SHELL_WRAP" "$U"
+
           KP="$NOMAD_TASK_DIR/key.pub"
           if [ -s "$KP" ] && grep -q ssh "$KP"; then
             cp "$KP" "$H/.ssh/authorized_keys"
@@ -136,6 +154,143 @@ job "codex-ssh" {
             fi
           done
 
+          # Codex App SSH hosts must be able to run `codex app-server` from the remote user's
+          # login shell. Avoid snap wrappers in this Nomad-launched sshd path (they fail cgroup
+          # checks on some nodes) by installing the npm CLI into autocodex's own prefix and
+          # placing a real wrapper in ~/.local/bin. npm also creates ~/.local/bin/codex as a
+          # symlink into node_modules, so always remove it before writing our wrapper.
+          install -d -m 755 -o "$U" -g "$U" "$H/.local" "$H/.local/bin"
+          CODEX_JS="$H/.local/node_modules/@openai/codex/bin/codex.js"
+          CODEX_ARM="$H/.local/node_modules/@openai/codex-linux-arm64/vendor/aarch64-unknown-linux-musl/bin/codex"
+          CODEX_X64="$H/.local/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex"
+          CODEX_NATIVE=""
+          CODEX_NATIVE_PACKAGE=""
+          CODEX_NATIVE_SUFFIX=""
+          case "$(uname -m)" in
+            aarch64|arm64)
+              CODEX_NATIVE="$CODEX_ARM"
+              CODEX_NATIVE_PACKAGE="@openai/codex-linux-arm64"
+              CODEX_NATIVE_SUFFIX="linux-arm64"
+              ;;
+            x86_64|amd64)
+              CODEX_NATIVE="$CODEX_X64"
+              CODEX_NATIVE_PACKAGE="@openai/codex-linux-x64"
+              CODEX_NATIVE_SUFFIX="linux-x64"
+              ;;
+          esac
+          NEED_CODEX_INSTALL=no
+          [ -n "$CODEX_NATIVE" ] && [ -x "$CODEX_NATIVE" ] || NEED_CODEX_INSTALL=yes
+          [ -f "$CODEX_JS" ] || NEED_CODEX_INSTALL=yes
+          if [ -f "$CODEX_JS" ] && grep -q 'case "$(uname -m)"' "$CODEX_JS"; then
+            log "detected corrupted @openai/codex entrypoint; reinstalling"
+            NEED_CODEX_INSTALL=yes
+          fi
+          if [ "$NEED_CODEX_INSTALL" = yes ] && ! command -v npm >/dev/null 2>&1; then
+            log "npm not found — attempting to install nodejs/npm"
+            if command -v apt-get >/dev/null 2>&1; then
+              DEBIAN_FRONTEND=noninteractive apt-get update -qq >/dev/null 2>&1 || true
+              DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nodejs npm >/dev/null 2>&1 || true
+            elif command -v dnf >/dev/null 2>&1; then dnf install -y nodejs npm >/dev/null 2>&1 || true
+            elif command -v yum >/dev/null 2>&1; then yum install -y nodejs npm >/dev/null 2>&1 || true
+            elif command -v apk >/dev/null 2>&1; then apk add --no-cache nodejs npm >/dev/null 2>&1 || true
+            fi
+          fi
+          if [ "$NEED_CODEX_INSTALL" = yes ]; then
+            if command -v npm >/dev/null 2>&1; then
+              log "installing @openai/codex for $U under $H/.local"
+              rm -rf "$H/.local/node_modules/@openai/codex" "$H/.local/node_modules/@openai/codex-linux-arm64" "$H/.local/node_modules/@openai/codex-linux-x64"
+              rm -f "$H/.local/bin/codex"
+              NPM_LOG="$NOMAD_TASK_DIR/npm-codex-install.log"
+              if command -v runuser >/dev/null 2>&1; then
+                if command -v timeout >/dev/null 2>&1; then
+                  timeout 240 runuser -u "$U" -- npm install --prefix "$H/.local" --include=optional --force @openai/codex >"$NPM_LOG" 2>&1 || true
+                else
+                  runuser -u "$U" -- npm install --prefix "$H/.local" --include=optional --force @openai/codex >"$NPM_LOG" 2>&1 || true
+                fi
+              else
+                if command -v timeout >/dev/null 2>&1; then
+                  timeout 240 su - "$U" -c "npm install --prefix '$H/.local' --include=optional --force @openai/codex" >"$NPM_LOG" 2>&1 || true
+                else
+                  su - "$U" -c "npm install --prefix '$H/.local' --include=optional --force @openai/codex" >"$NPM_LOG" 2>&1 || true
+                fi
+              fi
+              if [ -n "$CODEX_NATIVE" ] && [ ! -x "$CODEX_NATIVE" ] && [ -n "$CODEX_NATIVE_PACKAGE" ] && [ -n "$CODEX_NATIVE_SUFFIX" ]; then
+                CODEX_VERSION="$(node -p "require('$H/.local/node_modules/@openai/codex/package.json').version" 2>/dev/null || true)"
+                [ -n "$CODEX_VERSION" ] || CODEX_VERSION="$(npm view @openai/codex version 2>/dev/null || true)"
+                if [ -n "$CODEX_VERSION" ]; then
+                  CODEX_NATIVE_ALIAS="$CODEX_NATIVE_PACKAGE@npm:@openai/codex@$CODEX_VERSION-$CODEX_NATIVE_SUFFIX"
+                  log "installing native codex package alias $CODEX_NATIVE_ALIAS"
+                  if command -v runuser >/dev/null 2>&1; then
+                    if command -v timeout >/dev/null 2>&1; then
+                      timeout 240 runuser -u "$U" -- npm install --prefix "$H/.local" --include=optional --force "$CODEX_NATIVE_ALIAS" >>"$NPM_LOG" 2>&1 || true
+                    else
+                      runuser -u "$U" -- npm install --prefix "$H/.local" --include=optional --force "$CODEX_NATIVE_ALIAS" >>"$NPM_LOG" 2>&1 || true
+                    fi
+                  else
+                    if command -v timeout >/dev/null 2>&1; then
+                      timeout 240 su - "$U" -c "npm install --prefix '$H/.local' --include=optional --force '$CODEX_NATIVE_ALIAS'" >>"$NPM_LOG" 2>&1 || true
+                    else
+                      su - "$U" -c "npm install --prefix '$H/.local' --include=optional --force '$CODEX_NATIVE_ALIAS'" >>"$NPM_LOG" 2>&1 || true
+                    fi
+                  fi
+                fi
+              fi
+              if [ -s "$NPM_LOG" ]; then
+                sed -n '1,20p' "$NPM_LOG" | sed 's/^/[npm-codex] /'
+              fi
+              chown -R "$U:$U" "$H/.local" 2>/dev/null || true
+            else
+              log "WARN: npm not available; cannot install user-local codex CLI"
+            fi
+          fi
+          if [ -x "$H/.local/node_modules/@openai/codex-linux-arm64/vendor/aarch64-unknown-linux-musl/bin/codex" ] \
+             || [ -x "$H/.local/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex" ] \
+             || [ -f "$H/.local/node_modules/@openai/codex/bin/codex.js" ]; then
+            rm -f "$H/.local/bin/codex"
+            cat > "$H/.local/bin/codex" <<CODEXWRAP
+#!/bin/sh
+case "\$(uname -m)" in
+  aarch64|arm64)
+    native="$H/.local/node_modules/@openai/codex-linux-arm64/vendor/aarch64-unknown-linux-musl/bin/codex"
+    ;;
+  x86_64|amd64)
+    native="$H/.local/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex"
+    ;;
+  *)
+    native=""
+    ;;
+esac
+if [ -n "\$native" ] && [ -x "\$native" ]; then
+  exec "\$native" "\$@"
+fi
+exec node "$H/.local/node_modules/@openai/codex/bin/codex.js" "\$@"
+CODEXWRAP
+            chmod 755 "$H/.local/bin/codex"
+            chown "$U:$U" "$H/.local/bin/codex" 2>/dev/null || true
+          fi
+          if ! env HOME="$H" PATH="$H/.local/bin:$H/.local/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/snap/bin" codex app-server --help >/dev/null 2>&1; then
+            log "WARN: user-local codex app-server check failed; falling back to any system codex"
+          fi
+
+          # Give the app concrete remote project folders to discover/use.
+          for spec in \
+            "monad https://github.com/eliott-monad/monad.git" \
+            "math https://github.com/eliottcassidy2000/math.git" \
+            "math-lean https://github.com/eliott-monad/math-lean.git"
+          do
+            set -- $spec
+            name="$1"; url="$2"; dir="$H/$name"
+            if [ ! -d "$dir/.git" ] && command -v git >/dev/null 2>&1; then
+              log "cloning $name for $U"
+              if command -v timeout >/dev/null 2>&1; then
+                timeout 120 git clone --depth 1 "$url" "$dir" >/dev/null 2>&1 || true
+              else
+                git clone --depth 1 "$url" "$dir" >/dev/null 2>&1 || true
+              fi
+              chown -R "$U:$U" "$dir" 2>/dev/null || true
+            fi
+          done
+
           mkdir -p /run/sshd 2>/dev/null || true
           CFG="$NOMAD_TASK_DIR/sshd_autocodex.conf"
           {
@@ -151,7 +306,9 @@ job "codex-ssh" {
               [ -f "$k" ] && echo "HostKey $k"
             done
           } > "$CFG"
-          command -v codex >/dev/null 2>&1 || log "WARN: codex not on PATH for sshd sessions"
+          env HOME="$H" PATH="$H/.local/bin:$H/.local/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/snap/bin" codex app-server --help >/dev/null 2>&1 \
+            && log "codex app-server available for $U" \
+            || log "WARN: codex app-server still unavailable for $U"
           # Kill any orphaned autocodex sshd from a prior alloc so this fresh one can bind :2222.
           pkill -f sshd_autocodex.conf 2>/dev/null && sleep 1 || true
           log "autocodex ready; starting sshd on :2222"
@@ -161,7 +318,7 @@ job "codex-ssh" {
 
       resources {
         cpu    = 100
-        memory = 128
+        memory = 768
       }
     }
   }

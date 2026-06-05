@@ -1,0 +1,10 @@
+{
+  "id": "t-0087",
+  "type": "infra",
+  "scope": "eliotts-mac-mini is ready/eligible/online and advertises claude,codex, but maintenance-agent has only 5 running allocs because jobs/maintenance-agent.hcl constrains kernel.name=linux; decide whether to add a macOS equivalent agent or update roster/health expectations",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

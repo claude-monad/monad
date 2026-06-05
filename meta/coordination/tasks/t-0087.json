@@ -1,10 +1,10 @@
 {
   "id": "t-0087",
   "type": "infra",
-  "scope": "eliotts-mac-mini is ready/eligible/online and advertises claude,codex, but maintenance-agent has only 5 running allocs because jobs/maintenance-agent.hcl constrains kernel.name=linux; decide whether to add a macOS equivalent agent or update roster/health expectations",
+  "scope": "DONE 2026-06-05: maintenance-agent now allows darwin raw_exec nodes, uses Nomad node names for queue prefixes, and was redeployed with a running eliotts-mac-mini alloc.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

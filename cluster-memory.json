@@ -57,9 +57,9 @@
     "value": "DONE-2026-06-03T14:46:28Z"
   },
   "health:windesk": {
-    "updated": 1780594163.095406,
-    "updated_by": "V1410-1",
-    "value": "DONE-2026-06-04T17:29:23Z box NOW reachable (1ms pong) but Nomad client still down since 00:55Z; t-0081 reopened with evolved scope (t-0076/t-0077 said offline, now recovered net-side)"
+    "updated": 1780625079.3688495,
+    "updated_by": "oraclebox1",
+    "value": "DONE-2026-06-05T02:04:39Z oraclebox1 sweep: Nomad client still down (Windows-side, tracked t-0081); no new action"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,
@@ -85,7 +85,7 @@
     "value": "tournament theory H(T) counting"
   },
   "work:op-math-264": {
-    "updated": 1780622104.265224,
+    "updated": 1780626604.199657,
     "updated_by": "oraclebox1",
     "value": "container-max-1"
   }

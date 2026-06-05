@@ -57,9 +57,9 @@
     "value": "OK-2026-06-05T04:10:26Z oraclebox1 sweep: quorum 3/3 voters (V1410-1 leader + claudebox + oraclebox1, build 2.0.2 raft v3); 6/7 clients ready, windesk Nomad-down (Windows-side, t-0081, already DONE 02:04Z); maint-agent 5/5 running all linux members; engines claude+codex ready; self disk 80% 9.2G free, no real pressure"
   },
   "health:windesk": {
-    "updated": 1780625079.3688495,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-05T02:04:39Z oraclebox1 sweep: Nomad client still down (Windows-side, tracked t-0081); no new action"
+    "updated": 1780632881.188063,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-05T04:14:41Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

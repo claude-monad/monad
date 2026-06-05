@@ -1,0 +1,10 @@
+{
+  "id": "t-0088",
+  "type": "infra",
+  "scope": "eliotts-mac-mini: Nomad node is ready/eligible and Tailscale active, but maintenance-agent has no running alloc because jobs/maintenance-agent.hcl is Linux-only. Verify/start the intended Mac maintenance loop or container mesh equivalent per meta/CODEX-ON-WIN-MAC.md; V1410-1 messaged agent-mac-mini during health sweep.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

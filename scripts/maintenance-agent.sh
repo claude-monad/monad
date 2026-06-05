@@ -21,7 +21,7 @@ RUN_AGENT="$REPO_DIR/meta/agent/run-agent.sh"
 # shellcheck source=/dev/null
 . "$REPO_DIR/meta/agent/engines.sh" 2>/dev/null || true
 
-NODE="$(hostname)"
+NODE="${NODE_NAME:-$(hostname)}"
 INTERVAL="${MAINT_INTERVAL:-1800}"
 POLL="${POLL:-60}"
 ENGINE="${MONAD_ENGINE:-auto}"

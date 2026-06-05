@@ -62,15 +62,27 @@ CHOSEN="$(engine_pick "$ENGINE")" || {
 cd "$CWD" 2>/dev/null || { echo "run-agent: cannot cd to $CWD" >&2; exit 2; }
 
 if [ "$MODE" = "session" ]; then
-  mapfile -t ARGV < <(engine_session_argv "$CHOSEN" "$NAME")
+  ARGV=()
+  while IFS= read -r arg; do ARGV+=("$arg"); done < <(engine_session_argv "$CHOSEN" "$NAME")
   exec "${ARGV[@]}"
 fi
 
 # exec mode
 LAST=""; [ "$QUIET" = 1 ] && [ "$CHOSEN" = codex ] && LAST="$(mktemp)"
-mapfile -t ARGV < <(engine_exec_argv "$CHOSEN" "$CWD" "$LAST")
+ARGV=()
+while IFS= read -r arg; do ARGV+=("$arg"); done < <(engine_exec_argv "$CHOSEN" "$CWD" "$LAST")
 
-run() { if [ "$TIMEOUT" = 0 ]; then "${ARGV[@]}" "$PROMPT"; else timeout --signal=TERM "$TIMEOUT" "${ARGV[@]}" "$PROMPT"; fi; }
+run() {
+  if [ "$TIMEOUT" = 0 ]; then
+    "${ARGV[@]}" "$PROMPT"
+  elif command -v timeout >/dev/null 2>&1; then
+    timeout --signal=TERM "$TIMEOUT" "${ARGV[@]}" "$PROMPT"
+  elif command -v gtimeout >/dev/null 2>&1; then
+    gtimeout --signal=TERM "$TIMEOUT" "${ARGV[@]}" "$PROMPT"
+  else
+    "${ARGV[@]}" "$PROMPT"
+  fi
+}
 
 if [ "$QUIET" = 1 ]; then
   if [ "$CHOSEN" = codex ]; then

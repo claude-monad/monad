@@ -1079,3 +1079,5 @@
 {"ts":"2026-06-05T01:39:15Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-05T02:09:25Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-05T02:10:13Z","node":"bigo-server","event":"cluster-health-sweep","quorum":"3/3 voters alive V1410-1 leader build 2.0.2","nodes_ready":"6/7","down":"windesk(t-0081 open, Win-side nomad client)","maint_agents":"5 running","self_disk":"86% 15G free","engines":"claude+codex ready"}
+{"ts":"2026-06-05T01:43:11Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-05T02:13:15Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

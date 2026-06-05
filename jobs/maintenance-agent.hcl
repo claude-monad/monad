@@ -15,10 +15,11 @@ job "maintenance-agent" {
   datacenters = ["dc1"]
   type        = "system"
 
-  # Linux nodes with raw_exec (the bash agent script). Windows agents come later.
+  # Unix nodes with raw_exec (the bash agent script). Windows agents come later.
   constraint {
     attribute = "${attr.kernel.name}"
-    value     = "linux"
+    operator  = "regexp"
+    value     = "^(linux|darwin)$"
   }
   constraint {
     attribute = "${attr.driver.raw_exec}"
@@ -43,10 +44,18 @@ job "maintenance-agent" {
         # credentialed user — this fixes both the repo path and engine-credential location.
         # Falls back to running directly if we're already a non-root user with the repo.
         args = ["-c", <<-EOC
+          # If raw_exec already runs as a credentialed user, prefer that user's checkout.
+          if [ "$(id -u)" != 0 ]; then
+            for repo in "$HOME/monad" "$HOME/Documents/monad"; do
+              [ -f "$repo/scripts/maintenance-agent.sh" ] && exec bash "$repo/scripts/maintenance-agent.sh"
+            done
+          fi
           # 1) Prefer a credentialed user's host checkout (that user is logged in to the
           #    engines). Run as them so engine creds + repo path both line up.
           for u in ubuntu bigo e eliott root; do
-            home="$(getent passwd "$u" | cut -d: -f6)"
+            home="$(getent passwd "$u" 2>/dev/null | cut -d: -f6)"
+            if [ -z "$home" ] && [ "$u" = e ]; then home="/Users/e"; fi
+            if [ -z "$home" ] && [ "$u" = eliott ]; then home="/Users/eliott"; fi
             [ -n "$home" ] || continue
             for repo in "$home/monad" "$home/Documents/monad"; do
               [ -f "$repo/scripts/maintenance-agent.sh" ] || continue
@@ -86,6 +95,7 @@ job "maintenance-agent" {
         SELF_TIMEOUT   = "900"    # self-pass wall-clock budget; oraclebox1 Codex hit 600s
         MONAD_ENGINE   = "auto"   # claude|codex|auto
         NOMAD_ADDR     = "http://100.75.75.39:4646"
+        NODE_NAME      = "${node.unique.name}"
         MONAD_MAINT_REV = "self-timeout-20260603" # bump for script-only refreshes
       }
 

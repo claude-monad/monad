@@ -1,0 +1,10 @@
+{
+  "id": "t-0092",
+  "type": "infra",
+  "scope": "bigo-server has stale duplicate Nomad client 2a05707f down/ineligible with no allocations; active client 26700410 is ready/eligible with maintenance-agent. Verify and purge stale client if appropriate.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

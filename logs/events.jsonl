@@ -1438,3 +1438,5 @@
 {"ts":"2026-06-06T04:05:58Z","node":"Eliotts-Mac-mini.local","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
 {"ts":"2026-06-06T04:09:00Z","node":"Eliotts-Mac-mini.local","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-06T04:11:40Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}
+{"ts":"2026-06-06T07:56:33Z","node":"oraclebox1","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}
+{"ts":"2026-06-06T07:57:13Z","node":"oraclebox1","event":"cluster-health sweep: quorum 3/3, six live roster clients ready/eligible with engines+maintenance-agent; emitted infra task t-0092 for stale duplicate bigo-server client 2a05707f; claim released"}

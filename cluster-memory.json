@@ -21,9 +21,9 @@
     "value": "OK-2026-06-04T22:13:20Z leader quorum3/3voters(V1410-1+claudebox+oraclebox1 build2.0.2) 6/7clients-ready engines claude+codex disk6% maint-agent 5/5linux; windesk down 00:55Z already-escalated t-0081"
   },
   "health:bigo-server": {
-    "updated": 1780553279.2141423,
-    "updated_by": "bigo-server",
-    "value": "DONE-2026-06-04T06:07:59Z"
+    "updated": 1780732633.8472302,
+    "updated_by": "oraclebox1",
+    "value": "DONE-2026-06-06T07:57:13Z"
   },
   "health:claudebox": {
     "updated": 1780572076.8048387,
@@ -41,11 +41,6 @@
     "updated_by": "oraclebox1",
     "value": "DONE-2026-06-05T18:16:25Z"
   },
-  "health:eliotts-mac-mini:death-star-20260605T180950Z": {
-    "updated": 1780682990.0538535,
-    "updated_by": "death-star",
-    "value": "DONE-2026-06-05T18:09:50Z"
-  },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
     "updated_by": "V1410-1",
@@ -60,6 +55,11 @@
     "updated": 1780646680.7174656,
     "updated_by": "V1410-1",
     "value": "V1410-1"
+  },
+  "health:eliotts-mac-mini:death-star-20260605T180950Z": {
+    "updated": 1780682990.0538535,
+    "updated_by": "death-star",
+    "value": "DONE-2026-06-05T18:09:50Z"
   },
   "health:eliotts-mac-mini:oraclebox1-20260603T102743Z": {
     "updated": 1780482464.1440544,

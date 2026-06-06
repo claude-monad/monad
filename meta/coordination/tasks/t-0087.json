@@ -1,10 +1,10 @@
 {
   "id": "t-0087",
-  "type": "infra",
-  "scope": "DONE 2026-06-05: maintenance-agent now allows darwin raw_exec nodes, uses Nomad node names for queue prefixes, and was redeployed with a running eliotts-mac-mini alloc.",
-  "repo": "eliott-monad/monad",
+  "type": "math",
+  "scope": "S635 HYP-2306 (alternating group graph = uniform odd sector, chi(AG_n)=3, alpha=N/3): (1) exhibit the explicit balanced 3-coloring / N/3-tripartition of AG_n (which A_n-invariant gives it; for n>=5 A_n simple so NOT a homomorphism \u2014 a Z/3 cocycle?). (2) make 'parity defect chi-2 = stacked odd obstructions' precise (homology/obstruction statement) and place LRC single->multi-sieve, alternating graph, Moser spindle, Hadwiger-Nelson on one defect scale. (3) does AG_n arise as an actual LRC/tournament conflict graph (the 3-cycle sieve), or is it the abstract defect-1 universal? Tie to the OCR/Redei 3-cycle (parity-in-tournaments core) and the 2-adic seam (THM-407).",
+  "repo": "eliottcassidy2000/math",
   "payload": {},
-  "status": "done",
+  "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S635"
 }

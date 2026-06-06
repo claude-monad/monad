@@ -1,0 +1,10 @@
+{
+  "id": "t-0095",
+  "type": "infra",
+  "scope": "oraclebox1 Nomad client heartbeat-flapping every ~30-60s (missed->reregistered, see node 73795fbb events 2026-06-06T19:40-19:48Z); repeatedly marks node down and kills/reschedules its maintenance-agent alloc. Quorum unaffected (3/3 voters alive), alloc self-recovers. Diagnose locally on oraclebox1: tailscale link stability to leader 100.75.75.39:4647, client heartbeat_grace/network. Flagged by death-star maint sweep.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

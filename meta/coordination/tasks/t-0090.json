@@ -1,10 +1,10 @@
 {
   "id": "t-0090",
-  "type": "infra",
-  "scope": "Eliotts-Mac-mini.local disk pressure: /System/Volumes/Data is 94% used with 14Gi free; logs/ is only 488K, /tmp is empty, and Docker prune was not applicable. Needs operator review for larger safe cleanup targets.",
-  "repo": "eliott-monad/monad",
+  "type": "math",
+  "scope": "S638 HYP-2321 (reciprocity = the 2-adic seam; Legendre = XNOR-with-out-of-phase-0-middle = Paley conference matrix): read the LRC 2n-1 shell through reciprocity (2n-1=p prime => the multiplier dodge (Z/p)* is QR/Legendre; unramified n=19 vs ramified n=14 = the (./p) split?); Paley as the H-landscape's metastable seam (THM-135 p=19) vs the glass (HYP-2316); the tower XNOR -> quadratic character -> reciprocity 2-cocycle; Gauss sum = character-ratio spectrum (S636).",
+  "repo": "eliottcassidy2000/math",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S69.."
 }

@@ -39,12 +39,13 @@ if [ "$want" -lt 1 ]; then log "$running explorer(s) running (target $TARGET) �
 log "topping up: $running running, launching up to $want (target $TARGET)"
 
 spawned=0
+off=$(( RANDOM % ${#ANGLES[@]} ))   # random start, then rotate — distinct angles within a pass
 for i in $(seq 1 "$want"); do
   node="$(python3 "$REPO_DIR/scripts/llm-scheduler.py" place --engine claude --mem 1024 --quiet 2>/dev/null)"
   if [ -z "$node" ] || [ "$node" = "QUEUE" ]; then
     log "governor: no Claude capacity right now — holding ($spawned launched this pass)"; break
   fi
-  angle="${ANGLES[$(( (RANDOM + i) % ${#ANGLES[@]} ))]}"
+  angle="${ANGLES[$(( (off + i) % ${#ANGLES[@]} ))]}"
   if nomad job dispatch -detach -meta "seed=$seed" -meta "angle=$angle" "$EXPLORE_JOB" >/dev/null 2>&1; then
     log "launched explorer (governor node hint: $node)"; spawned=$((spawned+1))
   else

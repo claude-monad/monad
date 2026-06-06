@@ -69,6 +69,15 @@ if [ "$ROLE" = "researcher" ]; then
     PROMPT="${PROMPT//\{\{FOCUS\}\}/$FOCUS}"
 fi
 
+# Optional dispatched SEED (e.g. recent-commit context from math-explore-watch) — appended so
+# the session builds on what just landed instead of starting cold.
+if [ -n "${SEED:-}" ]; then
+    PROMPT="$PROMPT
+
+## Dispatched seed — recent activity to build on (explore beyond it, don't just resolve it)
+$SEED"
+fi
+
 # ─── Run Claude session ──────────────────────────────────────────────────────
 
 PROMPT_FILE="$WORK_DIR/prompt.txt"
@@ -76,20 +85,21 @@ printf '%s' "$PROMPT" > "$PROMPT_FILE"
 
 if [ "$(id -u)" = "0" ]; then
     # Nomad raw_exec runs as root; claude refuses --dangerously-skip-permissions as root.
-    # Drop to a non-root user that has claude installed.
+    # Drop to the node's Claude-credentialed user. Check creds (portable now) + claude on PATH
+    # (the provisioner symlinks it to /usr/local/bin). Includes 'claude' (claudebox) + any
+    # uid>=1000 user with credentials, so this works on every node, not just the old roster.
     RUN_USER=""
-    for u in e bigo ubuntu eliott; do
-        if id "$u" &>/dev/null && su - "$u" -c "command -v claude >/dev/null 2>&1"; then
-            RUN_USER="$u"; break
-        fi
+    for u in claude e bigo ubuntu eliott $(getent passwd | awk -F: '$3>=1000 && $3<65000 && $6 ~ /^\/home\//{print $1}'); do
+        h="$(getent passwd "$u" 2>/dev/null | cut -d: -f6)"; [ -n "$h" ] || continue
+        if [ -f "$h/.claude/.credentials.json" ]; then RUN_USER="$u"; break; fi
     done
     if [ -z "$RUN_USER" ]; then
-        echo "ERROR: no non-root user with claude found" >&2
+        echo "ERROR: no user with claude credentials found" >&2
         exit 1
     fi
     echo "[math-session] dropping privileges to $RUN_USER"
     chown -R "$RUN_USER" "$WORK_DIR"
-    su - "$RUN_USER" -c "cd '$PWD' && claude --print --dangerously-skip-permissions \"\$(cat '$PROMPT_FILE')\""
+    su - "$RUN_USER" -c "export PATH=/usr/local/bin:\$HOME/.local/bin:\$HOME/.claude/local:/snap/bin:\$PATH; cd '$PWD' && claude --print --dangerously-skip-permissions \"\$(cat '$PROMPT_FILE')\""
 else
     claude --print --dangerously-skip-permissions "$PROMPT"
 fi

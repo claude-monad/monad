@@ -15,10 +15,11 @@
 
 ## Warnings
 
-- Local branch has repair commits to push after merge.
+- None after repair; `main` is synchronized with `origin/main`.
 
 ## Actions
 
 - Committed local oraclebox1 runtime/log state so it would not be lost.
 - Merged `origin/main`; Git auto-merged overlapping files and preserved both local and upstream entries.
 - Updated this doctor log with the repair summary.
+- Pushed repaired `main` to `origin/main`.

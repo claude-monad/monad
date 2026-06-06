@@ -40,7 +40,7 @@ job "math-explore-watch" {
             if [ "$(id -u)" = 0 ] && [ "$u" != root ]; then exec su - "$u" -c "exec bash '$repo/scripts/math-explore-watch.sh'"
             else exec bash "$repo/scripts/math-explore-watch.sh"; fi
           done
-          WORK="$${NOMAD_TASK_DIR:-/tmp}/mew-monad"
+          WORK="$NOMAD_TASK_DIR/mew-monad"
           [ -f "$WORK/scripts/math-explore-watch.sh" ] || { rm -rf "$WORK"; git clone -q --depth 1 https://github.com/eliott-monad/monad "$WORK" >/dev/null 2>&1 || true; }
           [ -f "$WORK/scripts/math-explore-watch.sh" ] && exec bash "$WORK/scripts/math-explore-watch.sh"
           echo "math-explore-watch: no checkout found" >&2; exit 1

@@ -1,10 +1,10 @@
 {
   "id": "t-0091",
-  "type": "infra",
-  "scope": "Investigate Eliotts-Mac-mini.local disk pressure: macOS Data volume 94% used with 13Gi free; repo logs 576K, /private/tmp visible top-level about 280MiB, no Docker daemon/local snapshots; avoid broad cache deletion without operator review.",
-  "repo": "eliott-monad/monad",
+  "type": "math",
+  "scope": "S639 HYP-2326 (FTA bridge: combinatorial spectrum=coefficients, character-ratio spectrum=roots): (1) Lee-Yang/fugacity zero locus of Z(z) and I(Omega,z) across n \u2014 does it pinch the real axis at the even-n glass transition (HYP-2316)? circle (ferro) or off-axis (antiferro THM-290)? (2) Newton's identities explicitly: H-moment power-sums <-> character ratios (roots) for the conflict graph / Hermitian adjacency. (3) forbidden-H (7,21,...) as a root-locus / unrealizable-root statement; real-rootedness of I(Omega,z) (claw-free?) => ultra-log-concave alpha_k (Newton, canon).",
+  "repo": "eliottcassidy2000/math",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S69.."
 }

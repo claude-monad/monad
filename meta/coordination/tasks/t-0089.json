@@ -1,10 +1,10 @@
 {
   "id": "t-0089",
-  "type": "infra",
-  "scope": "eliotts-mac-mini is ready/eligible and advertises claude,codex, but maintenance-agent has no running alloc there because jobs/maintenance-agent.hcl constrains kernel.name=linux; define/deploy a Darwin equivalent or update coverage policy.",
-  "repo": "eliott-monad/monad",
+  "type": "math",
+  "scope": "S637 HYP-2316 (polarized delta field = gradient of a frustrated antiferromagnet; glass transition at the even-n 2-adic seam): (1) pin the glass transition \u2014 count metastable local-max basins of H vs n (even vs odd); is the metastable value (37 at n=6, flanked by forbidden 35,39) and its fencing-by-forbidden-H a general pattern? does ruggedness grow toward n=14? (2) Walsh/influence spectrum of the delta field across n; relate the bandlimit 2*floor((n-1)/2) (THM-260) to the field structure; (3) discrete-Morse the H-landscape (Morse complex, critical cells = metastable basins = the LRC 'worry'/odd sector). Ties H=I(Omega,2) partition fn, delta=dH gradient, Hessian=propagation (S636), the antiferromagnet THM-290, and the 2-adic seam into one energy-landscape picture.",
+  "repo": "eliottcassidy2000/math",
   "payload": {},
-  "status": "done",
+  "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S637"
 }

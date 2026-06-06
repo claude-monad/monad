@@ -1,10 +1,10 @@
 {
   "id": "t-0088",
-  "type": "infra",
-  "scope": "eliotts-mac-mini: Nomad node is ready/eligible and Tailscale active, but maintenance-agent has no running alloc because jobs/maintenance-agent.hcl is Linux-only. Verify/start the intended Mac maintenance loop or container mesh equivalent per meta/CODEX-ON-WIN-MAC.md; V1410-1 messaged agent-mac-mini during health sweep.",
-  "repo": "eliott-monad/monad",
+  "type": "math",
+  "scope": "S636 HYP-2311 (H, delta, dichromatic = one conflict graph Omega(T)): (1) compute the Hermitian-adjacency character-ratio spectrum of round LRC tournaments (circulant => analytic, numpy-free) and confirm Hoffman chi_di >= 1+lmax/|lmin| = 2 tight; (2) write the delta-propagation operator Delta_a delta(b) exactly as a sum over odd cycles using arcs a,b in T and T+a; characterize the decoupled (odd-cycle-independent) arc pairs; (3) recover the forbidden-H values (7,21,...) across n as the unrealizable independence vectors of Omega \u2014 is the forbidden set itself an Omega-spectral condition? Ties H=I(Omega,2) (partition fn), chi_di (coloring/parity-defect HYP-2306), and the character-ratio spectrum (the perspective key) into one object.",
+  "repo": "eliottcassidy2000/math",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S636"
 }

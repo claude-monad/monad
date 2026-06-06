@@ -1,10 +1,10 @@
 {
   "id": "t-0092",
-  "type": "infra",
-  "scope": "bigo-server has stale duplicate Nomad client 2a05707f down/ineligible with no allocations; active client 26700410 is ready/eligible with maintenance-agent. Verify and purge stale client if appropriate.",
-  "repo": "eliott-monad/monad",
+  "type": "math",
+  "scope": "S640 HYP-2331 (HN as a Lee-Yang edge; NO elimination of {5,6,7}): (1) track the real chromatic-zero edge (=chi-1) AND the complex-bulk right-edge across a GROWING unit-distance family (Moser ring / field-tower gadgets S687) \u2014 does the complex edge climb toward chi_f<=4.36 while the real edge steps by integers? visualize the integrality gap as a q-plane zero-locus. (2) is the complex-bulk right-edge provably <= chi_f? then the Vitali wall (S699) becomes a Lee-Yang statement (complex bulk <=4.36, real edge=chi-1, gap=integrality). (3) 'kill 5' in zero-locus form: hunt a UD graph with a real chromatic zero in [5,6) (P(G,5)=0 => chi>=6). Both faces of W6 cyclotomic (geometry z^7-z S687; coloring q-zeros 2+5th-roots-of-(-1)); escape to [5,7] = leave the cyclotomic (sqrt-11, Heegner).",
+  "repo": "eliottcassidy2000/math",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S640"
 }

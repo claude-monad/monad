@@ -78,6 +78,17 @@ if [ -n "${SEED:-}" ]; then
 $SEED"
 fi
 
+# ─── Mesh access: let the session coordinate with peer explorers in real time ────────────────
+# Put `agent-msg` on the session PATH + give this session a UNIQUE peer name + the relay URL, so
+# the prompt's mesh-coordination steps (announce direction, share inspiration, ask when stuck)
+# actually work. agent-msg reads AGENT_NAME + MESH_RELAY from the env we pass into the claude run.
+MESH_MSG="$SCRIPT_DIR/../meta/agent/mesh/agent-msg.sh"
+AGENT_NAME="${AGENT_NAME:-agent-${MACHINE_ID#monad-}-$(hostname -s 2>/dev/null || hostname)-$$}"
+MESH_RELAY="${MESH_RELAY:-http://100.75.75.39:8477}"
+if [ -f "$MESH_MSG" ]; then
+    cp "$MESH_MSG" "$WORK_DIR/agent-msg" 2>/dev/null && chmod 755 "$WORK_DIR/agent-msg" 2>/dev/null || true
+fi
+
 # ─── Run Claude session ──────────────────────────────────────────────────────
 
 PROMPT_FILE="$WORK_DIR/prompt.txt"
@@ -100,9 +111,9 @@ if [ "$(id -u)" = "0" ]; then
         echo "ERROR: no user with claude credentials found" >&2
         exit 1
     fi
-    echo "[math-session] dropping privileges to $RUN_USER"
+    echo "[math-session] dropping privileges to $RUN_USER (mesh name $AGENT_NAME)"
     chown -R "$RUN_USER" "$WORK_DIR"
-    su - "$RUN_USER" -c "export PATH=/usr/local/bin:\$HOME/.local/bin:\$HOME/.claude/local:/snap/bin:\$PATH; cd '$PWD' && claude --print --dangerously-skip-permissions \"\$(cat '$PROMPT_FILE')\""
+    su - "$RUN_USER" -c "export PATH='$WORK_DIR':/usr/local/bin:\$HOME/.local/bin:\$HOME/.claude/local:/snap/bin:\$PATH; export AGENT_NAME='$AGENT_NAME' MESH_RELAY='$MESH_RELAY'; cd '$PWD' && claude --print --dangerously-skip-permissions \"\$(cat '$PROMPT_FILE')\""
 else
-    claude --print --dangerously-skip-permissions "$PROMPT"
+    PATH="$WORK_DIR:$PATH" AGENT_NAME="$AGENT_NAME" MESH_RELAY="$MESH_RELAY" claude --print --dangerously-skip-permissions "$PROMPT"
 fi

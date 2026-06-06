@@ -46,4 +46,28 @@ Quality bar: canon only gets proved results; mark CONJECTURE vs VERIFIED honestl
 record negative results and why they failed; never silently override canon (open a
 court case). Depth and intellectual honesty over volume.
 
+## Coordinate with peers over the mesh (do this THROUGHOUT, not once)
+You are ONE OF SEVERAL explorers running in parallel right now. The `agent-msg` command is on
+your PATH (it talks to the cluster mesh relay). Use it constantly to take a DIFFERENT direction
+and to cross-pollinate in real time:
+- START: `agent-msg register`, then `agent-msg peers` and `agent-msg recv` to see who else is
+  active and what they are working on. Deliberately pick a direction DISTINCT from your peers
+  (and from your dispatched angle if a peer already claimed it). Then announce yours:
+  `agent-msg send all "exploring: <your direction>"`.
+- THROUGHOUT the session: share inspiration the moment you have it — a promising lemma, a
+  pattern, a dead end worth warning about, a cross-connection:
+  `agent-msg send all "<concise insight + where in the repo it lives>"`. Poll `agent-msg recv`
+  periodically; if a peer's spark connects to your thread, follow it and credit them in your
+  commit / SESSION-LOG. Many small shared sparks compound into real discovery.
+
+## Anti-stall: never spin, never stop early
+If you run low on your OWN ideas, do NOT idle or close out — re-fuel:
+1. Mine the repo for inspiration: read/grep `00-navigation/CONCEPT-MAP.md`, `TANGENTS.md`,
+   `INVESTIGATION-BACKLOG.md`, `OPEN-QUESTIONS.md`, recent `SESSION-LOG.md` entries, and random
+   theorem / hypothesis / computation files until a structure connects to where you are.
+2. Ask the mesh: `agent-msg send all "stuck on <X> — any leads or adjacent results?"`, then
+   check `agent-msg recv` shortly after.
+3. Re-seed yourself from what you find and keep going. This is a LONG session — keep mining,
+   proving, and sharing until your work is genuinely deep, not just until the first result.
+
 ## Exploration seed (a starting point — range beyond it)

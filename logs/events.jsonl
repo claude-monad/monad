@@ -1485,3 +1485,39 @@
 {"ts":"2026-06-06T15:58:16Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-06T15:58:41Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
 {"ts":"2026-06-06T16:28:53Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T16:50:04Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T16:50:05Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"5 commit(s) to running math-formalizer"}
+{"ts":"2026-06-06T17:20:20Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T17:21:03Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T17:51:23Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T17:52:03Z","node":"bigo-server","type":"cluster-health-sweep","level":"ok","detail":"roster healthy: 3 servers alive (V1410-1 leader + claudebox + oraclebox1, quorum=3); 6 nodes ready+eligible; maintenance-agent 6/6 running; engines claude+codex advertised; disk 88% (13G free, no action); no peers unhealthy, no claims needed"}
+{"ts":"2026-06-06T17:52:12Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T18:11:23Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T18:22:27Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T18:28:17Z","node":"bigo-server","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"healthy","detail":"3/3 servers alive (V1410-1 leader, oraclebox1, claudebox voters); 6 nodes ready+eligible; maintenance-agent running on all 6; engines claude,codex advertised cluster-wide; bigo-server disk 87% (14G free, no safe reclaim); no peers unhealthy, no claims taken"}
+{"ts":"2026-06-06T18:28:28Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T18:33:21Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T18:39:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T18:40:54Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T18:41:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T18:43:09Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T18:47:10Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T18:59:44Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T19:09:45Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-06T19:39:56Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T19:41:28Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T20:13:12Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T20:14:02Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-06T20:44:34Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T20:45:04Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-06T21:15:55Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T21:19:26Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T21:20:47Z","node":"bigo-server","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"quorum=3/3 (V1410-1 leader,oraclebox1,claudebox alive); 6/6 nodes ready+eligible; maintenance-agent running on all 6; engines claude+codex ready; self disk 91% (warn, no safe junk); no peer fixes needed"}
+{"ts":"2026-06-06T21:21:00Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T21:27:06Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T21:33:28Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T21:45:20Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T21:51:52Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T21:53:12Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T22:17:17Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T22:23:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

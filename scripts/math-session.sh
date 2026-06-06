@@ -90,7 +90,10 @@ if [ "$(id -u)" = "0" ]; then
     # uid>=1000 user with credentials, so this works on every node, not just the old roster.
     RUN_USER=""
     for u in claude e bigo ubuntu eliott $(getent passwd | awk -F: '$3>=1000 && $3<65000 && $6 ~ /^\/home\//{print $1}'); do
-        h="$(getent passwd "$u" 2>/dev/null | cut -d: -f6)"; [ -n "$h" ] || continue
+        # Guard with `id` first: on a node without this user, `getent passwd <u>` exits 2 and
+        # `set -o pipefail` + `set -e` would kill the whole script (was exiting code 2 here).
+        id "$u" >/dev/null 2>&1 || continue
+        h="$(getent passwd "$u" | cut -d: -f6)"; [ -n "$h" ] || continue
         if [ -f "$h/.claude/.credentials.json" ]; then RUN_USER="$u"; break; fi
     done
     if [ -z "$RUN_USER" ]; then

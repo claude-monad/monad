@@ -11,10 +11,10 @@
 
 ## Warnings
 
-- Git has 3 uncommitted changes
+- Detector reported uncommitted local changes before repair.
 
 ## Actions
 
 - Fetched `origin/main`; local `main` was behind 3 commits with local runtime/log edits.
-- Preserved local oraclebox1 updates and prepared to merge upstream append-only log changes.
-- Committed the repair state after resolving the diverged history.
+- Committed local oraclebox1 state, including the doctor log and executable bit for `scripts/node-doctor.sh`.
+- Merged `origin/main`; append-only event log updates from both versions were preserved.

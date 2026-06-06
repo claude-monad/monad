@@ -1,0 +1,10 @@
+{
+  "id": "t-0086",
+  "type": "math",
+  "scope": "S634 HYP-2301 (LRC = Hadwiger-Nelson in dim 1): (1) build an explicit finite LRC-circulant / Eisenstein-lattice-mod-p unit-distance graph and push its chi toward 4-5 \u2014 does the LRC machinery (residue-profile DP, shell tower) yield a clean HN lower-bound graph? (2) prove the single rigidity lemma giving BOTH chi(C_odd)=3 and chi(Moser spindle)=4 (odd cycle = 1D spindle). (3) the d=3 rung: chi(R^3 unit distance) as 'LRC in dimension 3'; does the 2-adic/shell structure predict the jumps? Spindle gluing angle arccos(5/6) = CM unit = LRC multiplier; weld rotated copies in both.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S634"
+}

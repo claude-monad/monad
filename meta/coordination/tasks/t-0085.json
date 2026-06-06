@@ -1,16 +1,10 @@
 {
   "id": "t-0085",
-  "type": "infra",
-  "scope": "Owner request: standardize GPT mobile/desktop app SSH access to containerized math researchers on every eligible node. Initial investigation from local workstation: oraclebox1 100.125.210.126:22 presents SSH-2.0-Tailscale; :2222 presents OpenSSH_9.6 from the codex-ssh job; port-22 oralcle probe returned 'tailscale: failed to look up local user'. Build on :2222/autocodex/key-auth or document a better standard, publish endpoint roster, and wire login/attach to the math Codex researcher pool. See fleet/projects/codex-app-ssh-standardization.md.",
-  "repo": "eliott-monad/monad",
-  "payload": {
-    "requested_by": "owner",
-    "project": "codex-app-ssh-standardization",
-    "oraclebox1_tailnet_ip": "100.125.210.126",
-    "port_22_banner": "SSH-2.0-Tailscale",
-    "port_2222_banner": "SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.16"
-  },
+  "type": "math",
+  "scope": "S633 HYP-2295: prove tight-LRC <=> tie-graph=C_n; sieve=chi(C_n), corrector=alpha(C_n). Make chromatic polynomial P(G,k)=zero-temp Potts = covering-depth partition function Z (S626/HYP-2245) precise. Show pair-sum sieve (THM-401) = proper edge-coloring of K_n by sums mod 2n-1 = round-robin 1-factorization; chi' recovers sieve arity. Probe Hadwiger-Nelson <-> LRC: chi of the plane as continuous limit of the shell-circulant chi (discrete-circle unit-distance graph -> plane).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S633"
 }

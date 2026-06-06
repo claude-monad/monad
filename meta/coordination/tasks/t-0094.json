@@ -1,0 +1,10 @@
+{
+  "id": "t-0094",
+  "type": "infra",
+  "scope": "eliotts-mac-mini disk pressure: /System/Volumes/Data at 95%; checked logs=652K, /tmp=0, docker unavailable; largest safe-observed area is /Users/e/Library ~70G, needs owner/operator cleanup decision",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -33,6 +33,13 @@ job "math-explore" {
     attribute = "${meta.has_claude}"
     value     = "true"
   }
+  # Linux only: the engine provisioner (which keeps creds fresh + advertises has_claude) is
+  # Linux-only, so a non-Linux node's has_claude can be stale. Keep explorers on the 5
+  # provisioner-maintained Linux nodes where Claude creds are guaranteed current.
+  constraint {
+    attribute = "${attr.kernel.name}"
+    value     = "linux"
+  }
   constraint {
     attribute = "${attr.driver.raw_exec}"
     value     = "1"

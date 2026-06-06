@@ -1440,3 +1440,39 @@
 {"ts":"2026-06-06T04:11:40Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}
 {"ts":"2026-06-06T07:56:33Z","node":"oraclebox1","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}
 {"ts":"2026-06-06T07:57:13Z","node":"oraclebox1","event":"cluster-health sweep: quorum 3/3, six live roster clients ready/eligible with engines+maintenance-agent; emitted infra task t-0092 for stale duplicate bigo-server client 2a05707f; claim released"}
+{"ts":"2026-06-06T09:02:21Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T09:32:31Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T09:36:16Z","node":"bigo-server","source":"maintenance-agent","action":"cluster-health-sweep","result":"ok","detail":"quorum 3/3; roster ready+eligible with engines and maintenance-agent; self ensure-engines refreshed; no peer claims; tailscale inferred from live Nomad heartbeats because local tailscale CLI is absent"}
+{"ts":"2026-06-06T09:36:45Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T10:06:55Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T10:12:39Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T10:42:49Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T10:42:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-06T11:13:01Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T11:13:03Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-06T11:43:13Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T11:43:15Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-06T12:13:25Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T12:13:27Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-06T12:43:36Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T12:53:37Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-06T12:55:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"health-duplicate-bigo-20260606T125040Z"}
+{"ts":"2026-06-06T12:58:50Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"health-duplicate-bigo-20260606T125040Z rc=0"}
+{"ts":"2026-06-06T13:24:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T13:28:18Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"cluster-health-sweep","status":"ok","detail":"quorum=3/3; nodes=6/6 ready; maintenance-agent=6/6 running; bigo-server engines=claude,codex; no peer fix needed; tailscale-cli unavailable in snap session"}
+{"ts":"2026-06-06T13:29:48Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T13:59:57Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T14:02:36Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T14:06:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T14:10:06Z","node":"bigo-server","source":"codex-health-sweep","action":"cluster-sweep","result":"ok","detail":"quorum=3/3 nodes=6/6 ready maint=6/6 running self_repo_dirty ahead3 behind6 disk_home=88% no_claims no_fixes"}
+{"ts":"2026-06-06T14:10:42Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T14:40:52Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T14:45:59Z","node":"bigo-server","source":"maintenance-agent","action":"cluster-sweep","result":"ok","detail":"quorum 3/3; nodes ready 6/6; maintenance-agent running 6/6; refreshed bigo-server ensure-engines"}
+{"ts":"2026-06-06T14:46:48Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T15:00:07Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"1 commit(s) to running math-formalizer"}
+{"ts":"2026-06-06T15:16:58Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T15:17:00Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-06T15:47:10Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T15:47:14Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-06T16:10:11Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"1 commit(s) to running math-formalizer"}
+{"ts":"2026-06-06T16:17:24Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

@@ -22,9 +22,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1780611200.8395915,
-    "updated_by": "V1410-1",
-    "value": "OK-2026-06-04T22:13:20Z leader quorum3/3voters(V1410-1+claudebox+oraclebox1 build2.0.2) 6/7clients-ready engines claude+codex disk6% maint-agent 5/5linux; windesk down 00:55Z already-escalated t-0081"
+    "updated": 1780754642.0696907,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-06T14:04:02Z"
   },
   "health:bigo-server": {
     "updated": 1780732633.8472302,
@@ -37,15 +37,14 @@
     "value": "DONE-2026-06-04T11:21:16Z"
   },
   "health:death-star": {
-    "expires": 1780568002.267214,
-    "updated": 1780481602.267213,
+    "updated": 1780754642.102103,
     "updated_by": "bigo-server",
-    "value": "bigo-server: flapping (No path to node) - breaks codex-tui; tracked in fleet/projects/codex-tui-availability.md; needs on-node stabilization"
+    "value": "DONE-2026-06-06T14:04:02Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1780683385.7627583,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-05T18:16:25Z"
+    "updated": 1780754642.1347442,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-06T14:04:02Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,

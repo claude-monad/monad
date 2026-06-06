@@ -1,0 +1,10 @@
+{
+  "id": "t-0089",
+  "type": "infra",
+  "scope": "eliotts-mac-mini is ready/eligible and advertises claude,codex, but maintenance-agent has no running alloc there because jobs/maintenance-agent.hcl constrains kernel.name=linux; define/deploy a Darwin equivalent or update coverage policy.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "done",
+  "owner": null,
+  "parent": null
+}

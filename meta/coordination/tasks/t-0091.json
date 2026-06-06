@@ -1,0 +1,10 @@
+{
+  "id": "t-0091",
+  "type": "infra",
+  "scope": "Investigate Eliotts-Mac-mini.local disk pressure: macOS Data volume 94% used with 13Gi free; repo logs 576K, /private/tmp visible top-level about 280MiB, no Docker daemon/local snapshots; avoid broad cache deletion without operator review.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

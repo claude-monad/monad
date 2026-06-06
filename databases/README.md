@@ -114,8 +114,11 @@ compute jobs going forward.
 - `results.derivation` — `claim_hash` (PK) = `sha256(program_hash ‖ env_hash ‖ input_hash)`, plus
   `program_ref` (git `path@commit` or label) and `args` (jsonb).
 - `results.output` — binds `claim_hash → output_hash`, stores the output inline (base64, ≤128 KiB)
-  or a MinIO `output_ref` (large blobs — upload still TODO), plus `rc`, `wall_ms`, `node`, `engine`,
-  and `verified` (`tier1` | `reproduced` | `MISMATCH`).
+  or, for larger outputs, in MinIO content-addressed by `output_hash` with `output_ref` set to
+  `minio://results/<output_hash>` (uploaded/fetched by `scripts/s3-blob.py`, a stdlib-only SigV4
+  client — no `mc`/`aws`/`boto3` needed); plus `rc`, `wall_ms`, `node`, `engine`, and `verified`
+  (`tier1` | `reproduced` | `MISMATCH`). `get`/`verify` transparently fetch the blob, so MinIO
+  outputs get the same Tier-1 integrity check as inline ones.
 
 ```bash
 # record a result (any node; drives psql through the postgres alloc when psql is absent locally)

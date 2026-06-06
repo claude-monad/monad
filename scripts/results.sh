@@ -11,7 +11,8 @@
 #   output_hash  = sha256(output bytes)
 #
 # A row binds claim_hash -> output_hash + provenance. Index lives in the fleet Postgres
-# (`results` schema); large blobs go to MinIO (TODO) — small outputs are stored inline (base64).
+# (`results` schema); outputs >128KiB go to MinIO content-addressed by output_hash (via
+# scripts/s3-blob.py), referenced as minio://<bucket>/<hash>; smaller outputs are inline (base64).
 #
 # Usage:
 #   results.sh put  --program FILE --env ENV [--args JSON] [--output FILE|-] \
@@ -64,6 +65,33 @@ pg_sql() {
 }
 sqlq() { printf "%s" "$1" | sed "s/'/''/g"; }   # single-quote escape for SQL literals
 
+# ---- MinIO blob storage (large outputs) ------------------------------------
+# Outputs larger than the inline threshold are content-addressed by output_hash and stored in
+# the cluster MinIO (jobs/minio-storage.hcl), referenced from Postgres as minio://<bucket>/<hash>.
+# Creds come from the same Nomad var as the job; the endpoint from service discovery. Transport is
+# scripts/s3-blob.py (stdlib-only SigV4 — no mc/aws/boto3 needed). MINIO_BUCKET defaults to results.
+MINIO_BUCKET="${MINIO_BUCKET:-results}"
+_MINIO_READY=""
+minio_init() {  # returns 0 if MinIO is usable, 1 otherwise (caller decides whether to fail)
+  [ "$_MINIO_READY" = "1" ] && return 0
+  command -v python3 >/dev/null 2>&1 || return 1
+  export S3_ACCESS_KEY="$(nomad var get -item=MINIO_ROOT_USER nomad/jobs/minio-storage 2>/dev/null)"
+  export S3_SECRET_KEY="$(nomad var get -item=MINIO_ROOT_PASSWORD nomad/jobs/minio-storage 2>/dev/null)"
+  [ -n "$S3_ACCESS_KEY" ] && [ -n "$S3_SECRET_KEY" ] || return 1
+  if [ -z "${S3_ENDPOINT:-}" ]; then
+    S3_ENDPOINT="$(nomad service info -json minio-api 2>/dev/null \
+      | python3 -c 'import sys,json
+try:
+    d=json.load(sys.stdin); print(f"{d[0][\"Address\"]}:{d[0][\"Port\"]}",end="")
+except Exception: pass' 2>/dev/null)"
+  fi
+  [ -n "${S3_ENDPOINT:-}" ] || S3_ENDPOINT="100.96.31.66:9000"
+  export S3_ENDPOINT S3_BUCKET="$MINIO_BUCKET"
+  _MINIO_READY=1; return 0
+}
+minio_put() { minio_init || return 1; python3 "$HERE/s3-blob.py" put "$1" "$2"; }   # key file
+minio_get() { minio_init || return 1; python3 "$HERE/s3-blob.py" get "$1"; }         # key -> stdout
+
 # ---- hashing helpers -------------------------------------------------------
 canon_args() {  # canonical JSON if valid json, else raw string; "" if empty
   local a="$1"; [ -z "$a" ] && { printf ''; return; }
@@ -101,13 +129,15 @@ cmd_put() {
   if [ "$output" = "-" ]; then cat >"$tmp"; else cat "$output" >"$tmp"; fi
   output_hash="$(sha256 <"$tmp")"
   obytes="$(wc -c <"$tmp" | tr -d ' ')"
-  # inline if small (<131072 bytes raw), else leave a MinIO TODO marker
+  # inline if small (<=131072 bytes raw), else upload to MinIO content-addressed by output_hash
   local inline_sql="NULL" ref_sql="NULL"
   if [ "$obytes" -le 131072 ]; then
     ob64="$(base64 -w0 <"$tmp")"
     inline_sql="'$(sqlq "$ob64")'"
   else
-    ref_sql="'minio://results/${output_hash} (TODO: upload)'"
+    minio_put "$output_hash" "$tmp" \
+      || die "put: output is ${obytes}B (>128KiB) but MinIO upload failed; not recording a row"
+    ref_sql="'minio://${MINIO_BUCKET}/${output_hash}'"
   fi
   [ -z "$pref" ] && pref="$program"
   [ -z "$engine" ] && engine="${MONAD_ENGINE:-}"
@@ -164,11 +194,20 @@ SELECT output_hash,bytes,rc,wall_ms,node,engine,verified,produced_at,
 FROM results.output WHERE claim_hash='$(sqlq "$h")';
 SQL
   echo "== output =="
-  local b64; b64="$(pg_sql -tA <<SQL
-SELECT coalesce(output_inline,'') FROM results.output WHERE claim_hash='$(sqlq "$h")' LIMIT 1;
+  local meta b64 ref
+  meta="$(pg_sql -tA <<SQL
+SELECT coalesce(output_inline,''), coalesce(output_ref,'')
+FROM results.output WHERE claim_hash='$(sqlq "$h")' LIMIT 1;
 SQL
 )"
-  [ -n "$b64" ] && printf '%s' "$b64" | tr -d '\r\n' | base64 -d 2>/dev/null || echo "(no inline output)"
+  IFS='|' read -r b64 ref <<<"$meta"
+  if [ -n "$b64" ]; then
+    printf '%s' "$b64" | tr -d '\r\n' | base64 -d 2>/dev/null
+  elif [ "${ref#minio://${MINIO_BUCKET}/}" != "$ref" ]; then
+    minio_get "${ref#minio://${MINIO_BUCKET}/}" || die "get: blob fetch from MinIO failed ($ref)"
+  else
+    echo "(no inline output${ref:+; ref=$ref})"
+  fi
 }
 
 cmd_verify() {
@@ -176,25 +215,32 @@ cmd_verify() {
   local rerun=0; [ "${1:-}" = "--rerun" ] && rerun=1
   # pull the stored tuple
   local row; row="$(pg_sql -tA <<SQL
-SELECT d.program_hash,d.env_hash,d.input_hash,o.output_hash,coalesce(o.output_inline,'')
+SELECT d.program_hash,d.env_hash,d.input_hash,o.output_hash,coalesce(o.output_inline,''),coalesce(o.output_ref,'')
 FROM results.derivation d JOIN results.output o USING(claim_hash)
 WHERE d.claim_hash='$(sqlq "$h")' LIMIT 1;
 SQL
 )"
   [ -n "$row" ] || die "verify: claim_hash not found"
-  local ph eh ih oh b64
-  IFS='|' read -r ph eh ih oh b64 <<<"$row"
+  local ph eh ih oh b64 ref
+  IFS='|' read -r ph eh ih oh b64 ref <<<"$row"
   # Tier-1a: the tuple is internally consistent (claim_hash binds the three)
   local recomputed; recomputed="$(printf '%s%s%s' "$ph" "$eh" "$ih" | sha256)"
   if [ "$recomputed" = "$h" ]; then echo "TIER1 claim_hash: OK (binds program+env+input)"; else
     echo "TIER1 claim_hash: MISMATCH (stored $h != recomputed $recomputed)"; return 1; fi
-  # Tier-1b: the stored output still hashes to output_hash
+  # Tier-1b: the stored output still hashes to output_hash (inline base64, or the MinIO blob)
+  local actual=""
   if [ -n "$b64" ]; then
-    local actual; actual="$(printf '%s' "$b64" | tr -d '\r\n' | base64 -d 2>/dev/null | sha256)"
+    actual="$(printf '%s' "$b64" | tr -d '\r\n' | base64 -d 2>/dev/null | sha256)"
+  elif [ "${ref#minio://${MINIO_BUCKET}/}" != "$ref" ]; then
+    actual="$(minio_get "${ref#minio://${MINIO_BUCKET}/}" 2>/dev/null | sha256)" || actual=""
+  fi
+  if [ -n "$actual" ]; then
     if [ "$actual" = "$oh" ]; then echo "TIER1 output integrity: OK ($oh)"; else
       echo "TIER1 output integrity: MISMATCH (stored $oh != actual $actual)"; return 1; fi
+  elif [ -n "$ref" ]; then
+    echo "TIER1 output integrity: SKIP (MinIO blob $ref not fetchable from this node)"
   else
-    echo "TIER1 output integrity: SKIP (no inline output / blob in MinIO)"
+    echo "TIER1 output integrity: SKIP (no inline output and no blob ref)"
   fi
   [ "$rerun" = 1 ] && echo "TIER2 re-derivation: not yet implemented in this slice (needs program bytes + docker)"
   echo "VERIFIED (tier1): result is the recorded output of the named program/env/input."

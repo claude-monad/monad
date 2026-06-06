@@ -1,15 +1,10 @@
 {
   "id": "t-0084",
-  "type": "infra",
-  "scope": "Owner request: build an always-on pool of about 4-5 containerized Codex math researchers that can be queried back and forth. Reuse agent-mesh/codex-worker machinery, run with MONAD_ENGINE=codex, spread onto compute-capable has_codex nodes, publish a roster/status, and keep reservations bounded so keystone nodes are not starved. See fleet/projects/math-codex-research-pool.md.",
-  "repo": "eliott-monad/monad",
-  "payload": {
-    "requested_by": "owner",
-    "project": "math-codex-research-pool",
-    "target_pool_size": "4-5",
-    "preferred_engine": "codex"
-  },
+  "type": "math",
+  "scope": "S630 HYP-2280: PROVE C(19) (=> LRC(19), open for n>13) via the residue-profile DP \u2014 the minimizer is a red herring; need COVERAGE. Run the dodge(m<=37) u B coverage check over ALL residue profiles mod L=lcm(2..37) (finite, box-free, HYP-2256); unramified 37 (prime, 2 primitive) has no ramified strata. If every profile is covered => C(19) proven. Generalize to all unramified n (2n-1 prime). Builds on t-0083.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S630"
 }

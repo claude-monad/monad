@@ -978,6 +978,7 @@ main() {
         codex)            cmd_codex "$@" ;;
         doctor)           cmd_doctor "$@" ;;
         memory)           "$REPO_DIR/scripts/cluster-memory.sh" "$@" ;;
+        results)          "$REPO_DIR/scripts/results.sh" "$@" ;;
         secrets)          cmd_secrets "$@" ;;
         storage)          cmd_storage "$@" ;;
         sched)            NOMAD_ADDR="$NOMAD_ADDR" python3 "$REPO_DIR/scripts/llm-scheduler.py" "$@" ;;

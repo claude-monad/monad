@@ -63,6 +63,7 @@ The default `fleet` database is shared. To avoid stepping on each other:
 |------|------|-------------------|---------|
 | `fleet` | database | shared | default shared DB |
 | `public` | schema | shared | default schema — prefer a named schema for app data |
+| `results` | schema | shared (`scripts/results.sh`) | **verifiable master results store** — content-addressed computation provenance (see Consumers) |
 
 ## Backups & restore
 
@@ -102,6 +103,37 @@ PGPASSWORD=… psql -h 100.78.218.70 -U fleet -d fleet
 ```
 
 ## Consumers
+
+### `results` schema — verifiable master results store (`scripts/results.sh`, `monad results`)
+
+The cluster's provenance ledger: every recorded computation result is **content-addressed** so it
+is easily verifiable as the output of a specific program in a specific environment on a specific
+input (see the design RFC `databases/PROPOSAL-results-and-graph.md`). Use it for **all** math /
+compute jobs going forward.
+
+- `results.derivation` — `claim_hash` (PK) = `sha256(program_hash ‖ env_hash ‖ input_hash)`, plus
+  `program_ref` (git `path@commit` or label) and `args` (jsonb).
+- `results.output` — binds `claim_hash → output_hash`, stores the output inline (base64, ≤128 KiB)
+  or a MinIO `output_ref` (large blobs — upload still TODO), plus `rc`, `wall_ms`, `node`, `engine`,
+  and `verified` (`tier1` | `reproduced` | `MISMATCH`).
+
+```bash
+# record a result (any node; drives psql through the postgres alloc when psql is absent locally)
+python3 mycompute.py | monad results put --program mycompute.py --env compute:host --args '{"n":5}' --rc 0
+
+# execute IN the pinned toolchain image AND record (reproducible; needs docker — run on a docker node/container)
+monad results run --program 04-computation/a000568_enum.py --env compute -- 100
+
+monad results get    <claim_hash>      # show derivation + output
+monad results verify <claim_hash>      # Tier-1: claim_hash binds program+env+input, output hash intact
+monad results list                     # recent derivations
+monad results stats                    # counts (incl. reproduced / MISMATCH)
+```
+
+First real row: brute-force non-isomorphic tournament count (A000568 = 1,1,1,2,4,12 for n=0..5),
+recorded + Tier-1 verified 2026-06-06. **Open build-out:** MinIO blob upload for large outputs,
+Tier-2 re-derivation in `verify --rerun`, a `results-verify` periodic job (mirror
+`postgres-verify`), and the companion `graph` schema (nodes/edges/actions) from the RFC.
 
 ### `health_snapshots` — fleet health time-series (job `jobs/health-history.hcl`)
 

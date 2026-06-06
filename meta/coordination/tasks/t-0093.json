@@ -1,10 +1,10 @@
 {
   "id": "t-0093",
-  "type": "infra",
-  "scope": "bigo-server has stale down/ineligible Nomad client 2a05707f (Nomad 1.9.3, no allocs) alongside healthy live client 26700410; confirm safe cleanup/purge or old agent shutdown",
-  "repo": "eliott-monad/monad",
+  "type": "math",
+  "scope": "S642 THM-420/HYP-2341 (LRC non-transversal dodge proved; C'(n)[2n-1 prime] reduces to the rare \u00b1-transversal/quasi-random core): FINISH C'(n) for the unramified family (n=15,19,21,22,... open >13) by proving every \u00b1-transversal multiple-of-n config is loose. Candidate: a transversal mod 2n-1 blocking all 1-clocks m<=n-1 would need a multiple of every m<=n-1 => show this forces a \u00b1-collision (contradicting transversality, CRT) OR a dominant runner (B'). Else run the residue-profile DP (HYP-2256) restricted to the SMALL transversal core to certify n=15 then n=19 finitely. Then the ramified case 2n-1=p^k (n=14, 27=3^3): the \u00b1-pair structure on (Z/p^k)* + inner-shell correction.",
+  "repo": "eliottcassidy2000/math",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S642"
 }

@@ -1,0 +1,10 @@
+{
+  "id": "t-0093",
+  "type": "infra",
+  "scope": "bigo-server has stale down/ineligible Nomad client 2a05707f (Nomad 1.9.3, no allocs) alongside healthy live client 26700410; confirm safe cleanup/purge or old agent shutdown",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

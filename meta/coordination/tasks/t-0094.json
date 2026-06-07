@@ -1,10 +1,10 @@
 {
   "id": "t-0094",
-  "type": "infra",
-  "scope": "eliotts-mac-mini disk pressure: /System/Volumes/Data at 95%; checked logs=652K, /tmp=0, docker unavailable; largest safe-observed area is /Users/e/Library ~70G, needs owner/operator cleanup decision",
-  "repo": "eliott-monad/monad",
+  "type": "math",
+  "scope": "S643 HYP-2346 (LRC(14) as fiber bundle over LRC(7)): PROVE the fiber dodge always works \u2014 the mult-of-7 sub-config (=7-divided speeds {w_i}, <=4 runners) is lonely within the 7-clock perturbation window (0,1/(2V)); dichotomy V small (window fits sub-config loneliness) vs V large (dominant non-mult-of-7 => B). Verified: at 7-clock danger==mult-of-7 (1500/1500); all loose. Combine with the 27=3^3 ramified shell (THM-420 fails) \u2014 n=14 needs both the 14=2.7 clock-fiber + the 3-adic shell. Converges with opus-S699p/HYP-2282 (monodromy/Rado).",
+  "repo": "eliottcassidy2000/math",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "S643"
 }

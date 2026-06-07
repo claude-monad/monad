@@ -1657,6 +1657,33 @@
 {"ts":"2026-06-06T22:22:49Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
 {"ts":"2026-06-06T22:25:53Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts": "2026-06-06T22:27:36.791744Z", "node": "eliotts-mac-mini", "type": "health-sweep", "status": "ok", "summary": "quorum=3/3 nodes=5/6-ready(bigo-server-down-known) maint-agent=all-5-running engines=claude+codex disk=87%-28Gi-free"}
+{"ts":"2026-06-06T22:34:08Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T22:37:40Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T22:38:34Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T00:24:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-07T00:28:22Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T00:30:14Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T00:52:48Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-07T01:00:52Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T01:02:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T01:27:37Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"5 commit(s) to running math-formalizer"}
+{"ts":"2026-06-07T01:32:41Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T01:42:41Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T02:05:01Z","node":"bigo-server","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T02:12:55Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T02:22:56Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T02:32:21Z","node":"bigo-server","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T02:53:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T02:55:01Z","node":"bigo-server","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T03:03:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T03:20:53Z","node":"bigo-server","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T03:33:18Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T03:34:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T04:04:27Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T04:14:28Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T04:37:58Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-07T04:39:05Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-07T04:45:38Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-06T22:32:06Z","node":"death-star","source":"explore-watch","action":"notify-active","result":"ok","detail":"? commit(s); 2 running"}
 {"ts":"2026-06-06T22:32:17Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-06T23:00:08Z","node":"death-star","source":"explore-watch","action":"notify-active","result":"ok","detail":"3 commit(s); 4 running"}
@@ -1675,6 +1702,26 @@
 {"ts":"2026-06-06T22:31:22Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
 {"ts":"2026-06-06T22:31:22Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
 {"ts":"2026-06-06T22:57:41Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T22:59:27Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T23:30:10Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T23:31:38Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-06T23:37:29Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-06T23:37:29Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-06T23:42:42Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-06T23:42:42Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-06T23:43:52Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-06T23:43:52Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T00:03:43Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T00:03:45Z","node":"oraclebox1","source":"node-doctor","action":"auto-repair","result":"fail","detail":"3 issues"}
+{"ts":"2026-06-07T00:04:48Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-07T00:36:00Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T00:37:03Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-07T00:50:33Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"health-20260607T002959Z"}
+{"ts":"2026-06-07T00:51:25Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T00:51:25Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T00:51:28Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"start","detail":"health-20260607T002959Z"}
+{"ts":"2026-06-07T00:54:50Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"delegated-task","status":"ok","detail":"health-20260607T002959Z rc=0"}
+{"ts":"2026-06-07T00:55:03Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-06T23:04:16Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-06T23:15:09Z","node":"death-star","source":"explore-watch","action":"notify-active","result":"ok","detail":"5 commit(s); 4 running"}
 {"ts":"2026-06-06T23:30:10Z","node":"death-star","source":"explore-watch","action":"notify-active","result":"ok","detail":"5 commit(s); 3 running"}
@@ -1726,3 +1773,58 @@
 {"ts":"2026-06-07T05:30:11Z","node":"death-star","source":"explore-watch","action":"spawn","result":"ok","detail":"1 explorer(s) for 8 commit(s)"}
 {"ts":"2026-06-07T05:59:31Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-07T06:00:14Z","node":"death-star","source":"explore-watch","action":"spawn","result":"ok","detail":"1 explorer(s) for 7 commit(s)"}
+{"ts":"2026-06-07T04:54:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T05:24:25Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T05:25:58Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T05:56:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T00:57:00Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T01:33:34Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T01:34:15Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T01:34:15Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T01:37:20Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T01:38:17Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T02:08:28Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T02:09:11Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T02:39:21Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T02:40:57Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T03:11:07Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T03:11:52Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T03:16:23Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T03:16:23Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T03:27:57Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T03:27:57Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T03:37:22Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T03:37:22Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T03:39:09Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T03:39:09Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T03:40:45Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T03:40:45Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T03:45:07Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T03:45:07Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T03:49:35Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T03:51:25Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T03:51:25Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T04:04:52Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T04:04:52Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T04:07:20Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T04:07:20Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T04:10:54Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T04:16:36Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-07T04:27:53Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T04:27:53Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T04:43:11Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T04:43:11Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T04:46:12Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T04:47:27Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T04:47:27Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T04:50:10Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T04:50:10Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T04:53:12Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T04:54:07Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T05:17:36Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T05:17:36Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T05:19:16Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T05:19:16Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T05:23:53Z","node":"oraclebox1","source":"maintenance-agent","type":"mesh","action":"attach","status":"ok","detail":"agent-maint-oraclebox1"}
+{"ts":"2026-06-07T05:23:53Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
+{"ts":"2026-06-07T05:26:56Z","node":"oraclebox1","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

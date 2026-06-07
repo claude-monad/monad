@@ -1,10 +1,10 @@
 {
   "id": "t-0095",
   "type": "infra",
-  "scope": "oraclebox1 Nomad client heartbeat-flapping every ~30-60s (missed->reregistered, see node 73795fbb events 2026-06-06T19:40-19:48Z); repeatedly marks node down and kills/reschedules its maintenance-agent alloc. Quorum unaffected (3/3 voters alive), alloc self-recovers. Diagnose locally on oraclebox1: tailscale link stability to leader 100.75.75.39:4647, client heartbeat_grace/network. Flagged by death-star maint sweep.",
+  "scope": "claudebox nomad CLIENT wedged: 8 allocs pending/0 running (raw_exec stuck); server-voter healthy so quorum=3 OK. V1410-1 cannot SSH (tailscale SSH ACL rejects all users). Needs node-local 'systemctl restart nomad' on claudebox. Fix queued in maintenance/claudebox/queue/; claimed health:claudebox.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

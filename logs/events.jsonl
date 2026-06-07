@@ -1681,3 +1681,48 @@
 {"ts":"2026-06-06T23:34:21Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-06T22:59:36Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-06T23:29:51Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T00:05:02Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T00:08:37Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T00:12:25Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T00:18:38Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T00:31:14Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T00:38:23Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T00:42:32Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T00:48:43Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T00:50:01Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T00:55:01Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T00:58:43Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T01:05:01Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T01:20:01Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T01:28:48Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T01:35:01Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T01:38:48Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T01:45:01Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T01:50:00Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T01:55:00Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T02:08:53Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T02:18:53Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T02:45:00Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T02:48:58Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T02:58:58Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T03:15:35Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T03:29:03Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T03:35:02Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T03:39:04Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T04:02:15Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T04:09:08Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T04:17:07Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T04:19:14Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T04:20:32Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T04:30:13Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T04:35:04Z","node":"death-star","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T04:49:18Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T04:56:32Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T04:59:19Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T05:16:22Z","node":"death-star","source":"explore-watch","action":"poll","result":"fail","detail":"ls-remote failed"}
+{"ts":"2026-06-07T05:17:39Z","node":"death-star","source":"formalize-watch","action":"notify-active","result":"ok","detail":"1 commit(s) to running math-formalizer"}
+{"ts":"2026-06-07T05:29:23Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T05:29:27Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-07T05:30:11Z","node":"death-star","source":"explore-watch","action":"spawn","result":"ok","detail":"1 explorer(s) for 8 commit(s)"}
+{"ts":"2026-06-07T05:59:31Z","node":"death-star","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T06:00:14Z","node":"death-star","source":"explore-watch","action":"spawn","result":"ok","detail":"1 explorer(s) for 7 commit(s)"}

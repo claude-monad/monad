@@ -1,10 +1,10 @@
 {
   "id": "t-0095",
   "type": "infra",
-  "scope": "oraclebox1 down: Nomad server 'failed' + client 'down' (~45m), only reachable via DERP relay (no direct route from bigo-server). Quorum holds at 2/3 (V1410-1+claudebox) but redundancy lost. Needs nomad restarted ON the oraclebox1 host (hosts cluster-conductor w/ Claude creds). Cannot fix remotely from bigo-server. Self-heal queued at monad/maintenance/oraclebox1/queue/.",
+  "scope": "claudebox nomad CLIENT wedged: 8 allocs pending/0 running (raw_exec stuck); server-voter healthy so quorum=3 OK. V1410-1 cannot SSH (tailscale SSH ACL rejects all users). Needs node-local 'systemctl restart nomad' on claudebox. Fix queued in maintenance/claudebox/queue/; claimed health:claudebox.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

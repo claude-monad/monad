@@ -1,0 +1,7 @@
+{
+  "id": "oraclebox1-rejoin-quorum",
+  "created": "2026-06-07T12:18:16Z",
+  "from": "bigo-server(V1410-1)",
+  "priority": "high",
+  "task": "On boot: your Nomad server is 'failed' in the cluster and this node was unreachable on Tailscale (ping 100% loss, rx 0). 1) Verify tailscale up + reachable. 2) Restart nomad (systemctl restart nomad or service). 3) Confirm you rejoin as Raft voter: 'nomad server members' should show oraclebox1 alive. 4) Run meta/agent/ensure-engines.sh. Quorum currently 2/3 (V1410-1 leader + claudebox); restoring you returns it to 3/3."
+}

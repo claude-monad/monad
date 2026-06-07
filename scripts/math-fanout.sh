@@ -17,22 +17,34 @@ log() { echo "[fanout $(date '+%H:%M:%S')] $*"; }
 mapfile -t NODES < <(python3 - "$NOMAD_ADDR" <<'PY'
 import json,sys,urllib.request
 base=sys.argv[1].rstrip('/')
-def api(p):
-    return json.load(urllib.request.urlopen(base+p,timeout=12))
-for n in api('/v1/nodes'):
+def api(p,timeout=10,retries=1):
+    for a in range(retries+1):
+        try:
+            return json.load(urllib.request.urlopen(base+p,timeout=timeout))
+        except Exception:
+            if a==retries: raise
+try:
+    nodes=api('/v1/nodes')
+except Exception as e:
+    sys.stderr.write(f"cannot list nodes: {e}\n"); sys.exit(1)
+for n in nodes:
     if n.get('Status')!='ready': continue
-    d=api('/v1/node/'+n['ID'])
+    # Tolerate a slow/unreachable node — skip it rather than crash the whole fanout.
+    try:
+        d=api('/v1/node/'+n['ID'])
+        allocs=api('/v1/node/'+n['ID']+'/allocations')
+    except Exception:
+        sys.stderr.write(f"skip {n.get('Name')} (api slow)\n"); continue
     attrs=d.get('Attributes',{}) or {}; meta=d.get('Meta',{}) or {}
     if attrs.get('kernel.name')!='linux': continue
     if str(meta.get('has_claude','')).lower()!='true': continue
-    # crude load guard: skip if allocated mem fraction is high
     nr=d.get('NodeResources',{}); tot=(nr.get('Memory',{}) or {}).get('MemoryMB',0) or 1
     amem=0
-    for al in api('/v1/node/'+n['ID']+'/allocations'):
+    for al in allocs:
         if al.get('ClientStatus')=='running':
             for t in (al.get('AllocatedResources',{}).get('Tasks') or {}).values():
                 amem+=(t.get('Memory') or {}).get('MemoryMB',0)
-    if amem/tot > 0.75:
+    if amem/tot > 0.80:
         sys.stderr.write(f"skip {n['Name']} (mem {amem}/{tot})\n"); continue
     print(n['Name'])
 PY

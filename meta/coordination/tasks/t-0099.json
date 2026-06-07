@@ -1,0 +1,10 @@
+{
+  "id": "t-0099",
+  "type": "math",
+  "scope": "S713 THM-435 (Pfaffian = even/odd seam). Follow-ups: (1) Pf(S_T) odd is the even-n sibling of Redei H-odd \u2014 is there a UNIFIED odd-invariant subsuming both (H for all n, Pf for even n) via the conflict-graph/OCF (H=I(Omega,2))? Compute Pf vs OCF/independence-poly. (2) The complement mod-4 phase Pf(T^op)=(-1)^(n/2)Pf(T): tie to self-complementary tournaments (n=2 mod4: SC forces sign constraint via the iso permutation parity) and to the reciprocity i*sqrt(p) vs sqrt(p) (THM-213 Paley Pf minor = p^((p-3)/4)). (3) Extend the vertex-deletion ladder: is the whole adjugate adj(S)=w w^T (odd n) the even-(n-1) Pfaffian Gram structure? (4) 2-adic: relate |Pf| distribution multiplicities to THM-305 v_2(T(n))=(n-1)/2. PR #72.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S713"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0096",
+  "type": "infra",
+  "scope": "oraclebox1 Nomad client flapping despite direct Tailscale path; needs on-node client-only restart (not server). See monad/maintenance/oraclebox1/queue/20260607T042504Z-tailscale-relay-flap.md",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

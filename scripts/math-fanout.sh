@@ -13,42 +13,19 @@ NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"; export NOMAD_ADDR
 CAMPAIGN_VAR="${CAMPAIGN_VAR:-monad/campaign/signed-lrc}"
 log() { echo "[fanout $(date '+%H:%M:%S')] $*"; }
 
-# Capable nodes: ready + linux + has_claude + NOT flagged overloaded by the governor.
-mapfile -t NODES < <(python3 - "$NOMAD_ADDR" <<'PY'
-import json,sys,urllib.request
-base=sys.argv[1].rstrip('/')
-def api(p,timeout=10,retries=1):
-    for a in range(retries+1):
-        try:
-            return json.load(urllib.request.urlopen(base+p,timeout=timeout))
-        except Exception:
-            if a==retries: raise
-try:
-    nodes=api('/v1/nodes')
-except Exception as e:
-    sys.stderr.write(f"cannot list nodes: {e}\n"); sys.exit(1)
-for n in nodes:
-    if n.get('Status')!='ready': continue
-    # Tolerate a slow/unreachable node — skip it rather than crash the whole fanout.
-    try:
-        d=api('/v1/node/'+n['ID'])
-        allocs=api('/v1/node/'+n['ID']+'/allocations')
-    except Exception:
-        sys.stderr.write(f"skip {n.get('Name')} (api slow)\n"); continue
-    attrs=d.get('Attributes',{}) or {}; meta=d.get('Meta',{}) or {}
-    if attrs.get('kernel.name')!='linux': continue
-    if str(meta.get('has_claude','')).lower()!='true': continue
-    nr=d.get('NodeResources',{}); tot=(nr.get('Memory',{}) or {}).get('MemoryMB',0) or 1
-    amem=0
-    for al in allocs:
-        if al.get('ClientStatus')=='running':
-            for t in (al.get('AllocatedResources',{}).get('Tasks') or {}).values():
-                amem+=(t.get('Memory') or {}).get('MemoryMB',0)
-    if amem/tot > 0.80:
-        sys.stderr.write(f"skip {n['Name']} (mem {amem}/{tot})\n"); continue
-    print(n['Name'])
-PY
-)
+# Capable nodes = the Linux Claude roster (the engine provisioner keeps has_claude fresh on these),
+# filtered to `ready` (fast, from `nomad node status`) and minus any the governor flags OVERLOAD.
+# We deliberately avoid the per-node /allocations API — it's slow under cluster load and was
+# skipping everything. ROSTER is overridable via env.
+ROSTER="${ROSTER:-death-star oraclebox1 claudebox bigo-server V1410-1}"
+READY="$(nomad node status 2>/dev/null | awk '$NF=="ready"{print $4}')"
+OVERLOADED="$(python3 "$SCRIPT_DIR/llm-scheduler.py" report 2>/dev/null | awk '/OVERLOAD/{print $1}')"
+NODES=()
+for n in $ROSTER; do
+  echo "$READY" | grep -qx "$n" || { log "skip $n (not ready)"; continue; }
+  echo "$OVERLOADED" | grep -qx "$n" && { log "skip $n (governor: overloaded)"; continue; }
+  NODES+=("$n")
+done
 
 [ "${#NODES[@]}" -gt 0 ] || { log "no capable nodes found"; exit 0; }
 log "capable nodes: ${NODES[*]}"

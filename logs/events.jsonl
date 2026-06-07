@@ -1885,3 +1885,22 @@
 {"ts":"2026-06-07T16:29:26Z","node":"bigo-server","source":"maintenance-agent","type":"health","action":"sweep","status":"ok","detail":"self healthy (disk 90%/11G free; 413M logs is untracked research swarm output not junk; 3 docker active; no safe prune; git clean+0 behind; nomad ready; engines claude+codex advertised); roster 4/4 reachable ready+eligible w/ running maint-agent (V1410-1 leader,bigo-server,claudebox,eliotts-mac-mini); oraclebox1 DOWN (server failed+node down, relay-only, tailscale ping timeout) - unreachable for remote fix, already claimed(DONE)+self-heal queued(rejoin-quorum,relay-flap)+open t-0096, not re-stampeding; quorum OK 2/3 (V1410-1+claudebox); death-star down=non-roster ignored"}
 {"ts":"2026-06-07T16:29:34Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-07T16:59:46Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T17:01:15Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T17:31:24Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T17:32:26Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T18:02:36Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T18:03:47Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T18:33:57Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T18:35:01Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T19:05:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T19:06:39Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T19:36:47Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T19:38:19Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T20:08:27Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T20:09:15Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T20:39:23Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T20:40:10Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T21:10:17Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T21:11:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T21:41:24Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T16:45:00Z","node":"bigo-server","source":"maintenance-agent","type":"health","action":"sweep","status":"ok","detail":"self healthy (disk 91%/11G free, bulk is docker not logs; 414M logs=research swarm output not junk; 3 docker active so no idle prune; git clean+0 behind origin; nomad node ready+eligible; engines claude+codex advertised+ready); roster 4/4 ready+eligible w/ running maint-agent (V1410-1 leader,bigo-server,claudebox,eliotts-mac-mini); quorum OK 2/3 voters (V1410-1+claudebox alive, oraclebox1 server failed); oraclebox1 DOWN (relay-only on tailscale ~13h, node down) - unreachable for remote fix, already claimed(DONE)+self-heal queued+open t-0096, NOT re-stampeding; death-star down=non-roster ignored"}

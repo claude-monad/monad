@@ -1,7 +1,7 @@
 {
   "id": "t-0095",
   "type": "infra",
-  "scope": "oraclebox1 Nomad client heartbeat-flapping every ~30-60s (missed->reregistered, see node 73795fbb events 2026-06-06T19:40-19:48Z); repeatedly marks node down and kills/reschedules its maintenance-agent alloc. Quorum unaffected (3/3 voters alive), alloc self-recovers. Diagnose locally on oraclebox1: tailscale link stability to leader 100.75.75.39:4647, client heartbeat_grace/network. Flagged by death-star maint sweep.",
+  "scope": "oraclebox1 down: Nomad server 'failed' + client 'down' (~45m), only reachable via DERP relay (no direct route from bigo-server). Quorum holds at 2/3 (V1410-1+claudebox) but redundancy lost. Needs nomad restarted ON the oraclebox1 host (hosts cluster-conductor w/ Claude creds). Cannot fix remotely from bigo-server. Self-heal queued at monad/maintenance/oraclebox1/queue/.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

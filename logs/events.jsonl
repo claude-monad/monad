@@ -1657,3 +1657,30 @@
 {"ts":"2026-06-06T22:22:49Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=1"}
 {"ts":"2026-06-06T22:25:53Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts": "2026-06-06T22:27:36.791744Z", "node": "eliotts-mac-mini", "type": "health-sweep", "status": "ok", "summary": "quorum=3/3 nodes=5/6-ready(bigo-server-down-known) maint-agent=all-5-running engines=claude+codex disk=87%-28Gi-free"}
+{"ts":"2026-06-06T22:34:08Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-06T22:37:40Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-06T22:38:34Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T00:24:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-07T00:28:22Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T00:30:14Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T00:52:48Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-07T01:00:52Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T01:02:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T01:27:37Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"5 commit(s) to running math-formalizer"}
+{"ts":"2026-06-07T01:32:41Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T01:42:41Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T02:05:01Z","node":"bigo-server","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T02:12:55Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T02:22:56Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T02:32:21Z","node":"bigo-server","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T02:53:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T02:55:01Z","node":"bigo-server","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T03:03:07Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T03:20:53Z","node":"bigo-server","source":"formalize-watch","action":"poll","result":"fail","detail":"ls-remote failed for https://github.com/eliottcassidy2000/math.git"}
+{"ts":"2026-06-07T03:33:18Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T03:34:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-07T04:04:27Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-07T04:14:28Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-07T04:37:58Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-07T04:39:05Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-07T04:45:38Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

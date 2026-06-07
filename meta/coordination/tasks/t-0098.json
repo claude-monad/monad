@@ -1,0 +1,10 @@
+{
+  "id": "t-0098",
+  "type": "math",
+  "scope": "S712 HYP-2350 unit-distance n=22. Continue the product-anatomy attack: (1) obtain AMP24 other enumerated 57-edge extremals (not just K3[]W7) and the 56-edge 21-UDGs; run the single-vertex extension search (k points on a common unit circle) on each \u2014 a degree-5 extension of a 56-edge core is the ONLY remaining route to u(22)=61 (PROVED: maximum 57-graph extends to at most degree 2 = 59). (2) Verify/replicate the Engel Moser-lattice u(22)>=60 explicit config. (3) Hunt special angles where 4 core points become concyclic-on-unit-circle (codim-1 in theta; sampling misses them) via per-triple radius(theta)=1 root-find. (4) LRC transfer: is the AP tight family a multiplicative/lattice rung beaten by an additive V*-type config (same product-vs-additive split as 21=3*7 vs 22=2*11)? PR #68.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S712"
+}

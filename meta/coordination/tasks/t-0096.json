@@ -1,0 +1,10 @@
+{
+  "id": "t-0096",
+  "type": "infra",
+  "scope": "oraclebox1 DEGRADED further by 2026-06-07T06:1xZ: now fully down (nomad server member 'failed' + client node 'down', maintenance-agent alloc lost) where it was merely flapping. Tailscale dropped to relay-only ('ord'); ICMP + SSH both time out from V1410-1, so NO remote fix possible. Needs on-node action (systemctl restart nomad, or power/tailscale check). Quorum still OK: V1410-1 leader + claudebox voter = 2/3. Last healthy self-pass 05:26Z. See monad/maintenance/oraclebox1/queue/20260607T042504Z-tailscale-relay-flap.md",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

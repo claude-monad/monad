@@ -1,0 +1,10 @@
+{
+  "id": "t-0097",
+  "type": "math",
+  "scope": "S710 THM-421 (divisor-clock peeling, PROVED CRT) + HYP-2347. Extend the divisor-lattice cover: (H1) recursive divisor tower for n with >=2 distinct prime factors (n=30=2.3.5), residual sizes per level; (H3) enumerate n<=60 where 2n-1 is a prime power (THM-420 ramified set) crossed with composite n = the double-trouble frontier (n=14 first, 2n-1=27=3^3); (H4) LRC(7) base: count floor-vector cells exactly, confirm the 6 arc-confined of 56=A000568(6) are the half-turn-residual-hard types. Prime n -> THM-420 shell; composite n -> THM-421 tower: together partition the open frontier n=15,19,21,22. PR #66.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S710"
+}

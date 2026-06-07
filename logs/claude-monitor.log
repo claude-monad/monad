@@ -2632,3 +2632,162 @@ No allocations to restart
 2026-06-06T23:30:10Z concierge: ok (1 running allocation(s))
 2026-06-06T23:30:11Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
 2026-06-06T23:30:11Z monitor pass complete
+2026-06-06T23:50:07Z monitor pass start
+2026-06-06T23:50:07Z codex-tui: ok (1 running allocation(s))
+2026-06-06T23:50:07Z cluster-conductor: ok (1 running allocation(s))
+2026-06-06T23:50:07Z concierge: blocked; oraclebox1 client is down, so restarting would not place
+2026-06-06T23:50:07Z leonhard: blocked; assistant/dispatch-1780450051-bd7375e3 is pinned through assistant to oraclebox1, currently down
+2026-06-06T23:50:07Z monitor pass complete
+2026-06-07T00:00:08Z monitor pass start
+2026-06-07T00:00:08Z codex-tui: ok (1 running allocation(s))
+2026-06-07T00:00:08Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T00:00:08Z concierge: blocked; oraclebox1 client is down, so restarting would not place
+2026-06-07T00:00:09Z leonhard: blocked; assistant/dispatch-1780450051-bd7375e3 is pinned through assistant to oraclebox1, currently down
+2026-06-07T00:00:09Z monitor pass complete
+2026-06-07T00:20:01Z monitor pass start
+2026-06-07T00:20:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T00:20:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T00:20:01Z concierge: ok (1 running allocation(s))
+2026-06-07T00:20:02Z leonhard: blocked; assistant/dispatch-1780450051-bd7375e3 is pinned through assistant to oraclebox1, currently down
+2026-06-07T00:20:02Z monitor pass complete
+2026-06-07T00:30:06Z monitor pass start
+2026-06-07T00:30:06Z codex-tui: ok (1 running allocation(s))
+2026-06-07T00:30:06Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T00:30:06Z concierge: ok (1 running allocation(s))
+2026-06-07T00:30:07Z leonhard: blocked; assistant/dispatch-1780450051-bd7375e3 is pinned through assistant to oraclebox1, currently down
+2026-06-07T00:30:07Z monitor pass complete
+2026-06-07T00:40:01Z monitor pass start
+2026-06-07T00:40:02Z codex-tui: ok (1 running allocation(s))
+2026-06-07T00:40:02Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T00:40:02Z concierge: ok (1 running allocation(s))
+2026-06-07T00:40:02Z leonhard: blocked; assistant/dispatch-1780450051-bd7375e3 is pinned through assistant to oraclebox1, currently down
+2026-06-07T00:40:02Z monitor pass complete
+2026-06-07T00:50:24Z monitor pass start
+2026-06-07T00:50:24Z codex-tui: ok (1 running allocation(s))
+2026-06-07T00:50:25Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T00:50:25Z concierge: blocked; oraclebox1 client is down, so restarting would not place
+2026-06-07T00:50:25Z leonhard: blocked; assistant/dispatch-1780450051-bd7375e3 is pinned through assistant to oraclebox1, currently down
+2026-06-07T00:50:25Z monitor pass complete
+2026-06-07T01:40:01Z monitor pass start
+2026-06-07T01:40:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T01:40:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T01:40:02Z concierge: ok (1 running allocation(s))
+2026-06-07T01:40:02Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T01:40:02Z monitor pass complete
+2026-06-07T02:00:01Z monitor pass start
+2026-06-07T02:00:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T02:00:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T02:00:01Z concierge: ok (1 running allocation(s))
+2026-06-07T02:00:02Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T02:00:02Z monitor pass complete
+2026-06-07T02:10:06Z monitor pass start
+2026-06-07T02:10:06Z codex-tui: ok (1 running allocation(s))
+2026-06-07T02:10:06Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T02:10:06Z concierge: ok (1 running allocation(s))
+2026-06-07T02:10:07Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T02:10:07Z monitor pass complete
+2026-06-07T02:20:00Z monitor pass start
+2026-06-07T02:20:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T02:20:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T02:20:01Z concierge: ok (1 running allocation(s))
+2026-06-07T02:20:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T02:20:01Z monitor pass complete
+2026-06-07T02:30:01Z monitor pass start
+2026-06-07T02:30:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T02:30:02Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T02:30:02Z concierge: ok (1 running allocation(s))
+2026-06-07T02:30:02Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T02:30:02Z monitor pass complete
+2026-06-07T02:50:00Z monitor pass start
+2026-06-07T02:50:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T02:50:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T02:50:01Z concierge: ok (1 running allocation(s))
+2026-06-07T02:50:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T02:50:01Z monitor pass complete
+2026-06-07T03:10:00Z monitor pass start
+2026-06-07T03:10:00Z codex-tui: ok (1 running allocation(s))
+2026-06-07T03:10:00Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T03:10:01Z concierge: ok (1 running allocation(s))
+2026-06-07T03:10:01Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T03:10:01Z monitor pass complete
+2026-06-07T03:20:01Z monitor pass start
+2026-06-07T03:20:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T03:20:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T03:20:01Z concierge: ok (1 running allocation(s))
+2026-06-07T03:20:02Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T03:20:02Z monitor pass complete
+2026-06-07T03:50:01Z monitor pass start
+2026-06-07T03:50:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T03:50:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T03:50:01Z concierge: ok (1 running allocation(s))
+2026-06-07T03:50:01Z leonhard: oraclebox1 ready but assistant/dispatch-1780450051-bd7375e3 has no running allocations; rescheduling
+==> 2026-06-06T21:50:01-06:00: Restarting 1 allocation
+    2026-06-06T21:50:01-06:00: Rescheduling allocation "b7e163bc" for group "session"
+    2026-06-06T21:50:02-06:00: Allocation "b7e163bc" replaced by "8b286681", waiting for "8b286681" to start running
+==> 2026-06-06T21:50:23-06:00: Job restart finished with errors
+
+1 error occurred while restarting job:
+* Error restarting allocation "b7e163bc": Evaluation "952a4b10" has placement failures for group "session":
+    * Constraint "${node.unique.name} = oraclebox1": 5 nodes excluded by filter
+2026-06-07T03:50:23Z leonhard: reschedule failed for assistant/dispatch-1780450051-bd7375e3
+2026-06-07T03:50:23Z monitor pass complete
+2026-06-07T04:00:01Z monitor pass start
+2026-06-07T04:00:02Z codex-tui: ok (1 running allocation(s))
+2026-06-07T04:00:02Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T04:00:02Z concierge: ok (1 running allocation(s))
+2026-06-07T04:00:02Z leonhard: oraclebox1 ready but assistant/dispatch-1780450051-bd7375e3 has no running allocations; rescheduling
+==> 2026-06-06T22:00:02-06:00: Restarting 1 allocation
+    2026-06-06T22:00:02-06:00: Rescheduling allocation "7508a04a" for group "session"
+    2026-06-06T22:00:02-06:00: Allocation "7508a04a" replaced by "d8d4fe35", waiting for "d8d4fe35" to start running
+    2026-06-06T22:01:02-06:00: Still waiting for allocation "7508a04a" to be replaced
+    2026-06-06T22:02:02-06:00: Still waiting for allocation "7508a04a" to be replaced
+==> 2026-06-06T22:02:08-06:00: Job restart finished with errors
+
+1 error occurred while restarting job:
+* Error restarting allocation "7508a04a": Evaluation "37dce8e1" has placement failures for group "session":
+    * Constraint "${node.unique.name} = oraclebox1": 5 nodes excluded by filter
+2026-06-07T04:02:08Z leonhard: reschedule failed for assistant/dispatch-1780450051-bd7375e3
+2026-06-07T04:02:08Z monitor pass complete
+2026-06-07T04:20:42Z monitor pass start
+2026-06-07T04:20:42Z codex-tui: ok (1 running allocation(s))
+2026-06-07T04:20:42Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T04:20:42Z concierge: blocked; oraclebox1 client is down, so restarting would not place
+2026-06-07T04:20:43Z leonhard: blocked; assistant/dispatch-1780450051-bd7375e3 is pinned through assistant to oraclebox1, currently down
+2026-06-07T04:20:43Z monitor pass complete
+2026-06-07T04:50:01Z monitor pass start
+2026-06-07T04:50:01Z codex-tui: ok (1 running allocation(s))
+2026-06-07T04:50:01Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T04:50:01Z concierge: oraclebox1 ready but no running allocations; redeploying
+2026-06-07T04:50:01Z concierge: running nomad job run -detach /home/e/monad/jobs/concierge.hcl
+Job registration successful
+Evaluation ID: ab7210ec-4d38-f900-5c5c-a788b5357a54
+
+
+==> View this job in the Web UI: http://100.96.31.66:4646/ui/jobs/concierge@default
+2026-06-07T04:50:02Z leonhard: oraclebox1 ready but assistant/dispatch-1780450051-bd7375e3 has no running allocations; rescheduling
+==> 2026-06-06T22:50:02-06:00: Restarting 1 allocation
+    2026-06-06T22:50:02-06:00: Rescheduling allocation "f261ad71" for group "session"
+    2026-06-06T22:50:02-06:00: Allocation "f261ad71" replaced by "de57919b", waiting for "de57919b" to start running
+    2026-06-06T22:50:42-06:00: Allocation "de57919b" is "running"
+==> 2026-06-06T22:50:42-06:00: Job restart finished
+
+Job restarted successfully!
+2026-06-07T04:50:42Z monitor pass complete
+2026-06-07T05:10:06Z monitor pass start
+2026-06-07T05:10:06Z codex-tui: ok (1 running allocation(s))
+2026-06-07T05:10:06Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T05:10:06Z concierge: ok (1 running allocation(s))
+2026-06-07T05:10:07Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T05:10:07Z monitor pass complete
+2026-06-07T05:30:07Z monitor pass start
+2026-06-07T05:30:07Z codex-tui: ok (1 running allocation(s))
+2026-06-07T05:30:07Z cluster-conductor: ok (1 running allocation(s))
+2026-06-07T05:30:07Z concierge: oraclebox1 ready but no running allocations; redeploying
+2026-06-07T05:30:07Z concierge: running nomad job run -detach /home/e/monad/jobs/concierge.hcl
+Job registration successful
+Evaluation ID: e6451da4-505e-36e7-a3d1-bb11ff67be6d
+
+
+==> View this job in the Web UI: http://100.96.31.66:4646/ui/jobs/concierge@default
+2026-06-07T05:30:07Z leonhard: ok (assistant/dispatch-1780450051-bd7375e3, 1 running allocation(s))
+2026-06-07T05:30:07Z monitor pass complete

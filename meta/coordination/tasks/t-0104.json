@@ -1,0 +1,10 @@
+{
+  "id": "t-0104",
+  "type": "math",
+  "scope": "S718 THM-445 (LRC momentum twistor = discrete log). Follow-ups: (1) the twistor reduces the prime-shell transversal core to: is every HALF-SYSTEM L in Z/phi(2n-1) loose? = an additive-combinatorics tiling question. Attack it: for a half-system (no dodge at shell 2n-1), find a dodge at ANOTHER shell m or via criterion B; the hard core = SIMULTANEOUS half-system at all shells. Enumerate simultaneous-half-systems for n=15,19,21,22. (2) Higher-dim twistor: for composite 2n-1 with several prime factors, (Z/m)* = product of cyclics => multi-coordinate log; does covering factor across the CRT components (each a 1D twistor)? (3) The ramified migration: formalize that at 2n-1=q^e the off-twistor (q|v) residues carry the obstruction = the S710 divisor-clock fiber; unify THM-445 + THM-421 (divisor peeling). (4) Is the half-system core a Sidon/B_h or perfect-difference-set condition? tie to THM-415 homometry. PR #83.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S718"
+}

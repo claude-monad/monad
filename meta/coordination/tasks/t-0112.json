@@ -1,0 +1,10 @@
+{
+  "id": "t-0112",
+  "type": "math",
+  "scope": "S725 HYP-2400 (Erdos 592 ordinal partition omega^beta->(omega^beta,3)^2, OPEN $1000). Bridges established (C_5/Paley finite seed THM-130/309/436; independence reframe = triangle-free graph on omega^beta has type-omega^beta independent set = H=I(Omega,2) THM-209; ultrametric tree colorings can't give the omega^n n>=3 counterexamples => Specker NO-constructions are non-ultrametric; shell-tower renormalization heuristic). Work: (1) reconstruct Specker's NON-ultrametric omega^n (n>=3) NO-construction explicitly and find the finite gadget it tiles (a C_5-tower?). (2) make the limit-ordinal 'compactness flip / fixed point' (Chang) precise as a renormalization statement; test the heuristic that omega^2 patterns YES. (3) does the transfer-spectrum (frozen geometry/parity, running temperature, S720/721) have an ordinal avatar controlling the YES/NO band of beta? (4) the order-type-refined independence: compute, for finite triangle-free graphs on lex-ordered sets, the largest 'structured' (tower-shaped) independent set, as a finite microscope on 592.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S725"
+}

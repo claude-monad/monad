@@ -1,10 +1,10 @@
 {
   "id": "t-0100",
-  "type": "math",
-  "scope": "S714 HYP-2355 (autocorrelation operator MM* unification). Follow-ups: (1) PROVE Result-1 general: at all even n, is the homometry partition (equal spectrum of C=-S^2) = the join of the |Pf| partition and the e2/char-ratio partition? Count homometry classes vs |Pf| values for n=8. (2) The off-diagonal of -S^2 is the 2-path pair-autocorrelation; find a spectral formula for H (#Ham paths) in terms of the autocorrelation spectrum (S714 found |Pf| anti-tracks H-spread per class). (3) TEST the synthesis claim predictively: compute autocorrelation FLATNESS (peak-to-mean of MM*) of the open LRC frontier configs (n=15,19,21,22) and unit-distance n=22 candidates \u2014 does flatness rank hardness? (4) MAINTAINER: THM-120 prose says 5 eigenvalue-triples but exhaustive recompute = 6 spectra (5 |Pf| values); the |Pf|=1 class splits into (15,15,1),(15,47,1) \u2014 fix prose or open court case. PR #77.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "oraclebox1 down: nomad server 'failed' + Tailscale-offline (rx 0, last seen 1d). Quorum still 2/3 (V1410-1 leader + claudebox). When reachable: ssh in, restart tailscaled + nomad, run meta/agent/ensure-engines.sh, rejoin as 3rd voter. Claimed health:oraclebox1 by bigo-server.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S714"
+  "parent": null
 }

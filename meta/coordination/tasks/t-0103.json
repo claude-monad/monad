@@ -1,0 +1,10 @@
+{
+  "id": "t-0103",
+  "type": "math",
+  "scope": "S717 HYP-2370 (LRC dual conformal symmetry). Follow-ups: (1) exhibit the full YANGIAN closure \u2014 do the spacetime conformal generators (dilation/reflection/perm) and the dual multiplier generators (Z/m)* satisfy Yangian/Serre relations on the witness-orbit representation? Build the bi-local level-1 generators. (2) A MOMENTUM-TWISTOR for LRC: a change of variables making the dual conformal symmetry manifest and trivializing the transversal core (inversion v->v^-1 as the twistor map). (3) Test maximal-dual-symmetry = hardness as a predictor on the open frontier n=15,19,21,22: measure multiplier-orbit symmetry / autocorrelation flatness, rank hardness (continues S714 t-0100). (4) The observer-breaks-translation point: is the observer = a puncture/marked point, making LRC a moduli/M_{0,n}-type problem (amplituhedron boundary)? PR #82.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S717"
+}

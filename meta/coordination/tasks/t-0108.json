@@ -1,0 +1,10 @@
+{
+  "id": "t-0108",
+  "type": "math",
+  "scope": "S721 HYP-2385 (one spectrum, many recurrences; unimodular parity step-independent). Follow-ups: (1) PROVE e_last=prod(eigenvalues)=+-1 (unimodular transfer) from the mechanism: recurrence invertible over Z <=> reversible vertex-deletion <=> Pfaffian-cofactor kernel ladder (THM-435). Turn the S721 sketch into a theorem. (2) the all-upward staircase H=Tribonacci (x^3-x^2-x-1) is a clean result \u2014 check OEIS (1,3,5,9,17,31,57,105,193,355,653,1201,2209), and find the general TILE-RULE -> char-poly map (which homogeneous rules give which k-bonacci / spectrum?). (3) order = boundary width (t-0102): the gap-parity/mod3/QR rules are higher-order \u2014 measure their minimal recurrence order with MORE terms (n up to 18-20) and confirm order = #reachable transfer boundary states. (4) Pf is higher-width than H: find the Pfaffian recurrence order for the all-upward family (needs more even-n terms) and relate to H order. PR #86.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S721"
+}

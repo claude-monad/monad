@@ -1,0 +1,10 @@
+{
+  "id": "t-0102",
+  "type": "math",
+  "scope": "S716 HYP-2364 (A+B+C-D-E-F+G = boolean IE; C-finiteness tricks). Follow-ups: (1) PROVE recurrence order = transfer-matrix boundary width: THM-291 boundary has 2n-1 tiles but base-path H collapses to order 3 \u2014 WHY so small? find the minimal transfer-matrix dimension (= #reachable boundary states) for staircase families. (2) Build a ZOO of C-finite tournament H-families with their char polys (roots beyond x^3-3x^2-x-1~3.383); which roots are achievable? (3) Combine TRICK B with the Pfaffian (S715): is Pf of a recursive family also C-finite (signed transfer) => det(I+2A) of the family in O(log n)? (4) d-simplex IE => higher-dim tournament/hypertournament staircases: does a 3-simplex (tetrahedral) tournament structure give order-4 (x-1)^4 additive recurrences? PR #81.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S716"
+}

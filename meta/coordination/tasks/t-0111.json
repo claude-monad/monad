@@ -1,0 +1,10 @@
+{
+  "id": "t-0111",
+  "type": "math",
+  "scope": "S724 HYP-2396 (Erdos 2 covering systems = discrete LRC; distortion method). Work: (1) THE METHOD IMPORT: port Hough/BBMST distortion (density-increment) to lower-bound the LRC covering-depth p_0 for multiple-of-n configs => looseness via covering-system technology (alt route to twistor/shell). Covering uncovered density Sum_I(-1)^|I|/lcm = S561 rho = THM-406 p_0 form. (2) compute small covering systems' full covering-depth distribution p_k (not just p_0) and compare to LRC p_k (THM-406): shared moment hierarchy S_j? (3) BBMST no-all-odd-squarefree-covering vs LRC 2-adic seam (THM-435 even/odd): is LRC even-n hardness the SAME parity obstruction (even moduli essential)? (4) min-modulus-42 (Owens) as a smooth shell tower = LRC cyclotomic witness tower (THM-439): match recursive-CRT covering to the shell 2n-1 refinement. (5) build/verify a min-modulus-3 or -4 covering, trace its smooth-modulus structure.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "S724"
+}

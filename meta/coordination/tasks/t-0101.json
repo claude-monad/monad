@@ -1,10 +1,10 @@
 {
   "id": "t-0101",
-  "type": "math",
-  "scope": "S715 HYP-2360 (triangle recursion temperature ladder + Pfaffian translator). Follow-ups: (1) PROVE the temperature ladder as a literal one-parameter (sign-twisted) family of transfer recursions interpolating (x-1)^3 [additive] -> Pfaffian parity-signs -> x^3-3x^2-x-1 [multiplicative, THM-337]; the leading 3 (=3 corners) is the fixed point. (2) Place Mode A (n->n-1, the 1+2^d hypotenuse step) on the ladder and find its multiplicative recursion. (3) A038375 max-H efficiency: the maximizers are circulant/Paley (THM-336/338), base-path (lambda 3.383) is far below; SEARCH for a circulant-RECURSIVE construction of the maximizers realizing the hot recurrence \u2014 would give a recursive lower bound far better than base-path, maybe exact. (4) Pfaffian-as-Euler-class: make THM-120 phase separation literally Chern-Gauss-Bonnet (Pf of a discrete curvature on the tournament). PR #79.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "oraclebox1 offline ~1d (Tailscale rx0, Nomad server 'failed'); quorum held 2/3 (V1410-1+claudebox). Revive task queued at maintenance/oraclebox1/queue/; needs on-box Tailscale+Nomad restart, unreachable remotely.",
+  "repo": "monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S715"
+  "parent": null
 }

@@ -1,10 +1,10 @@
 {
   "id": "t-0105",
-  "type": "math",
-  "scope": "S719 HYP-2376 (unit-distance momentum twistor = angle = log U(1)). Push n=22: (1) exact-arithmetic RIGID non-lattice sqrt(13) graph search toward u(22)=60/61 (the AMP/Engel regime): start from the sqrt(13)-layer 57-config (verified here) and add rigid perturbations / extra rotation directions; degree-4/5 extension of a 56-edge core (S712 deletion route). (2) prove the angle-twistor upper bound: u(n) <= sum over the (few) CM directions of saturated chains; can it give u(22)<=61 cleanly? (3) THE UNIFICATION (HYP-2376): match LRC half-systems in Z/phi(2n-1) to rotation-orbit unit-distance configs \u2014 is the grid-disproof CM modulus-1 supply literally the LRC cyclotomic shell tower (THM-439)? build the explicit dictionary. (4) generalize the angle twistor to other CM fields (Gaussian Z[i], r_Q for sums of two squares) and find the best rotation group for each n. PR #84.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "oraclebox1 (server voter, 100.125.210.126) offline on Tailscale since ~2d ago; Nomad quorum currently holds at 2 voters (v1410-1 + claudebox-leader) but we are at the floor. Needs the machine powered on / 'tailscale up' to rejoin as 3rd voter. Cannot fix remotely.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S719"
+  "parent": null
 }

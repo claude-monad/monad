@@ -77,9 +77,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1780977811.5628607,
+    "updated": 1781013413.9033911,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-09T04:03:31Z"
+    "value": "DONE-escalated-2026-06-09T13:56:53Z"
   },
   "health:v1410-1": {
     "updated": 1780805638.9515183,

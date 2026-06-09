@@ -1,10 +1,10 @@
 {
   "id": "t-0103",
-  "type": "math",
-  "scope": "S717 HYP-2370 (LRC dual conformal symmetry). Follow-ups: (1) exhibit the full YANGIAN closure \u2014 do the spacetime conformal generators (dilation/reflection/perm) and the dual multiplier generators (Z/m)* satisfy Yangian/Serre relations on the witness-orbit representation? Build the bi-local level-1 generators. (2) A MOMENTUM-TWISTOR for LRC: a change of variables making the dual conformal symmetry manifest and trivializing the transversal core (inversion v->v^-1 as the twistor map). (3) Test maximal-dual-symmetry = hardness as a predictor on the open frontier n=15,19,21,22: measure multiplier-orbit symmetry / autocorrelation flatness, rank hardness (continues S714 t-0100). (4) The observer-breaks-translation point: is the observer = a puncture/marked point, making LRC a moduli/M_{0,n}-type problem (amplituhedron boundary)? PR #82.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "oraclebox1 fully OFFLINE ~1d (Tailscale relay 'ord', rx 0; Nomad non-member) as of 2026-06-08. Raft voters are now V1410-1(leader)+claudebox = 2/2: quorum OK but ZERO fault tolerance since oraclebox1 dropped out of the server set. oraclebox1 hosts cluster-conductor (Claude creds) so conductor tasks t-0012/t-0015/t-0018 are moot until it returns. No on-cluster fix (network/power level, like windesk t-0080). Watch next sweep; if >24h, ping owner to power-cycle / 'tailscale up' on oraclebox1.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S717"
+  "parent": null
 }

@@ -1,7 +1,7 @@
 {
   "id": "t-0106",
   "type": "infra",
-  "scope": "oraclebox1 offline ~22h + Nomad server FAILED (quorum fragile at 2/3: V1410-1 leader + claudebox alive). Host unreachable from V1410-1 (ping 100% loss, RPC 4647 closed). Needs power-on/remote revival, then 'sudo tailscale up' and 'sudo systemctl restart nomad' to rejoin as 3rd voter, then ensure-engines. Recovery task queued in monad/maintenance/oraclebox1/queue/.",
+  "scope": "restore 3rd Raft voter: oraclebox1 (100.125.210.126) offline on Tailscale ~2d; cluster on 2 voters (V1410-1 leader + claudebox) = quorum intact but zero fault tolerance. Revive oraclebox1 or rejoin a 3rd server per cluster/desired-servers.md.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

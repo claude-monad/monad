@@ -1,7 +1,7 @@
 {
   "id": "t-0035",
   "type": "infra",
-  "scope": "eliotts-mac-mini disk pressure: Nomad reports host disk 208GiB/228GiB used (~91%) with only ~32GiB free; node is ready/eligible but maintenance-agent is Linux-only, so run local node-doctor/safe cleanup and assess macOS maintenance equivalent.",
+  "scope": "eliotts-mac-mini disk pressure WORSENED (V1410-1 sweep 2026-06-10): Nomad now fingerprints only ~1.2GiB free of 245GB (~99.5% used; was ~32GiB free when filed). maintenance-agent is now fully UNPLACEABLE (eval: 'disk exhausted on 1 node', default 300MiB ephemeral_disk won't fit in ~200MiB allocatable). Queue-delegation is futile because the queue-drainer IS the down maintenance-agent. Needs a local/interactive macOS pass to free disk (node-doctor/safe cache cleanup, or move bulky data off-Mac) before the agent can return.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

@@ -1,0 +1,10 @@
+{
+  "id": "t-0122",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S6 THM-491/HYP-2436 follow-up: make the LRC(14) ramification-tower descent into a proof route. (1) Verify rigorously the unit/non-unit split at n=14 shell 27: every config's coprime-to-3 runners admit a good multiplier on shell 27 (the doubling orbit ord_27(2)=18 covers (Z/27)*), so the loneliness obstruction is carried ONLY by the <=4 multiples of 3; the residual is the mult-of-3 runners /3 = a shell-9 (n=5) sub-problem. (2) Compute M for many multiple-of-14 configs after the unit-dodge, confirm the residual matches the shell-9 prediction (descent fidelity). (3) Does C'(14) reduce EXACTLY to C'(5)-on-the-core UNION the THM-421 mod-2/mod-7 fiber? If yes, LRC(14) <= LRC(5)+LRC(7) (both PROVEN) + a uniform window-fit lemma -- a concrete route to the open LRC(14). (4) HYP-2437: is the LRC sieve rho=Sum(-1)^|T|/lcm a twisted Euler product over the shell tower (compare Pisano CRT product, -zeta'/zeta)? define the valuation-sensitivity dial s(structure,p) in {radical, tower} and look for a tower-sensitive Goldbach refinement (count p+q with a congruence mod p^k) matching the LRC ramification. (5) n=19 control: confirm the cyclotomic transversal core is the only content (depth-1 base case).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S6"
+}

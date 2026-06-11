@@ -77,9 +77,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781177418.9725227,
-    "updated_by": "bigo-server",
-    "value": "DONE-escalated-2026-06-11T11:30:18Z"
+    "updated": 1781208290.6274822,
+    "updated_by": "Eliotts-Mac-mini.local",
+    "value": "DONE-2026-06-11T20:04:50Z-offline-unreachable-existing-queue-covers"
   },
   "health:v1410-1": {
     "updated": 1780805638.9515183,

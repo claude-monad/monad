@@ -1,0 +1,10 @@
+{
+  "id": "t-0116",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S1 Tao C23b bridge (minimal condition number of sign matrices, teorth/optimizationproblems 23b, AJM arXiv:2511.14653): kappa(I+S)^2 = (1+lambda_max(SS^T))/(1+lambda_min(SS^T)). The record explicit family is symmetric conference matrices (kappa = 1+O(n^{-1/2}), conjectured optimal exponent 1/2). Tasks: (1) compute kappa for the maxdet-ladder extremals (DRT: sqrt(n+1) -- bad, odd order forces sigma_min=1; skew-conference: 1; skew-EW attainers at n=6,14,26,62: kappa -> sqrt 2): the LADDER of conditioning; (2) at even orders without skew-conference, find the kappa-OPTIMAL (not det-optimal) tournament: is the golden-ratio n=10 maximizer also kappa-optimal among tournaments? (3) can near-DRT cyclotomic tournaments at orders where no Hadamard/conference matrix is known give new approximate-Hadamard rows for the C23b table (the 17/92 exponent comes from Hadamard gaps + padding -- tournament families are denser in n)? Also note HYP-2405's n=18 anneal value 131533373440 ~ 0.901*EW(18) vs the 2013 cocyclic record 0.853*EW -- verify normalizations and, if real, it is a new computational record for skew maxdet at 18 (check against Dokovic/Kotsireas tables before claiming).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S1"
+}

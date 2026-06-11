@@ -2194,3 +2194,4 @@
 {"ts":"2026-06-11T15:16:24Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-11T15:46:46Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-11T15:29:50Z","node":"V1410-1","kind":"health-sweep","msg":"roster healthy; quorum 2/2 (V1410-1 leader + claudebox); 4/4 reachable nodes ready+eligible with running maintenance-agent; self engines claude+codex advertised; oraclebox1 offline already escalated by peer"}
+{"ts":"2026-06-11T16:16:04Z","node":"bigo-server","kind":"health-sweep","msg":"roster healthy; quorum 2/2 (V1410-1 leader + claudebox voter); 4/4 nomad nodes ready+eligible w/ running maintenance-agent; self engines claude+codex advertised, repo synced; oraclebox1 still offline 4d (only 2 voters=no redundancy, already escalated)"}

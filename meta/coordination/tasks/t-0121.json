@@ -1,0 +1,10 @@
+{
+  "id": "t-0121",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S5 OPEN-Q-062/HYP-2416 follow-ups: (1) Make the LRC 'level of distribution' precise: formulate a Bombieri-Vinogradov-type average over shells m<=M of the discrepancy between the danger-band-avoidance count of (Z/m)* multipliers and its expectation, for a random speed set; identify the level M(n) and the theta=1/2 analogue (conjecturally the gap between easy M>1/(2n) [S625] and optimal 2/(2n-1) [THM-415]). Does a large-sieve argument give the 'theta=1/2' case? (2) Is the LRC sieve rho=Sum(-1)^|T|/lcm literally a twisted von Mangoldt average over the shell tower? compare Euler products: shell tower prod(1-...) vs -zeta'/zeta. (3) HYP-2416 test 4 (the promising lead): the polygonal->theta-function->self-dual-code chain. Triangular/square sums = theta-function powers (r_k(n)=[q^n] theta_3^k); even unimodular lattice theta-series are modular forms at dim 8,16,24; Construction A maps self-dual code weight enumerators to lattice theta series. Does Fermat polygonal connect DIRECTLY to THM-481's Golay/Leech gauge codes via theta at the 24 of THM-486? (4) rigorous interval-arithmetic digits of the base-path disordered constant ~2.9786 (cf Oliveira-de Figueiredo for Viswanath) and the tribonacci one ~1.223; are these new OEIS-worthy constants? (5) compute Goldbach/Lemoine representation counts r(n) through the S630 sigma-pair lens, confirm Hardy-Littlewood growth (structure check, not proof).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S5"
+}

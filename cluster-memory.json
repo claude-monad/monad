@@ -77,9 +77,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781013413.9033911,
+    "updated": 1781177418.9725227,
     "updated_by": "bigo-server",
-    "value": "DONE-escalated-2026-06-09T13:56:53Z"
+    "value": "DONE-escalated-2026-06-11T11:30:18Z"
   },
   "health:v1410-1": {
     "updated": 1780805638.9515183,
@@ -87,9 +87,9 @@
     "value": "oraclebox1"
   },
   "health:windesk": {
-    "updated": 1780640699.5008688,
-    "updated_by": "death-star",
-    "value": "DONE-2026-06-05T06:24:59Z"
+    "updated": 1781179305.0859387,
+    "updated_by": "bigo-server",
+    "value": "DONE-escalated-2026-06-11T12:01:45Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

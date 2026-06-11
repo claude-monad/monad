@@ -1,10 +1,10 @@
 {
   "id": "t-0107",
-  "type": "math",
-  "scope": "S720 HYP-2381 (transfer spectrum: frozen geometry e1=corners + parity e_last=+-1, running temperature = middle symmetric fn). Follow-ups: (1) tournament families at INTERMEDIATE temperatures a=0,1,2 in Lambda(a)=x^3-3x^2+a x-1 (between additive a=3 and THM-337 a=-1). (2) PROVE unimodular-transfer: bounded-width family => transfer det +-1 => char poly const +-1 = S713 Pfaffian/parity (with S716 t-0102). (3) d=3 tetrahedral order-4 recursion, crystalline (x-1)^4, TWO temperature coords. (4) a literal COOLING operator on sequences mapping THM-337 (a=-1) toward (x-1)^3 (a=3). [renum from t-0106 collision] PR #85.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "oraclebox1 (server-voter target) offline on Tailscale since ~2026-06-07 (4d, relay-only, rx0); windesk (Windows client) offline ~6h. Quorum currently OK at 2 (v1410-1+claudebox) but fragile with oraclebox down. Needs physical power-on / 'tailscale up' on both \u2014 cannot fix remotely.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S720"
+  "parent": null
 }

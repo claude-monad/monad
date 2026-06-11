@@ -1,0 +1,10 @@
+{
+  "id": "t-0120",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S4 OPEN-Q-061/HYP-2415: the extremal [72,36,16] self-dual code as a tournament-gauge problem. THM-481's eQR gauge ladder is extremal Type II at q=7,23,31,47 (lengths 8,24,32,48; d=4,8,8,12) and FIRST FAILS at q=71 (eQR(72) d=12 < extremal 16) = the famous open [72,36,16]. Order 72 == 8 mod 16 => every order-72 skew-Hadamard gauge code C(I+S(H)) is Type II [72,36]. Work: (1) obtain catalogued order-72 skew-Hadamard matrices (Dokovic-Kotsireas; or construct via Goethals-Seidel / two-circulant / DRT-switching on 71 vertices) and compute gauge minimum-distance LOWER bounds via Brouwer-Zimmermann / random coset-leader / information-set partial enumeration (full 2^36 infeasible) -- report best d and the spectral profile (char poly of S, autocorrelation flatness) of the best H. (2) test the conjecture: does HIGH tournament symmetry (Paley/large Aut) CAP gauge distance at 12, so that only asymmetric H could reach 16? (correlate |Aut(H)| with gauge d across classes). (3) which tournament/skew invariant lifts d 12->16 -- relate to the flat-vs-peaked MM* dichotomy (THM-441). (4) honest: sufficient route, not equivalence; a [72,36,16] code need not be a skew-Hadamard gauge. Cross-link THM-484 (24 = involution modulus), THM-480/481/482.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S4"
+}

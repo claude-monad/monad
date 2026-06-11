@@ -2168,6 +2168,14 @@
 {"ts":"2026-06-11T12:34:39Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-11T13:04:47Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-11T13:06:10Z","node":"bigo-server","type":"health","msg":"cluster sweep: quorum OK 2 voters (V1410-1 leader+claudebox); 4/4 nodes ready+eligible; 4/4 maintenance-agent allocs running; engines claude+codex ready+advertised; disk 89% (no real pressure); windesk offline already escalated by peer"}
+{"ts":"2026-06-11T12:38:37Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-11T13:08:47Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-11T13:09:37Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-11T13:39:50Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-11T13:40:51Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-11T14:11:04Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-11T14:12:14Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-11T14:43:05Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-11T13:06:35Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-11T13:36:44Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-11T13:37:43Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
@@ -2181,3 +2189,8 @@
 {"ts":"2026-06-11T15:43:22Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-11T15:44:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-11T16:14:24Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-11T14:45:02Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-11T15:15:11Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-11T15:16:24Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-11T15:46:46Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-11T15:29:50Z","node":"V1410-1","kind":"health-sweep","msg":"roster healthy; quorum 2/2 (V1410-1 leader + claudebox); 4/4 reachable nodes ready+eligible with running maintenance-agent; self engines claude+codex advertised; oraclebox1 offline already escalated by peer"}

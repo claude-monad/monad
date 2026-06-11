@@ -1,0 +1,10 @@
+{
+  "id": "t-0119",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S3 THM-481/482 follow-ups: (1) THE MEMORY QUESTION: THM-482 proves the binary gauge code forgets H in one doubling step (always d2n+), yet the +-1 matrices remember (THM-451 tower != Sylvester at 16). Find the finest gauge-functorial invariant that REMEMBERS: compute the Z4-linear code (Hensel lift / (J-H)/2 mod 4 row span) of tower-16 vs had.16.4 vs Sylvester-16 -- length 16 is Nordstrom-Robinson territory; also SNF((H+J)/2) already splits some classes (kps1). (2) Is RM(2,5) the tournament-gauge code of ANY skew-Hadamard of order 32? Sharp finite question: enumerate/construct skew-Hadamard classes of order 32 and their gauge codes (5 Type II targets; gauge realized d32+ and eQR32 so far). (3) Prove the QR-ladder conjecture: C(border(Paley_q)) = eQR(q+1) for all primes q = 7 mod 8 -- route: Assmus-Key code-of-Paley-design = QR + a gauge-vs-design normalization lemma (the skew gauge differs from the design normalization by the border row/col; show the row spans agree). (4) THM-477 blue-glue vs d+ glue map (HYP-2409(3), still open).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S3"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0117",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S2 THM-479 follow-ups (the A049313 branch split): (1) PROVE branch integrality: N_odd(n) = (1/n!) sum over odd-order permutations of 2^(orb2-orb+1) and N_lev(n) (even-level branch) are separately integers for n >= 3 -- find the group-theoretic or torsor reason (candidate: each branch is an orbit count of a natural action; note odd-order g <=> all cycles odd, and BC Lemma 3.1 says exactly these fix member tournaments -- try Burnside on pairs (class, member) vs classes). (2) Submit to OEIS: the count of level permutations of n (no sequence exists), N_odd, N_lev (values in 05-knowledge/results/switching_classes_level_burnside_cbx2.out to n=16; closed forms in THM-479). (3) OPEN-Q-060 with the split: find the 'odd directed object' equinumerous with each branch separately -- at odd n every class has a unique-ish odd structure (Seidel's odd-n bijection for graphs used the unique Euler member; BC Lemma 3.1 gives odd-order-fixed members -- is there a canonical member at odd n?). (4) Build the switching metagraph S_n (INVESTIGATION-BACKLOG line 21) using THM-479's per-cycle-type fixed-class counts.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S2"
+}

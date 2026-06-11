@@ -1,0 +1,10 @@
+{
+  "id": "t-0125",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S7: formalize in math-lean (1) the band criterion: t=a/q with gcd(a,q)=1 is a strict 1/14-witness iff every v has (v*a mod q) outside +-floor(q/14) (one-line dZ fact, FlowShell/LonelyFourteen infra); (2) the degeneration lemma: 3|v, 27 nmid v, unit a => dZ(v*a/27) >= 1/9 > 1/14 (so the 3-core of shell 27 at level 1/14 is divisor-only \u2014 THM-492 part 1); (3) the primitivity correction to C' (THM-398): exhibit 2*{1..13} tight with 14 in it (dZ dilation invariance).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S7"
+}

@@ -2202,3 +2202,8 @@
 {"ts":"2026-06-11T17:17:43Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-11T17:18:56Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-11T17:49:05Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-11T15:49:07Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-11T16:20:06Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-11T16:21:06Z","node":"eliotts-mac-mini","kind":"health-sweep","msg":"roster healthy; quorum 2/2 (V1410-1 leader + claudebox voter); 4/4 nomad nodes ready+eligible each w/ running maintenance-agent; self engines claude+codex advertised, repo ff to origin/main; oraclebox1 3rd-voter still offline 4d on tailscale, already DONE-escalated 11:30Z not re-stampeding; self disk 98% but logs=812K/docker idle = system-level not repo junk, no safe in-repo cleanup"}
+{"ts":"2026-06-11T16:21:25Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-11T16:52:07Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

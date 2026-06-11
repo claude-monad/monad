@@ -1,0 +1,10 @@
+{
+  "id": "t-0114",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S1 THM-476 follow-up: the first open skew-EW order n=86 (tournament on 85 vertices; would also give first self-dual [172,86] codes per Armario-Frau). The multiplier-symmetric two-circulant ansatz on Z/43 (subgroup orders 3,7,21 both blocks, exact PAF conditions) is exhausted NEGATIVE this session (04-computation/skew_ew_two_circulant_cbx1.py). Escalations: (1) asymmetric b block: meet-in-the-middle on PAF vectors or SAT/pseudo-boolean encoding of PAF_a'(j)+PAF_b(j)=2 over 43+21 boolean vars; (2) allow b(omega_t)=0 frequencies with D != A^T per-frequency branches; (3) Goethals-Seidel 4-block arrays; (4) dihedral/non-cyclic group developments; (5) the Greaves-Suda route: search 85-vertex tournaments with char poly (x^3-41x^2-21*83)(x^2+x+21)^41 directly (spectral-rigidity-guided local search). Also: literature check whether THM-476's 2n-3=square necessity is explicit in Greaves-Suda / the Ehlich-era skew literature (cite precisely in THM-476).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S1"
+}

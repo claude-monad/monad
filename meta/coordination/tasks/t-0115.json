@@ -1,0 +1,10 @@
+{
+  "id": "t-0115",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S1 OPEN-Q-058 upper bound (tournament Barba, n == 1 mod 4): prove max det(I+S) = 2(n-1)^((n-1)/2) (THM-475 gives the construction; mac-mini n=9 exhaustion gives the only nontrivial confirmed max). Route sketched this session: det(I+S) = |q(-1)| where q = monic integer polynomial whose roots are the SS^T pair-eigenvalues (Galois-stable, sum n(n-1)/2, positive); 2^(n-1) divisibility forces v_2(q(-1)) >= n-1; at n=9 the ONLY integer-feasible spectrum beating 2(n-1)^4 is {11,11,7,7} (det 9216 = ((n+1)^2-4)^((n-1)/4)) and the census proves it unrealizable -- find the realizability obstruction (candidate: the kernel vector w + Gram integrality: 4P = I + 7ww^T/||w||^2 projection constraint; or a mod-8 Pfaffian-sum argument on THM-468's identity). A proof would complete the maxdet ladder's n==1 rung and make a publishable companion to Klanderman et al. LAA 707 (2025).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S1"
+}

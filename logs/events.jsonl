@@ -2893,3 +2893,15 @@
 {"ts":"2026-06-13T16:13:47Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-13T16:43:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-13T16:46:06Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"heal-peer","status":"ok","detail":"eliotts-mac-mini maintenance-agent alloc 3ea3a47b failed (raw_exec executor handshake failure, exit141/SIGPIPE); stopped+rescheduled -> 2ffcd8cc running. quorum 2/2 voters (v1410-1 leader+claudebox); oraclebox1 offline 6d (queue covers), windesk escalated 06-11"}
+{"ts":"2026-06-13T16:46:24Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T17:16:30Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T17:18:12Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"roster healthy. quorum 2/3 voters alive (V1410-1 leader+claudebox; oraclebox1 offline 6d, majority holds). all 4 nomad members ready+eligible w/ running maintenance-agent. engines advertised: v1410-1/claudebox/mac-mini=claude,codex; bigo-server=codex. self ensure-engines ok (claude,codex). oraclebox1 queue covers (heal+restore tasks pending). windesk escalated 06-11. no new fixes needed; no stampede."}
+{"ts":"2026-06-13T17:18:23Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T17:48:30Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T17:50:12Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T18:20:19Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T18:21:24Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T18:51:30Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T18:52:40Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T19:22:47Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T19:24:25Z","node":"claudebox","source":"maintenance-agent","type":"health-sweep","action":"roster-sweep","status":"ok","detail":"quorum 2/3 voters alive (v1410-1 leader + claudebox; oraclebox1 offline 6d, queue covers); 4/4 reachable clients ready+eligible w/ running maintenance-agent; windesk offline 48m (already escalated); claudebox engines claude+codex advertised"}

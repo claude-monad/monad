@@ -81,10 +81,15 @@
     "updated_by": "Eliotts-Mac-mini.local",
     "value": "DONE-2026-06-11T20:04:50Z-offline-unreachable-existing-queue-covers"
   },
+  "health:sweep:claudebox": {
+    "updated": 1781332427.564928,
+    "updated_by": "claudebox",
+    "value": "2026-06-13T06:33:47Z roster-healthy quorum-2of2 oraclebox1+windesk-offline-escalated"
+  },
   "health:v1410-1": {
-    "updated": 1780805638.9515183,
-    "updated_by": "oraclebox1",
-    "value": "oraclebox1"
+    "updated": 1781320806.9574971,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-06-12-claudebox-sweep-leader-healthy-stale-claim-cleared"
   },
   "health:windesk": {
     "updated": 1781179305.0859387,

@@ -2836,3 +2836,8 @@
 {"ts":"2026-06-13T04:55:34Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
 {"ts":"2026-06-13T05:25:41Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-13T05:27:33Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"quorum 2/2 (V1410-1 leader + claudebox voter); 4 clients ready+eligible w/ engines + maint-agent; oraclebox1 offline 5d (restore-server queued) & windesk not-joined (stabilize queued), both escalated <24h"}
+{"ts":"2026-06-13T05:28:20Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T05:58:26Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T06:00:06Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T06:30:12Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T06:33:47Z","node":"claudebox","source":"maintenance-agent","type":"health-sweep","action":"roster-sweep","status":"ok","detail":"v1410-1+claudebox servers alive (raft 2/2 voters, FT=0); clients v1410-1,claudebox,eliotts-mac-mini,bigo-server ready; maint-agent 4/4 running; oraclebox1(5d)+windesk(1h) offline, already-escalated; set core.fileMode=false to clear 429 phantom mode-diffs"}

@@ -2859,3 +2859,12 @@
 {"ts":"2026-06-13T09:14:39Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-13T09:44:46Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-13T09:46:08Z","node":"claudebox","source":"maintenance-agent","type":"health-sweep","action":"cluster-sweep","status":"ok","detail":"raft 2/2 voters alive quorum OK (V1410-1 leader + claudebox, FT=0); 4 clients ready+eligible; maint-agent 4/4 running; oraclebox1+windesk offline+unreachable (claims DONE, queue tasks pending); self disk 5% engines claude+codex ready"}
+{"ts":"2026-06-13T09:46:27Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T10:16:34Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T10:18:02Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T10:48:08Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T10:49:46Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T11:19:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T11:21:09Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-13T11:51:18Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-13T11:52:59Z","node":"claudebox","source":"maintenance-agent","type":"health-sweep","action":"cluster-sweep","status":"ok","detail":"roster healthy; raft 2/2 voters alive (V1410-1 leader + claudebox follower, FT=0); 4 clients ready+eligible w/ maintenance-agent; engines claude+codex advertised; disk 5%; git in sync. oraclebox1+windesk offline (already escalated, queues hold heal/restore tasks). Updated CLUSTER-HEALTH roster: claudebox converged to 3rd voter."}

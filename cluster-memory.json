@@ -32,9 +32,9 @@
     "value": "DONE-2026-06-06T09:01:54Z"
   },
   "health:claudebox": {
-    "updated": 1781363344.0585337,
+    "updated": 1781423923.0729897,
     "updated_by": "claudebox",
-    "value": "DONE-2026-06-13T15:09:04Z-self-healthy-leader"
+    "value": "DONE-2026-06-14T07:58:43Z-leader-2of3voter-quorum-ok-engines-claude+codex"
   },
   "health:death-star": {
     "updated": 1780754642.102103,
@@ -87,9 +87,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1781332427.564928,
+    "updated": 1781433641.1882837,
     "updated_by": "claudebox",
-    "value": "2026-06-13T06:33:47Z roster-healthy quorum-2of2 oraclebox1+windesk-offline-escalated"
+    "value": "DONE-2026-06-14T10:40:41Z-2of2-quorum-leader-oraclebox1+windesk-offline-escalated-no-new-fix"
   },
   "health:v1410-1": {
     "updated": 1781320806.9574971,

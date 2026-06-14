@@ -1,7 +1,7 @@
 {
   "id": "t-0109",
   "type": "infra",
-  "scope": "2026-06-14 sweep from eliotts-mac-mini: death-star, oraclebox1, and windesk are Tailscale-unreachable; oraclebox1 is absent from Nomad server members so cluster quorum is OK but fragile at V1410-1+claudebox (2 voters). Needs physical/power/Tailscale recovery on those hosts, then restart/rejoin Nomad and run ensure-engines.",
+  "scope": "Restore Nomad quorum: V1410-1 failed from claudebox view on 2026-06-14; claudebox sees only itself alive, oraclebox1 already offline. Bring back V1410-1 or another voter, then verify leader and maintenance-agent roster.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

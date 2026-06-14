@@ -1,10 +1,10 @@
 {
   "id": "t-0110",
-  "type": "math",
-  "scope": "S723 HYP-2393 (Erdos 93<->98 duality; regular polygon pivot; convex-layers bridge). Work: (1) MAKE THE ROUTE PRECISE: a few-distinct-distance (D) general-position set is >=n/(2D+1) thin convex layers (hull-size bound h<=2D+1, proved via Altman/93), none circular (no-4-concyclic). Bound the distinct distances SHARED across L pairwise-non-concyclic convex layers \u2014 a circle-incidence/additive-energy estimate \u2014 to force D=omega(n) (=> h(n)/n->inf, resolving 98). (2) formalize h<=2D+1 as a clean lemma; recursive lower bound for h(n). (3) strong-93 (OPEN, one vertex>=n/2): the (n-1)/3 toehold under +no-4-concyclic; push toward n/2 using convex order (Dumitrescu 13n/36 is the bar). (4) small-n: constrained min-distinct-distance table + onion-layer profiles for both 93 (convex) and 98 (general position). (5) connect the regular-polygon pivot to our CM/twistor work (S719): the ring = the cold crystalline; CM-broken rings = the EFP construction. PR #88.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "QUORUM LOSS during eliotts-mac-mini sweep: V1410-1 became Tailscale-unreachable and ports 22/2222/4646/4647/4648 timed out; claudebox is the only alive voter and Nomad reports no cluster leader. death-star, oraclebox1, and windesk are also Tailscale-offline/absent. Needs physical/power/Tailscale recovery of V1410-1 or another voter, then restart/rejoin Nomad and rerun ensure-engines.",
+  "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
-  "parent": "S723"
+  "parent": null
 }

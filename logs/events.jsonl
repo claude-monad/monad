@@ -3171,3 +3171,5 @@
 {"ts":"2026-06-15T15:04:04Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-15T15:34:12Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-15T15:35:37Z","node":"claudebox","type":"cluster-health","severity":"info","msg":"claudebox sweep: quorum 2/2 (V1410-1 leader + claudebox voter), 4 nodes ready+eligible (claudebox, V1410-1, bigo-server, eliotts-mac-mini), maint-agent 4/4 running, engines ok (claudebox/V1410-1/mac-mini=claude+codex, bigo-server=codex); oraclebox1 offline 8d (power) voter+client, heal claim already DONE-2026-06-14; no unhealthy peer to claim"}
+{"ts":"2026-06-15T15:35:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-15T16:06:00Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

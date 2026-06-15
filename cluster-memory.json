@@ -97,9 +97,9 @@
     "value": "DONE-2026-06-14T22:39:26Z-quorum2of3-held(v1410-1+claudebox)-oraclebox1+windesk-offline-known-4of4-maint-allocs-running-engines-ok"
   },
   "health:v1410-1": {
-    "updated": 1781541986.760834,
+    "updated": 1781544062.4976847,
     "updated_by": "claudebox",
-    "value": "ESCALATED-2026-06-15T16:39Z-issue5-needs-onbox-nomad-restart"
+    "value": "DONE-2026-06-15T17:21:02Z"
   },
   "health:windesk": {
     "updated": 1781437545.14675,

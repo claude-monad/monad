@@ -11,7 +11,7 @@ job "codex-cluster-coordinator" {
 
   constraint {
     attribute = "${node.unique.name}"
-    value     = "claudebox"
+    value     = "bigo-server"
   }
 
   group "coordinator" {
@@ -52,9 +52,9 @@ job "codex-cluster-coordinator" {
         entrypoint = ["/bin/bash", "-c",
           "set -e; if [ ! -e /work/.git ]; then git clone --depth 50 \"$REPO_URL\" /work; fi; exec python3 /work/codex-worker/gateway.py"]
         volumes = [
-          "/home/claude/.claude:/home/ubuntu/.claude",
-          "/home/claude/.claude.json:/home/ubuntu/.claude.json",
-          "/home/claude/.codex:/home/ubuntu/.codex",
+          "/home/bigo/.claude:/home/ubuntu/.claude",
+          "/home/bigo/.claude.json:/home/ubuntu/.claude.json",
+          "/home/bigo/.codex:/home/ubuntu/.codex",
         ]
       }
 

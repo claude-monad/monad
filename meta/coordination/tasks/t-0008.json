@@ -4,7 +4,7 @@
   "scope": "claudebox is reachable on Tailscale (100.87.219.108) and has an active agent (making cluster-memory claims) but is NOT a Nomad member \u2014 it is the intended 3rd Raft voter. Quorum is currently 2/2 (v1410-1 leader + oraclebox1) so this is resilience not an outage. On claudebox: run meta/bootstrap/join.sh 100.75.75.39 pro to rejoin as the 3rd voter (its old orphaned single-node server was wiped 2026-06-02). Verify with 'nomad server members' showing 3 alive voters.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

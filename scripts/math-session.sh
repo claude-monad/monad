@@ -5,7 +5,9 @@
 #   role: researcher | compute | reviewer
 #   clone-depth: git clone depth (default: 100, use 0 for full clone)
 #
-# Handles: repo clone, machine ID, day-of-week focus (researcher), prompt loading, cleanup
+# Handles: repo clone, machine ID, day-of-week focus (researcher), prompt loading, cleanup.
+# Execution is routed through the engine abstraction so the cluster can run Codex-first
+# while keeping one launcher for all math roles.
 set -euo pipefail
 
 ROLE="${1:?Usage: math-session.sh <researcher|compute|reviewer>}"
@@ -13,6 +15,7 @@ CLONE_DEPTH="${2:-100}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROMPT_DIR="$SCRIPT_DIR/prompts"
+RUN_AGENT="$SCRIPT_DIR/../meta/agent/run-agent.sh"
 MATH_REPO="${MATH_REPO_URL:-https://github.com/eliottcassidy2000/math.git}"
 
 # ─── Setup working directory ──────────────────────────────────────────────────
@@ -81,7 +84,7 @@ fi
 # ─── Mesh access: let the session coordinate with peer explorers in real time ────────────────
 # Put `agent-msg` on the session PATH + give this session a UNIQUE peer name + the relay URL, so
 # the prompt's mesh-coordination steps (announce direction, share inspiration, ask when stuck)
-# actually work. agent-msg reads AGENT_NAME + MESH_RELAY from the env we pass into the claude run.
+# actually work. agent-msg reads AGENT_NAME + MESH_RELAY from the env we pass into the engine run.
 MESH_MSG="$SCRIPT_DIR/../meta/agent/mesh/agent-msg.sh"
 AGENT_NAME="${AGENT_NAME:-agent-${MACHINE_ID#monad-}-$(hostname -s 2>/dev/null || hostname)-$$}"
 MESH_RELAY="${MESH_RELAY:-http://100.75.75.39:8477}"
@@ -89,31 +92,39 @@ if [ -f "$MESH_MSG" ]; then
     cp "$MESH_MSG" "$WORK_DIR/agent-msg" 2>/dev/null && chmod 755 "$WORK_DIR/agent-msg" 2>/dev/null || true
 fi
 
-# ─── Run Claude session ──────────────────────────────────────────────────────
+# ─── Run agent session ───────────────────────────────────────────────────────
 
 PROMPT_FILE="$WORK_DIR/prompt.txt"
 printf '%s' "$PROMPT" > "$PROMPT_FILE"
+ENGINE="${MONAD_ENGINE:-codex}"
+TIMEOUT="${MONAD_TIMEOUT:-3600}"
+CODEX_EFFORT="${MONAD_CODEX_EFFORT:-high}"
 
 if [ "$(id -u)" = "0" ]; then
-    # Nomad raw_exec runs as root; claude refuses --dangerously-skip-permissions as root.
-    # Drop to the node's Claude-credentialed user. Check creds (portable now) + claude on PATH
-    # (the provisioner symlinks it to /usr/local/bin). Includes 'claude' (claudebox) + any
-    # uid>=1000 user with credentials, so this works on every node, not just the old roster.
+    # Nomad raw_exec runs as root. Drop to the first user with ready credentials for the
+    # requested engine so the login-bound CLI can authenticate correctly.
     RUN_USER=""
     for u in claude e bigo ubuntu eliott $(getent passwd | awk -F: '$3>=1000 && $3<65000 && $6 ~ /^\/home\//{print $1}'); do
-        # Guard with `id` first: on a node without this user, `getent passwd <u>` exits 2 and
-        # `set -o pipefail` + `set -e` would kill the whole script (was exiting code 2 here).
         id "$u" >/dev/null 2>&1 || continue
         h="$(getent passwd "$u" | cut -d: -f6)"; [ -n "$h" ] || continue
-        if [ -f "$h/.claude/.credentials.json" ]; then RUN_USER="$u"; break; fi
+        if [ "$ENGINE" = "claude" ]; then
+            [ -f "$h/.claude/.credentials.json" ] && RUN_USER="$u" && break
+        else
+            [ -f "$h/.codex/auth.json" ] && RUN_USER="$u" && break
+        fi
     done
     if [ -z "$RUN_USER" ]; then
-        echo "ERROR: no user with claude credentials found" >&2
+        echo "ERROR: no user with $ENGINE credentials found" >&2
         exit 1
     fi
-    echo "[math-session] dropping privileges to $RUN_USER (mesh name $AGENT_NAME)"
+    echo "[math-session] dropping privileges to $RUN_USER (engine=$ENGINE mesh=$AGENT_NAME)"
     chown -R "$RUN_USER" "$WORK_DIR"
-    su - "$RUN_USER" -c "export PATH='$WORK_DIR':/usr/local/bin:\$HOME/.local/bin:\$HOME/.claude/local:/snap/bin:\$PATH; export AGENT_NAME='$AGENT_NAME' MESH_RELAY='$MESH_RELAY'; cd '$PWD' && claude --print --dangerously-skip-permissions \"\$(cat '$PROMPT_FILE')\""
+    su - "$RUN_USER" -c "export PATH='$WORK_DIR':/usr/local/bin:\$HOME/.local/bin:\$HOME/.claude/local:/snap/bin:\$PATH; export AGENT_NAME='$AGENT_NAME' MESH_RELAY='$MESH_RELAY' MONAD_ENGINE='$ENGINE' MONAD_CODEX_EFFORT='$CODEX_EFFORT'; cd '$PWD' && exec '$RUN_AGENT' --engine '$ENGINE' --cwd '$PWD' --timeout '$TIMEOUT' '@$PROMPT_FILE'"
 else
-    PATH="$WORK_DIR:$PATH" AGENT_NAME="$AGENT_NAME" MESH_RELAY="$MESH_RELAY" claude --print --dangerously-skip-permissions "$PROMPT"
+    PATH="$WORK_DIR:$PATH" \
+      AGENT_NAME="$AGENT_NAME" \
+      MESH_RELAY="$MESH_RELAY" \
+      MONAD_ENGINE="$ENGINE" \
+      MONAD_CODEX_EFFORT="$CODEX_EFFORT" \
+      "$RUN_AGENT" --engine "$ENGINE" --cwd "$PWD" --timeout "$TIMEOUT" "@$PROMPT_FILE"
 fi

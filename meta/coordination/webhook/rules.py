@@ -48,13 +48,15 @@ LEAN = "eliott-monad/math-lean"
 MONAD = "eliott-monad/monad"
 
 RULES = [
-    # New/updated hypothesis or canon theorem in the math repo → formalize it in Lean.
-    Rule(MATH, "push", None, "05-knowledge/hypotheses/*",
+    # Every push to math/main kicks off Codex exploration and formalization immediately.
+    Rule(MATH, "push", None, None,
+         lambda c: Action("math", MATH, "math-explore",
+                          "codex explore latest math main push")
+         if c.get("ref") == "refs/heads/main" else None),
+    Rule(MATH, "push", None, None,
          lambda c: Action("formalize", LEAN, "math-formalizer",
-                          "formalize new/updated hypothesis from math push")),
-    Rule(MATH, "push", None, "01-canon/theorems/*",
-         lambda c: Action("formalize", LEAN, "math-formalizer",
-                          "formalize newly-canonized theorem")),
+                          "formalize latest math main push")
+         if c.get("ref") == "refs/heads/main" else None),
     # New computation result lands → a reviewer audits it.
     Rule(MATH, "push", None, "05-knowledge/results/*",
          lambda c: Action("review", MATH, "math-reviewer",

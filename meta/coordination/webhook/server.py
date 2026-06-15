@@ -84,7 +84,18 @@ def execute(action: R.Action):
         return
     # 1) durable task (pull-loop safety net)
     run(["bash", TASK_SH, "emit", action.task_type, action.repo, action.scope])
-    # 2) immediate push via the parameterized agent-dispatch job
+    # 2) immediate push via the named Nomad job when possible.
+    if action.job == "math-formalizer":
+        r = run(["nomad", "job", "periodic", "force", "math-formalizer"])
+        log("force math-formalizer ->",
+            "ok" if r.returncode == 0 else r.stderr.strip()[:120])
+        return
+    if action.job == "math-explore":
+        r = run(["nomad", "job", "dispatch", "-detach",
+                 "-meta", f"seed={action.scope[:200]}", "math-explore"])
+        log("dispatch math-explore ->",
+            "ok" if r.returncode == 0 else r.stderr.strip()[:120])
+        return
     role = TASK_ROLE.get(action.task_type) if action.job else None
     if role:
         r = run(["nomad", "job", "dispatch", "-detach",
@@ -131,7 +142,10 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(400, "bad json")
         repo = (payload.get("repository") or {}).get("full_name", "")
         action = payload.get("action")
-        ctx = {"merged": bool((payload.get("pull_request") or {}).get("merged"))}
+        ctx = {
+            "merged": bool((payload.get("pull_request") or {}).get("merged")),
+            "ref": payload.get("ref", ""),
+        }
         paths = changed_paths(event, payload)
 
         actions = R.match(repo, event, action, paths, ctx)

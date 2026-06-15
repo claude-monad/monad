@@ -23,21 +23,23 @@ SID=""
 log() { echo "[loop $AGENT_NAME $(date '+%H:%M:%S')] $*"; }
 
 run_engine() {  # $1=prompt -> stdout reply
-  local prompt="$1" o; o="$(mktemp)"
+  local prompt="$1" o raw out; o="$(mktemp)"; raw="$(mktemp)"
   if [ "$ENGINE" = codex ]; then
     if [ -n "$SID" ]; then
-      codex exec resume --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check -o "$o" "$SID" "$prompt" >/dev/null 2>&1
+      codex exec resume --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check -o "$o" "$SID" "$prompt" >"$raw" 2>&1
     else
-      local raw; raw="$(mktemp)"
       codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check -C "$WORK" -o "$o" "$prompt" >"$raw" 2>&1
       SID="$(grep -oiE 'session id:[[:space:]]*[0-9a-f-]{8,}' "$raw" | grep -oiE '[0-9a-f-]{8,}' | head -1)"
-      rm -f "$raw"
     fi
-    cat "$o" 2>/dev/null
+    out="$(cat "$o" 2>/dev/null || true)"
+    if [ -z "$out" ]; then
+      out="$(sed '/^[[:space:]]*session id:/Id' "$raw" 2>/dev/null || true)"
+    fi
+    printf '%s' "$out"
   else
     printf '%s' "$prompt" | claude --print --dangerously-skip-permissions 2>/dev/null
   fi
-  rm -f "$o" 2>/dev/null
+  rm -f "$o" "$raw" 2>/dev/null
 }
 
 $AM register >/dev/null 2>&1

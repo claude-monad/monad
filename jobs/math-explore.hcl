@@ -1,13 +1,13 @@
-# math-explore — a one-shot autonomous Claude DISCOVERY session on the math repo.
+# math-explore — a one-shot autonomous Codex DISCOVERY session on the math repo.
 #
-# Dispatched by scripts/math-explore-watch.sh whenever the math repo (eliottcassidy2000/math)
-# gets new commits: spin up Claude explorer sessions that build on the fresh work and try to
+# Dispatched by scripts/math-explore-watch.sh or the GitHub webhook whenever the math repo
+# (eliottcassidy2000/math) gets new commits: spin up Codex explorer sessions that build on the fresh work and try to
 # discover NEW theorems / proofs / connections on their own (prompt: scripts/prompts/explorer.md).
 # Commits its findings back to the math repo, which in turn triggers more exploration +
 # formalization — a self-sustaining research loop.
 #
-# Placement: any Claude-ready node (node meta has_claude, set by the engine provisioner) — NOT
-# the old claude_account pin. Load is kept safe by the governor (the watch checks `place` before
+# Placement: any Codex-ready node (node meta has_codex, set by the engine provisioner). Load is
+# kept safe by the governor (the watch checks `place` before
 # dispatching) + Nomad's spread scheduler.
 #
 #   nomad job dispatch -meta seed="..." -meta angle="..." math-explore
@@ -30,12 +30,11 @@ job "math-explore" {
   }
 
   constraint {
-    attribute = "${meta.has_claude}"
+    attribute = "${meta.has_codex}"
     value     = "true"
   }
-  # Linux only: the engine provisioner (which keeps creds fresh + advertises has_claude) is
-  # Linux-only, so a non-Linux node's has_claude can be stale. Keep explorers on the 5
-  # provisioner-maintained Linux nodes where Claude creds are guaranteed current.
+  # Linux only: the engine provisioner (which keeps creds fresh + advertises has_codex) is
+  # Linux-only, so a non-Linux node's has_codex can be stale.
   constraint {
     attribute = "${attr.kernel.name}"
     value     = "linux"
@@ -75,6 +74,8 @@ job "math-explore" {
         GIT_AUTHOR_NAME  = "monad-explorer"
         GIT_AUTHOR_EMAIL = "monad@cluster.local"
         SEED             = "${NOMAD_META_seed}${NOMAD_META_angle}"
+        MONAD_ENGINE     = "codex"
+        MONAD_CODEX_EFFORT = "high"
         NOMAD_ADDR       = "http://100.75.75.39:4646"
       }
 

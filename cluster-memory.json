@@ -81,6 +81,11 @@
     "updated_by": "Eliotts-Mac-mini.local",
     "value": "DONE-2026-06-14T11:45:44Z"
   },
+  "health:quorum": {
+    "updated": 1781541986.7971187,
+    "updated_by": "claudebox",
+    "value": "ESCALATED-2026-06-15T16:39Z-issue5-1of3-voters-alive"
+  },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,
     "updated_by": "V1410-1",
@@ -92,9 +97,9 @@
     "value": "DONE-2026-06-14T22:39:26Z-quorum2of3-held(v1410-1+claudebox)-oraclebox1+windesk-offline-known-4of4-maint-allocs-running-engines-ok"
   },
   "health:v1410-1": {
-    "updated": 1781320806.9574971,
+    "updated": 1781541986.760834,
     "updated_by": "claudebox",
-    "value": "DONE-2026-06-12-claudebox-sweep-leader-healthy-stale-claim-cleared"
+    "value": "ESCALATED-2026-06-15T16:39Z-issue5-needs-onbox-nomad-restart"
   },
   "health:windesk": {
     "updated": 1781437545.14675,

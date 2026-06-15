@@ -1,9 +1,8 @@
 # codex-cluster-coordinator — standing containerized Codex control-plane agent.
 #
-# Replaces the old Claude-only conductor path for cluster coordination. This agent lives in the
-# existing monad-agent-mesh container image, stays online as a reactive mesh peer, and can be
-# reached from this repo via scripts/codex-coordinator.sh without manually starting a Claude
-# session in the checkout.
+# Replaces the old Claude-only conductor path for cluster coordination. This service runs the
+# Codex HTTP gateway in a container so it is always reachable from this repo without manually
+# starting a Claude session in the checkout.
 
 job "codex-cluster-coordinator" {
   datacenters = ["dc1"]
@@ -41,14 +40,21 @@ job "codex-cluster-coordinator" {
       mode     = "delay"
     }
 
+    network {
+      mode = "host"
+      port "http" {
+        static = 8310
+      }
+    }
+
     task "agent" {
       driver = "docker"
 
       config {
         image        = "100.78.218.70:5000/monad-agent-mesh:uid${meta.agent_uid}"
-        network_mode = "bridge"
+        network_mode = "host"
         entrypoint = ["/bin/bash", "-c",
-          "set -e; if [ ! -e /work/.git ]; then git clone --depth 50 \"$REPO_URL\" /work; fi; exec bash /work/meta/agent/mesh/mesh-agent-loop.sh"]
+          "set -e; if [ ! -e /work/.git ]; then git clone --depth 50 \"$REPO_URL\" /work; fi; exec python3 /work/codex-worker/gateway.py"]
         volumes = [
           "${meta.agent_home}/.claude:/home/ubuntu/.claude",
           "${meta.agent_home}/.claude.json:/home/ubuntu/.claude.json",
@@ -56,24 +62,32 @@ job "codex-cluster-coordinator" {
         ]
       }
 
-      template {
-        data        = "TS_AUTHKEY={{ with nomadVar \"secret/agent-mesh\" }}{{ .tailscale_authkey }}{{ end }}"
-        destination = "secrets/mesh.env"
-        env         = true
-      }
-
       env {
-        AGENT_NAME   = "agent-cluster-coordinator"
-        MONAD_ENGINE = "codex"
-        REPO_URL     = "https://github.com/eliott-monad/monad"
-        AGENT_ROLE   = <<-EOT
-          You are the Monad cluster's standing Codex coordinator. Your top priority is to help operate the cluster through Codex only, not Claude. Focus on coordinating GitOps sync, deployment changes, Codex math exploration, Codex formalization, and safe cluster edits. Reply concisely, ask for evidence when needed, and prefer actionable steps that can be executed from the monad repo.
-        EOT
+        REPO_URL        = "https://github.com/eliott-monad/monad"
+        CODEX_BIND      = "0.0.0.0"
+        CODEX_PORT      = "8310"
+        CODEX_WORKDIR   = "/work"
+        CODEX_SANDBOX   = "bypass"
+        CODEX_TIMEOUT   = "900"
+        CODEX_PREAMBLE  = "/work/codex-worker/cluster-coordinator.md"
+        ENABLE_INTERACTIVE = "0"
       }
 
       resources {
         cpu    = 750
         memory = 1024
+      }
+
+      service {
+        name     = "codex-cluster-coordinator"
+        port     = "http"
+        provider = "nomad"
+        check {
+          type     = "http"
+          path     = "/health"
+          interval = "20s"
+          timeout  = "5s"
+        }
       }
     }
   }

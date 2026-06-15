@@ -1,65 +1,51 @@
 #!/usr/bin/env bash
-# codex-coordinator.sh — talk to the standing containerized Codex coordinator on the mesh.
+# codex-coordinator.sh — talk to the standing containerized Codex coordinator over HTTP.
 #
 # Usage:
 #   codex-coordinator.sh ask "what changed?"
-#   codex-coordinator.sh ask --agent agent-cluster-coordinator "restart the sync job"
-#   codex-coordinator.sh peers
+#   codex-coordinator.sh ask --url http://100.75.75.39:8310 "restart the sync job"
+#   codex-coordinator.sh health
 set -euo pipefail
 
-HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-AGENT_MSG="$HERE/../meta/agent/mesh/agent-msg.sh"
 CMD="${1:-ask}"
 shift || true
 
-TARGET="agent-cluster-coordinator"
-WAIT="${COORD_WAIT:-90}"
-export MESH_RELAY="${MESH_RELAY:-http://100.75.75.39:8477}"
-export AGENT_NAME="${AGENT_NAME:-operator-$(hostname -s 2>/dev/null || hostname)-$$}"
+URL="${CODEX_COORD_URL:-http://100.75.75.39:8310}"
 
 die() { echo "codex-coordinator: $*" >&2; exit 2; }
 
-recv_reply() {
-  python3 - "$TARGET" <<'PY'
-import json, sys
-target = sys.argv[1]
-try:
-    msgs = json.load(sys.stdin)
-except Exception:
-    sys.exit(0)
-for m in msgs:
-    if m.get("from") == target:
-        print(m.get("body", ""))
-        sys.exit(0)
+http_get() {
+  python3 - "$1" <<'PY'
+import sys, urllib.request
+with urllib.request.urlopen(sys.argv[1], timeout=20) as r:
+    sys.stdout.write(r.read().decode())
+PY
+}
+
+http_post() {
+  python3 - "$1" "$2" <<'PY'
+import json, sys, urllib.request
+url, text = sys.argv[1], sys.argv[2]
+body = json.dumps({"text": text}).encode()
+req = urllib.request.Request(url, data=body, method="POST", headers={"Content-Type": "application/json"})
+with urllib.request.urlopen(req, timeout=900) as r:
+    sys.stdout.write(r.read().decode())
 PY
 }
 
 case "$CMD" in
   ask)
-    if [ "${1:-}" = "--agent" ]; then
-      TARGET="${2:-}"
+    if [ "${1:-}" = "--url" ]; then
+      URL="${2:-}"
       shift 2
     fi
-    [ $# -gt 0 ] || die "usage: ask [--agent name] <message>"
-    MSG="$*"
-    bash "$AGENT_MSG" register >/dev/null
-    bash "$AGENT_MSG" send "$TARGET" "$MSG" >/dev/null
-    deadline=$(( $(date +%s) + WAIT ))
-    while [ "$(date +%s)" -lt "$deadline" ]; do
-      out="$(bash "$AGENT_MSG" recv --wait 10)"
-      reply="$(printf '%s' "$out" | recv_reply || true)"
-      if [ -n "${reply:-}" ]; then
-        printf '%s\n' "$reply"
-        exit 0
-      fi
-    done
-    echo "codex-coordinator: timed out waiting for reply from $TARGET" >&2
-    exit 1
+    [ $# -gt 0 ] || die "usage: ask [--url coordinator-url] <message>"
+    http_post "$URL/ask" "$*"
     ;;
-  peers)
-    bash "$AGENT_MSG" peers
+  health)
+    http_get "$URL/health"
     ;;
   *)
-    die "usage: {ask [--agent name] <message>|peers}"
+    die "usage: {ask [--url coordinator-url] <message>|health}"
     ;;
 esac

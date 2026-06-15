@@ -10,12 +10,8 @@ job "codex-cluster-coordinator" {
   priority    = 75
 
   constraint {
-    attribute = "${meta.agent_mesh_ready}"
-    value     = "true"
-  }
-  constraint {
-    attribute = "${meta.has_codex}"
-    value     = "true"
+    attribute = "${node.unique.name}"
+    value     = "claudebox"
   }
 
   group "coordinator" {
@@ -51,14 +47,14 @@ job "codex-cluster-coordinator" {
       driver = "docker"
 
       config {
-        image        = "100.78.218.70:5000/monad-agent-mesh:uid${meta.agent_uid}"
+        image        = "100.78.218.70:5000/monad-agent-mesh:latest"
         network_mode = "host"
         entrypoint = ["/bin/bash", "-c",
           "set -e; if [ ! -e /work/.git ]; then git clone --depth 50 \"$REPO_URL\" /work; fi; exec python3 /work/codex-worker/gateway.py"]
         volumes = [
-          "${meta.agent_home}/.claude:/home/ubuntu/.claude",
-          "${meta.agent_home}/.claude.json:/home/ubuntu/.claude.json",
-          "${meta.agent_home}/.codex:/home/ubuntu/.codex",
+          "/home/claude/.claude:/home/ubuntu/.claude",
+          "/home/claude/.claude.json:/home/ubuntu/.claude.json",
+          "/home/claude/.codex:/home/ubuntu/.codex",
         ]
       }
 

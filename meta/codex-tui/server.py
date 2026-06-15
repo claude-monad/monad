@@ -6,7 +6,9 @@ integration), so the ChatGPT desktop/iOS app can't natively attach to a remote C
 This gives a native-feeling browser chat instead, reachable from desktop or iOS Safari at
 this node's Tailscale IP. Conversation continuity uses `codex exec resume <session-id>`.
 
-Env: CODEX_TUI_PORT (8090), CODEX_BIN (codex), CODEX_HOME (creds dir), CODEX_TUI_WORKDIR.
+Env: CODEX_TUI_PORT (8090), CODEX_BIN (codex), CODEX_HOME (creds dir), CODEX_TUI_WORKDIR,
+     CODEX_TUI_PREAMBLE (prepended on the first turn of a chat), CODEX_TUI_LABEL,
+     CODEX_TUI_DEFAULT_SESSION.
 """
 import json, os, re, subprocess, tempfile, threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -15,6 +17,9 @@ PORT     = int(os.environ.get("CODEX_TUI_PORT", "8090"))
 CODEX    = os.environ.get("CODEX_BIN", "codex")
 WORKDIR  = os.environ.get("CODEX_TUI_WORKDIR", "/tmp/codex-tui-work")
 TIMEOUT  = int(os.environ.get("CODEX_TUI_TIMEOUT", "600"))
+PREAMBLE = os.environ.get("CODEX_TUI_PREAMBLE", "")
+LABEL    = os.environ.get("CODEX_TUI_LABEL", "Codex TUI")
+DEFAULT_SESSION = os.environ.get("CODEX_TUI_DEFAULT_SESSION", "default")
 os.makedirs(WORKDIR, exist_ok=True)
 if os.environ.get("CODEX_HOME"):
     os.environ["CODEX_HOME"] = os.environ["CODEX_HOME"]
@@ -46,11 +51,14 @@ def run_codex(name, message):
     with LOCK:
         sid = SESSIONS.get(name)
     last = tempfile.mktemp(suffix=".txt")
+    prompt = message
+    if not sid and PREAMBLE:
+        prompt = PREAMBLE + "\n\n---\n\n" + message
     if sid:
         # resume keeps the session's cwd (no -C); options before the SESSION_ID + prompt.
         cmd = [CODEX, "exec", "resume"] + COMMON + ["-o", last, sid, message]
     else:
-        cmd = [CODEX, "exec"] + COMMON + ["-C", WORKDIR, "-o", last, message]
+        cmd = [CODEX, "exec"] + COMMON + ["-C", WORKDIR, "-o", last, prompt]
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
         out = (p.stdout or "") + (p.stderr or "")
@@ -72,7 +80,7 @@ def run_codex(name, message):
 
 PAGE = """<!doctype html><html><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<title>Codex TUI</title><style>
+<title>__LABEL__</title><style>
 body{font-family:-apple-system,system-ui,monospace;margin:0;background:#0b0e14;color:#d7dce5}
 header{padding:10px 14px;background:#11151f;border-bottom:1px solid #232a39;font-weight:600}
 header input{background:#1a2130;color:#d7dce5;border:1px solid #2a3346;border-radius:6px;padding:4px 8px;font-size:14px}
@@ -84,7 +92,7 @@ textarea{flex:1;background:#1a2130;color:#d7dce5;border:1px solid #2a3346;border
 button{background:#2d6cdf;color:#fff;border:0;border-radius:8px;padding:0 18px;font-size:15px}
 button:disabled{opacity:.5}
 </style></head><body>
-<header>Codex &middot; session <input id=sess value=default size=10></header>
+<header>__LABEL__ &middot; session <input id=sess value="__DEFAULT_SESSION__" size=18></header>
 <div id=log></div>
 <footer><textarea id=in placeholder="message codex…" autofocus></textarea><button id=send>Send</button></footer>
 <script>
@@ -94,7 +102,7 @@ async function send(){const t=inp.value.trim();if(!t)return;inp.value='';add('u'
  try{const r=await fetch('/api/send',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({session:sess.value||'default',message:t})});
  const j=await r.json();log.lastChild.remove();add('a','codex',j.reply||'(no reply)');}catch(e){log.lastChild.remove();add('a','error',''+e);}btn.disabled=false;inp.focus();}
 btn.onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
-</script></body></html>"""
+</script></body></html>""".replace("__LABEL__", LABEL).replace("__DEFAULT_SESSION__", DEFAULT_SESSION)
 
 class H(BaseHTTPRequestHandler):
     def _send(self, code, body, ctype="application/json"):

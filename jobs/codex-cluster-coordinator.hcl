@@ -47,7 +47,7 @@ job "codex-cluster-coordinator" {
       driver = "docker"
 
       config {
-        image        = "100.78.218.70:5000/monad-agent-mesh:latest"
+        image        = "100.78.218.70:5000/monad-agent-mesh:uid1000"
         network_mode = "host"
         entrypoint = ["/bin/bash", "-c",
           "set -e; if [ ! -e /work/.git ]; then git clone --depth 50 \"$REPO_URL\" /work; fi; exec python3 /work/codex-worker/gateway.py"]

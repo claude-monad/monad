@@ -1,0 +1,10 @@
+{
+  "id": "t-0126",
+  "type": "infra",
+  "scope": "QUORUM LOST 2026-06-16T05:18Z: Nomad has no leader; stale raft voters are V1410-1 alive and claudebox failed/offline, oraclebox1 offline/non-member. Bring claudebox back via tailscale up + scripts/claudebox-server.sh keepalive or power/rejoin oraclebox1; verify leader, node status, and maintenance-agent after quorum returns. Also check bigo-server SSH/local-user prereq and death-star/windesk offline clients.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

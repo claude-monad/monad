@@ -3202,3 +3202,8 @@
 {"ts":"2026-06-15T21:06:40Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 2/2 (V1410-1 leader+claudebox); 4 nomad nodes ready w/ maintenance-agent alloc each; engines claude+codex advertised; oraclebox1 offline 8d (heal/restore queued, ping fail, claim DONE); windesk online-tailnet, not a nomad member"}
 {"ts":"2026-06-15T21:06:52Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-15T21:37:00Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-16T05:05:30Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-16T05:09:57Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-16T05:18:29Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"escalated","detail":"quorum lost: V1410-1 only reachable voter, claudebox/oraclebox1 unreachable; task t-0126 emitted; disk cache cleanup freed space to 94% used"}
+{"ts":"2026-06-16T05:20:51Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}
+{"ts":"2026-06-16T05:25:51Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}

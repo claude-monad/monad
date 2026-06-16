@@ -1,10 +1,10 @@
 {
   "id": "t-0109",
-  "type": "math",
-  "scope": "S722 HYP-2390: Erdos problem 98 (h(n)=min distinct distances, no 3 collinear no 4 concyclic; does h(n)/n->inf?) = the unit-distance DUAL. Begin work in earnest: (1) THE ATTACK: bound the additive energy = #concyclic/isosceles 4-tuples using the ZERO-concyclic ban (unused by the trivial (n-1)/3 bound), then Elekes Cauchy-Schwarz energy->support to push h(n) past (n-1)/3 toward superlinear. (2) constructions: implement/verify Erdos-Furedi-Pach (h(n)<n exp(c sqrt log n)) and a CM-BROKEN perturbed-lattice family; compute the small-n constrained min-distinct-distance table (analog of the AMP u(n) table). (3) the radius-1 slice = THM-440/u(22): use the Moser/cocyclic census as a microscope on n=22 of problem 98. (4) the autocorrelation operator MM* (THM-441): distinct distances = radial-spectrum support; concyclic ban = off-diagonal circle-incidence bound \u2014 make this a usable inequality. (5) Sidon/twistor link (S718): no-4-concyclic as a B_2 condition. PR #87.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "death-star (100.96.31.66) is absent from Nomad and unreachable from bigo-server on TCP 22/4646/4647/9000 as of 2026-06-12T07:16Z; likely offline/off-tailnet. Non-quorum client, but storage/compute node is unavailable. Needs power/network/Tailscale recovery, then verify Nomad rejoin if intended.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S722"
+  "parent": null
 }

@@ -1,10 +1,10 @@
 {
   "id": "t-0110",
-  "type": "math",
-  "scope": "S723 HYP-2393 (Erdos 93<->98 duality; regular polygon pivot; convex-layers bridge). Work: (1) MAKE THE ROUTE PRECISE: a few-distinct-distance (D) general-position set is >=n/(2D+1) thin convex layers (hull-size bound h<=2D+1, proved via Altman/93), none circular (no-4-concyclic). Bound the distinct distances SHARED across L pairwise-non-concyclic convex layers \u2014 a circle-incidence/additive-energy estimate \u2014 to force D=omega(n) (=> h(n)/n->inf, resolving 98). (2) formalize h<=2D+1 as a clean lemma; recursive lower bound for h(n). (3) strong-93 (OPEN, one vertex>=n/2): the (n-1)/3 toehold under +no-4-concyclic; push toward n/2 using convex order (Dumitrescu 13n/36 is the bar). (4) small-n: constrained min-distinct-distance table + onion-layer profiles for both 93 (convex) and 98 (general position). (5) connect the regular-polygon pivot to our CM/twistor work (S719): the ring = the cold crystalline; CM-broken rings = the EFP construction. PR #88.",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "2026-06-13 control-plane degraded: oraclebox1 (100.125.210.126) still offline/off-Nomad, and nomad server members now shows only V1410-1 + claudebox alive with NO cluster leader. Quorum count is 2 voters alive but scheduling/control-plane RPC is leaderless. Smallest safe path is on-box recovery of oraclebox1 (power/network, tailscale up, nomad restart, ensure-engines); if leadership does not return, inspect/restart local nomad on V1410-1 and/or claudebox.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S723"
+  "parent": null
 }

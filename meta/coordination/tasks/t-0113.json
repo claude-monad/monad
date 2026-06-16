@@ -1,10 +1,10 @@
 {
   "id": "t-0113",
-  "type": "math",
-  "scope": "S726 HYP-2404 (Erdos 61: aleph_1-chromatic common subgraph; targets = Mycielski tower from C_5). Work: (1) SHARP SUB-QUESTION: is there ONE fixed chromatic-4 graph (Grotzsch = M(C_5)?) contained in EVERY aleph_1-chromatic graph? If yes, the chi=4 form of 61 is immediate. Survey what is known (Erdos-Hajnal-Shelah: contain C_4, all finite bipartite, all long odd cycles); does that force Grotzsch? (2) make the S725 RENORMALIZATION precise as an elementary-submodel / compactness tower forcing: aleph_1 = limit fixed point forces the finite chromatic tower the way limit ordinals restore partition relations (Chang). (3) the LARGE-GIRTH obstruction: chromatic-4 + girth g needs Ramanujan/probabilistic towers (Mycielski caps girth at 4); attack via the laminar/ultrametric (S725) structure. (4) the Mycielski tower as a transfer-spectrum (S720/721): compute its independence-polynomial recurrence / the chi-additive ladder; is chi=4 a 'temperature' threshold? (5) connect to the finite Erdos-Hajnal paper (2606.06258) methods (structural decomposition) -- can 'complexity forces homogeneous substructure' be lifted to the infinite chromatic setting?",
-  "repo": "eliottcassidy2000/math",
+  "type": "infra",
+  "scope": "2026-06-16 bigo-server sweep: quorum is lost. V1410-1 (100.75.75.39) is reachable but /v1/agent/self shows Raft state=Candidate, num_peers=1, last_contact~2h, and latest_configuration contains only V1410-1 + claudebox. monad nomad servers shows V1410-1 alive, claudebox failed, and no cluster leader; nomad node status and nomad job status maintenance-agent both return 500 No cluster leader. Direct TCP probes from bigo-server: V1410-1 ports 22/4646/4647/4648 open; claudebox (100.87.219.108) and oraclebox1 (100.125.210.126) time out on 22/4646/4647/4648; eliotts-mac-mini 4646 open, windesk/death-star time out. Existing self-heal queue files already exist for claudebox and oraclebox1, but this session cannot SSH (sandbox denies /usr/bin/ssh) and no Nomad leader exists for var-based delegation. Smallest safe recovery: on-box revive claudebox first or oraclebox1 second (power/network, tailscale up, nomad up/rejoin); after a second server is alive, verify leader election and only then inspect/restart Nomad on V1410-1 if it remains candidate.",
+  "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": "S726"
+  "parent": "t-0112"
 }

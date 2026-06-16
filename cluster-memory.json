@@ -32,19 +32,19 @@
     "value": "DONE-2026-06-06T09:01:54Z"
   },
   "health:claudebox": {
-    "updated": 1780807775.0696042,
-    "updated_by": "oraclebox1",
-    "value": "DONE-2026-06-07T04:49:34Z"
+    "updated": 1781596345.1969457,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:death-star": {
-    "updated": 1780754642.102103,
+    "updated": 1781248626.1768403,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-06T14:04:02Z"
+    "value": "DONE-2026-06-12T07:17:06Z-escalated-t-0109"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1781116467.1843622,
-    "updated_by": "V1410-1",
-    "value": "DONE-2026-06-10T18:34:27Z"
+    "updated": 1781248652.0013578,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-12T07:17:31Z-queued-disk-self-fix"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -77,9 +77,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781208290.6274822,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-11T20:04:50Z-offline-unreachable-existing-queue-covers"
+    "updated": 1781596350.608499,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-16T07:52:30Z-existing-queue-t0113"
   },
   "health:v1410-1": {
     "updated": 1780805638.9515183,
@@ -87,9 +87,9 @@
     "value": "oraclebox1"
   },
   "health:windesk": {
-    "updated": 1781179305.0859387,
+    "updated": 1781248651.8303854,
     "updated_by": "bigo-server",
-    "value": "DONE-escalated-2026-06-11T12:01:45Z"
+    "value": "DONE-2026-06-12T07:17:31Z-existing-queue-and-open-tasks"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

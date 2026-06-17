@@ -32,14 +32,19 @@
     "value": "DONE-2026-06-16T06:08:48Z"
   },
   "health:claudebox": {
+    "updated": 1781668481.9066749,
+    "updated_by": "Eliotts-Mac-mini.local",
+    "value": "DONE-2026-06-17T03:54:41Z-existing-t-0147-quorum-no-leader"
+  },
+  "health:claudebox:bigo-server-20260616T075225Z": {
     "updated": 1781596345.1969457,
     "updated_by": "bigo-server",
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:death-star": {
-    "updated": 1781590128.82787,
+    "updated": 1781668490.746947,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-16T06:08:48Z"
+    "value": "DONE-2026-06-17T03:54:50Z-existing-t-0153-tailnet-offline"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -77,14 +82,19 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
+    "updated": 1781668486.390986,
+    "updated_by": "Eliotts-Mac-mini.local",
+    "value": "DONE-2026-06-17T03:54:46Z-existing-t-0152-offline"
+  },
+  "health:oraclebox1:bigo-server-20260616T075230Z": {
     "updated": 1781596350.608499,
     "updated_by": "bigo-server",
     "value": "DONE-2026-06-16T07:52:30Z-existing-queue-t0113"
   },
   "health:quorum": {
-    "updated": 1781541986.7971187,
-    "updated_by": "claudebox",
-    "value": "ESCALATED-2026-06-15T16:39Z-issue5-1of3-voters-alive"
+    "updated": 1781668477.179594,
+    "updated_by": "Eliotts-Mac-mini.local",
+    "value": "DONE-2026-06-17T03:54:37Z-existing-t-0147-no-leader-1of2"
   },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,
@@ -102,9 +112,9 @@
     "value": "DONE-2026-06-15T17:21:02Z"
   },
   "health:windesk": {
-    "updated": 1781590128.842674,
+    "updated": 1781668509.419832,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-16T06:08:48Z"
+    "value": "DONE-2026-06-17T03:55:09Z-existing-t-0136-nomad-http-timeout"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

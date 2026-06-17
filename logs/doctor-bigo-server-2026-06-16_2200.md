@@ -7,9 +7,9 @@
 
 ## Issues
 
-- Cannot reach Nomad server at 100.75.75.39:4646
-- Nomad is not installed on this node
-- Git cannot fast-forward — may have conflicts or diverged history
+- Nomad/Tailscale tooling is absent from this shell, so local install/restart could not be completed here.
+- Nomad server reachability alert was not reproduced; `100.75.75.39:4646` accepts TCP connections from this node.
+- Git merge conflict was resolved and committed as `e8b8a48`.
 
 ## Predictions
 
@@ -17,13 +17,14 @@
 
 ## Warnings
 
-- Tailscale command not found
-- Repo permissions had drifted — repaired
-- Git has 65 uncommitted changes
+- `tailscale` command not found
+- `nomad` command not found
+- `systemctl` is blocked in this shell
 - Disk usage is 92%
+- Worktree still has local telemetry churn and untracked temp files
 
 ## Actions
 
 - Verified `100.75.75.39:4646` is reachable from this node with `nc`; the server-unreachable alert was not reproducible at TCP level.
 - Checked local Nomad/Tailscale tooling: `nomad` and `tailscale` are absent in this shell, no obvious config paths were found under `/etc` or `/opt`, and `systemctl` is blocked here, so install/restart could not be completed from this session.
-- Resolved merge conflicts in `cluster-memory.json` and `meta/coordination/tasks/{.seq,t-0109.json,t-0110.json,t-0111.json,t-0112.json}` by preserving both sides' context.
+- Resolved merge conflicts in `cluster-memory.json` and `meta/coordination/tasks/{.seq,t-0109.json,t-0110.json,t-0111.json,t-0112.json}` by preserving both sides' context, then committed the merge as `e8b8a48`.

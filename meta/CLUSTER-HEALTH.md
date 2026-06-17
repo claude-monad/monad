@@ -10,9 +10,9 @@ it whenever you have a spare cycle.
 
 | node | Tailscale IP | OS | Nomad role |
 |------|--------------|----|------------|
-| `v1410-1`           | 100.75.75.39    | Linux  | server (leader-capable) + client |
-| `oraclebox1`        | 100.125.210.126 | Linux  | server (voter) + client |
-| `claudebox`         | 100.87.219.108  | Linux  | client (3rd server target) |
+| `v1410-1`           | 100.75.75.39    | Linux  | server (leader) + client |
+| `oraclebox1`        | 100.125.210.126 | Linux  | server (voter) + client — *offline since ~2026-06-07, queue holds heal/restore tasks* |
+| `claudebox`         | 100.87.219.108  | Linux  | server (voter, RaftProtocol 3) + client — converged to 3rd voter |
 | `eliotts-mac-mini`  | 100.113.252.45  | macOS  | client |
 | `windesk`           | 100.94.210.54   | Windows| client |
 

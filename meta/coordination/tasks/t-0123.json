@@ -1,0 +1,10 @@
+{
+  "id": "t-0123",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S7 THM-492/HYP-2438 follow-up: ADVERSARIAL test of the lattice closure. Search for a primitive multiple-of-14 config blocking ALL of Q={d*m : d|14, m<=27} (band criterion) AND the width-form B'(any runner). Single-stranger families cannot (THM-492 family theorem); use >=2 tuned strangers over a rich 7-core, residue-tune mod {13, 16, 17, 19, 23, 25, 27, 29..41} simultaneously (CRT), and SAT/meet-in-the-middle over residue profiles. Any hit = the next rung of the ladder; certified absence over a residue-complete sweep = strong evidence for HYP-2438 claim 1.",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S7"
+}

@@ -1,7 +1,7 @@
-# math-explore-watch — every new math-repo commit spins up autonomous Claude discovery sessions.
+# math-explore-watch — every new math-repo commit spins up autonomous Codex discovery sessions.
 #
 # Polls eliottcassidy2000/math HEAD; when it moves, scripts/math-explore-watch.sh dispatches a
-# bounded number of `math-explore` Claude sessions (governor-admitted) seeded with the recent
+# bounded number of `math-explore` Codex sessions (governor-admitted) seeded with the recent
 # commits. The companion of formalize-watch: that one formalizes the new results, this one tries
 # to discover the NEXT ones. Cheap (one git ls-remote per pass; spawns only when HEAD moves).
 

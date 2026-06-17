@@ -1,0 +1,10 @@
+{
+  "id": "t-0127",
+  "type": "infra",
+  "scope": "QUORUM LOST 2026-06-16T06:05Z from eliotts-mac-mini sweep: Nomad has no leader; stale voters are V1410-1 candidate/alive and claudebox failed/offline; oraclebox1 offline/non-member. claudebox/oracle SSH time out, v1410 ssh blocked by host-key verification. Restore by powering/rejoining claudebox via scripts/claudebox-server.sh keepalive or oraclebox1 tailscale+nomad; verify node status and maintenance-agent after leader returns. bigo-server reachable on Tailscale but SSH user mapping blocks direct prereq fix; death-star and windesk offline clients.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

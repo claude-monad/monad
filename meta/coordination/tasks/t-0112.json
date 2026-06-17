@@ -1,7 +1,7 @@
 {
   "id": "t-0112",
   "type": "infra",
-  "scope": "2026-06-15 quorum-loss incident from bigo-server sweep: local client on 100.78.218.70 is up, but `monad nomad servers` against V1410-1 shows NO cluster leader with only V1410-1 alive and claudebox failed. Direct TCP probes from bigo-server show V1410-1 ports 22/4646/4647/4648 open, while claudebox (100.87.219.108) and oraclebox1 (100.125.210.126) time out on 22/4646/4647/4648, so no remote queue/redeploy path exists from this node. Immediate on-box recovery of either claudebox or oraclebox1 is required to restore >=2 live voters; after that, verify leader election and restart Nomad on V1410-1 only if still leaderless.",
+  "scope": "Preserved merge scope A: 2026-06-15 quorum-loss incident from bigo-server sweep: the local client on 100.78.218.70 is up, but `monad nomad servers` against V1410-1 shows no cluster leader with only V1410-1 alive and claudebox failed. Direct TCP probes from bigo-server show V1410-1 ports 22/4646/4647/4648 open while claudebox (100.87.219.108) and oraclebox1 (100.125.210.126) time out, so no remote queue or redeploy path exists from this node. Preserved merge scope B: quorum lost on 2026-06-15, so Nomad on V1410-1 likely needs restart to restore 2/3 Raft with claudebox and/or oraclebox1 needs power recovery; claudebox is server-healthy but waiting and there is no remote exec path from claudebox because SSH times out.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

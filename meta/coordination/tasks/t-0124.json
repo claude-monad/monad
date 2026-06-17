@@ -1,0 +1,10 @@
+{
+  "id": "t-0124",
+  "type": "math",
+  "scope": "claudebox-2026-06-11-S7 HYP-2438 claim 2: prove the blocking-height resource bound f(K). Per band-k shell q, blocking without a multiple needs the 13 runners' +-{1..k}-dilate inverses to cover the units (Z/q)*; with a multiple it consumes a divisibility slot. Count CRT-independent constraints per rung, show f(K)->infinity with 13 runners, and derive the explicit finite K* such that [band-<=K* shells UNION B'(any)] covers all primitive multiple-of-14 configs. This would reduce C'(14) => LRC(14) to a finite residue-profile check (HYP-2256 DP machinery applies).",
+  "repo": "eliottcassidy2000/math",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "claudebox-2026-06-11-S7"
+}

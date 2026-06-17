@@ -1,7 +1,7 @@
 {
   "id": "t-0111",
   "type": "infra",
-  "scope": "bigo-server self-health degraded on 2026-06-14: repo dirty/behind so no ff pull; ensure-engines saw codex ready but could not advertise because local Nomad client is unavailable; host shell lacks usable nomad/tailscale/curl CLIs and cannot execute /usr/bin/snap,/usr/bin/sudo,/usr/bin/ping; direct probes to http://127.0.0.1:4646 refused and to leader/mesh relay 100.75.75.39:{4646,8477} timed out; maintenance-agent self-pass has been failing repeatedly. Needs on-box root pass to restore bigo-server tailnet + Nomad client tooling/connectivity, verify local agent listeners, then rerun cluster sweep.",
+  "scope": "Preserved merge scope A: bigo-server self-health degraded on 2026-06-14: repo dirty and behind so no fast-forward pull; ensure-engines saw codex ready but could not advertise because the local Nomad client is unavailable; the host shell lacks usable nomad, tailscale, and curl CLIs and cannot execute /usr/bin/snap, /usr/bin/sudo, or /usr/bin/ping; direct probes to http://127.0.0.1:4646 were refused and to 100.75.75.39:{4646,8477} timed out; maintenance-agent self-pass has been failing repeatedly. Preserved merge scope B: thin quorum with only 2 Raft voters (V1410-1 leader plus claudebox) while oraclebox1, the intended third voter, is offline, so losing claudebox would drop quorum.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

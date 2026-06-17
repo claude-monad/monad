@@ -1,7 +1,7 @@
 {
   "id": "t-0109",
   "type": "infra",
-  "scope": "death-star (100.96.31.66) is absent from Nomad and unreachable from bigo-server on TCP 22/4646/4647/9000 as of 2026-06-12T07:16Z; likely offline/off-tailnet. Non-quorum client, but storage/compute node is unavailable. Needs power/network/Tailscale recovery, then verify Nomad rejoin if intended.",
+  "scope": "Preserved merge scope A: death-star (100.96.31.66) is absent from Nomad and unreachable from bigo-server on TCP 22/4646/4647/9000 as of 2026-06-12T07:16Z; likely offline/off-tailnet. Non-quorum client, but storage/compute node is unavailable. Needs power/network/Tailscale recovery, then verify Nomad rejoin if intended. Preserved merge scope B: restore Nomad quorum after V1410-1 failed from claudebox view on 2026-06-14; claudebox sees only itself alive and oraclebox1 is already offline. Bring back V1410-1 or another voter, then verify leader and maintenance-agent roster.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

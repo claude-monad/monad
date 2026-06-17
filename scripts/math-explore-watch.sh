@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# math-explore-watch.sh — turn every new math-repo commit into autonomous Claude discovery.
+# math-explore-watch.sh — turn every new math-repo commit into autonomous Codex discovery.
 #
 # Watches eliottcassidy2000/math HEAD (like formalize-watch). When new commits land, it spins up
-# a bounded number of Claude `math-explore` sessions (jobs/math-explore.hcl) seeded with the
+# a bounded number of Codex `math-explore` sessions (jobs/math-explore.hcl) seeded with the
 # recent-commit context + distinct exploration angles, so the cluster keeps building on its own
 # latest results — discovering new theorems/proofs/connections. The formalizer already covers
 # formalization on the same commits; this covers FORWARD research.
 #
-# Cost-safe on the single Max account: governor admission (skip if Claude nodes are at capacity)
+# Cost-safe on the Codex pool: governor admission (skip if Codex nodes are at capacity)
 # + a hard cap on concurrent explorers + don't re-dispatch while explorers are already running.
 set -uo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -71,10 +71,10 @@ $SUMMARY"
 want=$(( MAX_CONCURRENT - RUNNING )); [ "$want" -gt "$PER_BATCH" ] && want="$PER_BATCH"
 spawned=0
 for i in $(seq 0 $((want-1))); do
-  # Governor admission: only spawn if a Claude node has capacity (else don't overload).
-  node="$(python3 "$REPO_DIR/scripts/llm-scheduler.py" place --engine claude --mem 1024 --quiet 2>/dev/null)"
+  # Governor admission: only spawn if a Codex node has capacity (else don't overload).
+  node="$(python3 "$REPO_DIR/scripts/llm-scheduler.py" place --engine codex --mem 1024 --quiet 2>/dev/null)"
   if [ -z "$node" ] || [ "$node" = "QUEUE" ]; then
-    log "governor: no Claude capacity right now — holding ($spawned spawned this batch)"; break
+    log "governor: no Codex capacity right now — holding ($spawned spawned this batch)"; break
   fi
   angle="${ANGLES[$(( i % ${#ANGLES[@]} ))]}"
   if nomad job dispatch -detach -meta "seed=$SEED" -meta "angle=$angle" "$EXPLORE_JOB" >/dev/null 2>&1; then

@@ -1,10 +1,10 @@
 {
   "id": "t-0110",
   "type": "infra",
-  "scope": "2026-06-13 control-plane degraded: oraclebox1 (100.125.210.126) still offline/off-Nomad, and nomad server members now shows only V1410-1 + claudebox alive with NO cluster leader. Quorum count is 2 voters alive but scheduling/control-plane RPC is leaderless. Smallest safe path is on-box recovery of oraclebox1 (power/network, tailscale up, nomad restart, ensure-engines); if leadership does not return, inspect/restart local nomad on V1410-1 and/or claudebox.",
+  "scope": "Preserved merge scope A: 2026-06-13 control-plane degraded: oraclebox1 (100.125.210.126) still offline/off-Nomad, and `nomad server members` shows only V1410-1 + claudebox alive with no cluster leader. Smallest safe path is on-box recovery of oraclebox1 (power/network, Tailscale up, Nomad restart, ensure-engines); if leadership does not return, inspect or restart local Nomad on V1410-1 and/or claudebox. Preserved merge scope B: quorum loss during eliotts-mac-mini sweep, with V1410-1 Tailscale-unreachable and ports 22/2222/4646/4647/4648 timing out; claudebox is the only alive voter and Nomad reports no cluster leader. death-star, oraclebox1, and windesk are also Tailscale-offline or absent.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

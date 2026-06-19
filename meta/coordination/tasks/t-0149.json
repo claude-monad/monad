@@ -1,0 +1,10 @@
+{
+  "id": "t-0149",
+  "type": "infra",
+  "scope": "2026-06-19 bigo-server sweep: quorum still lost. V1410-1 (100.75.75.39) reachable but Candidate/no leader with num_peers=1 and latest_configuration=[V1410-1,claudebox]; claudebox and oraclebox1 time out on 22/4646/4647/4648 from bigo-server, so there is no safe remote recovery path here. Smallest next action is on-box claudebox keepalive/start or oraclebox1 power/Tailscale/Nomad recovery, then verify leader election, node readiness, and maintenance-agent coverage. Local self fix done: bigo-server client healthy on 100.78.218.70:4646 and dynamic meta now has_claude=false has_codex=true agent_engines=codex; agent-v1410-codex-creative notified.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0151",
+  "type": "infra",
+  "scope": "Nomad quorum loss on 2026-06-19: nomad server members shows only V1410-1 alive and no leader; restore at least one voter (claudebox or oraclebox1) before node/job maintenance checks can succeed.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0153",
+  "type": "infra",
+  "scope": "oraclebox1 is offline on Tailscale (~12d) during quorum loss; bring host/Tailscale up, rejoin/restore Nomad server voter, and verify >=2 voters alive.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

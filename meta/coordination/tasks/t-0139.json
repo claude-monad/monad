@@ -1,0 +1,10 @@
+{
+  "id": "t-0139",
+  "type": "infra",
+  "scope": "2026-06-18 bigo-server sweep: Nomad quorum lost. V1410-1 (100.75.75.39) answers on 22/4646/4647/4648 and /v1/agent/self, but /v1/status/leader times out and nomad server members shows V1410-1 alive with claudebox failed and no leader. claudebox (100.87.219.108) and oraclebox1 (100.125.210.126) both time out on 22/4646/4647/4648 from bigo-server, so there is no safe remote recovery path from this node; least-disruptive next action is on-box tailscale/nomad recovery of either voter, preferably claudebox via scripts/claudebox-server.sh keepalive/start, then verify leader election, node status, and maintenance-agent coverage. Secondary client probes: death-star and windesk expose no checked ports; eliotts-mac-mini only answers on 4646. Local self-fix completed: bigo-server Nomad client healthy on 100.78.218.70:5646 and ensure-engines now advertises has_claude=true has_codex=true agent_engines=claude,codex.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

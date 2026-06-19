@@ -1,0 +1,10 @@
+{
+  "id": "t-0152",
+  "type": "infra",
+  "scope": "claudebox is offline on Tailscale (~15h) during quorum loss; bring host/Tailscale up, then run scripts/claudebox-server.sh keepalive/start and verify it joins V1410-1 as a voter.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0138",
+  "type": "infra",
+  "scope": "2026-06-18 bigo-server sweep: quorum still lost; V1410-1 is the only alive server and /v1/status/leader times out; claudebox and oraclebox1 are closed on 22/4646/4647/4648 from bigo-server; local ssh execution is denied here, so the smallest safe recovery is on-box claudebox scripts/claudebox-server.sh keepalive/start or oraclebox1 rejoin, then re-check maintenance-agent coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0137"
+}

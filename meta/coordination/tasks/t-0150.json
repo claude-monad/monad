@@ -1,0 +1,10 @@
+{
+  "id": "t-0150",
+  "type": "infra",
+  "scope": "2026-06-19 bigo-server sweep: quorum still lost. V1410-1 (100.75.75.39) is reachable on 22/4646/4647/4648 and /v1/agent/self shows raft.state=Candidate, leader_addr empty, num_peers=1, latest_configuration=[V1410-1,claudebox]. monad nomad servers shows only V1410-1 alive with no leader. claudebox (100.87.219.108) now times out on 22/4646/4647/4648 and /v1/agent/self from bigo-server, so there is no safe remote repair path here and this shell is also blocked from ssh exec. Because claudebox is still in the current Raft voter set, on-box claudebox recovery is the smallest required action: restore power/Tailscale, run ~/monad/scripts/claudebox-server.sh keepalive or start, and if needed ~/monad/meta/bootstrap/join.sh 100.75.75.39 pro; then verify a leader exists, all ready+eligible nodes reappear, and maintenance-agent coverage returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

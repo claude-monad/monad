@@ -1,0 +1,10 @@
+{
+  "id": "t-0155",
+  "type": "infra",
+  "scope": "Restore Nomad quorum: only V1410-1 is an alive server; claudebox and oraclebox1 do not answer Tailscale ping from bigo-server; Nomad returns No cluster leader.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

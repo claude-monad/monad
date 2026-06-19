@@ -1,0 +1,10 @@
+{
+  "id": "t-0154",
+  "type": "infra",
+  "scope": "death-star is offline on Tailscale (~12d); bring host/Tailscale up, rejoin Nomad client, and verify maintenance-agent once cluster leadership is restored.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

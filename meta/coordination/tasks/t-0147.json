@@ -1,0 +1,10 @@
+{
+  "id": "t-0147",
+  "type": "infra",
+  "scope": "2026-06-19 bigo-server sweep: quorum lost. monad nomad servers shows V1410-1 alive, claudebox failed, and no leader; V1410-1 /v1/status/leader times out. Direct probes from bigo-server: claudebox and oraclebox1 timeout on 22/4646/4647/4648, so there is no safe remote repair path from this node. Smallest required action is on-box claudebox recovery (scripts/claudebox-server.sh keepalive/start) or oraclebox1 power/Tailscale/Nomad restore, then verify leader election, node readiness, and maintenance-agent coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

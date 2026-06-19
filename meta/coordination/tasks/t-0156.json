@@ -1,0 +1,10 @@
+{
+  "id": "t-0156",
+  "type": "infra",
+  "scope": "Restore offline roster client death-star: Tailscale status says offline last seen 12d ago and tailscale ping from bigo-server gets no reply.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0144",
+  "type": "infra",
+  "scope": "2026-06-19 bigo-server sweep: quorum still lost; V1410-1 alive but no leader, claudebox failed, oraclebox1 unreachable on 22/4646/4647/4648. bigo-server local client healthy on 100.78.218.70:4646 and ensure-engines re-advertised claude,codex. Smallest safe action is on-box claudebox tailscale/nomad recovery via scripts/claudebox-server.sh keepalive/start, else oraclebox1 power/network/Tailscale/Nomad recovery; after second server returns, re-check node roster and maintenance-agent coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

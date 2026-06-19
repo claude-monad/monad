@@ -1,0 +1,10 @@
+{
+  "id": "t-0145",
+  "type": "infra",
+  "scope": "2026-06-19 bigo-server sweep: quorum still lost. monad nomad servers shows V1410-1 alive, claudebox failed, and no cluster leader; /v1/agent/self on V1410-1 reports raft.state=Candidate num_peers=1. Direct probes from bigo-server: claudebox and oraclebox1 timeout on 22/4646/4647/4648; death-star and windesk also timeout; eliotts-mac-mini still answers on 4646. bigo-server self is healthy as a detached client at 100.78.218.70:4646 with dynamic meta has_codex=true has_claude=false agent_engines=codex. Smallest safe next action is on-box claudebox keepalive/start or oraclebox1 power/Tailscale/Nomad recovery, then verify leader election, node readiness, and maintenance-agent coverage. agent-v1410-codex-creative notified.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

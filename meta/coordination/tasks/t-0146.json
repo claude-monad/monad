@@ -1,0 +1,10 @@
+{
+  "id": "t-0146",
+  "type": "infra",
+  "scope": "2026-06-19T07:11:00Z bigo-server sweep: quorum still lost. V1410-1 API reachable but /v1/status/leader returns 500 and /v1/agent/members shows only V1410-1 alive plus claudebox failed. bigo-server local client is healthy at 100.78.218.70:4646 (client health ok, disk ~92.47% used, ~8.36GiB free) but this shell lacks nomad/tailscale/curl CLIs so ensure-engines cannot advertise updated dynamic meta. Direct probes: claudebox/oraclebox1/death-star/windesk closed on 22/4646/4647/4648; eliotts-mac-mini still answers on 4646. Smallest safe recovery remains on-box claudebox keepalive/start or oraclebox1 recovery, then verify leader election, node readiness, and maintenance-agent coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

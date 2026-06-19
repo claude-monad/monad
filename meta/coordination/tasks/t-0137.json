@@ -1,0 +1,10 @@
+{
+  "id": "t-0137",
+  "type": "infra",
+  "scope": "Restore Nomad quorum: v1410-1 is the only reachable server; claudebox is failed in Serf and oraclebox1 times out. From bigo-server this session cannot execute ssh/tailscale/docker-socket remediation. Use out-of-band access to revive claudebox via scripts/claudebox-server.sh start or restore oraclebox1.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

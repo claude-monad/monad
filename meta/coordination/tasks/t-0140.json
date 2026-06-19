@@ -1,0 +1,10 @@
+{
+  "id": "t-0140",
+  "type": "infra",
+  "scope": "2026-06-18 bigo-server sweep: quorum still lost. V1410-1 (100.75.75.39) is reachable but raft_state=Candidate num_peers=1 last_contact~63h; monad nomad nodes and monad nomad job-status maintenance-agent both fail with 500 No cluster leader. Direct probes from bigo-server show claudebox (100.87.219.108) timing out on 22/4646/4647/4648, so there is no safe remote recovery path from this node. Preferred next action is on-box claudebox tailscale/nomad recovery via scripts/claudebox-server.sh keepalive/start; oraclebox1 rejoin is the fallback second voter.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

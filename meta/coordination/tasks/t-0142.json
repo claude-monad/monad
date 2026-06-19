@@ -1,0 +1,10 @@
+{
+  "id": "t-0142",
+  "type": "infra",
+  "scope": "Restore quorum: claudebox failed and oraclebox1 unreachable; V1410-1 candidate/no leader from bigo-server at 2026-06-19T03:21:56Z. Direct TCP to claudebox/oraclebox1 22/4646-4648 timed out; agent-v1410-codex-creative notified.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

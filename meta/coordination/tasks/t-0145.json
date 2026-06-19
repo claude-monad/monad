@@ -1,0 +1,10 @@
+{
+  "id": "t-0145",
+  "type": "infra",
+  "scope": "QUORUM LOSS persists 2026-06-19T21:07Z from eliotts-mac-mini: Nomad has no leader; monad nomad servers shows only V1410-1 alive/not leader, while monad nodes and maintenance-agent status return No cluster leader. Tailscale: V1410-1+bigo-server reachable, eliotts-mac-mini local agent reachable but stale heartbeat, windesk DERP-reachable with Nomad HTTP timeout, claudebox/oraclebox1/death-star no reply. Smallest safe fix: power/Tailscale-up claudebox and run scripts/claudebox-server.sh start; alternate restore oraclebox1 via meta/bootstrap/join.sh. Verify leader, node status, and maintenance-agent after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

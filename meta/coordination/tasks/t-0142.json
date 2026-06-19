@@ -1,0 +1,10 @@
+{
+  "id": "t-0142",
+  "type": "infra",
+  "scope": "Restore oraclebox1 tailnet/Nomad server voter: tailscale ping 100.125.210.126 timed out from eliotts-mac-mini during quorum-loss sweep; cannot recover remotely while offline.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

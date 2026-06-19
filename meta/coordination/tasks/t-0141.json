@@ -1,0 +1,10 @@
+{
+  "id": "t-0141",
+  "type": "infra",
+  "scope": "URGENT quorum loss: restore claudebox Tailscale/Nomad server. Nomad has no leader; server members shows only V1410-1 alive, and tailscale ping 100.87.219.108 timed out from eliotts-mac-mini.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

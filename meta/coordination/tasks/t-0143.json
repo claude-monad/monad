@@ -1,0 +1,10 @@
+{
+  "id": "t-0143",
+  "type": "infra",
+  "scope": "Restore death-star tailnet/Nomad peer health: user roster includes death-star, but tailscale ping 100.96.31.66 timed out from eliotts-mac-mini; Nomad node status could not be checked because the cluster has no leader.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

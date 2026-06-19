@@ -1,0 +1,10 @@
+{
+  "id": "t-0130",
+  "type": "infra",
+  "scope": "QUORUM LOST from eliotts-mac-mini sweep 2026-06-18: Nomad via bigo-server reports No cluster leader; server members show V1410-1 alive, claudebox failed, and oraclebox1 unreachable/offline. Tailscale ping from eliotts-mac-mini: v1410-1 no reply, claudebox no reply, oraclebox1 no reply, death-star no reply; bigo-server and windesk reply. Smallest fix: on claudebox or another reachable server voter, restore Tailscale/Nomad and run scripts/claudebox-server.sh start or meta/bootstrap/join.sh as appropriate; verify nomad server members has >=2 alive voters and maintenance-agent job status is readable.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

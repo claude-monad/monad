@@ -22,9 +22,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1781835165.616464,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T02:12:45Z-existing-t-0128"
+    "updated": 1781906039.2426586,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "health:bigo-server": {
     "updated": 1781754138.9988647,
@@ -32,9 +32,9 @@
     "value": "DONE-2026-06-18T03:42:18Z-ensure-engines-refreshed-disk-reviewed"
   },
   "health:claudebox": {
-    "updated": 1781901616.56222,
+    "updated": 1781906039.1922634,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-19T20:40:16Z"
+    "value": "bigo-server"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -47,9 +47,9 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:death-star": {
-    "updated": 1781901624.197885,
+    "updated": 1781906039.2542005,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-19T20:40:24Z"
+    "value": "bigo-server"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -87,9 +87,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781901619.6715376,
+    "updated": 1781906039.2731378,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-19T20:40:19Z"
+    "value": "bigo-server"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-16T07:52:30Z-existing-queue-t0113"
   },
   "health:quorum": {
-    "updated": 1781893097.1381195,
+    "updated": 1781904003.1031454,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-19T18:18:17Z-1of3-voters-alive-existing-t-0151"
+    "value": "DONE-2026-06-19T21:20:03Z-escalated-t-0157"
   },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,

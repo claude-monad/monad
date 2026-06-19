@@ -4210,3 +4210,21 @@
 {"ts":"2026-06-19T14:31:53Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-19T14:32:43Z","node":"bigo-server","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}
 {"ts":"2026-06-19T14:34:39Z","node":"bigo-server","source":"watchdog","action":"health-check","result":"warn","detail":"1 issues, 7 warnings"}
+{"ts":"2026-06-19T01:14:44Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude codex drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-19T01:18:40Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T01:28:31Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"escalated","detail":"quorum lost/no leader; V1410-1 and claudebox direct recovery timed out; emitted infra tasks t-0128,t-0129"}
+{"ts":"2026-06-19T01:33:00Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T02:06:14Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T02:14:50Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"escalated","detail":"verified Nomad server 100.75.75.39:4646 timeout; ping ok: bigo-server,windesk; ping failed: V1410-1,claudebox,oraclebox1,death-star; refreshed claims to existing tasks t-0128,t-0129,t-0103"}
+{"ts":"2026-06-19T02:16:08Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T02:49:49Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T02:59:29Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"infra","action":"cluster-health-sweep","status":"escalated","detail":"quorum lost; claimed health:claudebox; emitted t-0130; no remote fix because claudebox/oraclebox1/v1410-1 unreachable from Tailscale"}
+{"ts":"2026-06-19T03:00:48Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}
+{"ts":"2026-06-19T03:11:23Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"auto-repair","result":"fail","detail":"2 issues"}
+{"ts":"2026-06-19T03:13:48Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T03:44:44Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T03:50:44Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}
+{"ts":"2026-06-19T03:53:03Z","node":"eliotts-mac-mini","source":"cluster-health","action":"quorum-sweep","result":"escalated","detail":"No Nomad leader: V1410-1 alive, claudebox failed/offline, oraclebox1 offline; emitted infra tasks."}
+{"ts":"2026-06-19T03:55:43Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T04:26:29Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T04:35:37Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}

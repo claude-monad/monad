@@ -1,0 +1,10 @@
+{
+  "id": "t-0131",
+  "type": "infra",
+  "scope": "QUORUM LOSS: Nomad has no leader; only V1410-1 is alive in server members, claudebox is failed/offline and oraclebox1 is offline/not a member. Power/Tailscale up one server, then run scripts/claudebox-server.sh start on claudebox or meta/bootstrap/join.sh for oraclebox1.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

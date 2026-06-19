@@ -22,9 +22,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1781832540.1510599,
+    "updated": 1781835165.616464,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T01:28:59Z-t-0128"
+    "value": "DONE-2026-06-19T02:12:45Z-existing-t-0128"
   },
   "health:bigo-server": {
     "updated": 1781590128.788331,
@@ -32,14 +32,14 @@
     "value": "DONE-2026-06-16T06:08:48Z"
   },
   "health:claudebox": {
-    "updated": 1781832534.517401,
+    "updated": 1781843902.232265,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T01:28:54Z-t-0129"
+    "value": "DONE-2026-06-19T04:38:21Z-existing-t-0131"
   },
   "health:death-star": {
-    "updated": 1781668490.746947,
+    "updated": 1781843903.551373,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-17T03:54:50Z-existing-t-0153-tailnet-offline"
+    "value": "DONE-2026-06-19T04:38:21Z-existing-t-0132"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -77,9 +77,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781668486.390986,
+    "updated": 1781843902.932797,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-17T03:54:46Z-existing-t-0152-offline"
+    "value": "DONE-2026-06-19T04:38:21Z-existing-t-0131"
   },
   "health:quorum": {
     "updated": 1781668477.179594,

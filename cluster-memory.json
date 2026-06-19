@@ -32,14 +32,14 @@
     "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader"
   },
   "health:claudebox": {
-    "updated": 1781898327.893696,
+    "updated": 1781900660.230813,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T19:45:27Z"
+    "value": "DONE-2026-06-19T20:24:20Z"
   },
   "health:death-star": {
-    "updated": 1781898372.9806452,
+    "updated": 1781900660.319639,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T19:46:12Z"
+    "value": "DONE-2026-06-19T20:24:20Z"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -77,9 +77,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781898351.2562711,
+    "updated": 1781900660.276832,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T19:45:51Z"
+    "value": "DONE-2026-06-19T20:24:20Z"
   },
   "health:quorum": {
     "updated": 1781896176.6613178,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-15T17:21:02Z"
   },
   "health:windesk": {
-    "updated": 1781893963.1687171,
+    "updated": 1781900660.3610098,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T18:32:43Z-t-0139-tailscale-online-nomad-http-timeout"
+    "value": "DONE-2026-06-19T20:24:20Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

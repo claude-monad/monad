@@ -3419,3 +3419,9 @@
 {"ts":"2026-06-19T18:34:16Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-19T19:04:36Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-19T19:09:36Z","node":"eliotts-mac-mini","source":"cluster-health","type":"infra","action":"quorum-escalation","status":"escalated","detail":"t-0140 no Nomad leader; only V1410-1 alive, claudebox/oraclebox1/death-star unreachable"}
+{"ts":"2026-06-19T19:11:30Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T19:41:54Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T19:49:09Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T20:19:29Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T20:24:06Z","node":"eliotts-mac-mini","source":"cluster-health","type":"infra","action":"sweep","status":"escalated","detail":"no Nomad leader; only V1410-1 alive as server, claudebox/oraclebox1/death-star offline or HTTP-unreachable, windesk HTTP-unreachable; reused open tasks t-0140..t-0143"}
+{"ts":"2026-06-19T20:30:57Z","node":"eliotts-mac-mini","source":"cluster-health","type":"infra","action":"quorum-escalation","status":"escalated","detail":"t-0144 current sweep: no leader; restore claudebox voter first or oraclebox1 alternate"}

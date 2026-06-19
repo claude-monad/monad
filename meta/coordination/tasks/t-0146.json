@@ -1,0 +1,10 @@
+{
+  "id": "t-0146",
+  "type": "infra",
+  "scope": "QUORUM LOSS persists 2026-06-19T21:49:43Z from eliotts-mac-mini: Nomad has no leader; server members shows only V1410-1 alive and not leader; raft list-peers -stale shows voters V1410-1 + claudebox, with V1410-1 Candidate and claudebox unreachable on Tailscale/4646. oraclebox1 and death-star are Tailscale-unreachable; windesk answered one Tailscale ping but Nomad HTTP :4646 times out; bigo-server and eliotts-mac-mini agents answer locally but heartbeats are stale because there is no leader. Smallest safe fix: out-of-band power/Tailscale-up claudebox, then run scripts/claudebox-server.sh start; alternatively restore oraclebox1/rejoin as voter. Avoid single-node Raft surgery unless an operator explicitly approves.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

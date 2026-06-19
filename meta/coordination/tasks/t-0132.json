@@ -1,0 +1,10 @@
+{
+  "id": "t-0132",
+  "type": "infra",
+  "scope": "death-star is offline on Tailscale during 7-node health sweep; cannot verify Nomad readiness or maintenance-agent until it is powered on / tailscale up.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

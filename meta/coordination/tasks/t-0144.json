@@ -1,7 +1,7 @@
 {
   "id": "t-0144",
   "type": "infra",
-  "scope": "2026-06-19 bigo-server sweep: quorum still lost; V1410-1 alive but no leader, claudebox failed, oraclebox1 unreachable on 22/4646/4647/4648. bigo-server local client healthy on 100.78.218.70:4646 and ensure-engines re-advertised claude,codex. Smallest safe action is on-box claudebox tailscale/nomad recovery via scripts/claudebox-server.sh keepalive/start, else oraclebox1 power/network/Tailscale/Nomad recovery; after second server returns, re-check node roster and maintenance-agent coverage.",
+  "scope": "bigo-server: 2026-06-19 bigo-server sweep: quorum still lost; V1410-1 alive but no leader, claudebox failed, oraclebox1 unreachable on 22/4646/4647/4648. bigo-server local client healthy on 100.78.218.70:4646 and ensure-engines re-advertised claude,codex. Smallest safe action is on-box claudebox tailscale/nomad recovery via scripts/claudebox-server.sh keepalive/start, else oraclebox1 power/network/Tailscale/Nomad recovery; after second server returns, re-check node roster and maintenance-agent coverage. | eliotts-mac-mini: QUORUM LOSS persists 2026-06-19T20:30Z from eliotts-mac-mini: Nomad has no leader; server members shows only V1410-1 alive/not leader and V1410-1 Raft config needs claudebox. Tailscale ping: V1410-1 and bigo-server reachable, claudebox/oraclebox1/death-star no reply, windesk DERP-reachable but Nomad HTTP :4646 timed out. Smallest fix: power/Tailscale-up claudebox and run scripts/claudebox-server.sh start; alternate restore oraclebox1 via meta/bootstrap/join.sh. Then verify leader, node status, and maintenance-agent status.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

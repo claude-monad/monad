@@ -1,7 +1,7 @@
 {
   "id": "t-0142",
   "type": "infra",
-  "scope": "Restore quorum: claudebox failed and oraclebox1 unreachable; V1410-1 candidate/no leader from bigo-server at 2026-06-19T03:21:56Z. Direct TCP to claudebox/oraclebox1 22/4646-4648 timed out; agent-v1410-codex-creative notified.",
+  "scope": "bigo-server: Restore quorum: claudebox failed and oraclebox1 unreachable; V1410-1 candidate/no leader from bigo-server at 2026-06-19T03:21:56Z. Direct TCP to claudebox/oraclebox1 22/4646-4648 timed out; agent-v1410-codex-creative notified. | eliotts-mac-mini: Restore oraclebox1 tailnet/Nomad server voter: tailscale ping 100.125.210.126 timed out from eliotts-mac-mini during quorum-loss sweep; cannot recover remotely while offline.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

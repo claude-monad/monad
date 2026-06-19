@@ -1,0 +1,10 @@
+{
+  "id": "t-0140",
+  "type": "infra",
+  "scope": "QUORUM LOSS persists 2026-06-19T19:09:36Z from eliotts-mac-mini sweep: Nomad has no leader; monad/nomad server members shows only V1410-1 alive, not leader. V1410-1 local agent is Candidate with latest Raft config requiring claudebox; claudebox is Tailscale/HTTP unreachable, oraclebox1 is Tailscale/HTTP unreachable, death-star is Tailscale unreachable. bigo-server and eliotts-mac-mini client agents answer HTTP but have stale heartbeats; windesk replies via Tailscale DERP but Nomad HTTP :4646 times out. Smallest safe fix: power/Tailscale-up claudebox, then run scripts/claudebox-server.sh start; alternatively restore oraclebox1/rejoin per meta/bootstrap/join.sh. Verify leader, node status, and maintenance-agent status after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

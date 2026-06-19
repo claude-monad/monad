@@ -32,14 +32,14 @@
     "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader"
   },
   "health:claudebox": {
-    "updated": 1781893947.6181078,
+    "updated": 1781896176.5955431,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T18:32:27Z-t-0139-quorum-voter-unreachable"
+    "value": "DONE-2026-06-19T19:09:36Z-t-0140-quorum-voter-unreachable"
   },
   "health:death-star": {
-    "updated": 1781893958.5788329,
+    "updated": 1781896176.637459,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T18:32:38Z-t-0139-tailscale-unreachable"
+    "value": "DONE-2026-06-19T19:09:36Z-t-0140-tailscale-unreachable"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -77,14 +77,14 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781893954.355933,
+    "updated": 1781896176.61659,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T18:32:34Z-t-0139-quorum-voter-unreachable"
+    "value": "DONE-2026-06-19T19:09:36Z-t-0140-voter-target-unreachable"
   },
   "health:quorum": {
-    "updated": 1781893968.298435,
+    "updated": 1781896176.6613178,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T18:32:48Z-t-0139-no-leader-1-voter-alive"
+    "value": "DONE-2026-06-19T19:09:36Z-t-0140-no-leader-1-voter-alive"
   },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,

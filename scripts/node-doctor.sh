@@ -37,11 +37,71 @@ export NOMAD_ADDR
 mkdir -p "$LOG_DIR"
 
 EVENTS_FILE="$LOG_DIR/events.jsonl"
+NOMAD_BIN=""
+
 emit_event() {
     local source="$1" action="$2" result="$3" detail="${4:-}"
     printf '{"ts":"%s","node":"%s","source":"%s","action":"%s","result":"%s","detail":"%s"}\n' \
         "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$NODE_NAME" "$source" "$action" "$result" "$detail" \
         >> "$EVENTS_FILE"
+}
+
+resolve_nomad_bin() {
+    [ -n "$NOMAD_BIN" ] && [ -x "$NOMAD_BIN" ] && { printf '%s\n' "$NOMAD_BIN"; return 0; }
+
+    local candidate
+    for candidate in \
+        "$(command -v nomad 2>/dev/null || true)" \
+        "$HOME/claude-monad-runtime/bin/nomad" \
+        "/home/$(id -un)/claude-monad-runtime/bin/nomad"
+    do
+        [ -n "$candidate" ] && [ -x "$candidate" ] || continue
+        NOMAD_BIN="$candidate"
+        printf '%s\n' "$NOMAD_BIN"
+        return 0
+    done
+    return 1
+}
+
+http_ok() {
+    local url="$1"
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsS --connect-timeout 5 "$url" >/dev/null
+        return $?
+    fi
+    python3 - "$url" <<'PY' >/dev/null
+import sys
+import urllib.request
+
+url = sys.argv[1]
+with urllib.request.urlopen(url, timeout=5):
+    pass
+PY
+}
+
+find_local_nomad_api() {
+    local host_ips=() candidates=() ip base
+
+    candidates+=("http://127.0.0.1:4646" "http://127.0.0.1:5646")
+
+    if command -v hostname >/dev/null 2>&1; then
+        mapfile -t host_ips < <(hostname -I 2>/dev/null | tr ' ' '\n' | sed '/^$/d' | sort -u)
+        for ip in "${host_ips[@]}"; do
+            case "$ip" in
+                *:*) continue ;;
+            esac
+            candidates+=("http://${ip}:4646" "http://${ip}:5646")
+        done
+    fi
+
+    for base in "${candidates[@]}"; do
+        if http_ok "${base}/v1/agent/self"; then
+            printf '%s\n' "$base"
+            return 0
+        fi
+    done
+
+    return 1
 }
 
 # ─── Health checks ────────────────────────────────────────────────────────────
@@ -58,17 +118,14 @@ ok() { log "OK: $1"; }
 
 # Check 1: Is Nomad running?
 check_nomad() {
-    if command -v nomad &>/dev/null; then
-        if nomad node status -self &>/dev/null 2>&1; then
-            ok "Nomad agent is running"
+    local nomad_bin local_api
+    if nomad_bin="$(resolve_nomad_bin)"; then
+        ok "Nomad binary available at $nomad_bin"
 
-            local status
-            status=$(nomad node status -self -json 2>/dev/null | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('SchedulingEligibility',''))" 2>/dev/null || echo "unknown")
-            if [ "$status" = "eligible" ]; then
-                ok "Node is eligible for scheduling"
-            elif [ "$status" = "ineligible" ]; then
-                warn "Node is marked ineligible — may be intentional (drain)"
-            fi
+        if local_api="$(find_local_nomad_api)"; then
+            ok "Nomad agent API responding at $local_api"
+        elif pgrep -x nomad >/dev/null 2>&1 || pgrep -af '[ /]nomad( |$)' >/dev/null 2>&1; then
+            ok "Nomad process is running (API not detected on common local addresses)"
         else
             issue "Nomad agent is not running or not responding"
         fi
@@ -79,8 +136,11 @@ check_nomad() {
 
 # Check 2: Can we reach the Nomad server?
 check_server() {
-    if curl -s --connect-timeout 5 "http://${SERVER_IP}:4646/v1/status/leader" &>/dev/null; then
+    if http_ok "http://${SERVER_IP}:4646/v1/agent/self"; then
         ok "Nomad server reachable at $SERVER_IP"
+        if ! http_ok "http://${SERVER_IP}:4646/v1/status/leader"; then
+            warn "Nomad server reachable but no leader advertised"
+        fi
     else
         issue "Cannot reach Nomad server at $SERVER_IP:4646"
     fi

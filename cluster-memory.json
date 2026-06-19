@@ -27,12 +27,17 @@
     "value": "DONE-2026-06-19T02:12:45Z-existing-t-0128"
   },
   "health:bigo-server": {
-    "updated": 1781590128.788331,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-16T06:08:48Z"
+    "updated": 1781754138.9988647,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-18T03:42:18Z-ensure-engines-refreshed-disk-reviewed"
   },
   "health:claudebox": {
-    "updated": 1781846238.208554,
+    "updated": 1781879936.516122,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-19T14:38:56Z-offline-no-safe-remote-fix-existing-queue"
+  },
+  "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
+    "updated": 1781668481.9066749,
     "updated_by": "Eliotts-Mac-mini.local",
     "value": "DONE-2026-06-19T05:17:18Z-existing-t-0131"
   },
@@ -82,7 +87,12 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781846244.329746,
+    "updated": 1781879936.5166626,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-19T14:38:56Z-offline-no-safe-remote-fix-existing-queue"
+  },
+  "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
+    "updated": 1781668486.390986,
     "updated_by": "Eliotts-Mac-mini.local",
     "value": "DONE-2026-06-19T05:17:24Z-existing-t-0131"
   },
@@ -92,9 +102,9 @@
     "value": "DONE-2026-06-16T07:52:30Z-existing-queue-t0113"
   },
   "health:quorum": {
-    "updated": 1781846254.5649438,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T05:17:34Z-existing-t-0131-no-leader-1of2"
+    "updated": 1781879936.5420327,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-19T14:38:56Z-1of3-voters-alive-no-safe-remote-fix"
   },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,
@@ -112,9 +122,9 @@
     "value": "DONE-2026-06-15T17:21:02Z"
   },
   "health:windesk": {
-    "updated": 1781668509.419832,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-17T03:55:09Z-existing-t-0136-nomad-http-timeout"
+    "updated": 1781735793.6907032,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-06-17T22:36:33Z"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

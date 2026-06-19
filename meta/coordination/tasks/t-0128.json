@@ -1,0 +1,10 @@
+{
+  "id": "t-0128",
+  "type": "infra",
+  "scope": "QUORUM LOSS: V1410-1 is the only alive server seen before the leader disappeared, but from eliotts-mac-mini tailscale ping, ssh:22, and Nomad HTTP:4646 timed out. Inspect V1410-1 network/Nomad locally and restore control-plane reachability.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

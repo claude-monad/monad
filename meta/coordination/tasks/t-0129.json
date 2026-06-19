@@ -1,0 +1,10 @@
+{
+  "id": "t-0129",
+  "type": "infra",
+  "scope": "QUORUM LOSS: claudebox is in Nomad server members as failed; Tailscale status listed active but tailscale ping, ssh:22, and Nomad HTTP:4646 from eliotts-mac-mini timed out. Run ~/monad/scripts/claudebox-server.sh start locally or otherwise restore claudebox Nomad server, then verify nomad server members elects a leader.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

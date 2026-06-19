@@ -4350,3 +4350,7 @@
 {"ts":"2026-06-19T21:09:28Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-19T21:39:48Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-19T21:49:43Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0146 no leader; V1410-1 candidate; claudebox unreachable"}
+{"ts":"2026-06-19T22:01:31Z","node":"bigo-server","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}
+{"ts":"2026-06-19T22:02:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-06-19T22:32:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T22:36:48Z","node":"bigo-server","source":"manual-health-sweep","type":"infra","action":"cluster-health","status":"escalated","detail":"quorum lost; emitted t-0158; claudebox current raft peer unreachable; oraclebox1/death-star offline; windesk nomad timeout"}

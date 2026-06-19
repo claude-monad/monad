@@ -1,0 +1,10 @@
+{
+  "id": "t-0158",
+  "type": "infra",
+  "scope": "2026-06-19T22:36:37Z bigo-server health sweep: CRITICAL Nomad quorum lost/no leader. server members via V1410-1 shows only V1410-1 alive; V1410 agent self shows Raft latest_configuration=[V1410-1,claudebox], state=Candidate, commit_index=0, so smallest safe quorum fix is on-box claudebox recovery: power/Tailscale up 100.87.219.108, then run scripts/claudebox-server.sh keepalive/start and verify leader election. oraclebox1 100.125.210.126 and death-star 100.96.31.66 do not answer Tailscale ping; restore power/Tailscale/Nomad after quorum. windesk 100.94.210.54 answers Tailscale but :4646 times out; verify Windows Nomad/maintenance equivalent after quorum. bigo-server self: Nomad service active/client HTTP on 100.78.218.70, ensure-engines advertised claude,codex; disk 88%, no safe cleanup target found; repo not behind origin/main but dirty.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

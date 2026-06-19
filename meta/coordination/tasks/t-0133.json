@@ -1,0 +1,10 @@
+{
+  "id": "t-0133",
+  "type": "infra",
+  "scope": "Restore claudebox voter: Tailscale shows offline and Nomad server member is failed; bring machine/tailscale up, then run scripts/claudebox-server.sh start and verify quorum.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

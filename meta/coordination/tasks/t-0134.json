@@ -1,0 +1,10 @@
+{
+  "id": "t-0134",
+  "type": "infra",
+  "scope": "Restore oraclebox1 voter: Tailscale shows offline and Nomad has no leader with only V1410-1 alive; power/tailscale up oraclebox1, rejoin via meta/bootstrap/join.sh if needed, then verify Raft quorum.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

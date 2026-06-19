@@ -22,24 +22,24 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1781835165.616464,
+    "updated": 1781879589.716415,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T02:12:45Z-existing-t-0128"
+    "value": "DONE-2026-06-19T14:33:09Z-existing-t-0128-only-alive-server-no-leader"
   },
   "health:bigo-server": {
-    "updated": 1781590128.788331,
+    "updated": 1781879600.465579,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-16T06:08:48Z"
+    "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader"
   },
   "health:claudebox": {
-    "updated": 1781846238.208554,
+    "updated": 1781891096.944791,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T05:17:18Z-existing-t-0131"
+    "value": "DONE-2026-06-19T17:44:56Z"
   },
   "health:death-star": {
-    "updated": 1781846249.3657029,
+    "updated": 1781891097.023315,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T05:17:29Z-existing-t-0132"
+    "value": "DONE-2026-06-19T17:44:57Z"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -77,14 +77,14 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781846244.329746,
+    "updated": 1781891096.9840581,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T05:17:24Z-existing-t-0131"
+    "value": "DONE-2026-06-19T17:44:56Z"
   },
   "health:quorum": {
-    "updated": 1781846254.5649438,
+    "updated": 1781888711.213066,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-19T05:17:34Z-existing-t-0131-no-leader-1of2"
+    "value": "DONE-2026-06-19T17:05:11Z-t-0137-no-leader-1of2-voters"
   },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-15T17:21:02Z"
   },
   "health:windesk": {
-    "updated": 1781668509.419832,
+    "updated": 1781879590.240124,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-17T03:55:09Z-existing-t-0136-nomad-http-timeout"
+    "value": "DONE-2026-06-19T14:33:10Z-tailscale-online-nomad-unverified-no-leader"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

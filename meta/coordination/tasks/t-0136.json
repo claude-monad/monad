@@ -1,0 +1,10 @@
+{
+  "id": "t-0136",
+  "type": "infra",
+  "scope": "CRITICAL: Nomad quorum lost on 2026-06-19; claudebox (voter 100.87.219.108) is failed in nomad server members and offline/unreachable on Tailscale from eliotts-mac-mini. Bring claudebox back or otherwise restore a second voter for quorum.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

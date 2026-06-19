@@ -1,0 +1,10 @@
+{
+  "id": "t-0138",
+  "type": "infra",
+  "scope": "QUORUM LOSS persists 2026-06-19T17:44:56Z from eliotts-mac-mini: Nomad has no leader; server members reports only V1410-1 and it is not leader. claudebox and oraclebox1 voters are Tailscale-unreachable; death-star client is also unreachable; bigo-server client HTTP is healthy; windesk Tailscale replies via DERP but Nomad HTTP timed out. Restore one voter by powering/Tailscale-up claudebox or oraclebox1, then run scripts/claudebox-server.sh start or meta/bootstrap/join.sh as appropriate and verify nomad server members elects a leader plus maintenance-agent status is readable.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

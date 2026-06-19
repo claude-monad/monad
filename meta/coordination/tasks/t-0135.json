@@ -1,0 +1,10 @@
+{
+  "id": "t-0135",
+  "type": "infra",
+  "scope": "Restore death-star client: Tailscale shows offline; bring machine/tailscale up, ensure Nomad client rejoins, then run meta/agent/ensure-engines.sh and verify maintenance-agent placement.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

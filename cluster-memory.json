@@ -32,9 +32,9 @@
     "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader; preserved bigo-server: DONE-2026-06-18T03:42:18Z-ensure-engines-refreshed-disk-reviewed"
   },
   "health:claudebox": {
-    "updated": 1781945743.9733229,
+    "updated": 1781947820.484721,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T08:55:43Z-t-0169-escalated-existing"
+    "value": "DONE-2026-06-20T09:30:20Z-t-0169-escalated-existing"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -87,9 +87,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781945744.07583,
+    "updated": 1781947820.5171702,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T08:55:44Z-t-0169-escalated-existing"
+    "value": "DONE-2026-06-20T09:30:20Z-t-0169-escalated-existing"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,

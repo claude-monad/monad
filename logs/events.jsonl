@@ -4425,3 +4425,6 @@
 {"ts":"2026-06-20T05:16:11Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-20T05:46:46Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-20T05:52:58Z","node":"bigo-server","source":"node-doctor","action":"auto-repair","result":"fail","detail":"1 issues"}
+{"ts":"2026-06-20T05:56:12Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T06:26:47Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T06:31:41Z","node":"bigo-server","source":"codex-maintenance","type":"cluster-health","action":"sweep","status":"escalated-existing","detail":"quorum lost/no leader; V1410-1 candidate with latest_configuration V1410-1+claudebox; claudebox oraclebox1 death-star windesk Tailscale/TCP unreachable; reused open t-0167; no safe remote restart or Raft surgery"}

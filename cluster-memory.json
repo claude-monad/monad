@@ -32,9 +32,9 @@
     "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader; preserved bigo-server: DONE-2026-06-18T03:42:18Z-ensure-engines-refreshed-disk-reviewed"
   },
   "health:claudebox": {
-    "updated": 1781934862.1304345,
+    "updated": 1781937102.0231793,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T05:54:21Z-t-0167-escalated"
+    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -47,9 +47,9 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:death-star": {
-    "updated": 1781934862.3192842,
+    "updated": 1781937102.0250604,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T05:54:21Z-t-0167-escalated"
+    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -87,9 +87,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781934862.222597,
+    "updated": 1781937102.003413,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T05:54:21Z-t-0167-escalated"
+    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-16T07:52:30Z-existing-queue-t0113"
   },
   "health:quorum": {
-    "updated": 1781934861.9394531,
+    "updated": 1781937101.9930978,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T05:54:21Z-t-0167-escalated"
+    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
   },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,
@@ -122,9 +122,9 @@
     "value": "DONE-2026-06-15T17:21:02Z"
   },
   "health:windesk": {
-    "updated": 1781934862.4140384,
+    "updated": 1781937102.0127094,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T05:54:21Z-t-0167-escalated"
+    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

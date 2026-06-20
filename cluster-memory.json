@@ -34,7 +34,7 @@
   "health:claudebox": {
     "updated": 1781980609.7708836,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T18:36:49Z"
+    "value": "DONE-2026-06-20T18:36:49Z; preserved Eliotts-Mac-mini.local: DONE-2026-06-20T18:33:44Z-t-0183"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -49,7 +49,7 @@
   "health:death-star": {
     "updated": 1781980609.994243,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T18:36:49Z"
+    "value": "DONE-2026-06-20T18:36:49Z; preserved Eliotts-Mac-mini.local: DONE-2026-06-20T18:33:44Z-t-0183"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -89,7 +89,7 @@
   "health:oraclebox1": {
     "updated": 1781980609.882974,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T18:36:49Z"
+    "value": "DONE-2026-06-20T18:36:49Z; preserved Eliotts-Mac-mini.local: DONE-2026-06-20T18:33:44Z-t-0183"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,

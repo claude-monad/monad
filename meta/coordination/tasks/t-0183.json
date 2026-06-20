@@ -1,0 +1,10 @@
+{
+  "id": "t-0183",
+  "type": "infra",
+  "scope": "2026-06-20T18:31Z eliotts-mac-mini sweep, preserved from local duplicate t-0181 during node-doctor git sync: Nomad quorum still lost/no leader. scripts/monad/nomad and nomad server members show only V1410-1 alive/not leader; claudebox 100.87.219.108, oraclebox1 100.125.210.126, and death-star 100.96.31.66 do not answer Tailscale ping; windesk 100.94.210.54 answers via DERP but Nomad status is blocked by no leader. Claims held for claudebox/oraclebox1/death-star; no safe remote fix from mac-mini. Smallest action remains on-box power/Tailscale-up claudebox then ~/monad/scripts/claudebox-server.sh keepalive/start, fallback oraclebox1 restore/rejoin; avoid single-voter Raft surgery unless explicitly approved.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0180"
+}

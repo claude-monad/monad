@@ -4,7 +4,7 @@
   "scope": "2026-06-20T08:29:23Z eliotts-mac-mini sweep: CRITICAL Nomad quorum lost/no leader. ./scripts/monad nomad servers shows only V1410-1 alive and not leader; V1410-1 Raft config requires claudebox (100.87.219.108) as the other voter. claudebox is offline in tailscale status and tailscale ping times out. Smallest safe fix is on-box claudebox power/Tailscale restore, then ~/monad/scripts/claudebox-server.sh keepalive/start; verify leader election, node status, and maintenance-agent coverage. Preserved bigo-server 2026-06-20T07:44Z report: node status and maintenance-agent status fail 500 No cluster leader; V1410-1 and eliotts-mac-mini reachable; claudebox, oraclebox1, death-star, windesk no reply/offline; bigo-server client health OK, ensure-engines advertised claude,codex, repo matches origin/main but logs dirty, disk 89% with no safe cleanup target and Docker active.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

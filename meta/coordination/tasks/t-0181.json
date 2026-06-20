@@ -4,7 +4,7 @@
   "scope": "2026-06-20T16:10:22Z bigo-server sweep, preserved from local duplicate t-0180 during node-doctor git sync: CRITICAL Nomad quorum still lost/no leader. monad/nomad servers shows only V1410-1 alive and Leader=false; node status and maintenance-agent job status fail 500 No cluster leader. Tailscale: V1410-1, bigo-server, eliotts-mac-mini, windesk reachable; claudebox, oraclebox1, death-star no reply/off-tailnet. bigo-server self: Nomad service active/client API at 100.78.218.70, ensure-engines advertised claude,codex, disk 88% with logs/tmp small and Docker active, origin/main equal but repo has local health-log/memory changes. Smallest safe fix: out-of-band power/Tailscale-up claudebox then run scripts/claudebox-server.sh keepalive/start; fallback restore oraclebox1 as voter. Avoid single-voter Raft surgery unless explicitly approved; after quorum returns verify ready+eligible roster and maintenance-agent coverage.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

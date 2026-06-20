@@ -4,7 +4,7 @@
   "scope": "URGENT quorum loss: claudebox (100.87.219.108) is offline/unreachable; live Raft has only V1410-1+claudebox as voters, V1410-1 is candidate/no leader. Power on or tailscale up claudebox, then run scripts/claudebox-server.sh start/keepalive to restore quorum.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

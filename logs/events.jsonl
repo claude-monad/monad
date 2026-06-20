@@ -4501,3 +4501,7 @@
 {"ts":"2026-06-20T14:11:04Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-20T14:41:29Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-20T14:46:36Z","node":"eliotts-mac-mini","source":"codex-maintenance","type":"cluster-health","action":"sweep","status":"escalated","detail":"t-0178 emitted; quorum lost/no leader; only V1410-1 alive candidate with voters V1410-1+claudebox; claudebox/oraclebox1/death-star no Tailscale reply; windesk DERP reachable but Nomad HTTP timed out; bigo-server and eliotts-mac-mini client APIs ok; self engines advertised claude,codex; disk 91% no safe cleanup target; health:claudebox released"}
+{"ts":"2026-06-20T14:50:36Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T15:20:56Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T15:26:58Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T15:57:20Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

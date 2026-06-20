@@ -47,9 +47,9 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:death-star": {
-    "updated": 1781919816.038004,
+    "updated": 1781919896.303951,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "eliotts-mac-mini"
+    "value": "DONE-2026-06-20T01:44:56Z-existing-t-0161-no-leader"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -87,9 +87,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781919761.139168,
+    "updated": 1781919853.034867,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "eliotts-mac-mini"
+    "value": "DONE-2026-06-20T01:44:12Z-existing-t-0161-no-leader"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,

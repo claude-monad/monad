@@ -26,6 +26,7 @@
 - Preserved both upstream and local `logs/events.jsonl` entries; no conflict markers remained.
 - Included the current local `cluster-memory.json` health claim update so the repo is left clean.
 - Included this doctor report and local metric/event rows in the repair commit.
+- Committed a follow-up settled `health:oraclebox1` claim transition after the local writer updated it again.
 
 ## Outcome
 

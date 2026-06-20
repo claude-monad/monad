@@ -4383,3 +4383,5 @@
 {"ts":"2026-06-20T01:06:25Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0161 no leader; stale voters V1410-1+claudebox; claudebox/oraclebox1/death-star unreachable; windesk+bigo-server tailscale-reachable"}
 {"ts":"2026-06-20T01:35:35Z","node":"bigo-server","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}
 {"ts":"2026-06-20T01:36:56Z","node":"bigo-server","source":"watchdog","action":"health-check","result":"warn","detail":"1 issues, 7 warnings"}
+{"ts":"2026-06-20T01:08:49Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T01:39:50Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

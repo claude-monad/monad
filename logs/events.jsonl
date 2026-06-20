@@ -4395,3 +4395,6 @@
 {"ts":"2026-06-20T03:01:52Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-20T03:32:38Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-20T03:35:02Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"existing t-0163; no leader; only V1410-1 alive as server; claudebox/oraclebox1/death-star Tailscale no-reply; bigo-server/windesk reachable; claims released"}
+{"ts":"2026-06-20T03:38:03Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T04:08:45Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T04:13:28Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0164; claims released for quorum claudebox oraclebox1 death-star windesk"}

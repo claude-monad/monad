@@ -32,9 +32,9 @@
     "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader; preserved bigo-server: DONE-2026-06-18T03:42:18Z-ensure-engines-refreshed-disk-reviewed"
   },
   "health:claudebox": {
-    "updated": 1781926502.454449,
+    "updated": 1781928808.755597,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-20T03:35:02Z-existing-t-0163-no-safe-remote-recovery"
+    "value": "DONE-2026-06-20T04:13:28Z-t-0164-escalated"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -47,9 +47,9 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:death-star": {
-    "updated": 1781926502.5704992,
+    "updated": 1781928808.797874,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-20T03:35:02Z-existing-t-0163-no-safe-remote-recovery"
+    "value": "DONE-2026-06-20T04:13:28Z-t-0164-escalated"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -87,9 +87,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781926502.512484,
+    "updated": 1781928808.776126,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-20T03:35:02Z-existing-t-0163-no-safe-remote-recovery"
+    "value": "DONE-2026-06-20T04:13:28Z-t-0164-escalated"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-16T07:52:30Z-existing-queue-t0113"
   },
   "health:quorum": {
-    "updated": 1781926502.3961139,
+    "updated": 1781928808.693198,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-20T03:35:02Z-existing-t-0163-no-safe-remote-recovery"
+    "value": "DONE-2026-06-20T04:13:28Z-t-0164-escalated"
   },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,
@@ -122,9 +122,9 @@
     "value": "DONE-2026-06-15T17:21:02Z"
   },
   "health:windesk": {
-    "updated": 1781917135.096566,
-    "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T00:58:54Z-existing-t-0159-no-leader; preserved Eliotts-Mac-mini.local: DONE-2026-06-19T23:45:11Z-t-0146-escalated; preserved earlier bigo-server: DONE-2026-06-19T22:36:52Z-t-0158"
+    "updated": 1781928808.818717,
+    "updated_by": "Eliotts-Mac-mini.local",
+    "value": "DONE-2026-06-20T04:13:28Z-t-0164-escalated"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

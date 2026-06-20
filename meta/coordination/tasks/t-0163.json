@@ -1,0 +1,10 @@
+{
+  "id": "t-0163",
+  "type": "infra",
+  "scope": "2026-06-20T03:00:28Z eliotts-mac-mini sweep: Nomad quorum is lost. ./scripts/monad nomad servers shows only V1410-1 alive and no leader; ./scripts/monad nomad nodes and job-status maintenance-agent return 500 No cluster leader. Tailscale: V1410-1 answers via DERP, bigo-server and windesk answer, claudebox/oraclebox1/death-star time out. No safe remote recovery exists from mac-mini because the missing voters are off-tailnet. Smallest fix remains on-box claudebox power/Tailscale recovery then ~/monad/scripts/claudebox-server.sh keepalive/start; oraclebox1 power/Tailscale/Nomad restore or rejoin is fallback. Existing peer queue tasks are preserved; avoid single-voter Raft surgery unless explicitly approved.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

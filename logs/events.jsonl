@@ -4383,3 +4383,6 @@
 {"ts":"2026-06-20T01:06:25Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0161 no leader; stale voters V1410-1+claudebox; claudebox/oraclebox1/death-star unreachable; windesk+bigo-server tailscale-reachable"}
 {"ts":"2026-06-20T01:35:35Z","node":"bigo-server","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}
 {"ts":"2026-06-20T01:36:56Z","node":"bigo-server","source":"watchdog","action":"health-check","result":"warn","detail":"1 issues, 7 warnings"}
+{"ts":"2026-06-20T01:40:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T02:11:05Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T02:15:15Z","node":"bigo-server","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0162 no leader; only V1410-1 alive/candidate; claudebox+oraclebox1 voters off-tailnet; death-star off-tailnet; windesk Nomad HTTP timeout"}

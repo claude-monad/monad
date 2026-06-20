@@ -32,9 +32,9 @@
     "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader; preserved bigo-server: DONE-2026-06-18T03:42:18Z-ensure-engines-refreshed-disk-reviewed"
   },
   "health:claudebox": {
-    "updated": 1781973737.225125,
+    "updated": 1781976005.7864268,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-20T16:42:17Z-existing-t-0178-t-0179-unreachable-quorum"
+    "value": "DONE-2026-06-20T17:20:05Z-t-0180"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -47,9 +47,9 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:death-star": {
-    "updated": 1781973737.266473,
+    "updated": 1781976005.870124,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-20T16:42:17Z-existing-t-0171-unreachable"
+    "value": "DONE-2026-06-20T17:20:05Z-t-0180"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -87,9 +87,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781973737.2462778,
+    "updated": 1781976005.831557,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-20T16:42:17Z-existing-t-0170-unreachable"
+    "value": "DONE-2026-06-20T17:20:05Z-t-0180"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -122,9 +122,9 @@
     "value": "DONE-2026-06-20T10:47:35Z-t-0169-escalated-existing"
   },
   "health:windesk": {
-    "updated": 1781973737.2872078,
+    "updated": 1781976005.90894,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-20T16:42:17Z-existing-t-0172-tailnet-up-nomad-http-timeout"
+    "value": "DONE-2026-06-20T17:20:05Z-t-0180"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

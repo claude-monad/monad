@@ -1,0 +1,10 @@
+{
+  "id": "t-0186",
+  "type": "infra",
+  "scope": "2026-06-20T22:56:10Z eliotts-mac-mini sweep: CRITICAL Nomad quorum lost/no leader. server members via 100.75.75.39 shows only V1410-1 alive and Leader=false; V1410-1 /v1/agent/self raft.state=Candidate leader_addr empty latest_configuration=[V1410-1,claudebox]. nomad node status and maintenance-agent job status fail 500 No cluster leader. Tailscale roster checked: bigo-server reachable, claudebox was briefly ping/ssh-visible but Nomad ports 4646/4647/4648 refused and then Tailscale ping timed out; LAN 192.168.51.19:22 refused. oraclebox1 and death-star offline/unreachable; windesk visible but Nomad status blocked by no leader. Smallest safe recovery: on-box restore claudebox Tailscale/power, then run ~/monad/scripts/claudebox-server.sh keepalive or start; fallback restore oraclebox1 voter/rejoin. Avoid single-voter Raft surgery unless explicitly approved; after quorum returns verify node ready+eligible and maintenance-agent alloc coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -4398,3 +4398,9 @@
 {"ts":"2026-06-20T03:38:03Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-20T04:08:45Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-20T04:13:28Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0164; claims released for quorum claudebox oraclebox1 death-star windesk"}
+{"ts":"2026-06-20T04:14:48Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T04:45:32Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T04:49:14Z","node":"eliotts-mac-mini","source":"cluster-health","action":"sweep","result":"escalated","detail":"quorum lost; emitted t-0165; claudebox/oraclebox1/death-star off-tailnet"}
+{"ts":"2026-06-20T04:49:52Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T05:20:51Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T05:24:49Z","node":"eliotts-mac-mini","source":"cluster-health","action":"sweep","result":"escalated","detail":"quorum lost; emitted t-0166; claudebox/oraclebox1/death-star off-tailnet"}

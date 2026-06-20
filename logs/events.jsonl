@@ -4364,3 +4364,4 @@
 {"ts":"2026-06-19T23:45:41Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"no leader; stale raft voters V1410-1+claudebox; claudebox/oraclebox1/death-star Tailscale no-reply; windesk DERP but Nomad HTTP timeout; claims released to t-0147/t-0148/t-0146"}
 {"ts":"2026-06-19T23:46:07Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-20T00:16:25Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T00:25:54Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"auto-repair","result":"fail","detail":"2 issues"}

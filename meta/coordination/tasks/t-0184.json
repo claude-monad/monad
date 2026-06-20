@@ -1,0 +1,10 @@
+{
+  "id": "t-0184",
+  "type": "infra",
+  "scope": "death-star is unreachable on Tailscale from eliotts-mac-mini during cluster-health sweep; verify power/network/tailscale and rejoin Nomad client after quorum is restored.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

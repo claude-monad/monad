@@ -1,0 +1,10 @@
+{
+  "id": "t-0185",
+  "type": "infra",
+  "scope": "URGENT: Nomad quorum lost; only V1410-1 is alive and no leader exists. claudebox and oraclebox1 are unreachable on Tailscale; restore one voter via power/network/tailscale up and Nomad server start/rejoin.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

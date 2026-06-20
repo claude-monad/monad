@@ -1,0 +1,10 @@
+{
+  "id": "t-0159",
+  "type": "infra",
+  "scope": "URGENT: Nomad quorum lost on 2026-06-19T22:24Z: only V1410-1 is alive; claudebox and oraclebox1 are offline/unreachable on Tailscale. Power on/reconnect at least one voter, then start Nomad server/join to 100.75.75.39.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

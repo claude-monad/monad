@@ -1,0 +1,10 @@
+{
+  "id": "t-0169",
+  "type": "infra",
+  "scope": "2026-06-20T08:29:23Z eliotts-mac-mini sweep: CRITICAL Nomad quorum lost/no leader. ./scripts/monad nomad servers shows only V1410-1 alive and not leader; V1410-1 Raft config requires claudebox (100.87.219.108) as the other voter. claudebox is offline in tailscale status and tailscale ping times out. Smallest safe fix is on-box claudebox power/Tailscale restore, then ~/monad/scripts/claudebox-server.sh keepalive/start; verify leader election, node status, and maintenance-agent coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

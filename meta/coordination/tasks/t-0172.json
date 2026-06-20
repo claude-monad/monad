@@ -1,0 +1,10 @@
+{
+  "id": "t-0172",
+  "type": "infra",
+  "scope": "2026-06-20T08:29:23Z eliotts-mac-mini sweep: windesk (100.94.210.54) is offline/unreachable on Tailscale and Nomad HTTP :4646 times out; no safe remote fix from mac-mini. Restore Tailscale/host, then verify Nomad client ready+eligible and maintenance-agent allocation after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

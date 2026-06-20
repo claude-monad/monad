@@ -1,0 +1,10 @@
+{
+  "id": "t-0171",
+  "type": "infra",
+  "scope": "2026-06-20T08:29:23Z eliotts-mac-mini sweep: death-star (100.96.31.66) is offline/unreachable on Tailscale; no safe remote fix from mac-mini. Restore power/Tailscale, then verify Nomad client ready+eligible and maintenance-agent allocation after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

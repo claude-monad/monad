@@ -1,0 +1,10 @@
+{
+  "id": "t-0170",
+  "type": "infra",
+  "scope": "2026-06-20T08:29:23Z eliotts-mac-mini sweep: oraclebox1 (100.125.210.126) is offline/unreachable on Tailscale; not safely recoverable from this node. After power/Tailscale restore, rejoin/verify Nomad server+client with meta/bootstrap/join.sh or existing service, run meta/agent/ensure-engines.sh, then verify quorum and maintenance-agent coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

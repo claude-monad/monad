@@ -4385,3 +4385,7 @@
 {"ts":"2026-06-20T01:36:56Z","node":"bigo-server","source":"watchdog","action":"health-check","result":"warn","detail":"1 issues, 7 warnings"}
 {"ts":"2026-06-20T01:08:49Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-20T01:39:50Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T01:45:34Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}
+{"ts":"2026-06-20T01:47:11Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T02:18:18Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T02:23:18Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0162 no leader; only V1410-1 alive/Candidate; claudebox and oraclebox1 Tailscale no-reply; death-star also no-reply; bigo-server and windesk reachable but node/job checks blocked"}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0162",
+  "type": "infra",
+  "scope": "QUORUM LOST 2026-06-20T02:23Z from eliotts-mac-mini: nomad server members shows only V1410-1 alive and no leader; V1410-1 /v1/agent/self shows raft.state=Candidate latest_configuration=[V1410-1,claudebox]. claudebox 100.87.219.108 and oraclebox1 100.125.210.126 do not answer Tailscale ping, so no safe remote recovery path from mac-mini. Smallest required fix: power/Tailscale-up claudebox then run ~/monad/scripts/claudebox-server.sh keepalive/start, or restore oraclebox1 Tailscale/Nomad; verify leader, node status, and maintenance-agent coverage. death-star is also off-tailnet; bigo-server and windesk answer Tailscale but job/node checks are blocked until quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

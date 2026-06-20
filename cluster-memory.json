@@ -22,9 +22,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1781934862.0364876,
+    "updated": 1781939307.9226067,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T05:54:21Z-t-0167-escalated"
+    "value": "DONE-2026-06-20T07:08:27Z-t-0168-escalated"
   },
   "health:bigo-server": {
     "updated": 1781879600.465579,
@@ -32,9 +32,9 @@
     "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader; preserved bigo-server: DONE-2026-06-18T03:42:18Z-ensure-engines-refreshed-disk-reviewed"
   },
   "health:claudebox": {
-    "updated": 1781937102.0231793,
+    "updated": 1781939307.9829924,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
+    "value": "DONE-2026-06-20T07:08:27Z-t-0168-escalated"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -47,9 +47,9 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:death-star": {
-    "updated": 1781937102.0250604,
+    "updated": 1781939308.1047215,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
+    "value": "DONE-2026-06-20T07:08:27Z-t-0168-escalated"
   },
   "health:eliotts-mac-mini": {
     "updated": 1781369143.6530366,
@@ -87,9 +87,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1781937102.003413,
+    "updated": 1781939308.0440264,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
+    "value": "DONE-2026-06-20T07:08:27Z-t-0168-escalated"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-16T07:52:30Z-existing-queue-t0113"
   },
   "health:quorum": {
-    "updated": 1781937101.9930978,
+    "updated": 1781939307.8571029,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
+    "value": "DONE-2026-06-20T07:08:27Z-t-0168-escalated"
   },
   "health:sweep:V1410-1": {
     "updated": 1781326352.2253363,
@@ -122,9 +122,9 @@
     "value": "DONE-2026-06-15T17:21:02Z"
   },
   "health:windesk": {
-    "updated": 1781937102.0127094,
+    "updated": 1781939308.165302,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T06:31:41Z-t-0167-existing-escalation"
+    "value": "DONE-2026-06-20T07:08:27Z-t-0168-escalated"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

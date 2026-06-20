@@ -1,0 +1,10 @@
+{
+  "id": "t-0178",
+  "type": "infra",
+  "scope": "2026-06-20T14:46Z eliotts-mac-mini sweep: CRITICAL Nomad quorum lost/no leader. nomad server members shows only V1410-1.global alive and Leader=false; node status and maintenance-agent job status fail with 500 No cluster leader. Tailscale: bigo-server reachable; claudebox 100.87.219.108, oraclebox1 100.125.210.126, and death-star 100.96.31.66 do not answer ping from eliotts-mac-mini. Claimed health:claudebox and queued monad/maintenance/claudebox/queue/restore-quorum-20260620T144636Z.md. Smallest safe recovery is on-box claudebox power/Tailscale restore, then ~/monad/scripts/claudebox-server.sh keepalive/start; fallback restore oraclebox1 voter. Avoid single-voter Raft surgery unless explicitly approved; after quorum returns verify node readiness/eligibility and one maintenance-agent alloc per roster member.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

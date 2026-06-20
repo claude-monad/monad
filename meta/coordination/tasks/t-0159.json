@@ -1,0 +1,10 @@
+{
+  "id": "t-0159",
+  "type": "infra",
+  "scope": "restore Nomad quorum: V1410-1 is alive but candidate/no leader; claudebox is the current missing raft voter and is offline on Tailscale; oraclebox1 and death-star are also offline; after quorum returns, verify windesk Nomad client/maintenance-agent",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -4354,3 +4354,16 @@
 {"ts":"2026-06-19T22:02:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
 {"ts":"2026-06-19T22:32:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-19T22:36:48Z","node":"bigo-server","source":"manual-health-sweep","type":"infra","action":"cluster-health","status":"escalated","detail":"quorum lost; emitted t-0158; claudebox current raft peer unreachable; oraclebox1/death-star offline; windesk nomad timeout"}
+{"ts":"2026-06-19T22:38:11Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T23:08:45Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T23:13:23Z","node":"bigo-server","source":"codex-maintenance","type":"infra","action":"cluster-health","status":"escalated","detail":"quorum lost: only V1410-1 alive and candidate/no leader; claudebox current raft peer offline; oraclebox1 and death-star offline; windesk tailscale reachable but nomad HTTP timeout; emitted t-0159; self engines advertised claude,codex"}
+{"ts":"2026-06-19T23:14:33Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T23:45:06Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T23:49:23Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T00:19:59Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T00:23:45Z","node":"bigo-server","source":"codex-maintenance","type":"infra","action":"cluster-health","status":"escalated","detail":"quorum lost: only V1410-1 reachable as raft voter, V1410-1+claudebox stale peers, no leader; claudebox/oraclebox1/death-star off-tailnet; windesk tailnet reachable but Nomad HTTP timeout; claims released to t-0159; self ensure-engines ok"}
+{"ts":"2026-06-20T00:24:19Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T00:54:54Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T00:59:03Z","node":"bigo-server","source":"codex-maintenance","type":"infra","action":"cluster-health","status":"escalated","detail":"quorum lost: V1410-1 alive but no leader; stale raft peer claudebox offline; oraclebox1/death-star off-tailnet; windesk tailnet reachable but no local Nomad API; reused t-0159; self nomad+engines ok; git behind 2 but dirty"}
+{"ts":"2026-06-20T01:00:02Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T01:30:37Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

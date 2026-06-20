@@ -1,0 +1,10 @@
+{
+  "id": "t-0161",
+  "type": "infra",
+  "scope": "2026-06-20T01:04Z eliotts-mac-mini sweep: Nomad quorum is lost. monad/nomad server members shows only V1410-1 alive, not leader; V1410-1 /v1/agent/self reports raft.state=Candidate, leader_addr empty, num_peers=1, latest_configuration=[V1410-1,claudebox]. Stale Raft peers are V1410-1 and claudebox; claudebox 100.87.219.108 has no Tailscale reply and times out on 22/4646/4647/4648, so the smallest safe fix is on-box claudebox power/Tailscale recovery then ~/monad/scripts/claudebox-server.sh keepalive/start. oraclebox1 100.125.210.126 and death-star 100.96.31.66 are also unreachable; windesk and bigo-server answer Tailscale. Node/job/maintenance-agent checks fail until a leader returns. Avoid single-voter Raft surgery unless explicitly approved.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

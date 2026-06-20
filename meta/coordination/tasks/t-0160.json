@@ -1,0 +1,10 @@
+{
+  "id": "t-0160",
+  "type": "infra",
+  "scope": "death-star is offline/unreachable from eliotts-mac-mini on 2026-06-19T22:24Z (Tailscale ping timed out). Restore power/tailscale, then verify Nomad client readiness and maintenance-agent allocation after quorum is restored.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

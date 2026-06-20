@@ -1,7 +1,7 @@
 {
   "id": "t-0159",
   "type": "infra",
-  "scope": "restore Nomad quorum: V1410-1 is alive but candidate/no leader; claudebox is the current missing raft voter and is offline on Tailscale; oraclebox1 and death-star are also offline; after quorum returns, verify windesk Nomad client/maintenance-agent",
+  "scope": "URGENT: Nomad quorum lost on 2026-06-19T22:24Z: only V1410-1 is alive/candidate with no leader; claudebox is the current missing raft voter and is offline on Tailscale; oraclebox1 and death-star are also offline/unreachable. Power on/reconnect at least one voter, then start Nomad server/join to 100.75.75.39. After quorum returns, verify windesk Nomad client/maintenance-agent.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

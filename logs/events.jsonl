@@ -4367,3 +4367,17 @@
 {"ts":"2026-06-20T00:59:03Z","node":"bigo-server","source":"codex-maintenance","type":"infra","action":"cluster-health","status":"escalated","detail":"quorum lost: V1410-1 alive but no leader; stale raft peer claudebox offline; oraclebox1/death-star off-tailnet; windesk tailnet reachable but no local Nomad API; reused t-0159; self nomad+engines ok; git behind 2 but dirty"}
 {"ts":"2026-06-20T01:00:02Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-20T01:30:37Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T21:51:48Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T22:22:14Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T22:25:41Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0147 no leader; only V1410-1 server alive; claudebox and oraclebox1 unreachable on Tailscale"}
+{"ts":"2026-06-19T22:27:55Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T22:58:15Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T23:11:04Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-19T23:41:24Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-19T23:45:41Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"no leader; stale raft voters V1410-1+claudebox; claudebox/oraclebox1/death-star Tailscale no-reply; windesk DERP but Nomad HTTP timeout; claims released to t-0147/t-0148/t-0146"}
+{"ts":"2026-06-19T23:46:07Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T00:16:25Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T00:25:54Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"auto-repair","result":"fail","detail":"2 issues"}
+{"ts":"2026-06-20T00:27:32Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-20T00:57:58Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-20T01:06:25Z","node":"eliotts-mac-mini","source":"maintenance-sweep","type":"cluster-health","action":"quorum-escalate","status":"open","detail":"t-0161 no leader; stale voters V1410-1+claudebox; claudebox/oraclebox1/death-star unreachable; windesk+bigo-server tailscale-reachable"}

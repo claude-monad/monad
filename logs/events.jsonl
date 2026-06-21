@@ -4793,3 +4793,4 @@
 {"ts":"2026-06-21T19:06:19Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T18:32:11Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T19:02:18Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T19:34:07Z","node":"V1410-1","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 2/2 (V1410-1+claudebox), 4/4 clients ready+eligible, maintenance-agent 4/4 running, engines claude+codex; oraclebox1 offline 14d (heal task queued, claim DONE)"}

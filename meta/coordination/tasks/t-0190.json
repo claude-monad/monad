@@ -1,0 +1,10 @@
+{
+  "id": "t-0190",
+  "type": "infra",
+  "scope": "bigo-server disk 93% (7.3G free); no safe junk (docker not idle, 0B reclaimable; rest is real data). Operator decision needed on Downloads(2.5G)/snap or bigger disk.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

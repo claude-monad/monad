@@ -4732,3 +4732,5 @@
 {"ts":"2026-06-21T11:48:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T12:18:50Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T12:20:52Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"roster-sweep","status":"ok","detail":"quorum 2/3 voters alive (claudebox[leader]+V1410-1; oraclebox1 offline 14d, heal-server-20260607 queued+escalated); 4 Nomad clients ready+eligible (claudebox,V1410-1,bigo-server,eliotts-mac-mini); maintenance-agent 4/4 running (1 per member); all 4 nodes advertise claude+codex; self engines ready+advertised, disk 65%; no peer fix needed, all peers recently DONE-claimed"}
+{"ts":"2026-06-21T12:15:16Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T12:45:20Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

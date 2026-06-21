@@ -27,6 +27,17 @@ job "maintenance-agent" {
   }
 
   group "agent" {
+    # Flaky-link tolerance: nodes on Tailscale relays (e.g. eliotts-mac-mini) miss a
+    # heartbeat every minute or two and reregister within seconds. Without this, every
+    # blip marks the alloc lost and reschedules it, so the agent never survives long
+    # enough to run a self-pass. Keep the running alloc through brief disconnects and
+    # don't spin up replacements; reconcile back to the original when the node returns.
+    disconnect {
+      lost_after = "10m"
+      replace    = false
+      reconcile  = "keep_original"
+    }
+
     restart {
       attempts = 3
       interval = "10m"

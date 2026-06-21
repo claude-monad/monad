@@ -126,6 +126,11 @@
     "updated_by": "bigo-server",
     "value": "DONE-2026-06-20T20:26:30Z-existing-t-0183"
   },
+  "issue:v1410-1-git-push": {
+    "updated": 1782066595.4653945,
+    "updated_by": "V1410-1",
+    "value": "BLOCKED-2026-06-21T18:29:55Z: gh token invalid + no credential.helper; sweep-log commits accumulate locally, cannot reach origin. Needs interactive 'gh auth login -h github.com' on v1410-1."
+  },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,
     "updated": 1780451065.507398,

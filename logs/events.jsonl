@@ -4781,6 +4781,7 @@
 {"ts":"2026-06-21T17:26:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T17:56:56Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T17:58:56Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 2/2 voters (v1410-1+claudebox[leader]); 4/4 clients ready+eligible; maint-agent 4/4 running; engines claude,codex on all; oraclebox1 offline 14d already queued heal-server-20260607"}
+{"ts":"2026-06-21T17:56:59Z","node":"V1410-1","kind":"health-sweep","status":"ok","detail":"quorum 2/2 (V1410-1+claudebox leader), 4/4 nodes ready+eligible, maintenance-agent running on all 4, engines claude,codex advertised all 4, disk 6%, git up-to-date; oraclebox1+death-star offline 14d (non-member)"}
 {"ts":"2026-06-21T18:04:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T18:20:24Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"6 commit(s) to running math-formalizer"}
 {"ts":"2026-06-21T18:34:40Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
@@ -4790,3 +4791,5 @@
 {"ts":"2026-06-21T18:36:06Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T18:50:23Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"3 commit(s) to running math-formalizer"}
 {"ts":"2026-06-21T19:06:19Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T18:32:11Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T19:02:18Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

@@ -4754,3 +4754,6 @@
 {"ts":"2026-06-21T13:49:53Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T14:10:14Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"5 commit(s) to running math-formalizer"}
 {"ts":"2026-06-21T14:19:58Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T15:17:38Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T15:47:45Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T15:50:00Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"cluster-health-sweep","status":"ok","detail":"quorum 2/2 voters (claudebox leader + V1410-1); 4/4 clients ready+eligible w/ maintenance-agent; engines claude,codex on all; oraclebox1 offline 14d (restore tasks already queued, claim DONE)"}

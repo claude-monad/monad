@@ -20,3 +20,9 @@ consistent with the known "flaky on Tailscale" note in CLAUDE.md.
    the mac from holding the mesh link.
 
 When stable, this file can be removed.
+
+## Recurrence 2026-06-21 (V1410-1 sweep)
+Still flapping: Nomad shows node `disconnected`, maintenance-agent alloc 4d7c2668
+`status=unknown`. Tailscale still via `relay "den"` (not direct). No quorum
+impact (V1410-1+claudebox = 2/2 voters alive). Task remains open for the
+mac-mini's local agent to action on reconnect.

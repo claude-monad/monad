@@ -4824,3 +4824,6 @@
 {"ts":"2026-06-21T21:46:32Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T22:10:14Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"5 commit(s) to running math-formalizer"}
 {"ts":"2026-06-21T22:16:35Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T21:53:45Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T22:23:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T22:30:00Z","node":"v1410-1","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"quorum 2/2 voters alive (v1410-1 leader + claudebox follower); 4/4 clients ready+eligible; engines claude+codex on all 4; maintenance-agent 4/4 running; disk 5%; git clean. oraclebox1 down 14d (powered off) - heal/restore tasks already queued, no action. windesk reachable via DERP, not a registered nomad node."}

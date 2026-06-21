@@ -127,9 +127,9 @@
     "value": "DONE-2026-06-20T20:26:30Z-existing-t-0183"
   },
   "issue:v1410-1-git-push": {
-    "updated": 1782066595.4653945,
+    "updated": 1782083682.186607,
     "updated_by": "V1410-1",
-    "value": "BLOCKED-2026-06-21T18:29:55Z: gh token invalid + no credential.helper; sweep-log commits accumulate locally, cannot reach origin. Needs interactive 'gh auth login -h github.com' on v1410-1."
+    "value": "RESOLVED-2026-06-21T23:1x: push works from V1410-1 maint-agent (sweep commit 38857a5 reached origin)"
   },
   "node.windesk.dual-agent.claude": {
     "expires": 1781055865.507398,

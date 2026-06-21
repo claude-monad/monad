@@ -62,7 +62,7 @@ job "registry-backup" {
 #   tar -xzf <archive>.tar.gz -C /opt/monad-registry
 set -eu
 
-RETENTION_KEEP=3          # number of most-recent archives to keep
+RETENTION_KEEP=2          # number of most-recent archives to keep (was 3; bigo-server disk sits ~92%, each archive ~1.4G)
 # Free-space preflight: refuse to write unless free space comfortably exceeds the live
 # store size. Same-host backups share bigo-server's disk with the registry itself (the
 # disk registry-health guards), so a backup must NEVER be allowed to fill it and break

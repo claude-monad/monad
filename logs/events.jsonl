@@ -4658,6 +4658,13 @@
 {"ts":"2026-06-21T03:08:59Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T03:39:08Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T03:42:47Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum OK 2/2 voters (V1410-1 leader+claudebox); 4 clients ready (claudebox,eliotts-mac-mini,bigo-server,V1410-1); maint-agent 4/4 running; engines claude,codex on all; self disk 56% git behind2->synced; oraclebox1 3rd-voter offline 13d (fragile, already escalated t-0185)"}
+{"ts":"2026-06-21T03:43:36Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T04:13:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T04:14:44Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T04:44:51Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T05:10:20Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"boot","status":"ok","detail":"engines=claude drop_priv=0 engine_user=none mesh=0"}
+{"ts":"2026-06-21T05:13:21Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T05:18:02Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum OK 2/2 voters (claudebox leader+V1410-1); 4 clients ready (claudebox,eliotts-mac-mini,bigo-server,V1410-1); maint-agent 4/4 running; engines claude,codex; self disk 63%; oraclebox1 3rd-voter offline 13d (fragile, already handled t-0185+queue, claim DONE)"}
 {"ts":"2026-06-21T03:14:47Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T03:44:50Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T03:45:48Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}

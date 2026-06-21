@@ -1,0 +1,10 @@
+{
+  "id": "t-0189",
+  "type": "infra",
+  "scope": "eliotts-mac-mini Nomad heartbeat flapping (allocs lost as 'node down' every few min; DERP-relay only, no direct Tailscale path). maintenance-agent crash-loops as a result. Needs on-node Tailscale/Nomad stabilization; heal task queued at monad/maintenance/eliotts-mac-mini/queue/heal-heartbeat-20260621.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

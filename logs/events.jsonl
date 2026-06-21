@@ -4641,3 +4641,4 @@
 {"ts":"2026-06-21T02:35:24Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
 {"ts":"2026-06-21T03:05:30Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T03:08:33Z","node":"claudebox","kind":"health-sweep","detail":"quorum OK (2 voters: v1410-1 leader + claudebox); 4/4 nodes ready; 4/4 maintenance-agents running; self engines claude+codex ready; operator tree ff-synced from 176 behind. oraclebox1 (3rd voter) + windesk offline on tailscale, heal/rejoin tasks already queued; eliotts-mac-mini tailscale-flap task queued today."}
+{"ts":"2026-06-21T01:59:34Z","node":"V1410-1","source":"deploy","action":"maintenance-agent","result":"ok","detail":"deployed and pushed"}

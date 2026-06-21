@@ -4674,6 +4674,12 @@
 {"ts":"2026-06-21T04:49:20Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T05:20:13Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T05:22:27Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"cluster-health-sweep","status":"pass","detail":"self healthy: engines claude+codex advertised, nomad agent ready, disk 89pct/13G free; quorum OK 2 voters alive (V1410-1 + claudebox leader); oraclebox1 3rd-voter offline 13d (already DONE-claimed 06-20T22:48Z); mac-mini maint alloc unknown via flaky tailscale (already DONE-claimed 06-21T02:01Z); no new fixes needed"}
+{"ts":"2026-06-21T05:23:29Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T05:53:32Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T05:54:44Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T06:24:47Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-21T06:25:44Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-21T06:55:47Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T05:18:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-21T05:48:50Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-21T05:50:30Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}

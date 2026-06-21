@@ -52,9 +52,9 @@
     "value": "DONE-2026-06-20T22:48:39Z-t-0185"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1781369143.6530366,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-06-13T16:45:43Z-restarted-failed-maint-alloc-transient-executor-failure"
+    "updated": 1782001309.3112807,
+    "updated_by": "V1410-1",
+    "value": "DONE-2026-06-21T00:21:49Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,

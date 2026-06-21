@@ -1,0 +1,10 @@
+{
+  "id": "t-0187",
+  "type": "infra",
+  "scope": "eliotts-mac-mini maintenance-agent flapping (alloc lost ~every 1-2min, node-down via relay-only Tailscale link); needs local tailscaled restart + sleep/wifi-powersave fix on the mac. Queue task filed at monad/maintenance/eliotts-mac-mini/queue/tailscale-flap-20260620.md",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

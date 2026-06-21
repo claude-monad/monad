@@ -1,0 +1,10 @@
+{
+  "id": "t-0188",
+  "type": "infra",
+  "scope": "eliotts-mac-mini maintenance-agent flapping: ~18 alloc reschedules in ~2h from node-down/heartbeat loss (known Tailscale flakiness, relay den). Currently 1 running alloc, recovered. Watch for sustained loss; stabilize Tailscale link on the Mac.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

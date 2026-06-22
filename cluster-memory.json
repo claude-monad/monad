@@ -112,9 +112,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1782044452.5361397,
+    "updated": 1782145606.28161,
     "updated_by": "claudebox",
-    "value": "DONE-2026-06-21T12:20:52Z-quorum2of3-held(claudebox-leader+V1410-1)"
+    "value": "2026-06-22T16:26:46Z roster-ok quorum-2of2(V1410-1-leader+claudebox); oraclebox1-offline-15d(queued+DONE-by-bigo,physical); windesk-reachable(win-cron,not-nomad); 4 maint-agents-running"
   },
   "health:v1410-1": {
     "updated": 1781952455.7089677,

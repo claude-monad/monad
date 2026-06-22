@@ -4,7 +4,7 @@
   "scope": "2026-06-19T21:20Z bigo-server sweep: Nomad quorum is still lost. nomad server members via 100.75.75.39 shows only V1410-1 alive and no leader; nomad node status and maintenance-agent job status return 500 No cluster leader. Tailscale ping: V1410-1, bigo-server, eliotts-mac-mini, and windesk respond; claudebox, oraclebox1, and death-star time out. Claimed quorum/claudebox/oraclebox1/death-star; no safe remote repair path from bigo-server because the missing voters are off-tailnet. Smallest recovery remains on-box claudebox Tailscale/Nomad keepalive/start or oraclebox1 power/Tailscale/Nomad restore, then verify leader election, node readiness/eligibility, and maintenance-agent coverage.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "done",
   "owner": null,
   "parent": null
 }

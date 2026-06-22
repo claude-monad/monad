@@ -1,0 +1,10 @@
+{
+  "id": "t-0193",
+  "type": "infra",
+  "scope": "oraclebox1 still missing as 3rd Raft voter (offline 15d on Tailscale, relay rx 0, unreachable from bigo-server). Quorum RECOVERED since the 06-19 outage: claudebox=leader + V1410-1=voter, 2 alive, no leader-loss. Only risk is zero server margin: if either remaining voter dies quorum is lost again. Needs owner/physical action to bring oraclebox1's Tailscale+Nomad server back (cannot revive remotely). Lower priority than the now-closed t-0157/t-0159 quorum-lost tasks.",
+  "repo": "monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -117,14 +117,14 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1782044452.5361397,
+    "updated": 1782148206.942698,
     "updated_by": "claudebox",
-    "value": "DONE-2026-06-21T12:20:52Z-quorum2of3-held(claudebox-leader+V1410-1)"
+    "value": "2026-06-22T17:10:06Z QUORUM-LOST 1/2 (V1410-1-leader-WEDGED + claudebox-alive); oraclebox1-off-15d; clients-unverifiable(no-leader); self ok disk5% engines-ready(claude+codex); escalated issue#6 t-0193"
   },
   "health:v1410-1": {
-    "updated": 1781952455.7089677,
-    "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T10:47:35Z-t-0169-escalated-existing"
+    "updated": 1782148206.9091048,
+    "updated_by": "claudebox",
+    "value": "ESCALATED-2026-06-22T17:10:06Z-claudebox: nomad-wedged(TCP-open/HTTP-dead,serf-failed) likely-disk-full(t-0192); needs-V1410-1-host-access; issue#6 t-0193; claudebox-up+retry_joins->2/2-auto-on-its-nomad-restart"
   },
   "health:windesk": {
     "updated": 1781987190.5064423,

@@ -5017,3 +5017,4 @@
 {"ts":"2026-06-22T19:20:31Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T19:22:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
 {"ts":"2026-06-22T19:53:00Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-22T19:55:02Z","node":"claudebox","source":"node-doctor","action":"auto-repair","result":"ok","detail":"1 issues"}

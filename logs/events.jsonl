@@ -5006,3 +5006,7 @@
 {"ts":"2026-06-22T18:18:01Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-22T18:48:08Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T18:50:08Z","node":"claudebox","source":"maintenance-agent","type":"health-sweep","action":"roster-sweep","status":"ok","detail":"quorum 2/2 (claudebox leader + V1410-1 voter); 4/4 nomad members ready+eligible; engines claude+codex advertised on all; maintenance-agent 4/4 running; oraclebox1 offline 15d (3rd-voter gap, escalation tracked); windesk t-0183; mac-mini t-0188/t-0189; v1410-1 root-cause issue#6/t-0193"}
+{"ts":"2026-06-22T18:50:25Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-22T19:20:31Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-22T19:22:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-06-22T19:53:00Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

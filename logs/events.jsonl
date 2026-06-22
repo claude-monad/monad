@@ -4849,6 +4849,10 @@
 {"ts":"2026-06-21T23:37:29Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-22T00:07:38Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T00:25:00Z","node":"bigo-server","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 2/2 voters (V1410-1 leader + claudebox alive). nodes claudebox+mac-mini+bigo-server+V1410-1 all ready/eligible. maintenance-agent: 4 running allocs (one per live node). self: engines claude+codex refreshed+advertised, git committed+merged+pushed (8461b99), disk 89% (12G free, workload not junk - watch). oraclebox1 3rd-voter offline 14d (powered off, DONE-claimed t-0185, no remote fix). mac-mini flapping tracked t-0188/0189. windesk not a nomad member t-0004. no new claims - all known issues already escalated, avoided stampede."}
+{"ts":"2026-06-22T00:23:44Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-22T00:53:47Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-22T00:54:34Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-22T01:24:37Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T00:10:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-22T00:40:49Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T00:45:26Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}

@@ -4952,6 +4952,10 @@
 {"ts":"2026-06-22T10:56:40Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-22T11:26:46Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T11:30:00Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"quorum 2/2 voters alive (V1410-1 leader + claudebox, RaftProto3); oraclebox1 3rd voter offline 15d (powered off, needs physical power-on, DONE-claimed). clients ready+eligible: claudebox,V1410-1,bigo-server,eliotts-mac-mini. maintenance-agent 4/4 running (1/live node). engines claude+codex advertised on self (refreshed). self: disk 5%, mem ok, docker absent. git: committed local events + union-merged origin (bigo-server sweep) + pushed -> 91b203b, clean 0/0. windesk reachable-but-not-nomad-member (t-0004/t-0183 queued). bigo-server disk ~89% (t-0190), mac-mini flap (t0188/t0189). all peer health keys DONE within 2d - no new claims, no stampede."}
+{"ts":"2026-06-22T12:56:43Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-22T13:26:45Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-22T13:27:46Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-22T13:57:49Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T11:29:17Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-22T11:59:23Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T12:01:17Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}

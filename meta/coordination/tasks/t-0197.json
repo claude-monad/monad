@@ -1,0 +1,10 @@
+{
+  "id": "t-0197",
+  "type": "infra",
+  "scope": "windesk answers Tailscale ping but is absent from Nomad node status and has no maintenance-agent allocation; run Windows ensure-engines/rejoin or document equivalent maintenance loop.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0194",
+  "type": "infra",
+  "scope": "eliotts-mac-mini recovered after monad.nomad-client kickstart, but Nomad RPC to V1410-1/claudebox is DERP-only/flappy; investigate Tailscale direct connectivity or Nomad client/server heartbeat tolerance. Current node status was ready after recovery.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -122,9 +122,9 @@
     "value": "2026-06-22T17:10:06Z QUORUM-LOST 1/2 (V1410-1-leader-WEDGED + claudebox-alive); oraclebox1-off-15d; clients-unverifiable(no-leader); self ok disk5% engines-ready(claude+codex); escalated issue#6 t-0193"
   },
   "health:v1410-1": {
-    "updated": 1782148206.9091048,
+    "updated": 1782152230.8376207,
     "updated_by": "claudebox",
-    "value": "ESCALATED-2026-06-22T17:10:06Z-claudebox: nomad-wedged(TCP-open/HTTP-dead,serf-failed) likely-disk-full(t-0192); needs-V1410-1-host-access; issue#6 t-0193; claudebox-up+retry_joins->2/2-auto-on-its-nomad-restart"
+    "value": "DONE-2026-06-22T18:17:10Z-claudebox: acute-wedge-recovered (nomad rejoined, follower, leader-API-responsive, quorum 2/2); root-cause small-root-partition-fill still tracked in issue#6+task t-0193 (needs V1410-1 host access)"
   },
   "health:windesk": {
     "updated": 1781987190.5064423,

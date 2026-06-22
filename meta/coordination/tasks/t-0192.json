@@ -1,0 +1,10 @@
+{
+  "id": "t-0192",
+  "type": "infra",
+  "scope": "V1410-1 (leader) disk 91% (11G free); no safe junk (docker prune=0B, journal=120M). Legit data: /mnt/storage/final 30G, /home/bigo 26G, snapd 6.8G, containerd 5.4G. Needs human archival/cleanup decision before 95%.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

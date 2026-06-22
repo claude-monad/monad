@@ -1,0 +1,10 @@
+{
+  "id": "t-0191",
+  "type": "infra",
+  "scope": "oraclebox1 (desired 3rd Raft voter) offline 14d at Tailscale layer (relay-only, rx 0) \u2014 needs physical/network revival on the box; cluster currently runs at 2 voters (V1410-1, claudebox) with no fault tolerance. death-star also offline 14d.",
+  "repo": "monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0196",
+  "type": "infra",
+  "scope": "oraclebox1 is offline on Tailscale and absent from Nomad server members; quorum currently survives with V1410-1+claudebox, but restore/rejoin this voter or confirm decommission.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

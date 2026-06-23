@@ -5052,6 +5052,13 @@
 {"ts":"2026-06-22T22:33:21Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-22T23:00:17Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"3 commit(s) to running math-formalizer"}
 {"ts":"2026-06-22T23:03:24Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-22T23:16:26Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-22T23:46:40Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-22T23:47:00Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 2/2 (v1410-1+claudebox, claudebox=leader); 4 nodes ready+eligible; engines claude,codex on all; maintenance-agent running x4; oraclebox1 offline 15d (heal task queued, claim DONE 22:45Z); windesk reachable via DERP, non-member native; disk 6%; repo current"}
+{"ts":"2026-06-22T23:48:36Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-23T00:18:50Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-23T00:20:23Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-23T00:50:38Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-22T23:04:51Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-22T23:10:16Z","node":"bigo-server","source":"formalize-watch","action":"notify-active","result":"ok","detail":"2 commit(s) to running math-formalizer"}
 {"ts":"2026-06-22T23:34:54Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
@@ -5065,3 +5072,10 @@
 {"ts":"2026-06-23T01:39:20Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-23T01:41:02Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-23T02:11:04Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-23T00:52:48Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"ok","detail":"quorum 2/2 alive (claudebox=leader + v1410-1); 4 nodes ready+eligible; maintenance-agent running x4 (one per member); engines claude,codex advertised on claudebox; disk 6%; repo synced. oraclebox1 still offline ~15d (3rd voter) — already claimed DONE + heal task queued, escalation pending power-on; windesk non-member native, reachable."}
+{"ts":"2026-06-23T00:53:22Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-23T01:23:36Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-23T01:25:30Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"quorum 2/2 voters alive (claudebox leader + v1410-1); 4 clients ready+eligible w/ running maintenance-agent; self engines claude+codex advertised; oraclebox1 offline 15d (heal task already queued); windesk reachable but not nomad member (windows)"}
+{"ts":"2026-06-23T01:25:49Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-23T01:56:04Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-23T01:57:30Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"quorum 2/2 (V1410-1+claudebox-leader); 4/4 clients ready+eligible w/ maint-agent running; self engines claude+codex ready+advertised, disk 6%; oraclebox1 offline ~15d (escalation standing: queue heal-server task); v1410-1 root-disk root-cause tracked issue#6/t-0193"}

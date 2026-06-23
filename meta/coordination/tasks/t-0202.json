@@ -1,0 +1,10 @@
+{
+  "id": "t-0202",
+  "type": "infra",
+  "scope": "node-doctor on claudebox flags two phantom issues every pass -> spawns repair agent -> self-pass times out rc=124 (cosmetic, cluster healthy). (1) checks Nomad on 127.0.0.1:4646 but claudebox server binds the tailscale IP (server confirmed alive in 'nomad server members'); (2) 'git cannot fast-forward/1 uncommitted change' is a transient race vs maintenance-agent's continuous logs/events.jsonl appends (tree clean+in-sync between writes). Fix: in node-doctor, probe Nomad via NOMAD_ADDR/tailscale IP not hardcoded localhost, and skip the git-dirty flag when the only change is logs/events.jsonl. Touches core self-healing script -> review across nodes before merge.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

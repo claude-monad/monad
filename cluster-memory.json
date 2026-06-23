@@ -32,9 +32,9 @@
     "value": "DONE-2026-06-19T14:33:20Z-tailscale-and-nomad-client-online-job-check-blocked-no-leader; preserved bigo-server: DONE-2026-06-18T03:42:18Z-ensure-engines-refreshed-disk-reviewed"
   },
   "health:claudebox": {
-    "updated": 1781995719.206464,
-    "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T22:48:39Z-t-0185"
+    "updated": 1782219847.7278771,
+    "updated_by": "Eliotts-Mac-mini.local",
+    "value": "DONE-2026-06-23T13:04:07Z-t-0200"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -47,19 +47,19 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:cluster-quorum": {
-    "updated": 1782146455.539796,
-    "updated_by": "bigo-server",
-    "value": "bigo-server"
+    "updated": 1782219847.612115,
+    "updated_by": "Eliotts-Mac-mini.local",
+    "value": "DONE-2026-06-23T13:04:07Z-t-0200"
   },
   "health:death-star": {
-    "updated": 1782168326.620311,
+    "updated": 1782219847.843288,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-22T22:45:26Z"
+    "value": "DONE-2026-06-23T13:04:07Z-t-0200"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1782168326.0562801,
+    "updated": 1782217321.190658,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-22T22:45:26Z"
+    "value": "DONE-2026-06-23T12:22:01Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -92,9 +92,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1782168327.229999,
+    "updated": 1782219847.785571,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-22T22:45:27Z"
+    "value": "DONE-2026-06-23T13:04:07Z-t-0200"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -122,14 +122,14 @@
     "value": "2026-06-22T17:10:06Z QUORUM-LOST 1/2 (V1410-1-leader-WEDGED + claudebox-alive); oraclebox1-off-15d; clients-unverifiable(no-leader); self ok disk5% engines-ready(claude+codex); escalated issue#6 t-0193"
   },
   "health:v1410-1": {
-    "updated": 1782152230.8376207,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-06-22T18:17:10Z-claudebox: acute-wedge-recovered (nomad rejoined, follower, leader-API-responsive, quorum 2/2); root-cause small-root-partition-fill still tracked in issue#6+task t-0193 (needs V1410-1 host access)"
+    "updated": 1782219847.670124,
+    "updated_by": "Eliotts-Mac-mini.local",
+    "value": "DONE-2026-06-23T13:04:07Z-t-0200"
   },
   "health:windesk": {
-    "updated": 1782168327.9796941,
+    "updated": 1782219847.901022,
     "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-22T22:45:27Z"
+    "value": "DONE-2026-06-23T13:04:07Z-t-0200"
   },
   "issue:v1410-1-git-push": {
     "updated": 1782083682.186607,

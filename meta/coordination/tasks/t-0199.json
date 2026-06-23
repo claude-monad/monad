@@ -1,0 +1,10 @@
+{
+  "id": "t-0199",
+  "type": "infra",
+  "scope": "Investigate 2026-06-23 health sweep: eliotts-mac-mini Nomad client is locally running but cluster marks it down/lost; local Tailscale can reach bigo-server but times out to V1410-1 and claudebox Nomad RPC/API, while bigo API sees V1410-1 and claudebox alive/quorum OK. death-star, oraclebox1, and windesk are offline/not Nomad members from this sweep.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0203",
+  "type": "infra",
+  "scope": "oraclebox1 offline 16d (Tailscale relay-only, rx 0); not a Nomad server member. Quorum OK at 2 voters (V1410-1 leader + claudebox), 3-voter target degraded. Needs on-node revival - unreachable remotely. Rejoin via meta/bootstrap/join.sh 100.75.75.39 when back on tailnet.",
+  "repo": "monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

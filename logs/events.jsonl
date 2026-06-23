@@ -5182,3 +5182,5 @@
 {"ts":"2026-06-23T13:05:19Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-23T13:37:28Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-23T13:38:50Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"repo-perms","result":"repaired","detail":"shared-repo perms normalized"}
+{"ts":"2026-06-23T13:46:52Z","node":"Eliotts-Mac-mini.local","source":"node-doctor","action":"auto-repair","result":"fail","detail":"2 issues"}
+{"ts":"2026-06-23T13:47:47Z","node":"eliotts-mac-mini","source":"maintenance-agent","type":"cluster-health","action":"sweep","status":"escalated","detail":"quorum/no-leader persists; emitted t-0201; host-access voter recovery needed"}

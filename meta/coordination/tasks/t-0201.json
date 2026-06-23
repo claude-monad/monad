@@ -1,0 +1,10 @@
+{
+  "id": "t-0201",
+  "type": "infra",
+  "scope": "2026-06-23T13:47Z eliotts-mac-mini sweep: CRITICAL Nomad quorum/leader unavailable. Direct monad/nomad checks to v1410-1 (100.75.75.39) time out for server members, node status, and maintenance-agent job status; v1410-1:4646 and claudebox/oraclebox1:4646 curl probes time out. Via bigo-server:4646, /v1/agent/self is healthy as a client, but server-members fails trying claudebox:4647 and node/job status return RPC no-connection/lead-thread errors. Tailscale ping: bigo-server reachable, windesk replies via DERP, v1410-1/claudebox/oraclebox1/death-star no reply. mac-mini local Nomad API is healthy and ensure-engines advertised claude,codex locally; repo started behind+dirty, node-doctor created local commit caaef6e and repo is now ahead 1 with this t-0201 handoff uncommitted. Smallest safe fix requires host access: restart/restore v1410-1 Nomad or power/Tailscale-up claudebox/oraclebox1 and run scripts/claudebox-server.sh keepalive/start or meta/bootstrap/join.sh as appropriate; avoid single-voter Raft surgery unless explicitly approved. After quorum returns, verify node readiness/eligibility and one maintenance-agent alloc per roster member.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

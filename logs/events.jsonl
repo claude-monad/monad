@@ -5079,3 +5079,5 @@
 {"ts":"2026-06-23T01:25:49Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-23T01:56:04Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-23T01:57:30Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"quorum 2/2 (V1410-1+claudebox-leader); 4/4 clients ready+eligible w/ maint-agent running; self engines claude+codex ready+advertised, disk 6%; oraclebox1 offline ~15d (escalation standing: queue heal-server task); v1410-1 root-disk root-cause tracked issue#6/t-0193"}
+{"ts":"2026-06-23T02:12:00Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-23T02:42:03Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

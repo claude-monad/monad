@@ -1,0 +1,10 @@
+{
+  "id": "t-0200",
+  "type": "infra",
+  "scope": "2026-06-23T13:04:07Z eliotts-mac-mini sweep: Nomad quorum/leader unavailable from mac-mini and via bigo-server API. v1410-1:4646, claudebox:4646, oraclebox1:4646 timeout from mac-mini; bigo-server local agent health ok but nomad server-members/job-status fail on claudebox RPC timeout and node-status returns No cluster leader. Tailscale: bigo-server online, claudebox/oraclebox1/death-star/windesk offline from status; v1410-1 does not answer tailscale ping. Smallest safe fix needs host access: restore/restart a voter (v1410-1 or claudebox) or power/rejoin oraclebox1; avoid single-voter Raft surgery.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

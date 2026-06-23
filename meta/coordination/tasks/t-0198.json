@@ -1,0 +1,10 @@
+{
+  "id": "t-0198",
+  "type": "infra",
+  "scope": "oraclebox1 offline 15d (tailscale unreachable, ping 100% loss) \u2014 3rd Raft voter down; quorum at minimum 2/3 (claudebox leader + V1410-1). Needs owner/physical revival; 3 tasks already queued. Not remotely fixable from V1410-1.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

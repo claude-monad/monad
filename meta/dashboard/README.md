@@ -19,6 +19,10 @@ A lean, **read-only** web view of the Monad fleet, served on the tailnet.
 - **Nodes** — status / scheduling eligibility / drain / class (Nomad `/v1/nodes`).
 - **Jobs** — meaningful jobs with a running-alloc count; per-dispatch batch children are
   collapsed into their parent and finished jobs are hidden (Nomad `/v1/jobs` + `/v1/allocations`).
+- **Math workers** — active and recent math/formalization allocations across all nodes, with
+  read-only `stdout` / `stderr` log tails from Nomad allocation logs. This is the browser view
+  for watching LLM output and progress while workers run; it does not expose prompts, shells,
+  kill buttons, credentials, or writable actions.
 - **Mesh peers** — tailnet hosts named `agent-*`, best-effort from `tailscale status --json`
   on the host (empty if the tailscale CLI isn't available there).
 - **Backlog** — `fleet/BACKLOG.md` rows enriched with each project's live `status`/`owner`.
@@ -52,6 +56,9 @@ events update from a Server-Sent Events stream every few seconds.
     `out_degree`, `score_sequence`, `kings`, `complete`, `hamiltonian_path`.
 - `GET /api/events`  — JSON array of recent fleet events
 - `GET /api/events/stream` — Server-Sent Events feed for recent fleet events
+- `GET /api/math/workers` — active/recent math worker allocation metadata
+- `GET /api/math/log?alloc=<id>&task=<task>&type=stderr&offset=60000` — bounded read-only
+  log tail for a worker allocation (`type=stdout|stderr`)
 - `GET /healthz`     — liveness (used by the Nomad health check)
 
 ## Config (env)
@@ -62,6 +69,7 @@ events update from a Server-Sent Events stream every few seconds.
 | `REPO_DIR` | repo root | where to read repo files / git-pull |
 | `REFRESH_SECS` | `60` | repo git-pull interval |
 | `EVENT_STREAM_SECS` | `5` | event-stream file check interval |
+| `MATH_LOG_BYTES` | `60000` | default max bytes returned by `/api/math/log` |
 | `CONDUCTOR_URL` | `http://100.75.75.39:8200` | cluster-conductor chat gateway base URL |
 | `GATEWAYS` | empty | extra `name=url` chat gateways, comma-separated |
 

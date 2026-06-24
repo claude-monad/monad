@@ -1,7 +1,7 @@
 ---
 slug: math-worker-readonly-views
-status: todo
-owner: null
+status: building
+owner: codex
 updated: 2026-06-24T07:06:57Z
 priority: 1
 ---
@@ -51,3 +51,9 @@ SSH into nodes, or risk accidentally sending input to a running session.
 
 - 2026-06-24 — Owner requested cluster-wide read-only worker visibility at Tailscale addresses
   while moving math forum jobs to a 20-minute cadence with at least 40-minute run budgets.
+- 2026-06-24 — Implemented first dashboard pass: `meta/dashboard/server.py` now discovers
+  active/recent math allocations across Nomad and exposes bounded read-only stdout/stderr tails
+  via `/api/math/log`; the page has a Math workers panel that auto-refreshes selected logs
+  every 5 seconds. Local API test successfully read live `math-formalizer` Codex output from
+  an `eliotts-mac-mini` allocation through the Nomad log API. Remaining deployment check:
+  verify the dashboard's tailnet URL is reachable from owner devices.

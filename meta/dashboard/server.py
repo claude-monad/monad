@@ -41,17 +41,19 @@ EVENT_LIMIT = int(os.environ.get("EVENT_LIMIT", "50"))
 EVENT_STREAM_SECS = int(os.environ.get("EVENT_STREAM_SECS", "5"))
 MATH_LOG_BYTES = int(os.environ.get("MATH_LOG_BYTES", "60000"))
 MATH_WORKER_JOBS = {
-    "math-explore-watch",
     "math-explore",
     "math-researcher",
     "math-reviewer",
     "math-quick-compute",
     "math-pro-sessions",
     "math-formalizer",
-    "formalize-watch",
-    "formalizer-lag-health",
     "dual-engine-math-test",
     "bigo-codex-creative",
+}
+MATH_WORKER_EXCLUDE = {
+    "math-explore-watch",
+    "formalize-watch",
+    "formalizer-lag-health",
 }
 
 # ── chat: talk to Claude instances on the tailnet ──────────────────────────────
@@ -187,6 +189,8 @@ def _parent_job(jid):
 
 def _is_math_worker_job(jid):
     parent = _parent_job(jid)
+    if parent in MATH_WORKER_EXCLUDE:
+        return False
     if parent in MATH_WORKER_JOBS:
         return True
     return parent.startswith("math-") or "formaliz" in parent
@@ -242,8 +246,14 @@ def math_workers(limit=40):
 
     def rank(w):
         st = w.get("client_status")
-        sr = {"running": 0, "pending": 1, "complete": 2, "failed": 3, "lost": 4}.get(st, 5)
-        return (sr, w.get("modify_time", ""), w.get("job_id", ""))
+        # Pending replacement allocs often have no log file yet. Put live sessions first,
+        # then recent completed transcripts, then pending/stale allocs.
+        sr = {"running": 0, "complete": 1, "pending": 2, "failed": 3, "lost": 4}.get(st, 5)
+        try:
+            mt = -time.mktime(time.strptime(w.get("modify_time", ""), "%Y-%m-%dT%H:%M:%SZ"))
+        except Exception:
+            mt = 0
+        return (sr, mt, w.get("job_id", ""))
 
     # Active first, then newest recent allocations. Keeping recent dead allocs is useful
     # because the owner often wants to read the final transcript after a worker exits.

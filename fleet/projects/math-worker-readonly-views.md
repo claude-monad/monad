@@ -1,8 +1,8 @@
 ---
 slug: math-worker-readonly-views
-status: building
+status: done
 owner: codex
-updated: 2026-06-24T07:06:57Z
+updated: 2026-06-24T07:29:00Z
 priority: 1
 ---
 
@@ -57,3 +57,8 @@ SSH into nodes, or risk accidentally sending input to a running session.
   every 5 seconds. Local API test successfully read live `math-formalizer` Codex output from
   an `eliotts-mac-mini` allocation through the Nomad log API. Remaining deployment check:
   verify the dashboard's tailnet URL is reachable from owner devices.
+- 2026-06-24 — DONE. Deployed `cluster-dashboard` v13 and forced a fresh alloc-local clone.
+  Verified from claudebox over the tailnet that
+  `http://100.78.218.70:8088/api/math/workers` returns worker data, and verified the deployed
+  dashboard can read a real `math-formalizer` stderr transcript through `/api/math/log`.
+  Note: the Mac-side browser probe timed out only because Tailscale was stopped locally.

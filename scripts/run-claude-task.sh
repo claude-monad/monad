@@ -10,7 +10,7 @@ REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 RUN_AGENT="$REPO_DIR/meta/agent/run-agent.sh"
 
 TASK_ID="${NOMAD_META_task_id:-${NOMAD_ALLOC_ID:0:8}}"
-TIMEOUT="${NOMAD_META_timeout:-1800}"
+TIMEOUT="${NOMAD_META_timeout:-2400}"
 PROMPT="${NOMAD_META_prompt:?PROMPT required}"
 ENGINE="${NOMAD_META_engine:-auto}"          # claude|codex|auto
 RESULT_DIR="/tmp/claude-task-results"

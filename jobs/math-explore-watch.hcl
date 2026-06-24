@@ -10,7 +10,7 @@ job "math-explore-watch" {
   type        = "batch"
 
   periodic {
-    crons            = ["*/15 * * * *"]  # every 15 minutes
+    crons            = ["*/20 * * * *"]  # every 20 minutes
     prohibit_overlap = true
     time_zone        = "America/Denver"
   }
@@ -65,7 +65,7 @@ job "math-explore-watch" {
 
     restart {
       attempts = 1
-      interval = "15m"
+      interval = "20m"
       delay    = "1m"
       mode     = "fail"
     }

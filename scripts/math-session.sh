@@ -5,7 +5,7 @@
 #   role: researcher | compute | reviewer
 #   clone-depth: git clone depth (default: 100, use 0 for full clone)
 #
-# Handles: repo clone, machine ID, day-of-week focus (researcher), prompt loading, cleanup.
+# Handles: repo checkout/update, machine ID, day-of-week focus (researcher), prompt loading.
 # Execution is routed through the engine abstraction so the cluster can run Codex-first
 # while keeping one launcher for all math roles.
 set -euo pipefail
@@ -20,19 +20,32 @@ MATH_REPO="${MATH_REPO_URL:-https://github.com/eliottcassidy2000/math.git}"
 
 # ─── Setup working directory ──────────────────────────────────────────────────
 
-WORK_DIR="/tmp/math-${ROLE}-$$"
-trap "rm -rf $WORK_DIR" EXIT
+# Keep a durable checkout per role so periodic agents do not reclone the large math
+# repo every run. The lock preserves one-writer isolation for the shared checkout;
+# reset/clean gives each session fresh-clone semantics.
+DEFAULT_BASE="${HOME:-/tmp}/.cache/monad-math-sessions"
+[ "$(id -u)" = "0" ] && DEFAULT_BASE="/tmp/monad-math-sessions"
+WORK_DIR="${MATH_SESSION_WORKDIR:-${MATH_SESSION_BASE:-$DEFAULT_BASE}/$ROLE}"
+MATH_DIR="$WORK_DIR/math"
 
 mkdir -p "$WORK_DIR"
+exec 9>"$WORK_DIR/.lock"
+flock 9
 cd "$WORK_DIR"
 
-# Clone the math repo
-if [ "$CLONE_DEPTH" -gt 0 ] 2>/dev/null; then
-    git clone --depth="$CLONE_DEPTH" "$MATH_REPO" math
+if [ -d "$MATH_DIR/.git" ]; then
+    git -C "$MATH_DIR" fetch -q origin "${MATH_BRANCH:-main}" || true
+    git -C "$MATH_DIR" reset --hard -q "origin/${MATH_BRANCH:-main}" || true
+    git -C "$MATH_DIR" clean -fd -q || true
 else
-    git clone "$MATH_REPO" math
+    rm -rf "$MATH_DIR"
+    if [ "$CLONE_DEPTH" -gt 0 ] 2>/dev/null; then
+        git clone --depth="$CLONE_DEPTH" --branch "${MATH_BRANCH:-main}" "$MATH_REPO" "$MATH_DIR"
+    else
+        git clone --branch "${MATH_BRANCH:-main}" "$MATH_REPO" "$MATH_DIR"
+    fi
 fi
-cd math
+cd "$MATH_DIR"
 
 # ─── Register agent ──────────────────────────────────────────────────────────
 

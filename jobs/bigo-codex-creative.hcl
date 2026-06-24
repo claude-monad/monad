@@ -40,8 +40,8 @@ job "bigo-codex-creative" {
         USER_HOME           = "/home/bigo"
         SWARM_BASE_DIR      = "/home/bigo/Documents/monad/logs/swarm-bigo-codex-creative"
         MONAD_CODEX_EFFORT  = "high"
-        AGENT_TIMEOUT       = "900"
-        SWARM_SLEEP_SECONDS = "240"
+        AGENT_TIMEOUT       = "2400"
+        SWARM_SLEEP_SECONDS = "1200"
         SWARM_NICE_LEVEL    = "12"
       }
 

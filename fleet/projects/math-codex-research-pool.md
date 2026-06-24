@@ -59,3 +59,6 @@ compute capacity for math work.
 
 - 2026-06-04 — Owner requested a handful of containerized math-specific Codex researchers that
   can be queried back and forth and are spun up automatically across capable cluster nodes.
+- 2026-06-24 — Cadence/runtime requirement tightened: recurring math exploration/forum work
+  should launch every 20 minutes cluster-wide, get at least 40 minutes of runtime budget, reuse
+  existing checkouts where possible, and start agent sessions inside the math git repo.

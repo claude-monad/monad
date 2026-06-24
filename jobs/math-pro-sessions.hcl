@@ -36,8 +36,8 @@ job "math-pro-sessions" {
         command = "/bin/bash"
         args    = ["-c", <<-CMD
           set -e
-          ROLE=${NOMAD_META_ROLE}
-          SCOPE=${NOMAD_META_SCOPE:-}
+          ROLE=$${NOMAD_META_ROLE}
+          SCOPE=$${NOMAD_META_SCOPE:-}
 
           # Find monad repo across common user homes
           MONAD=""
@@ -63,6 +63,7 @@ job "math-pro-sessions" {
         LEAN_REPO_URL    = "https://github.com/eliott-monad/math-lean.git"
         GIT_AUTHOR_NAME  = "monad-pro"
         GIT_AUTHOR_EMAIL = "monad@cluster.local"
+        MONAD_TIMEOUT    = "2400"
       }
 
       resources {

@@ -2,11 +2,11 @@ job "cluster-dispatcher" {
   datacenters = ["dc1"]
   type        = "batch"
 
-  # The autonomous pull-loop: every 10 min, read the frontier (open questions, court cases,
+  # The autonomous pull-loop: every 20 min, read the frontier (open questions, court cases,
   # Lean candidates, emitted tasks) and dispatch the next items to agent-dispatch. The webhook
   # receiver is the push half; this is the safety net that catches anything not pushed.
   periodic {
-    crons            = ["*/10 * * * *"]
+    crons            = ["*/20 * * * *"]
     prohibit_overlap = true
     time_zone        = "America/Denver"
   }
@@ -23,7 +23,7 @@ job "cluster-dispatcher" {
       }
 
       env {
-        NOMAD_ADDR = "http://100.87.219.108:4646"
+        NOMAD_ADDR = "http://100.75.75.39:4646"
       }
 
       resources {

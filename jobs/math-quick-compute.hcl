@@ -29,6 +29,7 @@ job "math-quick-compute" {
         MATH_REPO_URL    = "https://github.com/eliottcassidy2000/math.git"
         GIT_AUTHOR_NAME  = "monad-compute"
         GIT_AUTHOR_EMAIL = "monad@cluster.local"
+        MONAD_TIMEOUT    = "2400"
       }
 
       resources {

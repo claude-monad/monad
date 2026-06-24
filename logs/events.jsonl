@@ -5288,3 +5288,7 @@
 {"ts":"2026-06-24T00:32:02Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"roster-sweep","status":"ok","detail":"quorum 2 alive (v1410-1 leader+claudebox); 4 nodes ready+eligible w/ running maint-agent (claudebox,eliotts-mac-mini,bigo-server,v1410-1); engines claude,codex advertised; oraclebox1 offline 16d -> already escalated (queue heal-server-20260607, claim DONE); windesk online tailscale but not nomad member"}
 {"ts":"2026-06-24T01:20:21Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-24T01:50:23Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-24T00:32:47Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-24T01:02:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-24T01:05:25Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-06-24T01:35:31Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

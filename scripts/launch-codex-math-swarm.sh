@@ -29,15 +29,22 @@ MATH_REPO_SOURCE="${MATH_REPO_SOURCE:-}"
 }
 [ -n "$MATH_REPO_SOURCE" ] || MATH_REPO_SOURCE="https://github.com/eliottcassidy2000/math.git"
 CLONE_DEPTH="${SWARM_CLONE_DEPTH:-50}"
+MATH_SPARSE_CHECKOUT="${MATH_SPARSE_CHECKOUT:-1}"
+MATH_GIT_FILTER_BLOBS="${MATH_GIT_FILTER_BLOBS:-1}"
 AGENT_TIMEOUT="${AGENT_TIMEOUT:-2400}"
 SLEEP_SECONDS="${SWARM_SLEEP_SECONDS:-1200}"
 NICE_LEVEL="${SWARM_NICE_LEVEL:-10}"
 CYCLE_LIMIT="${SWARM_CYCLES:-0}"
 
-export PATH="/snap/bin:/snap/codex/current/bin:$USER_HOME/claude-monad-runtime/bin:$USER_HOME/.local/bin:$USER_HOME/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+export PATH="$USER_HOME/.local/bin:$USER_HOME/bin:$USER_HOME/claude-monad-runtime/bin:/usr/local/bin:/usr/bin:/bin:/snap/bin:/snap/codex/current/bin:$PATH"
 export MONAD_ENGINE=codex
 export MONAD_CODEX_EFFORT="${MONAD_CODEX_EFFORT:-high}"
 export AGENT_NAME
+
+GIT_BIN="${GIT_BIN:-/usr/bin/git}"
+if [ ! -x "$GIT_BIN" ]; then
+  GIT_BIN="$(PATH="/usr/local/bin:/usr/bin:/bin:$PATH" command -v git)"
+fi
 
 mkdir -p "$LOG_DIR" "$NOTES_DIR" "$STATE_DIR" "$TOOLS_DIR"
 
@@ -71,15 +78,59 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
+configure_sparse_checkout() {
+  if [ "${MATH_SPARSE_CHECKOUT:-1}" = "0" ]; then
+    return
+  fi
+  "$GIT_BIN" -C "$WORKSPACE" sparse-checkout init --no-cone >/dev/null 2>&1 || true
+  cat > "$WORKSPACE/.git/info/sparse-checkout" <<'EOF'
+/*
+!/inbox/processed/
+!/inbox/processed/**
+EOF
+}
+
 ensure_workspace() {
+  local clone_source clone_ref remote clone_args=()
+  if [ -d "$WORKSPACE/.git" ] && ! "$GIT_BIN" -C "$WORKSPACE" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    rm -rf "$WORKSPACE"
+  fi
   if [ ! -d "$WORKSPACE/.git" ]; then
     rm -rf "$WORKSPACE"
-    log "cloning math workspace from $MATH_REPO_SOURCE"
-    git clone --depth="$CLONE_DEPTH" "$MATH_REPO_SOURCE" "$WORKSPACE" >/dev/null 2>&1
+    mkdir -p "$(dirname "$WORKSPACE")"
+    clone_source="$MATH_REPO_SOURCE"
+    clone_ref=""
+    if [ -d "$MATH_REPO_SOURCE/.git" ]; then
+      clone_ref="$MATH_REPO_SOURCE"
+      remote="$("$GIT_BIN" -C "$MATH_REPO_SOURCE" remote get-url origin 2>/dev/null || true)"
+      if [ -n "$remote" ]; then
+        clone_source="$remote"
+      fi
+    fi
+    log "cloning math workspace from $clone_source${clone_ref:+ using reference $clone_ref}"
+    clone_args=(clone --no-checkout)
+    if [ -n "$clone_ref" ]; then
+      clone_args+=(--reference-if-able "$clone_ref")
+    fi
+    if [ "${MATH_GIT_FILTER_BLOBS:-1}" != "0" ]; then
+      clone_args+=(--filter=blob:none)
+    fi
+    if [ "${CLONE_DEPTH:-0}" -gt 0 ] 2>/dev/null; then
+      clone_args+=(--depth="$CLONE_DEPTH")
+    fi
+    clone_args+=("$clone_source" "$WORKSPACE")
+    "$GIT_BIN" "${clone_args[@]}"
+    configure_sparse_checkout
+    "$GIT_BIN" -C "$WORKSPACE" checkout --force HEAD
     return
   fi
   log "updating math workspace"
-  git -C "$WORKSPACE" pull --ff-only >/dev/null 2>&1 || true
+  configure_sparse_checkout
+  "$GIT_BIN" -C "$WORKSPACE" reset --hard HEAD >/dev/null 2>&1 || true
+  "$GIT_BIN" -C "$WORKSPACE" clean -fd >/dev/null 2>&1 || true
+  "$GIT_BIN" -C "$WORKSPACE" fetch -q origin main >/dev/null 2>&1 || true
+  "$GIT_BIN" -C "$WORKSPACE" pull --ff-only >/dev/null 2>&1 || true
+  "$GIT_BIN" -C "$WORKSPACE" sparse-checkout reapply >/dev/null 2>&1 || true
 }
 
 mesh_register() {

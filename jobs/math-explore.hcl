@@ -77,6 +77,8 @@ job "math-explore" {
         MONAD_ENGINE     = "codex"
         MONAD_CODEX_EFFORT = "high"
         MONAD_TIMEOUT    = "2400"
+        MATH_SPARSE_CHECKOUT = "1"
+        MATH_GIT_FILTER_BLOBS = "1"
         NOMAD_ADDR       = "http://100.75.75.39:4646"
       }
 

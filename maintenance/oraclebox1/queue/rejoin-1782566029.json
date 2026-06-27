@@ -1,0 +1,1 @@
+{"task":"rejoin-cluster","detail":"On revive: tailscale up, then meta/bootstrap/join.sh 100.75.75.39 to rejoin as 3rd Raft voter; verify cluster-conductor + Claude creds present","from":"bigo-server","ts":"2026-06-27T13:13:49Z"}

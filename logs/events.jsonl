@@ -5973,3 +5973,4 @@
 {"ts":"2026-06-27T12:41:01Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-06-27T12:41:57Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-06-27T13:11:59Z","node":"bigo-server","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-06-27T14:59:26Z","node":"V1410-1","type":"health-sweep","detail":"quorum OK (V1410-1 leader + claudebox voter, 2 alive); 4/4 maintenance-agent allocs running; self disk 6%, git clean, engines claude+codex ready; oraclebox1 offline 20d (3rd voter, quorum holds, already DONE-claimed today); bigo-server codex refresh-token stale -> human codex login needed, already escalated t-0204/t-0006"}

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Poke Forum math investigator every 10 minutes
+
+[Timer]
+OnCalendar=*:5/10
+Persistent=true
+RandomizedDelaySec=15
+
+[Install]
+WantedBy=timers.target

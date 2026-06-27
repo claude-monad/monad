@@ -11,3 +11,4 @@ webhook.secret
 
 # local creative-agent scratch output (large, node-local)
 logs/swarm-bigo-codex-creative/math
+poke-forum/

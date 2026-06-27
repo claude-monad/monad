@@ -117,9 +117,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1782148206.942698,
+    "updated": 1782568547.7009754,
     "updated_by": "claudebox",
-    "value": "2026-06-22T17:10:06Z QUORUM-LOST 1/2 (V1410-1-leader-WEDGED + claudebox-alive); oraclebox1-off-15d; clients-unverifiable(no-leader); self ok disk5% engines-ready(claude+codex); escalated issue#6 t-0193"
+    "value": "2026-06-27T13:55:47Z roster: quorum 2/2 OK (V1410-1 leader + claudebox voter alive); oraclebox1 OFFLINE 20d (powered off, unreachable, heal task queued); clients ready: claudebox,eliotts-mac-mini,bigo-server,V1410-1; bigo-server BACK; maint-agent 4/4 running; engines claude+codex on all; windesk reachable-on-tailnet but NOT a nomad member; self disk6% clean"
   },
   "health:v1410-1": {
     "updated": 1782222510.122847,
@@ -159,9 +159,29 @@
     "updated_by": "claudebox",
     "value": "tournament theory H(T) counting"
   },
+  "work:op-math-1105": {
+    "updated": 1782562801.8132808,
+    "updated_by": "claudebox",
+    "value": "nomad-max-1"
+  },
   "work:op-math-264": {
     "updated": 1780806602.9632113,
     "updated_by": "oraclebox1",
     "value": "container-max-1"
+  },
+  "work:op-math-978": {
+    "updated": 1782423602.0920472,
+    "updated_by": "claudebox",
+    "value": "nomad-max-1"
+  },
+  "work:t-0001": {
+    "updated": 1782569485.1538699,
+    "updated_by": "claudebox",
+    "value": "nomad-max-1"
+  },
+  "work:t-0077": {
+    "updated": 1782569485.2926335,
+    "updated_by": "claudebox",
+    "value": "nomad-max-3"
   }
 }

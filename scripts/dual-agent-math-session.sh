@@ -39,7 +39,7 @@ mkdir -p "$LOG_DIR"
 RUN_LOG="$LOG_DIR/${RUN_ID}.log"
 
 # Per-agent task time budget (seconds). Keep sessions focused & bounded.
-AGENT_TIMEOUT="${AGENT_TIMEOUT:-900}"
+AGENT_TIMEOUT="${AGENT_TIMEOUT:-2400}"
 
 # ── Single-instance guard ──────────────────────────────────────────────────────
 LOCKFILE="/tmp/monad-dual-agent.lock"

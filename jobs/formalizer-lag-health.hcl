@@ -2,7 +2,7 @@
 #
 # READ-ONLY. The math-commit-driven-formalization pipeline keeps eliott-monad/math-lean
 # converging on eliottcassidy2000/math: jobs/formalize-watch.hcl polls the math HEAD every
-# 10m and, on a move, forces a math-formalizer (codex) run or defers the commits to an
+# 20m and, on a move, forces a math-formalizer (codex) run or defers the commits to an
 # active session; the watermark lives in fleet/formalizer-cursor (last_sha = the math HEAD
 # the watcher has processed). That project's Log named this follow-on: nothing folds a
 # `formalizer-lag` signal into fleet/health-summary, so a stalled pipeline is invisible.

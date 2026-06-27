@@ -1,0 +1,10 @@
+{
+  "id": "t-0204",
+  "type": "infra",
+  "scope": "bigo-server: codex re-login required ('refresh token already used', rc=1) \u2014 creative codex cycle failing; run 'codex login' on bigo-server host, not remotely fixable.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

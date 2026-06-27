@@ -23,13 +23,14 @@ job "math-reviewer" {
       config {
         command = "/bin/bash"
         # Full clone (depth 0) — reviewer needs complete history
-        args    = ["-c", "exec ${MONAD_REPO_DIR:-/home/${USER:-bigo}/monad}/scripts/math-session.sh reviewer 0"]
+        args    = ["-c", "exec $${MONAD_REPO_DIR:-/home/$${USER:-bigo}/monad}/scripts/math-session.sh reviewer 0"]
       }
 
       env {
         MATH_REPO_URL    = "https://github.com/eliottcassidy2000/math.git"
         GIT_AUTHOR_NAME  = "monad-reviewer"
         GIT_AUTHOR_EMAIL = "monad@cluster.local"
+        MONAD_TIMEOUT    = "2400"
       }
 
       resources {

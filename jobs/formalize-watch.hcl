@@ -6,7 +6,7 @@ job "formalize-watch" {
   # git ls-remote per pass, a trigger only when HEAD actually moves. count=1 + periodic
   # means exactly one watcher pass runs cluster-wide per tick.
   periodic {
-    crons            = ["*/10 * * * *"]  # every 10 minutes
+    crons            = ["*/20 * * * *"]  # every 20 minutes
     prohibit_overlap = true
     time_zone        = "America/Denver"
   }
@@ -76,7 +76,7 @@ job "formalize-watch" {
 
     restart {
       attempts = 1
-      interval = "10m"
+      interval = "20m"
       delay    = "1m"
       mode     = "fail"
     }

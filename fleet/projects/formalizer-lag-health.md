@@ -11,7 +11,7 @@ priority: 3
 ## Problem
 The commit-driven formalization pipeline (`math-commit-driven-formalization`, done) keeps
 `eliott-monad/math-lean` converging on `eliottcassidy2000/math`: the periodic
-`formalize-watch` job polls the math repo HEAD every 10m and, on a move, either forces a
+`formalize-watch` job polls the math repo HEAD every 20m and, on a move, either forces a
 `math-formalizer` (codex) run or defers the new commits to an active session via
 `monad/formalize/inbox`. The watermark lives in the Nomad var `fleet/formalizer-cursor`
 (`last_sha` = the math HEAD the watcher has processed, `updated`).

@@ -49,10 +49,10 @@ You are running a quick math computation test. Do these steps:
 4. Run it and capture the output
 5. Summarize what you computed and the result in 3-5 sentences
 
-Keep it fast — you have 5 minutes max. Focus on producing a concrete numeric result.
+Keep it bounded — you have up to 40 minutes max. Focus on producing a concrete numeric result.
 PROMPT
 
-TIMEOUT=300  # 5 minutes per engine
+TIMEOUT=2400  # 40 minutes per engine
 
 # ── Run Claude ───────────────────────────────────────────────────────────────
 echo "=== ENGINE 1: Claude ==="

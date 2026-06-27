@@ -8,7 +8,7 @@
 #   mode: explorer (default) | compute | targeted "<question>"
 #
 # The script:
-#   1. Clones the math repo to a temp dir (isolation)
+#   1. Clones the math repo to a temp dir, using a local reference checkout when possible
 #   2. Loads the appropriate prompt
 #   3. Runs claude --print --dangerously-skip-permissions
 #   4. Cleans up the temp dir
@@ -21,6 +21,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROMPT_DIR="$SCRIPT_DIR/prompts"
 MATH_REPO="https://github.com/eliottcassidy2000/math.git"
 MONAD_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+MATH_SPARSE_CHECKOUT="${MATH_SPARSE_CHECKOUT:-1}"
+MATH_GIT_FILTER_BLOBS="${MATH_GIT_FILTER_BLOBS:-1}"
 
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 WORK_DIR="$TMPDIR/math-session-${MODE}-${TIMESTAMP}"
@@ -46,9 +48,33 @@ trap 'rm -f "$LOCKFILE"; rm -rf "$WORK_DIR"' EXIT
 echo "[math-session] $(date -Is): starting ${MODE} session"
 echo "[math-session] work dir: $WORK_DIR"
 
-# clone
+# clone; prefer a local math checkout as the object reference to avoid full network clones.
 mkdir -p "$WORK_DIR"
-git clone --depth=100 "$MATH_REPO" "$WORK_DIR/math" 2>&1 | tail -1
+REFERENCE=""
+for c in "$HOME/math" "$HOME/Documents/math" "$HOME/Documents/GitHub/math" "$USERPROFILE/math" "$USERPROFILE/Documents/math" "$USERPROFILE/Documents/GitHub/math"; do
+  [ -n "$c" ] && [ -d "$c/.git" ] && { REFERENCE="$c"; break; }
+done
+if [ -n "$REFERENCE" ]; then
+  echo "[math-session] using local math reference: $REFERENCE"
+  git -C "$REFERENCE" fetch -q origin main 2>/dev/null || true
+  CLONE_ARGS=(clone --no-checkout --reference-if-able "$REFERENCE")
+else
+  CLONE_ARGS=(clone --no-checkout)
+fi
+if [ "${MATH_GIT_FILTER_BLOBS:-1}" != "0" ]; then
+  CLONE_ARGS+=(--filter=blob:none)
+fi
+CLONE_ARGS+=(--depth=100 "$MATH_REPO" "$WORK_DIR/math")
+git "${CLONE_ARGS[@]}"
+if [ "${MATH_SPARSE_CHECKOUT:-1}" != "0" ]; then
+  git -C "$WORK_DIR/math" sparse-checkout init --no-cone >/dev/null 2>&1 || true
+  cat > "$WORK_DIR/math/.git/info/sparse-checkout" <<'EOF'
+/*
+!/inbox/processed/
+!/inbox/processed/**
+EOF
+fi
+git -C "$WORK_DIR/math" checkout --force HEAD
 cd "$WORK_DIR/math"
 
 # machine id

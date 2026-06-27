@@ -26,6 +26,7 @@ import re
 import subprocess
 import threading
 import time
+import urllib.parse
 import urllib.request
 from collections import deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -38,6 +39,22 @@ REPO_DIR = os.environ.get(
 REFRESH_SECS = int(os.environ.get("REFRESH_SECS", "60"))
 EVENT_LIMIT = int(os.environ.get("EVENT_LIMIT", "50"))
 EVENT_STREAM_SECS = int(os.environ.get("EVENT_STREAM_SECS", "5"))
+MATH_LOG_BYTES = int(os.environ.get("MATH_LOG_BYTES", "60000"))
+MATH_WORKER_JOBS = {
+    "math-explore",
+    "math-researcher",
+    "math-reviewer",
+    "math-quick-compute",
+    "math-pro-sessions",
+    "math-formalizer",
+    "dual-engine-math-test",
+    "bigo-codex-creative",
+}
+MATH_WORKER_EXCLUDE = {
+    "math-explore-watch",
+    "formalize-watch",
+    "formalizer-lag-health",
+}
 
 # ── chat: talk to Claude instances on the tailnet ──────────────────────────────
 # Each chattable "brain" is a node running the conductor-style chat gateway
@@ -162,6 +179,106 @@ def jobs():
             "running": running.get(jid, 0),
         })
     return sorted(out, key=lambda x: (x["type"], x["id"]))
+
+
+def _parent_job(jid):
+    if not jid:
+        return ""
+    return jid.split("/", 1)[0]
+
+
+def _is_math_worker_job(jid):
+    parent = _parent_job(jid)
+    if parent in MATH_WORKER_EXCLUDE:
+        return False
+    if parent in MATH_WORKER_JOBS:
+        return True
+    return parent.startswith("math-") or "formaliz" in parent
+
+
+def _iso_ns(ns):
+    try:
+        if not ns:
+            return ""
+        return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(int(ns) / 1_000_000_000))
+    except Exception:
+        return ""
+
+
+def _task_names(a):
+    states = a.get("TaskStates") or {}
+    if states:
+        return sorted(states.keys())
+    # Fallbacks for pending allocs whose TaskStates are not populated yet.
+    tg = a.get("TaskGroup") or ""
+    if tg in ("watch",):
+        return ["poll"]
+    if tg in ("explore", "researcher", "reviewer", "compute", "formalizer", "agent"):
+        return ["session"] if tg != "agent" else ["session", "creative"]
+    return []
+
+
+def math_workers(limit=40):
+    """Active/recent math worker allocations with enough metadata for read-only log views."""
+    allocs = _nomad("/v1/allocations", timeout=15) or []
+    nlist = _nomad("/v1/nodes") or []
+    id2name = {n.get("ID"): n.get("Name") for n in nlist}
+    out = []
+    for a in allocs:
+        jid = a.get("JobID", "")
+        if not _is_math_worker_job(jid):
+            continue
+        tasks = _task_names(a)
+        out.append({
+            "id": a.get("ID", ""),
+            "short_id": (a.get("ID") or "")[:8],
+            "job_id": jid,
+            "parent_job": _parent_job(jid),
+            "task_group": a.get("TaskGroup", ""),
+            "tasks": tasks,
+            "task": tasks[0] if tasks else "",
+            "node": a.get("NodeName") or id2name.get(a.get("NodeID"), ""),
+            "client_status": a.get("ClientStatus", ""),
+            "desired_status": a.get("DesiredStatus", ""),
+            "create_time": _iso_ns(a.get("CreateTime")),
+            "modify_time": _iso_ns(a.get("ModifyTime")),
+        })
+
+    def rank(w):
+        st = w.get("client_status")
+        # Pending replacement allocs often have no log file yet. Put live sessions first,
+        # then recent completed transcripts, then pending/stale allocs.
+        sr = {"running": 0, "complete": 1, "pending": 2, "failed": 3, "lost": 4}.get(st, 5)
+        try:
+            mt = -time.mktime(time.strptime(w.get("modify_time", ""), "%Y-%m-%dT%H:%M:%SZ"))
+        except Exception:
+            mt = 0
+        return (sr, mt, w.get("job_id", ""))
+
+    # Active first, then newest recent allocations. Keeping recent dead allocs is useful
+    # because the owner often wants to read the final transcript after a worker exits.
+    return sorted(out, key=rank)[:limit]
+
+
+def math_log(alloc_id, task, log_type, offset):
+    """Read a bounded tail of one allocation log through Nomad. Read-only."""
+    if not re.fullmatch(r"[0-9a-fA-F-]{8,64}", alloc_id or ""):
+        raise ValueError("bad alloc id")
+    if not re.fullmatch(r"[A-Za-z0-9_.-]{1,80}", task or ""):
+        raise ValueError("bad task")
+    if log_type not in ("stdout", "stderr"):
+        raise ValueError("bad log type")
+    offset = max(1, min(int(offset or MATH_LOG_BYTES), 300000))
+    q = urllib.parse.urlencode({
+        "task": task,
+        "type": log_type,
+        "origin": "end",
+        "offset": str(offset),
+        "plain": "true",
+    })
+    url = f"{NOMAD_ADDR}/v1/client/fs/logs/{urllib.parse.quote(alloc_id)}?{q}"
+    with urllib.request.urlopen(url, timeout=12) as r:
+        return r.read().decode(errors="replace")
 
 
 def mesh_peers():
@@ -843,6 +960,7 @@ def state():
         "engine": engine_config(),
         "usage": account_usage(),
         "graph": cluster_graph(),
+        "math_workers": math_workers(),
     }
 
 
@@ -860,6 +978,7 @@ _cache = {
     "engine": {"engine": "auto", "set_by": "", "updated": "", "valid": list(ENGINE_VALID)},
     "usage": {"available": False, "providers": []},
     "graph": {"available": False, "nodes": [], "edges": [], "stats": {}, "publishers": []},
+    "math_workers": [],
 }
 _cache_lock = threading.Lock()
 STATE_SECS = int(os.environ.get("STATE_SECS", "10"))
@@ -921,6 +1040,8 @@ tr:last-child td{border-bottom:0}
 button.eng{font:13px inherit;background:#0d1117;color:#c9d1d9;border:1px solid #30363d;border-radius:6px;padding:5px 12px;cursor:pointer;text-transform:capitalize}
 button.eng.on{background:#1f6feb;border-color:#1f6feb;color:#fff;font-weight:600}
 button.eng:disabled{cursor:default}
+button.mini{font:12px inherit;background:#0d1117;color:#c9d1d9;border:1px solid #30363d;border-radius:6px;padding:4px 8px;cursor:pointer}
+button.mini.on{background:#1f6feb;border-color:#1f6feb;color:#fff}
 #eng-msg{font-size:12px;color:#7d8590}
 code{font:12px ui-monospace,monospace;color:#a5d6ff}
 .ev{font:12px ui-monospace,monospace}
@@ -948,6 +1069,10 @@ code{font:12px ui-monospace,monospace;color:#a5d6ff}
 .gstats code{color:#a5d6ff}
 .glegend{display:flex;gap:12px;font-size:11px;color:#7d8590;padding:0 14px 10px;flex-wrap:wrap}
 .glegend span::before{content:"●";margin-right:4px}
+#math-log-wrap{border-top:1px solid #30363d;background:#0d1117}
+#math-log-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 14px;color:#9da7b3;font-size:12px}
+#math-log{margin:0;padding:12px 14px;max-height:520px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#d6deeb;background:#05070a}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
 </style></head><body>
 <header><h1>Monad cluster</h1>
 <span class="muted" id="meta"></span>
@@ -1150,6 +1275,54 @@ function wireGraph(g){
    const d=document.getElementById('graph-detail');if(d)d.innerHTML=nodeDetailHtml(nd);
  }));
 }
+let _mathWorkers=[];
+let _selectedMath=null;
+function renderMathWorkers(ws){
+ _mathWorkers=ws||[];
+ if(!_mathWorkers.length)return '<p class="muted" style="padding:12px 14px">no math worker allocations found yet</p>';
+ const rows=_mathWorkers.map(w=>{
+   const active=(w.client_status==='running'||w.client_status==='pending');
+   const cls=active?'ok':(w.client_status==='complete'?'dim':'warn');
+   const task=w.task||((w.tasks||[])[0])||'';
+   const actions=task?`<span class="actions">
+     <button class="mini" data-alloc="${esc(w.id)}" data-task="${esc(task)}" data-kind="stdout">stdout</button>
+     <button class="mini" data-alloc="${esc(w.id)}" data-task="${esc(task)}" data-kind="stderr">stderr</button>
+   </span>`:'<span class="muted">no task yet</span>';
+   return `<tr>
+    <td><code>${esc(w.short_id)}</code></td>
+    <td><code>${esc(w.job_id)}</code><div class="sub">${esc(w.task_group)}${task?` · task ${esc(task)}`:''}</div></td>
+    <td><b>${esc(w.node||'?')}</b></td>
+    <td>${pill(esc(w.client_status||'?'),cls)}<div class="sub">desired ${esc(w.desired_status||'')}</div></td>
+    <td class="muted">${esc((w.modify_time||w.create_time||'').replace('T',' ').replace('Z',''))}</td>
+    <td>${actions}</td>
+   </tr>`;});
+ return tbl(['alloc','worker','node','state','updated','read-only log'],rows)+
+   `<div id="math-log-wrap"><div id="math-log-head"><span id="math-log-title">Select stdout or stderr to watch LLM output/progress.</span><span class="muted">auto-refreshes every 5s · Nomad allocation logs</span></div><pre id="math-log"></pre></div>`;
+}
+function wireMathWorkers(){
+ document.querySelectorAll('button.mini[data-alloc]').forEach(b=>b.onclick=()=>{
+   _selectedMath={alloc:b.dataset.alloc,task:b.dataset.task,kind:b.dataset.kind};
+   document.querySelectorAll('button.mini[data-alloc]').forEach(x=>x.classList.remove('on'));
+   b.classList.add('on');
+   loadMathLog();
+ });
+}
+async function loadMathLog(){
+ if(!_selectedMath)return;
+ const box=document.getElementById('math-log'),title=document.getElementById('math-log-title');
+ if(!box)return;
+ const w=_mathWorkers.find(x=>x.id===_selectedMath.alloc)||{};
+ if(title)title.textContent=`${w.job_id||_selectedMath.alloc} on ${w.node||'?'} · ${_selectedMath.task} · ${_selectedMath.kind}`;
+ try{
+   const q=new URLSearchParams({alloc:_selectedMath.alloc,task:_selectedMath.task,type:_selectedMath.kind,offset:'90000'});
+   const r=await fetch('api/math/log?'+q.toString());
+   const txt=await r.text();
+   box.textContent=r.ok?(txt||'(no output yet)'):('log unavailable: '+txt);
+   box.scrollTop=box.scrollHeight;
+ }catch(e){
+   box.textContent='network error while reading log: '+e;
+ }
+}
 async function load(){
  let s;try{s=await (await fetch('api/state')).json();}catch(e){document.getElementById('app').textContent='fetch failed';return;}
  _resByNode={};(s.resources||[]).forEach(r=>{_resByNode[r.node]=r;});
@@ -1173,6 +1346,7 @@ async function load(){
    : '<p class="muted" style="padding:12px 14px">no capability reports yet — the cluster-capability job runs every 6h (force one with <code>nomad job periodic force cluster-capability</code>). ✓=ran a real autonomous math session; ran-empty/error/absent = honest failure.</p>';
  document.getElementById('app').innerHTML=
    `<section class="full"><h2>Cluster graph — node-health tournament (edges = tailnet traffic)</h2>${renderGraph(s.graph)}</section>`+
+   `<section class="full"><h2>Math workers — read-only LLM output / progress</h2>${renderMathWorkers(s.math_workers)}</section>`+
    `<section class="full"><h2>Node resources — live utilization · allocated (CPU / memory / disk)</h2>${renderResources(s.resources)}</section>`+
    `<section><h2>Default engine</h2>${renderEngine(s.engine)}</section>`+
    `<section><h2>Account usage (Anthropic / OpenAI)</h2>${renderUsage(s.usage)}</section>`+
@@ -1186,9 +1360,11 @@ async function load(){
    `<section class="full"><h2>Recent events</h2><div id="events-body">${renderEvents(s.events)}</div></section>`;
  wireEngine();
  wireGraph(s.graph);
+ wireMathWorkers();
  connectEvents();
 }
 load();setInterval(load,STATE_REFRESH_MS);
+setInterval(loadMathLog,5000);
 
 // ── chat ───────────────────────────────────────────────────────────────────
 const _log=document.getElementById('log');
@@ -1260,17 +1436,33 @@ class Handler(BaseHTTPRequestHandler):
                 return
 
     def do_GET(self):
-        if self.path.rstrip("/") in ("", "/index.html") or self.path == "/":
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+        if path.rstrip("/") in ("", "/index.html") or path == "/":
             self._send(200, PAGE, "text/html; charset=utf-8")
-        elif self.path.startswith("/api/state"):
+        elif path.startswith("/api/state"):
             self._send(200, json.dumps(cached_state()), "application/json")
-        elif self.path.startswith("/api/events/stream"):
+        elif path.startswith("/api/events/stream"):
             self._stream_events()
-        elif self.path.startswith("/api/events"):
+        elif path.startswith("/api/events"):
             self._send(200, json.dumps(events()), "application/json")
-        elif self.path.startswith("/api/chat/targets"):
+        elif path.startswith("/api/chat/targets"):
             self._send(200, json.dumps(chat_targets()), "application/json")
-        elif self.path == "/healthz":
+        elif path.startswith("/api/math/workers"):
+            self._send(200, json.dumps(math_workers()), "application/json")
+        elif path.startswith("/api/math/log"):
+            qs = urllib.parse.parse_qs(parsed.query)
+            try:
+                text = math_log(
+                    (qs.get("alloc") or [""])[0],
+                    (qs.get("task") or [""])[0],
+                    (qs.get("type") or ["stderr"])[0],
+                    (qs.get("offset") or [str(MATH_LOG_BYTES)])[0],
+                )
+                self._send(200, text, "text/plain; charset=utf-8")
+            except Exception as e:
+                self._send(502, str(e)[:500], "text/plain; charset=utf-8")
+        elif path == "/healthz":
             self._send(200, "ok", "text/plain")
         else:
             self._send(404, "not found", "text/plain")

@@ -21,7 +21,7 @@ US=$'\037'   # unit separator for safe rc/summary split
 run_one() {
   local eng="$1" out rc sum
   echo "[math-engine-test] running $eng session (as $(whoami))…" >&2
-  out="$(timeout 540 bash "$RA" --engine "$eng" --quiet --timeout 480 "$PROMPT" 2>&1)"; rc=$?
+  out="$(timeout 2460 bash "$RA" --engine "$eng" --quiet --timeout 2400 "$PROMPT" 2>&1)"; rc=$?
   # one-line, trimmed summary (last ~500 chars of the final message)
   sum="$(printf '%s' "$out" | tr '\n\t' '  ' | tr -s ' ')"
   sum="${sum: -500}"

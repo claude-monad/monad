@@ -1,0 +1,10 @@
+{
+  "id": "t-0205",
+  "type": "infra",
+  "scope": "oraclebox1 offline 20d (tailscale relay-only, rx 0); target 3rd Raft voter + cluster-conductor host (Claude creds). Quorum OK at 2 (v1410-1 leader + claudebox). Needs Tailscale recovery + rejoin via meta/bootstrap/join.sh 100.75.75.39. Unreachable from bigo-server; queue task left in maintenance/oraclebox1/queue.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

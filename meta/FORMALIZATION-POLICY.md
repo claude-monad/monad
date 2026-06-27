@@ -32,7 +32,7 @@ Two rules define the policy:
 
 | Piece | File | Role |
 |-------|------|------|
-| Commit watcher | `jobs/formalize-watch.hcl` → `scripts/formalize-watch.sh` | Server-side periodic (every 10 min). `git ls-remote` the math repo; on a moved HEAD, record the new commits to the `monad/formalize/inbox` Nomad var and force an immediate `math-formalizer` run (or note that one is already active). Advances the `fleet/formalizer-cursor` watermark. |
+| Commit watcher | `jobs/formalize-watch.hcl` -> `scripts/formalize-watch.sh` | Server-side periodic (every 20 min). `git ls-remote` the math repo; on a moved HEAD, record the new commits to the `monad/formalize/inbox` Nomad var and force an immediate `math-formalizer` run (or note that one is already active). Advances the `fleet/formalizer-cursor` watermark. |
 | Formalizer job | `jobs/math-formalizer.hcl` | Periodic safety-net (every 4h) + the job the watcher forces. Constrained to a **codex-ready node** (`meta.has_codex = true`); sets `MONAD_ENGINE=codex`, `MONAD_CODEX_EFFORT=high`. |
 | Session launcher | `scripts/formalizer-session.sh` | Clones math-lean, injects the inbox ("just arrived") into the prompt, runs the agent via `meta/agent/run-agent.sh --engine codex` at high effort. |
 | Agent prompt | `scripts/prompts/formalizer.md` | The dual-mandate instructions. |

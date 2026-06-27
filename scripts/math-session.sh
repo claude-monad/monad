@@ -5,7 +5,7 @@
 #   role: researcher | compute | reviewer
 #   clone-depth: git clone depth (default: 100, use 0 for full clone)
 #
-# Handles: repo clone, machine ID, day-of-week focus (researcher), prompt loading, cleanup.
+# Handles: repo checkout/update, machine ID, day-of-week focus (researcher), prompt loading.
 # Execution is routed through the engine abstraction so the cluster can run Codex-first
 # while keeping one launcher for all math roles.
 set -euo pipefail
@@ -17,22 +17,102 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROMPT_DIR="$SCRIPT_DIR/prompts"
 RUN_AGENT="$SCRIPT_DIR/../meta/agent/run-agent.sh"
 MATH_REPO="${MATH_REPO_URL:-https://github.com/eliottcassidy2000/math.git}"
+ENGINE="${MONAD_ENGINE:-codex}"
+TIMEOUT="${MONAD_TIMEOUT:-3600}"
+CODEX_EFFORT="${MONAD_CODEX_EFFORT:-high}"
+MATH_SPARSE_CHECKOUT="${MATH_SPARSE_CHECKOUT:-1}"
+MATH_GIT_FILTER_BLOBS="${MATH_GIT_FILTER_BLOBS:-1}"
+GIT_BIN="${GIT_BIN:-/usr/bin/git}"
+if [ ! -x "$GIT_BIN" ]; then
+    GIT_BIN="$(PATH="/usr/local/bin:/usr/bin:/bin:$PATH" command -v git)"
+fi
+
+pick_engine_user() {
+    [ "$(id -u)" = "0" ] || { id -un; return; }
+    local u h cred
+    cred="$([ "$ENGINE" = "claude" ] && echo ".claude/.credentials.json" || echo ".codex/auth.json")"
+    for u in claude e bigo ubuntu eliott $(getent passwd | awk -F: '$3>=1000 && $3<65000 && $6 ~ /^\/home\//{print $1}'); do
+        id "$u" >/dev/null 2>&1 || continue
+        h="$(getent passwd "$u" | cut -d: -f6)"; [ -n "$h" ] || continue
+        [ -f "$h/$cred" ] && { echo "$u"; return; }
+    done
+    return 1
+}
+
+RUN_USER="$(pick_engine_user || true)"
+if [ -z "$RUN_USER" ]; then
+    echo "ERROR: no user with $ENGINE credentials found" >&2
+    exit 1
+fi
+RUN_HOME="$(getent passwd "$RUN_USER" | cut -d: -f6)"
+[ -n "$RUN_HOME" ] || RUN_HOME="$HOME"
 
 # ─── Setup working directory ──────────────────────────────────────────────────
 
-WORK_DIR="/tmp/math-${ROLE}-$$"
-trap "rm -rf $WORK_DIR" EXIT
+# Keep a durable checkout per role so periodic agents do not reclone the large math
+# repo every run. The lock preserves one-writer isolation for the shared checkout;
+# reset/clean gives each session fresh-clone semantics.
+DEFAULT_BASE="${RUN_HOME:-${HOME:-/tmp}}/.cache/monad-math-sessions"
+WORK_ROOT="${MATH_WORK_PARENT:-${MATH_SESSION_BASE:-$DEFAULT_BASE}}"
+WORK_DIR="${MATH_SESSION_WORKDIR:-$WORK_ROOT/$ROLE}"
+MATH_DIR="$WORK_DIR/math"
 
 mkdir -p "$WORK_DIR"
+exec 9>"$WORK_DIR/.lock"
+flock 9
 cd "$WORK_DIR"
 
-# Clone the math repo
-if [ "$CLONE_DEPTH" -gt 0 ] 2>/dev/null; then
-    git clone --depth="$CLONE_DEPTH" "$MATH_REPO" math
-else
-    git clone "$MATH_REPO" math
+configure_sparse_checkout() {
+    local repo_dir="$1"
+    if [ "${MATH_SPARSE_CHECKOUT:-1}" = "0" ]; then
+        return
+    fi
+    "$GIT_BIN" -C "$repo_dir" sparse-checkout init --no-cone >/dev/null 2>&1 || true
+    cat > "$repo_dir/.git/info/sparse-checkout" <<'EOF'
+/*
+!/inbox/processed/
+!/inbox/processed/**
+EOF
+}
+
+# Use a local on-node checkout as a Git object reference when possible. The working tree
+# remains isolated under WORK_DIR, but repeated sessions avoid downloading the large repo
+# from scratch.
+REFERENCE="${MATH_REPO_REFERENCE:-}"
+if [ -z "$REFERENCE" ]; then
+    for c in "${MATH_REPO_DIR:-}" "$RUN_HOME/math" "$RUN_HOME/Documents/math" "$RUN_HOME/monad/../math" /home/autocodex/math; do
+        [ -n "$c" ] && [ -d "$c/.git" ] && { REFERENCE="$c"; break; }
+    done
 fi
-cd math
+if [ -n "$REFERENCE" ] && [ -d "$REFERENCE/.git" ]; then
+    echo "[math-session] using local math reference: $REFERENCE"
+    "$GIT_BIN" -C "$REFERENCE" fetch -q origin "${MATH_BRANCH:-main}" 2>/dev/null || true
+else
+    REFERENCE=""
+fi
+
+if [ -d "$MATH_DIR/.git" ]; then
+    configure_sparse_checkout "$MATH_DIR"
+    "$GIT_BIN" -C "$MATH_DIR" fetch -q origin "${MATH_BRANCH:-main}" || true
+    "$GIT_BIN" -C "$MATH_DIR" reset --hard -q "origin/${MATH_BRANCH:-main}" || true
+    "$GIT_BIN" -C "$MATH_DIR" clean -fd -q || true
+    "$GIT_BIN" -C "$MATH_DIR" sparse-checkout reapply >/dev/null 2>&1 || true
+else
+    rm -rf "$MATH_DIR"
+    clone_args=(clone --no-checkout --branch "${MATH_BRANCH:-main}")
+    [ -n "$REFERENCE" ] && clone_args+=(--reference-if-able "$REFERENCE")
+    if [ "${MATH_GIT_FILTER_BLOBS:-1}" != "0" ]; then
+        clone_args+=(--filter=blob:none)
+    fi
+    if [ "$CLONE_DEPTH" -gt 0 ] 2>/dev/null; then
+        clone_args+=(--depth="$CLONE_DEPTH")
+    fi
+    clone_args+=("$MATH_REPO" "$MATH_DIR")
+    "$GIT_BIN" "${clone_args[@]}"
+    configure_sparse_checkout "$MATH_DIR"
+    "$GIT_BIN" -C "$MATH_DIR" checkout --force HEAD
+fi
+cd "$MATH_DIR"
 
 # ─── Register agent ──────────────────────────────────────────────────────────
 
@@ -96,27 +176,7 @@ fi
 
 PROMPT_FILE="$WORK_DIR/prompt.txt"
 printf '%s' "$PROMPT" > "$PROMPT_FILE"
-ENGINE="${MONAD_ENGINE:-codex}"
-TIMEOUT="${MONAD_TIMEOUT:-3600}"
-CODEX_EFFORT="${MONAD_CODEX_EFFORT:-high}"
-
 if [ "$(id -u)" = "0" ]; then
-    # Nomad raw_exec runs as root. Drop to the first user with ready credentials for the
-    # requested engine so the login-bound CLI can authenticate correctly.
-    RUN_USER=""
-    for u in claude e bigo ubuntu eliott $(getent passwd | awk -F: '$3>=1000 && $3<65000 && $6 ~ /^\/home\//{print $1}'); do
-        id "$u" >/dev/null 2>&1 || continue
-        h="$(getent passwd "$u" | cut -d: -f6)"; [ -n "$h" ] || continue
-        if [ "$ENGINE" = "claude" ]; then
-            [ -f "$h/.claude/.credentials.json" ] && RUN_USER="$u" && break
-        else
-            [ -f "$h/.codex/auth.json" ] && RUN_USER="$u" && break
-        fi
-    done
-    if [ -z "$RUN_USER" ]; then
-        echo "ERROR: no user with $ENGINE credentials found" >&2
-        exit 1
-    fi
     echo "[math-session] dropping privileges to $RUN_USER (engine=$ENGINE mesh=$AGENT_NAME)"
     chown -R "$RUN_USER" "$WORK_DIR"
     su - "$RUN_USER" -c "export PATH='$WORK_DIR':/usr/local/bin:\$HOME/.local/bin:\$HOME/.claude/local:/snap/bin:\$PATH; export AGENT_NAME='$AGENT_NAME' MESH_RELAY='$MESH_RELAY' MONAD_ENGINE='$ENGINE' MONAD_CODEX_EFFORT='$CODEX_EFFORT'; cd '$PWD' && exec '$RUN_AGENT' --engine '$ENGINE' --cwd '$PWD' --timeout '$TIMEOUT' '@$PROMPT_FILE'"

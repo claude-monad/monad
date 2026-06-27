@@ -13,9 +13,9 @@ set -uo pipefail
 MONAD_DIR="${MONAD_REPO_DIR:-$HOME/monad}"
 MATH_REPO_URL="${MATH_REPO_URL:-https://github.com/eliottcassidy2000/math.git}"
 RUN_AGENT="$MONAD_DIR/meta/agent/run-agent.sh"
-PER_ENGINE_TIMEOUT="${PER_ENGINE_TIMEOUT:-720}"   # 12 min hard cap per engine
+PER_ENGINE_TIMEOUT="${PER_ENGINE_TIMEOUT:-2400}"  # 40 min hard cap per engine
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
-WORK="$(mktemp -d /tmp/dual-engine-math-XXXX)"
+WORK="${DUAL_ENGINE_WORKDIR:-$HOME/.cache/monad-dual-engine-math-test}"
 REPORT_DIR="$MONAD_DIR/logs/dual-engine-math-test"
 REPORT="$REPORT_DIR/report-$STAMP.md"
 EVENTS="$MONAD_DIR/logs/events.jsonl"
@@ -26,8 +26,8 @@ log() { echo "[dual-engine-test $(date -u +%H:%M:%S)] $*"; }
 
 # The autonomous research task both engines get (bounded, verifiable, no push).
 read -r -d '' PROMPT <<'EOP'
-You are running ONE bounded (~8 minute) autonomous research pass on this tournament /
-Lonely-Runner-Conjecture mathematics repo. You are in a FRESH, throwaway clone — do NOT
+You are running ONE bounded (~40 minute) autonomous research pass on this tournament /
+Lonely-Runner-Conjecture mathematics repo. You are in an isolated working checkout — do NOT
 git push and do NOT run agents/finish_session.py.
 
 1. Read 00-navigation/SESSION-LOG.md (top few entries) for recent context.
@@ -43,9 +43,17 @@ EOP
 declare -A RC DUR OUT DIFF
 run_engine() {
   local eng="$1"                       # bind eng first (set -u: same-line self-ref fails)
-  local dir="$WORK/$eng" out="$WORK/$eng.out" t0 t1
-  log "cloning math repo for $eng ..."
-  git clone --depth 30 "$MATH_REPO_URL" "$dir" >/dev/null 2>&1 || { RC[$eng]=200; OUT[$eng]="(clone failed)"; DUR[$eng]=0; DIFF[$eng]=0; return; }
+  local dir="$WORK/$eng/math" base="$WORK/$eng" out="$WORK/$eng.out" t0 t1
+  mkdir -p "$base"
+  log "preparing reusable math repo for $eng ..."
+  if [ -d "$dir/.git" ]; then
+    git -C "$dir" fetch -q origin main >/dev/null 2>&1 || true
+    git -C "$dir" reset --hard -q origin/main >/dev/null 2>&1 || true
+    git -C "$dir" clean -fd -q >/dev/null 2>&1 || true
+  else
+    rm -rf "$dir"
+    git clone --depth 30 "$MATH_REPO_URL" "$dir" >/dev/null 2>&1 || { RC[$eng]=200; OUT[$eng]="(checkout failed)"; DUR[$eng]=0; DIFF[$eng]=0; return; }
+  fi
   log "running $eng session (timeout ${PER_ENGINE_TIMEOUT}s) ..."
   t0=$(date +%s)
   ( cd "$dir" && "$RUN_AGENT" --engine "$eng" --cwd "$dir" --timeout "$PER_ENGINE_TIMEOUT" --quiet "$PROMPT" ) >"$out" 2>&1
@@ -120,5 +128,4 @@ if [ -f "$WORK/claude/agents/processor.py" ]; then
 fi
 
 log "=== test complete: claude=$(verdict "${RC[claude]}") | codex=$(verdict "${RC[codex]}") ==="
-rm -rf "$WORK" 2>/dev/null || true
 exit 0

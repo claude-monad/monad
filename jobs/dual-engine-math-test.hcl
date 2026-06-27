@@ -11,7 +11,7 @@ job "dual-engine-math-test" {
   type        = "batch"
 
   periodic {
-    crons             = ["*/5 * * * *"]   # fires automatically every 5 min
+    crons             = ["*/20 * * * *"]  # fires automatically every 20 min
     prohibit_overlap  = true              # never two runs at once (each shares one account)
     time_zone         = "UTC"
   }
@@ -42,7 +42,7 @@ job "dual-engine-math-test" {
       env {
         MONAD_REPO_DIR    = "/home/ubuntu/monad"
         MATH_REPO_URL     = "https://github.com/eliottcassidy2000/math.git"
-        PER_ENGINE_TIMEOUT = "720"
+        PER_ENGINE_TIMEOUT = "2400"
         HOME              = "/home/ubuntu"
       }
 

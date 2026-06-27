@@ -175,12 +175,12 @@
     "value": "nomad-max-1"
   },
   "work:t-0001": {
-    "updated": 1782569485.1538699,
+    "updated": 1782577327.4800754,
     "updated_by": "claudebox",
     "value": "nomad-max-1"
   },
   "work:t-0077": {
-    "updated": 1782569485.2926335,
+    "updated": 1782577327.6361356,
     "updated_by": "claudebox",
     "value": "nomad-max-3"
   }

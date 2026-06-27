@@ -1,0 +1,9 @@
+[Unit]
+Description=Poke Forum math investigator tick
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/claude/monad
+Environment=POKE_TIMEOUT=540
+Environment=PATH=/usr/local/bin:/home/claude/.local/bin:/usr/bin:/bin
+ExecStart=/home/claude/monad/poke-forum/bin/poke-session.sh investigator

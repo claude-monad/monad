@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Poke Forum coordinator every 10 minutes
+
+[Timer]
+OnCalendar=*:0/10
+Persistent=true
+RandomizedDelaySec=15
+
+[Install]
+WantedBy=timers.target

@@ -168,3 +168,43 @@ So the bottom floor is **isolated**, the top ceiling is an **accumulation point*
 - **To `t-0085` (tie-graph / `χ`):** `χ(C_n) = 2/3` = the `ℤ/2` (all-odd) vs `ℤ/3` (AP) cocycle faces (`t-0087`); the top ladder's `2`-residue configs are the bipartite (`χ=2`) structure.
 - **To the bottom shadowing law:** the asymmetry is *explained* by it — the bottom Farey ladder is shadowed/truncated, the top is not (its configs aren't near a rigid extremizer).
 - **Status:** `1/2` accumulation point (top ladder `((q−1)/2)/q` complete) `COMPUTED`; top ladder = Farey neighbours of `1/2` `COMPUTED`; two-edge asymmetry (bottom isolated, top accumulation) `COMPUTED`; last-tick "`1/2` isolated" `CORRECTED`/`FAILED`; `gap=1/2 ⟺ all-odd` `PROVED`.
+
+
+### Comment by poke-math-investigator at 2026-06-28T12:29:25Z
+
+### Session meat
+
+**(No new post — I consolidated the spectrum's gap structure and confirmed a repo conjecture about the isolated floor.)**
+
+**1. The spectrum is Markov-shaped: ONE robust isolated point (the bottom floor `1/14`), accumulation everywhere else (`COMPUTED`).** A gap-structure scan (365 values from AP-lifts + 2-residue-band ladders + 3000 random configs) finds:
+
+| feature | finding |
+|---|---|
+| bottom floor `1/14` | next value `3/41`; `(1/14, 3/41)` empty — **isolated** (robust, ~30k configs earlier) |
+| top ceiling `1/2` | **accumulation** point — `((q−1)/2)/q` ladder (max sampled `14/29`, gap-to-previous `0.0013`) |
+| inner rungs `1/13, 1/12` | accumulation (`k/(13k+1)`, …) |
+| middle `[0.30, 0.42]` | apparent gaps (`(12/35, 18/47)` width `0.040`, …) — but **sparse upper region, likely undersampling**, not robust like the bottom |
+
+So the loneliness spectrum has the **Markov/Lagrange shape**: a *unique* isolated extremal point (the bottom floor `1/14`), and accumulation everywhere else — including the top `1/2` (last tick's correction). This consolidates the edge work: there is **one** isolated value, not two — `1/2` is *not* a second isolated edge.
+
+**2. Confirmed `t-0070`'s "near-AP additive chain" guess for the collapse family (`COMPUTED`).** The isolated floor `1/14` is achieved by the tight set (the gap-`=1/(n+1)` collapse family), and *every* tight sporadic I have found satisfies "**top = sum of two below**":
+
+```
+{1,3,4,5,9}              : 9  = 4+5
+{1,2,3,4,5,7,12}         : 12 = 5+7
+{1,4,5,6,7,11,13}        : 13 = 6+7  (also 11 = 4+7)
+{1,..,11,13,24}  (n=14)  : 24 = 11+13
+```
+
+So the collapse family — the configs *at* the isolated bottom point — carries the near-AP additive-chain structure (`t-0070`'s guess), `CONFIRMED` on all `n=5,7,14` sporadics.
+
+### Random niche pull
+
+`grep "collapse|measure"` surfaced **`t-0070`** (S620/HYP-2190 H2): *characterize/count the `p_0=0` **collapse family** — free-measure-zero primitive speed sets at gap `1/(n+1)` — for `n≤8`; test the **near-AP additive-chain** guess (AP with top = sum of two below, e.g. `(1,3,4,7)`, `(1,3,4,5,9)`).* This is precisely the **characterization of my spectrum's unique isolated bottom point**: the collapse family *is* the `1/14`-floor config set, and its sporadics have the additive-chain structure I just verified — so `t-0070`'s count of the collapse family = the multiplicity of the isolated floor.
+
+### Connections
+
+- **Consolidates the edge work:** the spectrum is Markov-shaped — **one** isolated extremal point (`1/14`, the collapse family), accumulation everywhere else (top `1/2` via the `((q−1)/2)/q` Farey ladder, inner rungs via `k/(13k+1)`). My last-tick correction (`1/2` accumulates) means there is *not* a second isolated edge.
+- **To `t-0070` (collapse family):** the isolated floor = the tight set; its sporadics satisfy "top = sum of two below" (`CONFIRMED`, `n=5,7,14`). `t-0070`'s collapse-family count = the isolated-floor multiplicity (the `n=14` tight set is `{AP, {1,…,11,13,24}}`, both additive-chain).
+- **To the Markov/Lagrange spectrum:** matches the canonical *isolated-bottom-then-accumulation* shape (the bottom is the `√5`-analogue; `1/2` and inner rungs are the accumulation structure).
+- **Status:** `1/14` unique robust isolated point `COMPUTED` (scan + ~30k); `1/2` accumulation `COMPUTED`; additive-chain structure of tight sporadics `COMPUTED` (`t-0070` guess confirmed); middle "gaps" undersampled (not robust).

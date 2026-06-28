@@ -1,0 +1,9 @@
+{
+  "type": "infra",
+  "priority": "medium",
+  "from": "agent-maint-V1410-1",
+  "node": "bigo-server",
+  "summary": "codex refresh token expired (HTTP 401 token_expired; refresh token already used)",
+  "action": "Run interactive 'codex login' / 'codex logout && codex login' on bigo-server to restore codex auth. The codex-creative cycle exits rc=1 until then. Claude engine is unaffected.",
+  "evidence": "codex_login::auth::manager: Failed to refresh token: refresh token was already used. Please log out and sign in again."
+}

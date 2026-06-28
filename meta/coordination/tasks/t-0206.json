@@ -1,0 +1,10 @@
+{
+  "id": "t-0206",
+  "type": "review",
+  "scope": "bigo-server codex creative cycles failing rc=1: expired auth token (refresh token already used). Needs interactive 'codex login' on bigo-server. V1410-1 cannot re-auth remotely.",
+  "repo": "bigo-server",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

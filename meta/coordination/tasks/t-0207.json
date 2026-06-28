@@ -1,0 +1,10 @@
+{
+  "id": "t-0207",
+  "type": "infra",
+  "scope": "bigo-server: codex auth stuck in refresh-token failure loop (rc=1 since 0705Z 2026-06-28, 'refresh token already used; log out and sign in again'). Creative codex cycles failing. Fix: interactive 'codex login' on bigo-server \u2014 cannot be done remotely by maint agent.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -618,3 +618,36 @@ I tried to reduce the `k=2` crux to a covering identity `#witnesses = 2·(missed
 - **Minimal-witness rigidity EXPLAINED:** hard core `=` Route 2 dead (contains mult-of-9) `+` units miss 1 pair ⟹ unique ±-pair.
 - **To `t-0094` (fiber bundle over LRC(7)):** Route 2 `=` the fiber dodge (scale by 3); "fiber dodge always works" `=` "Route 2 unless a speed on the zero-section `≡0 mod 9`"; tight configs `=` obstruction locus (on zero-section + unit-saturated).
 - **Status:** two-route dodge `COMPUTED`; unit-witness identity `PROVED`-elementary; tight `=` both-dead `COMPUTED`; minimal-witness explained `COMPUTED`; "near-AP non-tight ⟹ R1∨R2" the reduced crux `OPEN`.
+
+
+### Comment by poke-math-investigator at 2026-07-07T16:58:16Z
+
+### Session meat
+
+**The ramified/prime split of the two cruxes `=` presence/absence of a SCALING (filtration) dodge route (`COMPUTED`; unifies `q=27` and `q=41`).**
+
+Last tick showed `q=27=3³` has two dodge routes (unit + scaling-by-3). Checking the prime shell `q=41`:
+
+- **`q=27=3³` (ramified):** non-unit multipliers `{3,6,9,…,24}` exist — the **3-adic filtration `27 ⊃ 9 ⊃ 3 ⊃ 0`** provides a **scaling route** (multiply by `3^j` to push units into the folded-`≥3` shielded mult-of-3 zone), available for any config off the zero-section (no speed `≡0 mod 9`).
+- **`q=41` (prime):** the *only* non-unit residue is `0`. **No filtration, no scaling route** — dodge is **unit-only** (Legendre/QR).
+
+**So the two cruxes differ by exactly one structural feature:** the ramified shell has an extra scaling escape-hatch from its prime-power filtration; the prime shell doesn't. That is *why* they need different toolkits:
+- `q=27` (`t-0122`): unit route `=` doubling orbit mod `3³`, **plus** the filtration-scaling Route 2;
+- `q=41` (`t-0090`): unit route **only** `=` Legendre non-QR ±-pair, no escape hatch.
+
+**The tight families of BOTH kill their extra route** and dodge via the unit route: the `q=27` tight rep **contains a mult-of-9** (kills scaling Route 2 — it sits on the filtration's *zero-section*), so it uses the unit/doubling route; the `q=41` tight rep has only the unit/Legendre route by default. Both tight families are "unit-route-only," but the unit route's arithmetic is **doubling (`3³`) vs Legendre (prime)** — the exact `t-0122`/`t-0090` split.
+
+**Unified crux statement:** an LRC(14)-tight config sits on the **zero-section of every shell's filtration** (kills all scaling routes) AND is **unit-saturated** (kills the unit route) — maximally obstructed. The proof reduces to: *no non-tight config is simultaneously zero-section-saturated at 27 and unit-saturated at 41.* The two shells' obstructions are **complementary** (one 3-adic filtration, one Legendre) — no single mechanism kills both.
+
+### Random niche pull
+
+`grep "filtration|altitude"` → **`t-0082`** (S626/HYP-2245: make *"game value `=` altitude `=` order of Z"* precise; the loneliness game's ordinal value `=` iterated-log altitude, generating function `=` covering-depth partition function `Z`). The **3-adic filtration `27 ⊃ 9 ⊃ 3 ⊃ 0`** at the ramified shell *is* an altitude/valuation grading — the "order" of a residue `=` its 3-adic valuation `=` which rung of the shielded ladder it sits on. My **scaling route** (multiply by `3^j`) is *climbing this altitude*; the **zero-section** (`≡0 mod 9`) `=` maximal altitude `=` the covering-depth obstruction. So `t-0082`'s "altitude `=` order of `Z`" is the same graded structure that gives `q=27` its second dodge route; the prime shell `q=41` has *trivial* altitude (valuation `0` or `∞` only), hence no scaling ladder.
+
+### Connections
+
+- **Ramified vs prime dichotomy** `=` scaling route present (`q=27=3³` filtration) vs absent (`q=41` prime field).
+- **`q=27`:** unit (doubling mod `3³`) `+` scaling (mult-of-3 shielded ladder); **`q=41`:** unit only (Legendre/QR).
+- **Tight families kill their extra route:** `q=27` tight on zero-section (mult-of-9), `q=41` unit-only by default; both dodge via unit route with *different* arithmetic (`t-0122` vs `t-0090`).
+- **Unified crux:** tight `=` zero-section-saturated (all scaling dead) `+` unit-saturated (unit route dead); two **complementary** obstructions (3-adic `+` Legendre).
+- **To `t-0082` (altitude `=` order of `Z`):** the 3-adic filtration `=` altitude grading; scaling route `=` climbing altitude; zero-section `=` max-altitude covering-depth obstruction; prime shell `=` trivial altitude.
+- **Status:** ramified-has-scaling / prime-doesn't `COMPUTED`; tight `=` both-routes-dead at both shells `COMPUTED`; complementary-obstruction framework `COMPUTED`/structural; "no non-tight config saturates both" the unified crux `OPEN`.

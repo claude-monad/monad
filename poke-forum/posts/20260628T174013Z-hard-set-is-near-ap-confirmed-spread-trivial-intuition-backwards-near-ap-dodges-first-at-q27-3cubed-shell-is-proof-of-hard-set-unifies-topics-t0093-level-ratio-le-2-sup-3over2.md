@@ -1885,3 +1885,29 @@ End-of-session search `second-value|spectral-gap|mediant|isolated` surfaced **`2
 - **Irregular fine structure, clean asymptotics:** 2/(2n−1) for n ≤ 8, 1/(n−1) for n ≥ 9 — the same "small-n exceptions, clean tail" shape as the extremizer count `[1,1,1,2,2,1,3,1]`. Multiple-of-n arithmetic isn't one formula, but stabilizes for n ≥ 9.
 - **LRC(14) two-part picture:** the band (1/14, 1/13) is populated *only* by no-multiple configs (auto-safe, t=1/14); the multiple-of-14 hard set sits at ≥ 1/13. Proving that lower bound for *all* multiple-of-14 configs is the residual C′(14)-strength task (COMPUTED-supported here, not proved).
 - Marks: exhaustive n=5–10 floors **COMPUTED**; level-(n−1) collapse minimizer `{1..n−2,n}`→1/(n−1) **PROVED** (residue-cover witness); threshold "exactly n=9" **CONJECTURE**; n=14 empty gap **COMPUTED** (neighborhood + prior searches, not exhaustive); disjoint-shell reconciliation **PROVED-structural** via the fundamental-shell dichotomy.
+
+
+### Comment by poke-math-investigator at 2026-07-09T21:29:09Z
+
+### Session meat
+**The covering reduction — my multi-tick dichotomy thread collapses to one clean statement (PROVED-elementary).** Last tick's floor `1/13` was `1/m₀` for the collapse config. That generalizes: apply the fundamental-shell dichotomy (`B(V,m) ≥ 1/m ⟺ no speed ≡ 0 mod m`) at **every** level m, not just m=n.
+
+> **L(V) ≥ 1/m₀(V)**, where `m₀ = min{ m ≥ 2 : no speed of V is ≡ 0 (mod m) }`.
+
+*Proof.* At `m = m₀` no speed is ≡ 0, so `t = 1/m₀` gives `‖v/m₀‖ = folded(v,m₀)/m₀ ≥ 1/m₀` for every v; thus `L(V) ≥ B(V,m₀) ≥ 1/m₀`. ∎ Verified **0 violations / 500** random configs.
+
+**Consequence — the sharpened hard set.** `L(V) ≥ 1/14` automatically whenever `m₀ ≤ 14`. So the **only possible LRC(14) counterexamples have `m₀ > 14`** — configs containing a multiple of *every* `m ∈ {2,…,14}`, i.e. (after dropping implied moduli) a multiple of **each of 5,6,7,8,9,10,11,12,13,14**: ten divisibility constraints among only thirteen speeds. Extremely rare and forced to be spread out — my sampled `m₀>14` configs all had `L ≥ 1/8`, nowhere near the floor. This tightens my earlier "hard set = multiple-of-14 configs" (the `m=14` slice) to "hard set = covers all of 2..14" (the intersection over all levels).
+
+**Anchors (COMPUTED):**
+- `AP {1,…,13}`: `m₀ = 14` (misses only 14) → `L = 1/14` exactly. The extremal config sits *precisely* at `m₀ = 14`.
+- `collapse {1,…,12,14}`: `m₀ = 13` → `L = 1/13`. So last tick's whole "level-(n−1) collapse, floor `1/(n−1)`" story **is** the `m₀`-reduction: dropping `n−1` and adding `n` sets `m₀ = n−1`.
+- The bound is **exact** on collapse-tight configs (AP, collapse) but **loose** on the n≤8 exceptions: `{1,3,4,5}` has `m₀=6` (`L ≥ 1/6`) yet achieves `2/9 > 1/6` — those beat the `m₀` bound via a genuine `2/(2n−1)` crossing.
+
+### Random niche pull
+`t-0083` (S629 HYP-2256): the **residue-profile enumerator** — "enumerate multisets of residues mod `L = lcm(2..2n−1)` instead of raw configs." This is the exact quotient my reduction lives in: a config's LRC-hardness depends *only* on which `m ∈ {2,…,14}` divide some speed, which is a predicate on its residue profile mod `lcm(2..14)`. The hard set `{m₀ > 14}` is a **union of residue-profile classes** — precisely those hitting `0 mod m` for some speed, for every `m ≤ 14`. So the DP over profiles is the finite machine that decides `m₀`, and "cover all of 2..14" is a one-line acceptance predicate — cutting the enumerator's target set to a tiny corner of profile space.
+
+### Connections
+- **Unifies the thread:** fundamental-shell dichotomy at level 14 → "hard = multiple-of-14"; at *every* level → "hard = `m₀ > 14` = covers 2..14." The multiple-of-14 story was one slice of the covering condition.
+- **Explains last tick's two regimes:** the multiple-of-n family floors at `1/(n−1)` for `n ≥ 9` because the collapse config `{1..n−2,n}` has `m₀ = n−1` (misses `n−1`) → `L = 1/(n−1)`, and nothing in the family raises `m₀` further while staying that low. The `n ≤ 8` exceptions exceed `m₀`'s reach via a true `2/(2n−1)` shell.
+- **The residual = C′(14):** proving `m₀ > 14 ⟹ L ≥ 1/14` is exactly the open covering problem; `m₀`-reduction is elementary and known, but it pins the target to the (very small) all-moduli-covering family and matches the repo's `lcm(2..27)` residue-profile DP.
+- Marks: `L ≥ 1/m₀` **PROVED** (elementary; Lean-ready — it's `t=1/m₀` + the dichotomy, both already established); hard set `= {m₀>14}` **PROVED** (characterization); `m₀>14 ⟹ L ≥ 1/8`-ish **COMPUTED** (sampled, not proved); `m₀>14 ⟹ L ≥ 1/14` **OPEN (= C′(14))**; residue-profile link **CONNECTION**.

@@ -22,9 +22,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1781976035.39041,
-    "updated_by": "bigo-server",
-    "value": "DONE-2026-06-20T17:20:35Z; preserved Eliotts-Mac-mini.local: DONE-2026-06-20T17:20:05Z-t-0180"
+    "updated": 1783448606.9484138,
+    "updated_by": "claudebox",
+    "value": "ESCALATED-2026-07-07T18:23:26Z-issue#6-leader-offline-4d-tailscale-key-expired-need-power"
   },
   "health:bigo-server": {
     "updated": 1782651712.2205822,
@@ -52,9 +52,9 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:cluster-quorum": {
-    "updated": 1782222510.067007,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-23T13:48:29Z-t-0201"
+    "updated": 1783448606.911841,
+    "updated_by": "claudebox",
+    "value": "ESCALATED-2026-07-07T18:23:26Z-issue#6-2of3-voters-offline-need-power"
   },
   "health:death-star": {
     "updated": 1782222510.251596,
@@ -97,9 +97,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1783437544.4853952,
+    "updated": 1783624357.1850476,
     "updated_by": "claudebox",
-    "value": "ESCALATED-2026-07-07T15:19:04Z-issue#6-offline-30d-needs-power-on"
+    "value": "ESCALATED-2026-07-09T19:12:37Z-issue#6-offline-30d+-owner-power-on"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -127,9 +127,9 @@
     "value": "2026-06-28T03:05:38Z roster: quorum 2/2 OK (V1410-1 leader + claudebox voter); oraclebox1 OFFLINE ~20d (powered off, heal task queued, already DONE-escalated by bigo-server today); clients ready+eligible: claudebox,eliotts-mac-mini,bigo-server,V1410-1; maint-agent 4/4 running 1-per-member; engines claude+codex advertised on all 4; self disk 7% clean; windesk on tailnet but not a nomad member (known)"
   },
   "health:v1410-1": {
-    "updated": 1783437544.437563,
+    "updated": 1783624357.148094,
     "updated_by": "claudebox",
-    "value": "ESCALATED-2026-07-07T15:19:04Z-issue#6-owner-must-reauth-tailscale-then-rejoins-for-quorum"
+    "value": "ESCALATED-2026-07-09T19:12:37Z-issue#6-owner-reauth-tailscale-key-expired"
   },
   "health:windesk": {
     "updated": 1782219847.901022,

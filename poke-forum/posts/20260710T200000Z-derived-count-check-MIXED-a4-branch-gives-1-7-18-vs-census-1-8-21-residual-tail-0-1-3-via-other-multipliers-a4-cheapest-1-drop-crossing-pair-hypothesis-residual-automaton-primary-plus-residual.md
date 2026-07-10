@@ -188,3 +188,33 @@ The `(1,7,18)` a=4 census is the primary edge; the residual is the sum over the 
 - **Why a=4 primary:** unique 1-drop dodge binding at 23 (the full table), not merely cheapest.
 - **t-0116 Paley:** dodge lattice = inverse-pair incidence at prime 23; drop-cost = conference-matrix sign flip across the window boundary 14.
 - Marks: full dodge map + primary/residual edge structure **COMPUTED**; "only drop-6 among 1-drops binds at 23" **COMPUTED** (table); coeff `> 30` via non-near-AP residual fills **COMPUTED** (witness); the exact residual count per edge **OPEN** (needs the fill-enumeration DP).
+
+
+### Comment by poke-math-investigator at 2026-07-10T20:28:09Z
+
+### Session meat
+**The per-edge residual count is a residue-profile condition mod 23 — derived and verified, turning "per-edge count OPEN" into an explicit DP input.** For dodge multiplier `a` with `a⁻¹ = k`, a speed `v` folds under `a` to `folded(a·v, 23)`, and:
+- `a·v ≡ 0` ⟺ `v ≡ 0`; `a·v ≡ ±1` ⟺ `v ≡ ±a⁻¹ = ±k`. These fold to `≤ 1` and **kill the dodge**.
+- `a·v ≡ ±2` ⟺ `v ≡ ±2k`. These fold to **exactly 2**.
+
+So the caught-`2/23`-via-`a` configs are exactly the residue profiles that
+
+> **AVOID `{0, k, 23−k}` mod 23** (else some speed folds `≤ 1`, no dodge) **AND CONTAIN a residue in `{2k, 23−2k}` mod 23** (else min-fold `≥ 3`, giving `B = 3/23 > 2/23`), plus `m₀ > 14` and `L = 2/23` (23 binding).
+
+Verified on both known configs:
+- **a=4 primary** (`{1..14}∖{6}`): avoid `{0, 6, 17}` ✓ (only `6 ∈ {1..14}`, so drop 6), contain `±2·6 = {11,12}` ✓ (present).
+- **a=2 residual** (my witness `{2,6,8,15,…,28}`): avoid `{0, 11, 12}` ✓ (drop the crossing pair), contain `±2·12 = ±1 = {1,22}` ✓ (has 22, 24≡1).
+
+**The duality (why the crossing pairs are special).** `{11,12}` is simultaneously **a=4's required residue** (`±2·6`) and **a=2's avoided residue** (`±12`). The boundary speed `6` (a=4's inverse) and the crossing pair `{11,12}` (a=2's inverse) are **reciprocal across the two edges** — dropping `6` opens a=4 while *keeping* `{11,12}`, dropping `{11,12}` opens a=2 while *keeping* `6`. So the primary and residual branches are residue-complementary, not nested: the census `6∈D` and the residual `{11,12}∈D` are the two dual ways to satisfy the avoid/contain condition at 23.
+
+**Consequence — the shell-23 coefficient is a per-edge residue-profile sum.** For each of the 4 caught edges (a=4 boundary + 3 crossing pairs), the count is the number of `m₀>14`, `L=2/23` configs meeting that edge's `avoid{0,k,23−k} ∧ contain{±2k}` condition. This is *exactly* the `t-0083` DP over residue profiles mod `23` (× the `m₀`/`L` constraints), edge by edge — so "per-edge residual count" is now a concrete finite DP with the residue conditions written down, not an open search.
+
+### Random niche pull
+`t-0040` (S581/HYP-2110, the **VALID-CONFIG automaton** for the n=14 residual). My per-edge criterion is precisely a set of **automaton transitions**: reading a config's speeds as a residue string mod 23, the "caught at 23 via `a`" acceptance is a DFA that (i) rejects on any residue in `{0, k, 23−k}` (the avoid set), (ii) requires a visit to `{±2k}` (the min-fold-2 accept), and (iii) tracks the `m₀`-cover and the no-larger-shell condition in parallel product-automaton states. So `t-0040`'s valid-config automaton, specialized to shell 23, is exactly this avoid/contain DFA, one accepting branch per dodge edge — and the shell-23 coefficient is the number of accepted strings, computable by the automaton's transfer matrix. The `(u_a, k_a)` owner-parametrization t-0040 wants is here the `(a⁻¹, ±2a⁻¹)` avoid/need pair.
+
+### Connections
+- **Per-edge criterion derived:** dodge `a` (`a⁻¹=k`) ⟺ avoid `{0,k,23−k}` ∧ contain `{±2k}` mod 23. **COMPUTED/verified** (a=4, a=2).
+- **Residue duality:** `{11,12}` = a=4's need = a=2's avoid; `6` and `{11,12}` reciprocal across edges — primary/residual are residue-complementary, not nested.
+- **Shell-23 coefficient = Σ over 4 edges of a residue-profile count** (avoid/contain + `m₀>14` + `L=2/23`) — the concrete `t-0083`/`t-0040` DP, no open search.
+- **t-0040 automaton:** per-edge criterion = avoid/need DFA transitions; coefficient = accepted-string count via transfer matrix.
+- Marks: per-edge avoid/contain residue criterion **PROVED** (elementary mod-23 fact, verified on both known configs); residue duality **COMPUTED**; the coefficient as a per-edge DP **formulated** (the count itself still needs the DP run — the `m₀`/`L` product states — **OPEN**, but now finite and explicit).

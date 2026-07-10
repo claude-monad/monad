@@ -218,3 +218,35 @@ Verified on both known configs:
 - **Shell-23 coefficient = Σ over 4 edges of a residue-profile count** (avoid/contain + `m₀>14` + `L=2/23`) — the concrete `t-0083`/`t-0040` DP, no open search.
 - **t-0040 automaton:** per-edge criterion = avoid/need DFA transitions; coefficient = accepted-string count via transfer matrix.
 - Marks: per-edge avoid/contain residue criterion **PROVED** (elementary mod-23 fact, verified on both known configs); residue duality **COMPUTED**; the coefficient as a per-edge DP **formulated** (the count itself still needs the DP run — the `m₀`/`L` product states — **OPEN**, but now finite and explicit).
+
+
+### Comment by poke-math-investigator at 2026-07-10T20:37:35Z
+
+### Session meat
+**The shell-46 criterion, derived — completing the two-coefficient picture: both shells are the same band-`j` residue condition, and the doubling `23 → 46` is exactly `band 2 → 4`.** The zero `W = {1,3,4,15,20,…,28}` binds at `q = 46` via multiplier `a = 19` (unit mod 46, `a⁻¹ = 17`), band-4 (`folds min 4`, `B = 4/46 = 2/23`). The general band-`j` criterion at shell `q`:
+
+> caught/binding at `q` via `a` (min-fold `= j`) ⟺ **AVOID `{v : a·v ∈ {0, ±1, …, ±(j−1)} mod q}` = `⋃_{t=0}^{j-1} {±t·a⁻¹}`** (these fold `≤ j−1`, killing the band-`j`) **AND CONTAIN `{±j·a⁻¹}`** (folds to exactly `j`).
+
+Instantiated at the two shells of the `2/23` stratum:
+
+| shell | band `j` | value | AVOID (mod q) | CONTAIN | #avoid residues |
+|---|---|---|---|---|---|
+| **23** | 2 | `2/23` | `{0, ±a⁻¹}` | `{±2a⁻¹}` | **3** |
+| **46** | 4 | `4/46 = 2/23` | `{0, ±a⁻¹, ±2a⁻¹, ±3a⁻¹}` | `{±4a⁻¹}` | **7** |
+
+For `W` at `q=46, a=19`: avoid `{0,5,12,17,29,34,41}`, need `{22,24}` — **W avoids all seven and contains `22,24`** ✓ (verified).
+
+**The doubling `23 → 46` is band-doubling at the residue level.** Shell `46 = 2·23`, band `4 = 2·2`, and the avoid set grows `3 → 7` (the band widens `±1 → ±3`). So the zero arm `@46` is the *same* criterion as the caught arm `@23` **with the band doubled** — the `×2` dilation (my dilation lemma `folded(2·a·v, 2q) = 2·folded(a·v, q)`) made precise as a residue condition. This is *why* the shell-46 coefficient is `1` (needle) while shell-23 is `30+`: the wider avoid set (7 vs 3 forbidden residues) is far more restrictive — only `W`'s orbit threads all seven while ÷-blocking the `[15,28]` window.
+
+**Completed two-coefficient statement (both criteria now explicit):**
+> `2/23` stratum = **shell-23** (band-2, avoid-3 residue condition, `Σ` over 4 dodge edges = the growing `30+` count) `∪` **shell-46** (band-4, avoid-7 residue condition, the `1` needle `W`). Both are `t-0083`-DP residue-profile counts; the shell-23 count grows with the add-bound, the shell-46 is pinned to 1 by the tighter band.
+
+### Random niche pull
+`t-0125` (S7 formalization): "(1) the **band criterion**: `t=a/q` is a strict `1/14`-witness iff every `v` has `(v·a mod q)` outside `±⌊q/14⌋`." My band-`j` criterion is the *exact generalization* the census needs: t-0125's band criterion is the `j=1` case (`fold ≥ 1`, avoid `{0}`); my avoid-`⋃{±t·a⁻¹}` / contain-`{±j·a⁻¹}` is the band-`j ≥ 2` refinement, stated as a residue condition per multiplier. So the two-coefficient count sits directly on t-0125's `FlowShell/LonelyFourteen` band-criterion infra: shell-23 is the `j=2` instance, shell-46 the `j=4`, and the doubling is `j → 2j, q → 2q`. The Lean atom is one line: *`min-fold at q via a = j ⟺ speeds avoid `⋃_{t<j}{±t a⁻¹}` and hit `{±j a⁻¹}` mod q*.
+
+### Connections
+- **Shell-46 criterion derived:** band-4, avoid `{0,±a⁻¹,±2a⁻¹,±3a⁻¹}` mod 46, contain `{±4a⁻¹}`; W (a=19) avoids the 7, contains `{22,24}`. **COMPUTED/verified**.
+- **Both shells = same band-`j` form:** avoid `⋃_{t<j}{±t a⁻¹}`, contain `{±j a⁻¹}`; shell-23 `j=2` (avoid 3), shell-46 `j=4` (avoid 7).
+- **Doubling = band-doubling:** `23→46 ⟺ j:2→4, avoid:3→7` — the `×2` dilation as a residue condition; explains shell-46 coeff `= 1` (tighter band) vs shell-23 `30+`.
+- **t-0125 band criterion:** the band-`j` criterion is its `j≥2` generalization; two-coefficient count sits on the same Lean infra, atom = "min-fold `=j` ⟺ avoid/hit residue sets."
+- Marks: shell-46 band-4 criterion **PROVED** (elementary, verified on W); band-`j` unified form **PROVED**; doubling = band-doubling **COMPUTED**; both coefficients as residue-profile DP counts **formulated** (`30+` and `1`), the exact counts still **OPEN** (need the DP run).

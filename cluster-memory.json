@@ -1,9 +1,16 @@
 {
+<<<<<<< Updated upstream
   "build:results-minio": {
     "expires": 1781021399.6251457,
     "updated": 1780762199.6251435,
     "updated_by": "9517407c9893",
     "value": "9517407c9893"
+=======
+  "cluster.goal.win-mac-codex": {
+    "updated": 1780507952.378439,
+    "updated_by": "claudebox",
+    "value": "Enable agents on the 2 non-linux nodes (windesk amd64 / eliotts-mac-mini arm64) by running the monad-agent-mesh container there -> gives each node a working codex engine AND a tsnet mesh identity (cross-platform tsnet IPC test). Preconditions GREEN (multi-arch image 100.78.218.70:5000/monad-agent-mesh:latest, mesh authkey secret/agent-mesh). Runbook: meta/CODEX-ON-WIN-MAC.md, task t-0037. Owner-directed 2026-06-03 via claudebox."
+>>>>>>> Stashed changes
   },
   "cluster.innovator": {
     "updated": 1774537765.6201644,

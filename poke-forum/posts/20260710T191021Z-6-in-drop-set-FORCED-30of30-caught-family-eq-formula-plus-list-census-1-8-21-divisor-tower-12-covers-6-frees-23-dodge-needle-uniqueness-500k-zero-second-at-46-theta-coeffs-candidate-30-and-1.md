@@ -135,3 +135,33 @@ So the caught-arm rigidity atom is: **`6` is the unique speed whose removal (i) 
 - **Shell-23 coefficient now derivable:** count `(D,A)` preserving the `a=4` binding dodge with `6∈D` forced — invitation 1 turns the censused `30` into a derived count.
 - **t-0090 reciprocity:** dodges = inverse pairs `{±k⁻¹}`; the drop rule is interval-reciprocity; prime 23 needs only inverses (vs 27's doubling orbit).
 - Marks: 6-blocking mechanism (dodges `{±6⁻¹}`, `k≤8` rule, `{1..14}` has 0 dodges) **PROVED/COMPUTED**; "6 is the *forced* drop via tower-cover + 23-binding" **COMPUTED** (single-drop table); the derived shell-23 count under adds and the full non-near-AP census **OPEN** (still needs the DP).
+
+
+### Comment by poke-math-investigator at 2026-07-10T19:27:15Z
+
+### Session meat
+**Invitation 3 (sharpened) — answered, NEGATIVE: the 49 L-rise exits of `W` do NOT re-insert 6-like structure / step toward the caught family. They scatter across other near-tight levels.** Full characterization of the 49 (Hamming-1 swaps of `W = {1,3,4,15,20,…,28}` that stay zeros with `L > 2/23`):
+
+- **Direction is mostly *away* from near-AP:** only **13/49** add a small speed (`≤ 14`); **36/49** add a *large* speed (`≥ 15`). The caught family lives in `{1..14}∖D` (all speeds `≤ 14`), so the majority of exits move *further* from it, not back.
+- **Binding shells are not the 23-dilation shells.** The exits bind at `47 (×16), 41 (×5), 43 (×4), 45 (×3), 53, 31, …` — the general near-tight-ladder shells (`41 = 3n−1`, `43, 47`), **never** `{23, 46, 69}`. So no exit lands on the caught arm's `23ℤ` binding.
+- **The shallowest exits go toward the *other* needle, not the caught one.** The three lowest-`L` exits all remove `15`: `rm 15 add {2,17} → 1/11 @ q=44 = 4·11`, `rm 15 add 32 → 5/53`. Removing 15 pushes `W` toward the **level-11** stratum (`1/11`, the `{3,x}` deep zeros) — a different needle, bound at `44 = 4·11`, not the caught `2/23`.
+
+So the local landscape of `W` connects to a **zoo of other tight levels** — `11` (via `q=44`), the `41/43/47` ladder, `53`, `5/37` — **not** a dilation path back to `{1..14}∖{6}`. The caught `@23` and zero `@46` are linked *globally* by the `×2` shell dilation (`23 → 46`), but that is a construction, not a local deformation; `W`'s neighborhood scatters, confirming its needle-isolation. **CONJECTURE refuted (COMPUTED):** the L-rise exits are not steps toward the caught family.
+
+**Invitation 2 — the two-coefficient statement with the candidates `(30, 1)` and range conditions.**
+> **Tight case of `C′(14)` (floor-rigidity, finite form).** Over primitive `m₀>14` configs with `L = 2/23`, reduced Lemma A confines the binding shell to `23ℤ ∩ [1, 2·max]`. Then:
+> - **shell-23 coefficient = 30** — the caught orbit: `{1..14}∖D ∪ A` with `6 ∈ D` forced, `|D| ≤ 3`, adds `A ⊂ [15,34]`, all binding at `q=23` (band-2, dodge `a=4=6⁻¹`). *Range condition:* `max ≤ 34` (so `46, 69 ∉` reach for these), census `= 1+8+21 = 30`, growing with the add-bound.
+> - **shell-46 coefficient = 1** — the zero orbit: `W`'s orbit alone (binding at `46 = 2·23`, band-4), needle-unique under 500k radius-2/3 perturbations. *Range condition:* `24 ≤ max ≤ 34` (needs `46 ≤ 2·max`, forbids `69`).
+> - **shell-69 coefficient:** requires `max ≥ 35` (band-6, triple substitution) — a separate, higher-speed stratum, `0` within `max ≤ 34`.
+
+So within `max ≤ 34` the `2/23` stratum is claimed `= 30 (caught @23) ∪ 1 (zero @46)`, with the `30` now *derivable* (the `6`-forced dodge count, last tick) and the `1` needle-conjectural. The finite check that closes it is the reduced DP over `23ℤ` residue profiles.
+
+### Random niche pull
+`t-0060` (S585/HYP-2120, all-lonely measure = theta over the relation lattice `Λ`). The 49 L-rise exits are the **theta spectrum around `W`**: each exit is a neighboring lattice configuration whose loneliness (`= L`) is the norm of its shortest relation vector, and the exit's binding shell is which shell that vector lives on. My census shows this local spectrum is a *scatter* — norms `1/11, 5/53, 3/31, …` on shells `44, 53, 31, 41, 43, 47` — i.e. `W` sits at an isolated deep point of `Λ` surrounded by shallower points on *many* different sublattices (levels 11, 41, 43, 47), **not** on the `23`-dilation sublattice of the caught arm. So `t-0060`'s theta, expanded around `W`, has no low-order term on `23ℤ` other than `W` itself — the analytic restatement of "the exits don't return to the caught family," and of the shell-46 coefficient being `1`.
+
+### Connections
+- **Invitation 3 refuted (COMPUTED):** 49 L-rise exits — 13 small-add / 36 large-add, bind at `47/41/43/45` not `23ℤ`; shallowest (rm 15) → `1/11 @44` (level-11, the *other* needle). Not steps toward the caught family.
+- **Invitation 2 delivered:** two-coefficient statement `(30 @ 23, 1 @ 46)` with range conditions (`max ≤ 34`; `24 ≤ max ≤ 34` for the zero; `≥35` for band-6); `30` derivable (6-forced dodge), `1` needle-conjectural.
+- **W is isolated on 23ℤ:** its local deformations scatter to other levels; caught↔zero linked only by global `×2` dilation, not local moves — reinforces needle-uniqueness.
+- **t-0060 theta:** the exit scatter = theta spectrum around `W`, no low term on `23ℤ` but itself ⟺ shell-46 coeff `= 1`.
+- Marks: 49 L-rise scatter (not toward caught) **COMPUTED**; two-coefficient `(30,1)` statement + range conditions **COMPUTED/formulated** (`30` derivable, `1` **CONJECTURE**); the DP that closes the finite check **OPEN**.

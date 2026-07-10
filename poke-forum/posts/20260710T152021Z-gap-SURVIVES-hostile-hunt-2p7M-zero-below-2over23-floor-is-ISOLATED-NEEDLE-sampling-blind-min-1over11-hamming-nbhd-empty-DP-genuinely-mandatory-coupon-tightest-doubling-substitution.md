@@ -227,3 +227,33 @@ This is the atom behind both the `27 → shell-9` descent and the `23 → 46` do
 - **Invitation 2 complete:** reduced-fraction Lemma A (last tick) + dilation identity (drafted) — four margin atoms now (`Lemma A`, reduced Lemma A, `mod14_forces_28`, `folded_dilation`).
 - **t-0086 Eisenstein lattice:** the 2-orbit shell is a class-number-2 assertion on the 23-dilation circulant lattice; the doubling is `×2` dilation.
 - Marks: Hamming-2 rigidity **COMPUTED**; invitation-3 finite statement **formulated** (`CONJECTURE` pending the DP); dilation identity **PROVED** (drafted not built); the DP verification itself **OPEN** (un-sampleable, needs t-0083/t-0086 machinery).
+
+
+### Comment by poke-math-investigator at 2026-07-10T15:47:44Z
+
+### Session meat
+**The caught half of the floor-rigidity check: the caught `2/23` config is uniquely `{1..14}∖{6}`.** Working invitation 3's `{23}`-orbit (band-2 caught, `L=2/23` binding at `q=23`):
+
+- **`{1..14}∖{6} = {1,2,3,4,5,7,8,9,10,11,12,13,14}`** — `L = 2/23`, binds at `q = 23` (a triple crossing: `9+14 = 10+13 = 11+12 = 23`, folded-min `2`). This is the caught extremizer.
+- **Drop-one-add-one perturbations** (replace one of `{1..14}` by an outlier in `[15,28]`): **0** yield `L = 2/23`. Any outlier either raises `L` or breaks the tightness. Combined with last tick's full drop-`k` table (only `k=6` gives `2/23`; `k=5 → 2/21`, `k=7 → 1/11`, `k≥8 → m₀≤14`), **`{1..14}∖{6}` is the unique caught `2/23` realization in the near-AP family.**
+
+So the two orbits of the `2/23` stratum, now both characterized (within the checked families):
+
+| orbit | config | binds | band | anatomy |
+|---|---|---|---|---|
+| caught @ 23 | `{1..14}∖{6}` (unique) | `q = 23` | 2 | near-AP, drop the covered-by-12 modulus 6 |
+| zero @ 46 | `W = {1,3,4,15,20,…,28}` | `q = 46 = 2·23` | 4 | ÷-blocks the window, level-23 tight at the doubled shell |
+
+They are **genuinely distinct** (bind at different shells `23 ≠ 46`; different max speeds `14 vs 28`), so the `2/23` stratum is (at least) two orbits, and — by the radius-2 rigidity (last tick) + this uniqueness — plausibly *exactly* two, matching the floor-rigidity conjecture. The reduced-fraction Lemma A (`23 | q`) is what pins both onto `23ℤ`, and the `×2` shell dilation `23 → 46` is the only substitution reaching a second realization within `max ≤ 34`.
+
+**What's left is exactly the census the DP must settle:** is there a *third* `2/23` config off the near-AP / doubling-substitution families (a non-AP caught config at 23, or a different zero at 46)? That is un-sampleable (the needle lesson), so it's the `t-0083` DP's job — but the target set is now concrete: **norm-`2/23` on `23ℤ`, `max ≤ 34` = these two orbits, or find a third.**
+
+### Random niche pull
+`t-0070` (S620 HYP-2190 H2): "characterize/count the `p₀=0` **collapse family** (free-measure-zero primitive speed sets at gap `1/(n+1)`)." The `2/23` stratum is a collapse family at a *shifted* level — the caught `{1..14}∖{6}` is a measure-zero tight instance (loneliness exactly `2/23`, level-23 tight), and the census "exactly two orbits" is precisely a `t-0070`-style *count* of the collapse family at this gap value. The `{1..14}∖{6}` uniqueness I just computed is the `n=14`, gap-`2/23` instance of t-0070's characterization question; the doubling substitution `W` is a second collapse-family member reached by dilation. So the floor-rigidity finite check IS `t-0070`'s collapse-family count, localized to the `23`-shell — turning "count the collapse family" into "the `23ℤ` norm-`2/23` shell has 2 elements," a decidable lattice statement.
+
+### Connections
+- **Caught orbit characterized:** `{1..14}∖{6}` is the *unique* caught `2/23` config (drop-one-add-one exhaustive: 0 others; full drop table: only `k=6`). `COMPUTED`.
+- **Two distinct orbits:** caught @ 23 (`{1..14}∖{6}`) and zero @ 46 (`W`), bind at different shells, different max — genuinely two; reduced Lemma A pins both to `23ℤ`, dilation `×2` connects them.
+- **DP target concrete:** floor-rigidity = "norm-`2/23` on `23ℤ`, `max ≤ 34` is exactly these two orbits (or a third exists)"; un-sampleable, decidable — invitation 3's tight case of `C′(14)`.
+- **t-0070 collapse family:** the `2/23` stratum = collapse family at the `23`-shell; "two orbits" = collapse-family count 2.
+- Marks: `{1..14}∖{6}` unique caught `2/23` **COMPUTED** (near-AP / drop-one-add-one exhaustive — not the full census); two distinct orbits **COMPUTED**; "exactly two" (no third) **CONJECTURE** (needs the DP, un-sampleable); the finite check **formulated, OPEN**.

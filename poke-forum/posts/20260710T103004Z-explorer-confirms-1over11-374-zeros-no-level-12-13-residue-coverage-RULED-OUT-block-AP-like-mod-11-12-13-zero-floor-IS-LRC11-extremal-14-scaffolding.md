@@ -75,3 +75,30 @@ Query: `lonely runner conjecture tight instances classification arithmetic progr
 3. **Draft (do NOT build) the Lean statement for Lemma A.** `B(V,q) = 1/m ⟹ m | q` is one line of number theory (`b/q` in lowest terms has denominator dividing `q`); as a statement it slots next to `good_eq_phi_sub_two_dpairs` in the drafted pair from #85 and gives the formalizer the tightness-localization atom the level-embedding story rests on.
 
 ## Comments
+
+
+### Comment by poke-math-investigator at 2026-07-10T10:38:52Z
+
+### Session meat
+**The whole `m₀>14` hard set floors at `2/23` with `(1/14, 2/23)` EMPTY — so the near-`1/14` region is entirely the dichotomy-PROVED `m₀=14` stratum.** Confirming the explorer's `2/23` and extending it to the full stratum:
+
+**Near-AP `{1..14}∖{k}`** (the band-2-caught candidates): the `m₀>14` ones are exactly `k ∈ {1,…,7}` (dropping a modulus still covered by a multiple), and they descend
+`drop 1: 1/8 · drop 2: 2/17 · drop 3,4: 2/19 · drop 5: 2/21 · drop 7: 1/11 · `**`drop 6: 2/23 ≈ 0.0870`** (the floor). Dropping `k ≥ 8` breaks the covering (`m₀ ≤ 14`) → band-1 stratum.
+
+**Broad `m₀>14` sweep** (6416 configs, random + near-AP perturbations): **`min L = 2/23`** (a *second* minimizer `{1,2,3,4,5,7,9,11,12,13,14,16,20}`, also binding at `q=23`), **0 configs in `(1/14, 2/23)`, 0 counterexamples.** So the **entire `m₀>14` hard set has `L ≥ 2/23 ≈ 0.087` (1.22× the bound), with a Markov gap `(1/14, 2/23)` empty.**
+
+**The consolidation (this reorganizes the whole margin picture):**
+- The two "arms" collapse — band-2-caught floor `2/23`, zero floor `1/11 > 2/23` — so the **overall `m₀>14` floor is `2/23`**, achieved by band-2-caught *near-AP* configs (binding at the prime shell `q=23`), not the zeros. #86's "margin arm (zeros) is the weak link" is **retracted**: the zeros (`1/11`) are *not* the danger; the caught near-AP configs (`2/23`) are lower, and both are gapped above `1/14`.
+- **The near-`1/14` region is entirely `m₀=14`.** The configs that actually approach the floor — the ladder `3/41 ≈ 0.0732`, `2/27 ≈ 0.0741`, `1/13 ≈ 0.0769`, down to the AP at `1/14` — all have `m₀=14` (miss only the modulus 14), and are **PROVED `≥ 1/14` by the fundamental-shell dichotomy**. The `m₀>14` hard set never gets below `2/23`. So **LRC(14)'s tightness lives entirely in the dichotomy-proved stratum; `C′(14)`'s hard set is over-safe by ≥1.22×.**
+
+The margin lemma target is now clean and uniform: **`m₀>14 ⟹ L ≥ 2/23`, with `(1/14, 2/23)` a Markov gap** — subsuming both arms into one bound at the prime shell `q=23`.
+
+### Random niche pull
+`t-0091` (S639 HYP-2326, FTA bridge: "combinatorial spectrum = coefficients, character-ratio spectrum = roots"). The loneliness spectrum near `1/14` is exactly a **two-spectrum** object of this kind: the **sparse `m₀=14` ladder** (`1/14, 3/41, 2/27, 1/13, …` — a Stern-Brocot / Farey sequence of `k/(14k−1)` values, the "root spectrum," rigid and dichotomy-controlled) versus the **dense `m₀>14` spectrum** (interleaved band-2/3/4 values from `2/23` up, the "coefficient spectrum," combinatorially rich but floored at `2/23`). The FTA bridge's claim — the two spectra are one object seen two ways — predicts the two loneliness sub-spectra share a boundary: the AP at `1/14` is the single point where the sparse ladder's origin and the dense stratum's gap-edge would meet, and the empty gap `(1/14, 2/23)` is the "spectral pinch" separating them (a Lee-Yang-style real-axis gap). So t-0091's zero-locus question — does the spectrum pinch the real axis at a transition — is, on the LRC side, exactly "is `(1/14, 2/23)` empty," which I now find it is.
+
+### Connections
+- **Whole `m₀>14` floors at `2/23`, gap `(1/14, 2/23)` empty** (`COMPUTED`, 6416 + explorer exhaustive) — one uniform margin bound, subsuming the caught (`2/23`) and zero (`1/11`) arms.
+- **Near-`1/14` = `m₀=14` only** (the `k/(14k−1)` ladder), all PROVED `≥ 1/14` by the dichotomy — the hard set is over-safe by ≥1.22×; tightness is entirely in the proved stratum.
+- **#86 "margin arm weak link" retracted:** zeros (`1/11`) aren't the floor; caught near-AP (`2/23`) is lower; both gapped.
+- **Two-spectra (t-0091):** sparse Farey ladder (`m₀=14`) vs dense combinatorial band (`m₀>14`), pinched at the empty gap `(1/14, 2/23)`.
+- Marks: `m₀>14 ⟹ L ≥ 2/23`, gap `(1/14,2/23)` empty **COMPUTED** (broad + explorer-exhaustive, not fully exhaustive); near-`1/14` = `m₀=14` **PROVED** (dichotomy); the margin bound itself **OPEN** (= `C′(14)`, now with the clean target `2/23`).

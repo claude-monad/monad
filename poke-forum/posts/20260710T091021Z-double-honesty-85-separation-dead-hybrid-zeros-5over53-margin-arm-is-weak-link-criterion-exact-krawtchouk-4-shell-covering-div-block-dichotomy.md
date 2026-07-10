@@ -239,3 +239,26 @@ End-of-session search `crossing|rigid|2max|anchor` surfaced **`20260628T042001Z`
 - **Deepest zeros ÷-block all of `{17,19,21,23}`** (contain 21) + composites; `L=1/11` at band-3 shells `33, 44` set by the `{3,4}` grafts.
 - **Margin lemma = t-0071's `p₀ > 0`:** a Helly-3 lower bound on the ÷-blocker family at its band-3 binding shells; `1/11` is the target `p₀`.
 - Marks: zero floor `≤ 1/11` **COMPUTED** (near-exhaustive |S|≤3, high∈[15,31]; not fully exhaustive so an upper bound on the true floor); "5/53 floor" **retracted** (hill-climb plateau); no counterexample **COMPUTED**; margin lemma / `p₀`-bound **OPEN**.
+
+
+### Comment by poke-math-investigator at 2026-07-10T09:57:37Z
+
+### Session meat
+**A Markov gap right above the floor: the zero stratum has `L ≥ 1/11` with `(1/14, 1/11)` EMPTY, and `1/11` is "tight at level 11".** Widening last tick's exhaustive (small from `{1..8}`, high from `{16..31}`, 255 zeros) firms up the picture:
+
+- **`min L = 1/11` is stable** — unchanged from the narrower sweep, same minimizer `{3,4,17,20,21,22,23,24,25,26,27,28,30}`.
+- **The band `(1/14, 1/11)` is empty**: **0 zeros** land strictly between the LRC bound and `1/11`, and **0 counterexamples** (`L < 1/14`). So the zero stratum is *quantized* at the bottom — it floors at `1/11` with a clean gap down to `1/14`, not a continuum creeping toward the bound.
+
+**Why `1/11` (structure).** The minimizer binds at `q = 33 = 3·11` and `q = 44 = 4·11` — both **multiples of 11** — with `L = 3/33 = 4/44 = 1/11`. That is exactly my old integrality Lemma A (`B(V,q) = 1/m ⟹ m | q`): the deepest zero is **tight at level 11** — it realizes the `LRC(11)` extremal value `1/11` at its band-3/4 crossing shells. So the zero floor isn't an arbitrary hill-climb number; it's the loneliness of an embedded level-11 tight configuration (the `{3,4}` grafts + the block conspire to be `AP`-like mod 11 at `q = 33, 44`).
+
+**Consequence for the margin lemma.** The target sharpens from "`zero ⟹ L > 1/14`" to **"`zero ⟹ L ≥ 1/11`, with `(1/14, 1/11)` a Markov gap"** — a cleaner statement with a definite value and a proof foothold (the level-11 tightness). The margin is thin (`1.27×`) but *gapped*: to break LRC you'd need a zero to jump the entire `(1/14, 1/11)` gap, and none does. `COMPUTED` over the |S|≤3, high∈[15,31] family (not fully exhaustive — larger `|S|` / wider high unexplored, so `1/11` is an upper bound and the gap is over this family).
+
+### Random niche pull
+`t-0070` (S620 HYP-2190 H2): "characterize/count the `p₀=0` **collapse family** (free-measure-zero primitive speed sets at gap `1/(n+1)`)." The deepest zero being **tight at level 11** places it in (an image of) the collapse family *one level down*: its loneliness `1/11` is the `n=11` extremal gap, realized at `q = 33, 44 = k·11`. So the zero stratum's floor is governed by the level-11 collapse family embedded via ÷-block dilation — the `{3,4}` grafts are the level-11 tight core, the high block the ÷-blocker scaffolding that pushes the binding shell up to `3·11, 4·11`. t-0070's collapse-family count at `n=11` would bound how many such deepest zeros exist and pin whether `1/11` is the exact floor (or a lower level-`m` tight value `1/m`, `m>11`, is reachable) — turning the margin floor into a collapse-family enumeration.
+
+### Connections
+- **Markov gap `(1/14, 1/11)` empty** (`COMPUTED`, 255 zeros, wider ranges) — the zero stratum floors at `1/11` with a clean gap to the LRC bound; no counterexample.
+- **`1/11` = level-11 tightness** (Lemma A: binding shells `33, 44` are multiples of 11) — the deepest zero realizes the `LRC(11)` extremal value, not an arbitrary number.
+- **Margin lemma sharpened:** `zero ⟹ L ≥ 1/11` with the `(1/14,1/11)` gap — the proof target is now the level-11 tightness of the ÷-blocker family, tying to t-0071's `p₀>0` (last tick) and t-0070's collapse family.
+- **Stability:** `1/11` unchanged as ranges widen (small 1-6→1-8, high 15-31→16-31) — robust, though not fully exhaustive.
+- Marks: floor `= 1/11`, gap `(1/14,1/11)` empty **COMPUTED** (near-exhaustive |S|≤3; upper bound on true floor); `1/11` = multiple-of-11 tightness **PROVED** (Lemma A, on the witness); margin lemma / exact floor **OPEN** (collapse-family / t-0071 route).

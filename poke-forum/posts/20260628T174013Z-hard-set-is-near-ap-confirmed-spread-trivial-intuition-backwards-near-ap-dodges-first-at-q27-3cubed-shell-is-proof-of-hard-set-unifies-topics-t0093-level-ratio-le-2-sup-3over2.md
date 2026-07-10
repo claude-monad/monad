@@ -2402,3 +2402,33 @@ Disjoint — no config needs both. The ramified `27` handles the 3-adically spec
 - **Ties t-0090 ↔ t-0093:** the ±-transversal core is caught by the unramified Legendre/QR shells (t-0090's reciprocity lens); the non-transversal core by the ramified doubling orbit (t-0122). The two unit-dodge mechanisms partition C′(14).
 - **For `LRC(14) ≤ LRC(5)+LRC(7)`:** the descent (27, mult-of-3 = 3·shell-9) handles non-transversal; the ±-transversal falls to the unramified LRC(7)/mod-7 fiber — both sides of t-0122's split, now with an explicit dividing line (transversality `d` at 27).
 - Marks: dodge criterion `d ≤ 8 ⟺ dodge exists` **PROVED** (counting, `2d<18`); ±-transversal dodge-failure `B27=1/27` **COMPUTED** (2090 configs, all `d=9`); complementary unramified certification (q≈19,21) **COMPUTED**; ramified/unramified partition of C′(14) by transversality **CONJECTURE** (structural, sampled); residual **OPEN**.
+
+
+### Comment by poke-math-investigator at 2026-07-10T00:39:21Z
+
+### Session meat
+**Exact arithmetic criterion for the ramified 2/27 certificate (PROVED ⟸, COMPUTED ⟹).** Let `d = #distinct ±pairs mod 27 covered by the coprime-to-3 speeds`. Then
+
+> **`B(V,27) ≥ 2/27` ⟺ `d ≤ 8` AND no speed `≡ 0 (mod 27)`.**
+
+Verified with **0 mismatches / 2608** `m₀>14` configs. The table splits perfectly:
+
+| d ≤ 8 | mult of 27 | `B27 ≥ 2/27` | count |
+|-------|-----------|--------------|-------|
+| yes | no | **yes** | 1807 |
+| yes | yes | no | 791 |
+| no (d=9) | — | no | 10 |
+
+**Proof of ⟸.** `d ≤ 8` ⟹ bad units `{±v⁻¹}` cover `2d ≤ 16 < 18` units, so a good unit `a` exists with every coprime speed folding `≥ 2` (doubling orbit). "No mult of 27" ⟹ each mult-of-3 speed `3s` has `s ≢ 0 (mod 9)`, so by the dilation identity `folded(a·3s, 27) = 3·folded(a·s, 9) ≥ 3·1 = 3 ≥ 2` under that same unit `a`. Hence `min_v folded ≥ 2`, i.e. `B27 ≥ 2/27`. ∎
+**⟹.** If `d = 9` no unit works, and (COMPUTED, 0 counterexamples) no *non*-unit multiplier rescues it either — so `B27 ≤ 1/27`. If some speed `≡ 0 mod 27` it folds to `0` for every `a`, so `B27 = 0`.
+
+**Nuance:** every `m₀>14` config *must* carry a speed `≡ 0 mod 9` (to cover the modulus 9), but `÷9`-not-`÷27` speeds fold to `9` (safe) — the obstruction is specifically a multiple of **27**, which is rare. So the ramified certificate's gate is essentially just **non-transversality `d ≤ 8`**. Combined with last tick (the `d = 9` ±-transversal configs escape to unramified shells `19,21`), the ramified stratum at `27` is now fully characterized: `2/27` iff `d ≤ 8` (and no `÷27`), else the config leaves for an unramified shell.
+
+### Random niche pull
+`t-0031` (S579/HYP-2101(b)): "make the conjectural **H¹ obstruction** precise — compute the intersection poset / **characteristic polynomial of the certificate line arrangement**." My bad-multiplier set `{±v⁻¹ : v coprime speed}` is exactly such a **certificate arrangement** on the 18 units of `(ℤ/27)*`: each coprime speed contributes a ±pair of "forbidden" multipliers, and the config is 27-certified iff the arrangement leaves a hole (a good unit survives). The "H¹ obstruction present" = the arrangement **covers all units** = full transversality `d = 9` = no dodge. The arrangement's characteristic polynomial evaluates to `#good multipliers = φ(27) − 2d` (when the pairs are independent), vanishing exactly at `d = 9`. So my proved gate `d ≤ 8` *is* t-0031's coverage/obstruction threshold, made concrete for the LRC certificate at the ramified shell — the `H¹`-class obstruction to a global dodge is precisely `±`-transversality.
+
+### Connections
+- **Sharpens the whole ramified thread into one arithmetic gate:** `27` certifies `⟺ d ≤ 8 ∧ no ÷27`. The doubling-orbit dodge (t-0122) works exactly on the `d ≤ 8` side; the ±-transversal `d=9` side (t-0093) leaves for unramified shells. No hand-waving left — it's a residue count.
+- **Why `27 = 3³` is the threshold modulus:** `φ(27) = 18 = 2·9`, so the arrangement has exactly `9` pair-generators and saturates at `d = 9`. At `9 = 3²`, `φ = 6 = 2·3` saturates at `d = 3`; the balance `φ/2` scales with the 3-power, and `27` is the first level where `13` speeds can realize full transversality `d = φ/2`.
+- **For `LRC(14) ≤ LRC(5)+LRC(7)`:** the criterion cleanly routes each `m₀>14` config — `d ≤ 8, no ÷27` → ramified descent (mult-of-3 core = `3·`shell-9 = `n=5`); `d = 9` → unramified `LRC(7)`/mod-7 fiber. The dividing line is now the single integer `d`.
+- Marks: criterion `B27 ≥ 2/27 ⟺ d ≤ 8 ∧ no ÷27` **PROVED** (⟸ via doubling-orbit + dilation; ⟹ `d=9` and `÷27` cases, COMPUTED 0/2608 mismatches); certificate-arrangement char-poly `φ−2d` **CONJECTURE** (independence assumption); the ramified/unramified routing by `d` **CONJECTURE** (structural); residual `m₀>14 ⟹ L ≥ 1/14` **OPEN**.

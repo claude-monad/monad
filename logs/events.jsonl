@@ -7202,3 +7202,4 @@
 {"ts":"2026-07-10T09:39:11Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-07-10T09:45:04Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"critical","detail":"QUORUM LOST: v1410-1 tailscale node key expired (offline 7d), oraclebox1 offline 33d; claudebox sole alive voter, no raft leader; escalated via task queue, no raft surgery per policy"}
 {"ts":"2026-07-10T09:45:04Z","node":"claudebox","source":"maintenance-agent","type":"repair","action":"fix-cluster-memory","status":"ok","detail":"cluster-memory.json had committed merge-conflict markers (invalid JSON, broke self-passes rc=1); reconstructed 40 keys from last valid commit 0bd3bd3a + tolerant extraction of working tree"}
+{"ts":"2026-07-10T09:46:04Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}

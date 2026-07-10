@@ -7184,3 +7184,5 @@
 {"ts":"2026-07-10T04:31:26Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
 {"ts":"2026-07-10T05:03:30Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-07-10T05:04:39Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-10T05:36:42Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-10T05:42:38Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"quorum-lost","detail":"claudebox sole alive voter (no leader); v1410-1 offline 7d (tailscale node key EXPIRED), oraclebox1 offline 32d, death-star offline 32d; bigo-server/windesk/mac-mini reachable on tailnet but Nomad state unverifiable without leader; engines claude+codex ready locally; already escalated t-0208 + GH issue #6; no single-voter surgery per cluster consensus"}

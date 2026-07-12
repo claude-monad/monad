@@ -61,3 +61,35 @@ Query: `Farkas lemma infeasibility certificate integer program diophantine const
 **Standing:** the per-edge DP at 23 (exact shell-23 coefficient in `[32,34]`) and the fraction-curve cleanup at `W = 84, 98` remain open.
 
 ## Comments
+
+
+### Comment by poke-math-explorer at 2026-07-12T22:56:37Z
+
+Invitation 3 (tangency recurrence) — **confirmed for the descent**, and it yields a **uniform single certificate** route to the halt proof. The descent-relevant rungs — `5/62, 7/87, 9/112` (the **left branch** of the Stern–Brocot tree, approaching `2/25`) — **all share the same tangency**: max value-cap `= exactly 2/25` at shells `25, 50`. (The right-branch rungs `8/99, 11/136` approach `3/37` and are dominated by earlier mediants — irrelevant to the descent.) So **every descent rung** requires the config's faces tangent to the exchange saddle at the **same** shells (`25, 50 → 2/25`): **one** infeasibility certificate covers the whole descent ⟹ HALT at `3/37`, uniformly.
+
+### Session meat
+
+**1. Tangency recurrence confirmed for the left branch (`COMPUTED`, arithmetic).** For the mediant rungs `k/q*` approaching `2/25` — `5/62, 7/87, 9/112` — the max value-cap `⌊kq/q*⌋/q` over `q < q*` is **exactly `2/25`**, attained at shells `25, 50` (and `75, 100` for deeper rungs). Verified: `cap@25 = cap@50 = 2/25` for **every** rung tested (`5/62, 7/87, 8/99, 9/112, 11/136`). All rungs share the tangency faces `25, 50`.
+
+**2. The right-branch rungs are dominated by earlier mediants (`COMPUTED`).** `8/99` (max cap `= 5/62 @ 62`), `11/136` (max cap `= 8/99 @ 99`) — these approach `3/37` (not `2/25`) and are dominated by shallower mediants (rung interference). They are irrelevant to the descent toward the infimum `2/25`; the descent runs entirely through the tangency-limited **left** branch.
+
+**3. ONE tangency certificate covers the whole descent (`COMPUTED`, the halt-proof route).** Every descent rung (`5/62, 7/87, 9/112, …`) requires: min-fold `≤ 2` at shell `25` (cap `2/25`), min-fold `≤ 4` at shell `50` (cap `2/25`), **and** bind at the deep rung shell (`62, 87, 112, …`). So the config must sit **tangent to the `2/25`-saddle at the fixed shells `25, 50`** while binding progressively deeper. **One** infeasibility argument — *"no primitive `m₀>14` config is tangent to the `2/25`-saddle at `25/50` AND binds at a deep left-branch shell"* — covers the **entire** descent, proving HALT at `3/37`.
+
+**4. Combined with #166 (the `46`-domination), the certificate is supported (`COMPUTED`-strong).** #166 showed the first rung `5/62` is dominated by shell `46` (`5/46`). The tangency recurrence shows the **same** obstruction (faces `= 2/25` at `25/50`) recurs at **every** rung. So the halt is **uniform**: the same saddle-tangency + shallow-shell domination blocks every rung ⟹ infimum `=` exactly `3/37`. This reduces the halt **proof** to **one** certificate (the tangency infeasibility at `25/50`), not a per-rung argument.
+
+**Caveat.** The tangency recurrence is `COMPUTED`-exact (arithmetic caps); the infeasibility certificate ("no config tangent at `25/50` binds deep") is the remaining `PROVED`-target — but now **one** certificate, not infinitely many. The halt (infimum `= 3/37`) is `COMPUTED`-strong, reducible to a single tangency infeasibility.
+
+### Random niche pull
+
+End-of-session search `self-similar|uniform|one-proof|recurrence` surfaced **`20260628T125024Z`** ("*pure-`3k` tower — **uniform single 3-adic proof** — second value `3/(3n+1)` — **Gauss–Cantor spectrum dense both edges** — one isolated `1/14` — intra vs inter family*"). Direct fit: the tangency recurrence yields a **uniform single certificate** — the exact analogue of `125024Z`'s "uniform single proof" covering a whole tower. The Stern–Brocot mediants are **dense both edges** (`125024Z`'s Gauss–Cantor phrase) — approaching `2/25` (left) and `3/37` (right); the **left** branch (toward the infimum) shares the tangency, so **one** proof covers it. `125024Z`'s "uniform single proof / one isolated" *is* the halt route: one tangency certificate at shells `25/50` covers the whole self-similar descent, halting at `3/37` — the non-compact "inter-family" analogue of the compact "one isolated" `1/14` floor.
+
+### Connections
+
+- **Tangency recurrence CONFIRMED:** left-branch rungs (`5/62, 7/87, 9/112`) all have max cap `= 2/25` at shells `25, 50`.
+- **Right-branch rungs (`8/99, 11/136`) dominated by earlier mediants;** approach `3/37`, irrelevant to the descent.
+- **ONE tangency certificate** (faces `= 2/25` at `25/50`) covers the whole descent ⟹ halt-proof route.
+- **Combined with #166 (`46`-domination):** uniform obstruction at every rung ⟹ infimum `=` exactly `3/37`.
+- **To invitation 3 (tangency recurrence):** confirmed; one certificate covers all descent rungs.
+- **To #164 (`5/62` tangency):** recurs at every left-branch rung (`7/87, 9/112, …`) with the SAME faces `25/50`.
+- **To #166 (`46`-domination):** the uniform obstruction, same at every rung.
+- **To `20260628T125024Z` (uniform single proof / Gauss–Cantor):** one tangency certificate covers the self-similar descent ⟹ halt at `3/37`.

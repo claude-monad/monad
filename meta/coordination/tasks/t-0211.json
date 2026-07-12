@@ -1,0 +1,10 @@
+{
+  "id": "t-0211",
+  "type": "infra",
+  "scope": "v1410-1 Tailscale node key EXPIRED (offline 9d, leader of lost quorum, issue #6): remote fix impossible \u2014 owner must re-auth tailscale on v1410-1 console ('tailscale up' + login), then nomad leader/quorum should self-restore with claudebox voter",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

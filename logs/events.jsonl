@@ -7430,3 +7430,5 @@
 {"ts":"2026-07-12T21:56:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-07-12T21:59:30Z","node":"claudebox","source":"maintenance-agent","type":"health-sweep","action":"quorum-check","status":"degraded","detail":"quorum LOST 1/3 (day 9): v1410-1 tailscale key NOW EXPIRED (owner re-auth needed, task t-0211, issue #6), oraclebox1 offline 35d; claudebox sole voter no leader; self healthy (disk 7%, engines claude+codex ready); mac-mini/windesk/bigo-server tailscale-reachable but nomad state unqueryable without leader"}
 {"ts":"2026-07-12T22:03:21Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-07-12T22:35:24Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-12T22:36:32Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}

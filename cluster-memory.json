@@ -127,9 +127,10 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1783893747.3171258,
+    "expires": 1784525334.3552496,
+    "updated": 1783920534.3552487,
     "updated_by": "claudebox",
-    "value": "2026-07-12T21:58Z quorum LOST 1/3 (9d) \u2014 NEW: v1410-1 tailscale key EXPIRED (owner re-auth required), oraclebox1 offline 35d; issue#6 open; self healthy, engines claude+codex ready"
+    "value": "2026-07-13T05:25Z quorum still LOST 1/3 no change: v1410-1 key EXPIRED (issue #6 OPEN), oraclebox1 offline 35d; claims held ESCALATED; self healthy"
   },
   "health:v1410-1": {
     "updated": 1783893747.385872,

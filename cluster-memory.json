@@ -138,9 +138,9 @@
     "value": "ESCALATED-issue#6-tailscale-key-EXPIRED-2026-07-12-owner-console-reauth-needed"
   },
   "health:windesk": {
-    "updated": 1782219847.901022,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-23T13:04:07Z-t-0200"
+    "updated": 1783937193.883797,
+    "updated_by": "claudebox",
+    "value": "ESCALATED-task-t-0212-tailscale-offline-3h-2026-07-13"
   },
   "issue:v1410-1-git-push": {
     "updated": 1782083682.186607,

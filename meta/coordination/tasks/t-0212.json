@@ -1,0 +1,10 @@
+{
+  "id": "t-0212",
+  "type": "infra",
+  "scope": "windesk tailscale-offline ~3h (3rd consecutive sweep 2026-07-13, last seen 09:xx relay den tx-only); no remote fix from claudebox \u2014 needs machine/tailscale up on windesk; client-only node, no quorum impact (quorum already tracked in issue #6)",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

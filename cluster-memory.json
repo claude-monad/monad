@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1783676712.454619,
+    "updated": 1783918202.3985147,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-10T09:45:12Z"
+    "value": "ESCALATED-issue#6-offline-35d-needs-power-on-2026-07-13"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,

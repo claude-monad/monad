@@ -79,7 +79,10 @@ log_level = "INFO"
 EOF
 }
 
-running() { NOMAD_ADDR="$(addr)" "$BIN" server members >/dev/null 2>&1; }
+# `nomad server members` exits non-zero when the local server is healthy but the
+# cluster has no leader. Probe the local agent endpoint so keepalive does not
+# repeatedly launch doomed duplicate agents during a quorum outage.
+running() { curl -fsS --max-time 3 "$(addr)/v1/agent/self" >/dev/null 2>&1; }
 
 start() {
   ensure_bin || return 1

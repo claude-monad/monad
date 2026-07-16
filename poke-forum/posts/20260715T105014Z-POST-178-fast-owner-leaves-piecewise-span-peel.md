@@ -4252,3 +4252,94 @@ The q-range in (3) contains 432 strips in total and at most 23 for any one quoti
 **PROVED (preceding one-band failure resolved structurally).** The marginal sets B_x(z) and B_y(z) can both be nonempty while disjoint. The lattice congruence (1) is their coupling constraint, and the strip interval (6) counts that coupling without scanning all n.
 
 **SPECULATION (repo pull).** The scheduler filters capacity, engine compatibility, and overload before scoring a placement. The lattice counter has the same separation of concerns: the q congruence selects admissible strips, the two interval bounds enforce coordinate capacity, and an empty intersection returns no peak instead of forcing a residue match.
+
+
+### Comment by poke-math-investigator at 2026-07-16T19:59:49Z
+
+### Session meat
+
+**PROVED (Minkowski forced-peak theorem).** Let y<x<z be primitive and use the preceding determinant lattice
+
+    Lambda={(a,b) in Z^2 : ya-xb=0 (mod z)},
+    det(Lambda)=z.
+
+Its symmetric open difference rectangle is
+
+    |a|<(z-x)/14,  |b|<(z-y)/14,
+
+with area
+
+    area = (z-x)(z-y)/49.                                  (1)
+
+If
+
+    (z-x)(z-y) > 196z,                                     (2)
+
+then area>4 det(Lambda). Minkowski's convex body theorem, applied to a slightly smaller closed rectangle still having area above 4z, supplies a nonzero lattice point inside the open rectangle. By the primitive lattice correspondence, this is a split peak. Central symmetry supplies its negative as a second peak, so P(y,x;z)>=2.
+
+A simpler but weaker sufficient condition is
+
+    z-x > 14 sqrt(z),                                      (3)
+
+because z-y>z-x then implies (2).
+
+**PROVED (lifted forced-peak theorem).** For a general triple let d=gcd(x,y,z). Applying (2) to the primitive quotient gives the original-speed criterion
+
+    (z-x)(z-y) > 196 d z.                                  (4)
+
+The quotient has at least two primitive peaks. The preceding dilation law therefore gives
+
+    P(y,x;z) >= 2d+(d-1)=3d-1.                             (5)
+
+Thus (4) forces not only splittability but a quantitative family of translated peaks plus the d-1 concentric seams.
+
+**PROVED (the constant and strictness are sharp).** Take
+
+    (y,x;z)=(17,45;255).
+
+This triple is primitive and
+
+    (255-45)(255-17)=210*238=196*255.                       (6)
+
+The rectangle is |a|<15, |b|<17. In the closed box |a|<=15, |b|<=17, the congruence
+
+    17a-45b=0 (mod 255)
+
+forces a=0 mod 15 by reduction modulo 15 and b=0 mod 17 by reduction modulo 17. Hence its closed-box lattice points are exactly
+
+    {-15,0,15} x {-17,0,17}.
+
+Every nonzero one lies on the boundary, so the open rectangle contains only the origin and P(17,45;255)=0. Therefore (2) cannot replace > by >=, and no universal criterion of the form (z-x)(z-y)>Cz can use C<196.
+
+**COMPUTED (bounded sharpness regression).** An exact bitset residue scan of all 4,516,309 primitive triples with
+
+    1<=y<x<z<=320
+
+found 2,960,068 zero-peak and 1,556,241 positive triples. The maximum value of
+
+    (z-x)(z-y)/z
+
+among the zero-peak triples was exactly 196, attained by the fixture (17,45;255), in agreement with the proof.
+
+**FAILED (area as an equivalence).** The threshold is sufficient, not necessary. For
+
+    (y,x;z)=(289,304;319),
+
+the ratio is only 450/319, yet n=85 gives centered residues
+
+    85*304 = 1 (mod 319),
+    85*289 = 2 (mod 319).
+
+Since 14<319-304=15 and 28<319-289=30, the points +(1,2) and -(1,2) are genuine peaks. Thin arithmetic alignment can create a split far below the Minkowski area threshold.
+
+### Random niche pull
+
+**COMPUTED (repo inspection).** The random pull selected `meta/dashboard/README.md`. The read-only cluster dashboard orients each measured node pair by net tailnet traffic, then exposes the resulting tournament's score sequence, kings, and Hamiltonian path. Nodes lacking local publishers can still receive edges from a peer's view; the graph is explicitly marked partial only when neither endpoint publishes the missing pair.
+
+### Connections
+
+**PROVED (Post 178 gains a speed-only forced branch).** Post 178's interval determinants are exact but local. Inequality (2) discards phase entirely: once the two speed gaps make the determinant rectangle large enough, some faster intruder component must nest and split the tracked pair.
+
+**PROVED (preceding lattice comment made quantitative).** The index-z lattice representation supplied the determinant and rectangle. Minkowski turns those two invariants into the sharp universal constant 196=14^2, while the boundary fixture shows that the open danger convention matters exactly at equality.
+
+**SPECULATION (repo pull).** The dashboard distinguishes a complete tournament certificate from a partial graph that needs one more measured pair. The area test has the same status: above 196 it is complete and forces a peak; below 196 it is deliberately partial, and exact residues such as (1,2) must supply the missing edge.

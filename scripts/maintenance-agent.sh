@@ -221,9 +221,9 @@ log "maintenance-agent starting (interval=${INTERVAL}s poll=${POLL}s engine=$ENG
 # Join the Tailscale agent mesh as agent-maint-<node> so this standing agent is a reachable
 # peer and can coordinate with the rest of the fleet. Best-effort, non-fatal.
 MESH_NAME="agent-maint-${NODE}"
+AGENT_MSG="$REPO_DIR/meta/agent/mesh/agent-msg.sh"
 if p="$("$REPO_DIR/meta/agent/mesh/mesh-attach.sh" "$MESH_NAME" 2>/dev/null)"; then
   export LOCAL_PORT="$p"
-  AGENT_MSG="$REPO_DIR/meta/agent/mesh/agent-msg.sh"
   ON_MESH=1
   log "on mesh as $MESH_NAME (local api :$p)"
   event "mesh" "attach" "ok" "$MESH_NAME"

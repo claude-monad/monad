@@ -1,0 +1,10 @@
+{
+  "id": "t-0227",
+  "type": "infra",
+  "scope": "windesk is Tailscale-offline (last seen about 3 hours ago) and cannot be remotely reached; its Nomad readiness, engine advertisement, and maintenance loop are currently unverifiable. Bring the Windows host/Tailscale/Nomad client back, run ensure-engines or node-doctor, and verify maintenance coverage after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

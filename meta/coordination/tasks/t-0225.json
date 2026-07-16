@@ -1,0 +1,10 @@
+{
+  "id": "t-0225",
+  "type": "infra",
+  "scope": "bigo-server root filesystem is critically full: 98.95% used with about 1.16 GB free at 2026-07-16T10:43Z. Maintenance-agent is still running, but quorum loss prevents Nomad-var delegation and Tailscale SSH requires interactive re-auth. Inspect largest paths on-host and remove only clearly safe cache/old logs or prune Docker only if idle; verify free space afterward.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

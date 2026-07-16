@@ -1,0 +1,10 @@
+{
+  "id": "t-0224",
+  "type": "infra",
+  "scope": "QUORUM LOST: v1410-1 is offline in Tailscale and its node key has expired; claudebox is the sole visible Nomad server with no leader. Restore the host/Tailscale/Nomad voter urgently, then verify at least 2 alive voters.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

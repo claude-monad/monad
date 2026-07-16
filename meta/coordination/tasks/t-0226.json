@@ -1,0 +1,10 @@
+{
+  "id": "t-0226",
+  "type": "infra",
+  "scope": "death-star is Tailscale-offline (last seen about 39 days ago) and cannot be remotely reached; its Nomad readiness, engine advertisement, and maintenance-agent allocation are absent/unverifiable. Power on or restore Tailscale, rejoin Nomad if needed, run meta/agent/ensure-engines.sh, and verify one running maintenance-agent allocation after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -27,9 +27,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1784205979.9977374,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-16T12:46:19Z"
+    "updated": 1784217536.0291157,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "health:bigo-server": {
     "updated": 1784211228.6963415,
@@ -62,9 +62,9 @@
     "value": "DONE-2026-07-15T05:08:08Z"
   },
   "health:death-star": {
-    "updated": 1784205980.0779223,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-16T12:46:20Z"
+    "updated": 1784217536.0899222,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "health:eliotts-mac-mini": {
     "updated": 1784178270.880987,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1784205980.0389817,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-16T12:46:20Z"
+    "updated": 1784217536.0593557,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -137,9 +137,9 @@
     "value": "DONE-2026-07-16T12:05:46Z"
   },
   "health:windesk": {
-    "updated": 1784205980.11549,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-16T12:46:20Z"
+    "updated": 1784217536.1203215,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "issue:v1410-1-git-push": {
     "updated": 1782083682.186607,

@@ -1,0 +1,10 @@
+{
+  "id": "t-0215",
+  "type": "infra",
+  "scope": "CRITICAL 2026-07-15 claudebox sweep: Nomad quorum remains lost; claudebox is the sole alive server and reports No cluster leader. v1410-1 Tailscale node key is expired/offline 12d; oraclebox1 and death-star are offline/unreachable 37d. Re-auth or power on v1410-1 and restore its Nomad agent for the smallest 2-voter recovery, or restore/rejoin oraclebox1; do not perform single-voter Raft surgery. bigo-server and eliotts-mac-mini client APIs respond; windesk is tailnet-reachable but Nomad API times out. After leader recovery verify all seven nodes ready/eligible and one maintenance-agent allocation per member; reconcile the stale five-node roster in meta/CLUSTER-HEALTH.md.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

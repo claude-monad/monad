@@ -6,14 +6,16 @@ agent, a node-doctor pass, a research session between tasks, an interactive oper
 part of your job is the **constant mutual health of the whole roster**. Read this, then act on
 it whenever you have a spare cycle.
 
-## The roster (the canonical 5 nodes)
+## The roster (the canonical 7 nodes)
 
 | node | Tailscale IP | OS | Nomad role |
 |------|--------------|----|------------|
 | `v1410-1`           | 100.75.75.39    | Linux  | server (leader) + client |
+| `bigo-server`       | 100.78.218.70    | Linux  | client |
+| `claudebox`         | 100.87.219.108   | Linux  | server (voter, RaftProtocol 3) + client |
+| `death-star`        | 100.96.31.66     | Linux  | client |
+| `eliotts-mac-mini`  | 100.113.252.45   | macOS  | client |
 | `oraclebox1`        | 100.125.210.126 | Linux  | server (voter) + client — *offline since ~2026-06-07, queue holds heal/restore tasks* |
-| `claudebox`         | 100.87.219.108  | Linux  | server (voter, RaftProtocol 3) + client — converged to 3rd voter |
-| `eliotts-mac-mini`  | 100.113.252.45  | macOS  | client |
 | `windesk`           | 100.94.210.54   | Windows| client |
 
 Server RPC / `NOMAD_ADDR`: `http://100.75.75.39:4646` (or any alive server). The 3-voter Raft

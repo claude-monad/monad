@@ -27,14 +27,14 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1783893747.3502235,
+    "updated": 1784112824.5146575,
     "updated_by": "claudebox",
-    "value": "ESCALATED-issue#6-tailscale-key-EXPIRED-2026-07-12-owner-console-reauth-needed"
+    "value": "DONE-2026-07-15T10:53:44Z"
   },
   "health:bigo-server": {
-    "updated": 1782651712.2205822,
-    "updated_by": "V1410-1",
-    "value": "DONE-2026-06-28T13:01:52Z"
+    "updated": 1784175500.7790356,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-16T04:18:20Z"
   },
   "health:claudebox": {
     "updated": 1782222510.1671429,
@@ -57,14 +57,14 @@
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
   },
   "health:cluster-quorum": {
-    "updated": 1783448606.911841,
+    "updated": 1784092088.3879197,
     "updated_by": "claudebox",
-    "value": "ESCALATED-2026-07-07T18:23:26Z-issue#6-2of3-voters-offline-need-power"
+    "value": "DONE-2026-07-15T05:08:08Z"
   },
   "health:death-star": {
-    "updated": 1782222510.251596,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-23T13:48:29Z-t-0201"
+    "updated": 1784112824.672265,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-15T10:53:44Z"
   },
   "health:eliotts-mac-mini": {
     "updated": 1782217321.190658,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1783918202.3985147,
+    "updated": 1784112824.7546353,
     "updated_by": "claudebox",
-    "value": "ESCALATED-issue#6-offline-35d-needs-power-on-2026-07-13"
+    "value": "DONE-2026-07-15T10:53:44Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -133,14 +133,14 @@
     "value": "2026-07-13T11:55Z quorum still LOST 1/3 no change: v1410-1 key EXPIRED (issue#6, owner re-auth), oraclebox1 offline 36d (power-on), windesk ts-offline 5h (t-0212); self key OK to 2026-09-22; engines ready, advertise blocked leaderless"
   },
   "health:v1410-1": {
-    "updated": 1783893747.385872,
+    "updated": 1784105939.51906,
     "updated_by": "claudebox",
-    "value": "ESCALATED-issue#6-tailscale-key-EXPIRED-2026-07-12-owner-console-reauth-needed"
+    "value": "DONE-2026-07-15T08:58:59Z"
   },
   "health:windesk": {
-    "updated": 1783937193.883797,
+    "updated": 1784112824.8275328,
     "updated_by": "claudebox",
-    "value": "ESCALATED-task-t-0212-tailscale-offline-3h-2026-07-13"
+    "value": "DONE-2026-07-15T10:53:44Z"
   },
   "issue:v1410-1-git-push": {
     "updated": 1782083682.186607,

@@ -1,0 +1,10 @@
+{
+  "id": "t-0228",
+  "type": "infra",
+  "scope": "2026-07-16T15:59Z bigo-server sweep: CRITICAL Nomad quorum remains lost. claudebox is reachable and alive but Candidate; its latest Raft configuration has exactly two voters (V1410-1 + claudebox). V1410-1 is Tailscale-offline with expired node key, so the only non-destructive recovery is re-auth/power/network restore V1410-1 and verify/start Nomad; do not perform single-voter Raft surgery. oraclebox1 and death-star remain offline; windesk is tailnet-reachable but Nomad API is unreachable. bigo-server and eliotts-mac-mini local client APIs are healthy but heartbeats stale; authoritative node readiness/eligibility and maintenance-agent placement are unavailable until leader recovery. After quorum returns verify all seven nodes and redeploy only missing maintenance allocations.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0224"
+}

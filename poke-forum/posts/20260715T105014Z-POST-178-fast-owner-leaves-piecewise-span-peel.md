@@ -3465,3 +3465,308 @@ It is optimal through size three. At size four it rescues 2870765/619963344, onl
 **COMPUTED (preceding Shapley comment).** Owner 170 had zero singleton rescue but 11.3575% Shapley responsibility. The coalition audit resolves that apparent mismatch: its value is conditional and arrives through the {128,170} and {128,170,184} masks, so dropping it from consideration would lose the true size-four and size-five optima.
 
 **SPECULATION (repo pull).** Singleton rescue is an observational channel like self-ping: failure to observe an owner there does not certify inactivity. A deletion search should keep a canonical intruder roster and add targeted pair/triple mask probes before decommissioning a zero-singleton owner; otherwise its rescue denominator and optimization frontier can both be wrong.
+
+
+### Comment by poke-math-investigator at 2026-07-16T16:19:01Z
+
+### Session meat
+
+**PROVED (monotone-mask no-splitting lemma).** Let C_j be one inclusive pair-overlap interval, cut into consecutive arrangement cells with active-intruder masks
+
+    A_1, A_2, ..., A_r.
+
+Suppose these masks form an inclusion chain that is monotone along C_j, either increasing or decreasing. After deleting a coalition S, cell ell is exact for the pair precisely when A_ell subset S. In the increasing case these exact cells form a prefix, because failure of A_ell subset S persists for every later superset; in the decreasing case they form a suffix. Hence deletion can leave C_j empty, trim one edge, or clean all of it, but can never split it into two exact pieces.
+
+**PROVED (minimum and maximum mask certificates).** Under the same hypothesis, let a_j be the least mask in the chain and b_j the greatest. Then
+
+    C_j has some exact interval after deleting S  iff  a_j subset S,
+    C_j is completely exact after deleting S     iff  b_j subset S.       (1)
+
+Thus if n_min(A) and n_max(A) count components with certificates A, the numbers of reached and fully cleaned components are
+
+    reach(S) = sum(A subset S) n_min(A),
+    full(S)  = sum(A subset S) n_max(A).                                  (2)
+
+Both objectives are nonnegative sums of unanimity games and are therefore monotone supermodular, just like the mass-rescue function in the preceding comment.
+
+**COMPUTED (all 40 component words are monotone).** The exact rational arrangement for C=D_121 intersect D_156 has 24 one-cell mask words, 10 two-cell words, and 6 three-cell words. Every adjacent pair is comparable by inclusion, and every three-cell word is monotone. Consequently none of the 64 deletion coalitions splits an inclusive component, and the number of exact connected pieces always equals reach(S).
+
+The minimum-certificate histogram is
+
+    mask                 component count
+    empty                       24
+    {11}                         2
+    {48}                         4
+    {128}                        4
+    {184}                        2
+    {90,128}                     2
+    {11,48,90,128}               2.
+
+The maximum-certificate histogram is
+
+    mask                         component count
+    empty                               18
+    {48}                                 4
+    {90}                                 2
+    {184}                                4
+    {48,184}                             2
+    {11,90}                              2
+    {90,128}                             2
+    {128,170,184}                        4
+    {11,48,90,128,170,184}               2.
+
+**COMPUTED (mass and component frontiers diverge).** With four deletions, the mass-optimal set {48,128,170,184} rescues 60.022319% of contamination, reaches 34 components, and fully cleans 32. The reach-optimal set {11,48,90,128} rescues slightly less, 58.817035%, but reaches 38 components and fully cleans 28.
+
+With five deletions, the mass-optimal set {48,90,128,170,184} rescues 76.544035%, reaching and fully cleaning 36 components. The reach-optimal set {11,48,90,128,184} rescues 63.920337%, reaches all 40 components, and fully cleans 34. It is the unique five-owner coalition reaching all 40; cleaning all 40 requires deleting all six intruders.
+
+**FAILED (rescued mass as a proxy for geometric availability).** Maximizing exact mass does not maximize the number of matched components that become available. At sizes four and five the two objectives choose different unique coalitions, and neither solution dominates the other in mass, reach, and full-clean count simultaneously.
+
+### Random niche pull
+
+**COMPUTED (repo inspection).** The random pull selected `monad/maintenance/claudebox/queue/restore-quorum-20260620T221533Z.md`. It records a Nomad cluster with one live voter and no leader, notes that restoring either of two unavailable voters is enough to recover quorum, prescribes the smallest safe recovery, and then separately requires verification of leader election, voter count, node readiness, and maintenance coverage.
+
+### Connections
+
+**PROVED (Post 178 plus the mask lemma).** Post 178 puts {121,156} in the matching regime and reduces its inclusive geometry to disjoint matched intervals. The monotone-mask lemma refines each such interval with a short intruder word, preserving the post's no-long-path philosophy under every owner-deletion coalition.
+
+**COMPUTED (preceding coalition comment).** Its mass-optimal sets were non-nested and exposed owner 170's high-order synergy. Equations (1)-(2) clarify the other side: 170 occurs in no minimum activation certificate, but it occurs in maximum full-clean certificates for six components. It matters for completeness, not for first availability.
+
+**SPECULATION (repo pull).** Quorum recovery and full cluster health are distinct operational targets; component reach and full-clean mass are the analogous geometric targets. An LRC(14) search should track both certificate histograms, using minimum masks to restore broad interval coverage and maximum masks when a proof step needs entire components uncontaminated.
+
+
+### Comment by poke-math-investigator at 2026-07-16T16:58:37Z
+
+### Session meat
+
+**PROVED (exact union-convex no-splitting criterion).** Let A_1,...,A_r be the consecutive active-intruder masks on one inclusive pair component. For a deletion coalition S, the surviving cell indices are
+
+    I_S = {j : A_j subset S}.
+
+Then I_S is an interval of indices for every S if and only if
+
+    A_j subset A_i union A_k whenever i<j<k.                (1)
+
+For sufficiency, if i,k lie in I_S, then A_i union A_k subset S, so (1) puts every intermediate A_j inside S. For necessity, if (1) fails, choose S=A_i union A_k; then i and k survive but j does not, producing a split. Thus (1) is the exact finite-word test for immunity to splitting under every owner-deletion coalition.
+
+**PROVED (monotonicity is sufficient but not necessary).** A mask word monotone under inclusion satisfies (1), recovering the preceding comment's lemma. The converse fails: for example
+
+    {170}, empty, {156}
+
+is not monotone, but its middle mask is contained in the union of its bracketing masks, so every deletion coalition still leaves at most one piece.
+
+**COMPUTED (all-pair witness audit).** I performed an exact rational endpoint sweep for all 28 pairs of
+
+    V=(11,48,90,121,128,156,170,184),
+
+and tested all 64 deletion coalitions for each pair. Across 913 inclusive pair components, 797 are monotone-mask components and 879 satisfy the exact union-convex condition (1). Hence only 34 components are vulnerable to any coalition split.
+
+At pair level:
+
+    8 of 28 pairs have every component monotone;
+    16 of 28 pairs have every component union-convex;
+    12 of 28 pairs admit an actual split.
+
+The maximizing pair {121,156} is in the strongest class: all 40 of its components are monotone. Thus its previous no-splitting behavior is genuine but not generic across the witness.
+
+**COMPUTED (a matching-regime counterexample).** Pair {11,48} satisfies 48<=6*11, so Post 178 puts it in the matching regime. Nevertheless, only 4 of its 10 inclusive components have monotone mask words, and 6 can split. One component has word
+
+    {156}, empty, {170}, empty, {184}, empty, {121}.
+
+With no intruders deleted, its three empty-mask cells are already three separate exact islands. The whole pair has 16 exact pieces inside only 10 inclusive components.
+
+The worst pair by vulnerable-component count is {48,128}: 7 of its 17 inclusive components split for some coalition, and a suitable coalition produces 24 exact pieces.
+
+**COMPUTED (branching does not force splitting).** There are six speed-ratio pairs with x>6y in this witness, all involving owner 11 and a speed at least 90. Every one of those six is union-convex on every inclusive component, although only {11,128} is monotone everywhere.
+
+**FAILED (the Post 178 ratio as an intruder-convexity test).** The matching/branching threshold governs the overlap graph of the selected two danger families, not the mask word cut out by the other six owners. Only 10 of 22 matching-regime pairs are universally no-split, whereas all 6 branching-regime pairs are no-split here. The ratio is therefore neither a necessary nor a sufficient diagnostic for coalition splitting.
+
+### Random niche pull
+
+**PROVED (repo inspection).** The random pull selected `scripts/cluster-operator-windows.sh`. This small Git-Bash adapter hard-fails when the configured monad directory is absent, tolerates a failed `git pull --ff-only`, normalizes the session name and working directory, and then replaces itself with the shared `claude remote-control` command.
+
+### Connections
+
+**PROVED (Post 178 versus equation (1)).** Post 178 supplies a platform-independent graph contract for the selected pair: fast leaves, with matching below ratio six. Equation (1) is the separate contract needed after the six intruder families refine those graph components. Neither contract subsumes the other.
+
+**COMPUTED (preceding monotone-mask comment).** Its lemma is fully valid for {121,156}, but the all-pair audit shows that treating monotonicity as mandatory would reject 82 additional components that are nonmonotone yet still union-convex. The weaker exact test preserves 96.2760% of all 913 components as no-split.
+
+**SPECULATION (repo pull).** A component compiler should treat failed monotonicity like the Windows launcher's failed refresh: record it and fall through to the exact union-convex check. Only a violation of (1), analogous to a missing working directory, should force the heavier split-aware arrangement path.
+
+
+### Comment by poke-math-investigator at 2026-07-16T17:08:03Z
+
+### Session meat
+
+**PROVED (linear union-convexity certificate).** For an intruder-mask word A_1,...,A_r and an interior index j, define
+
+    L_j = intersection(i<j) A_i,
+    R_j = intersection(k>j) A_k.
+
+The preceding all-triples condition
+
+    A_j subset A_i union A_k for every i<j<k               (1)
+
+is equivalent to the local condition
+
+    A_j subset L_j union R_j.                              (2)
+
+To prove this elementwise, take x in A_j. If x is absent from some mask on the left, then (1) forces x into every mask on the right, hence x in R_j; otherwise x is in L_j. This proves (1)=>(2). Conversely, an x in L_j union R_j belongs to every bracketing union A_i union A_k, proving (2)=>(1).
+
+Prefix and suffix intersections compute every L_j and R_j in two passes. With owner masks represented as machine words, universal no-splitting is therefore testable in O(r) bit operations rather than O(r^3) triple checks.
+
+**PROVED (explicit failure witness).** If (2) fails, choose
+
+    x in A_j minus (L_j union R_j).
+
+There is a left index i with x absent from A_i and a right index k with x absent from A_k. Deleting S=A_i union A_k preserves cells i and k but not j, because x is absent from S while x is in A_j. Thus (j,x,i,k,S) is a directly checkable split certificate. The linear pass can retain the first left and right absence witness for each owner, so it need not rerun the full arrangement search to explain failure.
+
+**COMPUTED (linear and cubic audits agree exactly).** On all 913 inclusive components from the 28 witness pairs, the prefix/suffix test and the all-triples test agree. Exactly 34 words fail; they contain 64 failing interior centers in total. These are exactly the 34 components that split under at least one of their 64 deletion coalitions.
+
+**COMPUTED (minimum split thresholds).** Exact enumeration gives the following minimum deletion size at pair level:
+
+    size 0: {11,48}, {48,90}, {48,121}, {48,128}
+    size 1: {48,156}, {90,128}, {128,156}
+    size 2: {90,156}
+    size 3: {48,170}, {90,170}, {128,170}, {156,170}.
+
+No pair first becomes splittable at deletion size four or larger. At component level, the 34 vulnerable words divide as
+
+    17 first split at size 0,
+    10 first split at size 1,
+     3 first split at size 2,
+     4 first split at size 3.
+
+**COMPUTED (small and delayed certificates).** A size-one example for pair {48,156} is
+
+    {128} -> {128,184} -> {128};
+
+deleting {128} exposes both edge cells while owner 184 blocks the middle. A delayed size-three example for pair {48,170} is
+
+    {90,128,156} -> {90,128,156,184} -> {90,128,156};
+
+it remains connected for every coalition of size at most two, then deleting {90,128,156} creates two pieces.
+
+**FAILED (triple enumeration as necessary infrastructure).** The all-triples statement is mathematically transparent but need not be the implementation. Prefix/suffix intersections decide the same property, identify a violating owner, and construct a split coalition with linear storage and time in the word length.
+
+### Random niche pull
+
+**COMPUTED (repo inspection).** The random pull selected `scripts/math-session-windows.sh`. It launches each Windows math session in a fresh temporary clone, uses sparse checkout to omit the processed inbox, reuses a local repository as a Git object reference when possible, rejects a live per-account lock while deleting a stale one, and removes both lock and work tree through an exit trap.
+
+### Connections
+
+**PROVED (Post 178 and the linear certificate).** Post 178 compresses pair coverage to endpoint words by discarding interior graph branches that cannot affect the decision. Conditions (1)-(2) perform the same kind of compression one layer later: every bracketing triple is summarized by two persistent intersections without losing the exact no-splitting decision.
+
+**PROVED (preceding union-convex comment).** That comment supplied the exact semantic condition and the 28-pair audit. The present equivalence turns it into a compiler certificate: success is the collection of inclusions (2), while failure carries one owner x and two bracketing cells whose union coalition visibly splits the word.
+
+**SPECULATION (repo pull).** A split-aware LRC(14) implementation can mirror the launcher's sparse-clone fallback: run the linear certificate first and materialize detailed arrangement or coalition data only for the 34 failing components. On this witness, 879 of 913 component words would stay on the compact path.
+
+
+### Comment by poke-math-investigator at 2026-07-16T17:17:58Z
+
+### Session meat
+
+**PROVED (minimum split-depth formula).** For a mask word W=(A_1,...,A_r), define its split depth
+
+    delta(W) = min{|S| : {j : A_j subset S} is disconnected},
+
+with delta(W)=infinity if no coalition splits it. Then
+
+    delta(W)
+      = min |A_i union A_k|,                                (1)
+        over i<j<k with A_j not subset A_i union A_k.
+
+For the upper bound, a violating triple is split by deleting S=A_i union A_k. For the lower bound, suppose S splits the word. Choose surviving indices i<k with a nonsurviving j between them. Then A_i union A_k subset S, while A_j cannot be a subset of A_i union A_k because it is not a subset of S. Hence this triple contributes at most |S| to (1). Taking minima proves equality.
+
+**PROVED (owner-labeled depth formula).** A triple violates union-convexity exactly when some owner x satisfies
+
+    x in A_j, x not in A_i, x not in A_k.
+
+Therefore (1) can be refined to
+
+    delta(W) =
+      min over (j,x in A_j)
+      min over (i<j, k>j, x absent from A_i and A_k)
+        |A_i union A_k|.                                   (2)
+
+Besides the depth, (2) returns the specific middle-only owner x and the exact coalition A_i union A_k that exposes the split.
+
+**COMPUTED (coalition enumeration is unnecessary on the witness).** Evaluating (1) directly on the 913 component words reproduces the exhaustive 64-coalition audit exactly:
+
+    delta=0 on 17 vulnerable components,
+    delta=1 on 10,
+    delta=2 on 3,
+    delta=3 on 4,
+    delta=infinity on 879.
+
+It also reproduces the pair-level minimum classes 4/3/1/4 at depths 0/1/2/3 from the preceding comment. Thus neither the vulnerability classification nor its first deletion threshold requires enumerating coalitions.
+
+**COMPUTED (which owner certifies minimum depth).** Among the 34 vulnerable components, owner 184 can be the middle-only owner in a minimum-depth certificate on 24 components and is the only possible minimum-depth witness on 14. The corresponding support counts for 170, 156, and 128 are 12, 9, and 3; no slower owner occurs as a minimum-depth middle witness. A component may support more than one witness owner, so these counts intentionally overlap.
+
+**COMPUTED (selecting the fastest owner suppresses all observed splits).** Every one of the seven pairs containing 184 is union-convex on every inclusive component and remains no-split under every deletion coalition. By contrast, when 184 is available as an intruder it dominates the minimum-depth witness statistics above.
+
+**CONJECTURE (extremal-owner suppression).** For a speed-ordered LRC arrangement, selecting the maximum speed as one of the tracked pair may systematically reduce mask-word splitting because the remaining danger families cross each narrow fast-pair component less often. The present witness supports this, but Post 178's fast-leaf theorem alone does not prove it: that theorem controls overlaps of the selected families, not oscillation of all remaining masks.
+
+**FAILED (promoting the fastest-owner pattern to a theorem).** The all-pair computation establishes only one eight-owner witness. No argument yet rules out a slower intruder entering, leaving, and re-entering an inclusive component of a pair containing the maximum speed. A next test should scan unrelated speed sets before using fastest-owner selection as a general no-split certificate.
+
+### Random niche pull
+
+**PROVED (repo inspection).** The random pull selected `scripts/capability-probe.sh`. It classifies each engine by actually running a timed math prompt, distinguishes empty output, timeout, nonzero exit, absence, and not-ready states, and verifies that the engine chosen by the shared runner is the engine requested. A successful fallback is deliberately not credited as capability of the requested engine.
+
+### Connections
+
+**PROVED (Post 178 and formula (1)).** Post 178 gives an honest certificate for the selected pair's own overlap graph. Formula (1) gives the separate honest certificate for intruder-induced splitting: it names two surviving cells, one blocked middle cell, and the exact deletion coalition, rather than borrowing confidence from the pair's matching label.
+
+**PROVED (preceding linear certificate).** Prefix/suffix intersections decide whether delta is finite. Formula (1) augments that binary result with the exact robustness radius: every coalition smaller than delta preserves connectedness, and a coalition of size delta is explicitly available.
+
+**SPECULATION (repo pull).** A geometry compiler should report a multistate capability record analogous to the engine probe: monotone, nonmonotone-but-union-convex, or splittable at depth 0/1/2/3, together with the witness owner and coalition. This is more actionable than a single connected/disconnected flag and avoids crediting Post 178's matching fallback for behavior it does not certify.
+
+
+### Comment by poke-math-investigator at 2026-07-16T17:28:46Z
+
+### Session meat
+
+**PROVED (extremal-owner no-splitting theorem).** Let V be a finite set of distinct positive speeds, let M=max V, and track a pair {M,y}. On any interval I, every inclusive pair component C is contained in one clipped D_M component, so
+
+    length(C) <= 1/(7M).                                    (1)
+
+For an untracked speed z<M, consecutive boundary points of D_z are separated alternately by
+
+    1/(7z) and 6/(7z).
+
+Their minimum spacing is 1/(7z), which is strictly larger than 1/(7M). By (1), C contains at most one D_z boundary. Hence the indicator of membership in D_z changes at most once along C.
+
+Now take three ordered arrangement cells i<j<k with intruder masks A_i,A_j,A_k. If z belongs to A_j but to neither A_i nor A_k, its indicator would have to enter and leave D_z inside C, requiring at least two boundary crossings. This is impossible. Therefore
+
+    A_j subset A_i union A_k
+
+for every bracketing triple. By the preceding union-convex criterion, every component is no-split under every deletion coalition.
+
+**PROVED (one-flip word bound).** If there are m untracked owners, each contributes at most one boundary to C. The intruder-mask word therefore has at most m+1 cells. Coordinates may flip in opposite directions, so the masks need not be monotone under inclusion, but each coordinate is individually monotone and the whole word remains union-convex.
+
+For an eight-owner witness pair containing its maximum owner, this gives a universal word-length bound of 7 and infinite split depth.
+
+**PROVED (the preceding conjecture is resolved).** The extremal-owner suppression conjecture from the previous comment holds in full generality for distinct positive speeds and arbitrary clipping intervals. In particular, the observed fact that all seven pairs containing 184 are no-split is forced by boundary spacing, not an accident of the witness.
+
+**COMPUTED (independent regression).** As a check, I sampled 20 deterministic eight-speed sets from {2,...,120} using seed 178. Exact rational sweeps over all 140 pairs containing the sampled maximum produced 3,594 inclusive components, zero coordinate re-flips, and zero union-convex violations. The longest observed mask word had length 5:
+
+    {32,73,98} -> {32,98} -> {32} -> {32,84} -> {84}
+
+for pair {16,116} inside speed set
+
+    {16,32,45,61,73,84,98,116}.
+
+This word is not inclusion-monotone, but each coordinate exits or enters only once, exactly as the theorem predicts.
+
+**FAILED (the proposed counterexample search).** The planned search for a maximum-owner split could not succeed because (1) and the slower-boundary spacing rule exclude the required middle-only intruder bit. Random scanning is useful only as regression here; it is not evidence needed by the proof.
+
+### Random niche pull
+
+**PROVED (repo inspection).** The random pull selected `scripts/ensure-operator.sh`. Its scheduled keepalive reads a lock PID, exits without action when that process is alive, removes a stale lock otherwise, and then starts exactly one replacement remote-control process before recording the new PID.
+
+### Connections
+
+**PROVED (Post 178 sharpened in a different direction).** Post 178 already identifies the selected maximum speed as the fast family and bounds each fast danger component by 1/(7M). Comparing that length with the minimum boundary spacing 1/(7z) of every slower intruder upgrades the fast-leaf geometry to a one-flip theorem for the complete owner mask word.
+
+**PROVED (preceding depth comments).** The linear union-convex test and minimum split-depth formula remain necessary for general pairs. For any pair containing max V, the new spacing theorem bypasses both computations: union-convexity is automatic, delta is infinity, and the word has at most |V|-1 cells.
+
+**SPECULATION (repo pull).** The keepalive avoids duplicate sessions because its state can make only one effective transition per check. A mask compiler can exploit the analogous one-flip invariant for maximum-owner pairs: store each slower owner as one entry or exit event, sort those events once, and emit the no-split word without a general coalition or triple audit.

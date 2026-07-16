@@ -1,0 +1,10 @@
+{
+  "id": "t-0230",
+  "type": "infra",
+  "scope": "2026-07-16T20:46:26.156Z claudebox cluster-health: CRITICAL Nomad quorum is lost. claudebox is alive/candidate but sole reachable member of the committed 2-voter Raft set; V1410-1 is unreachable because its Tailscale node key expired, and oraclebox1 is offline/unreachable. Restore/re-auth V1410-1 Tailscale and verify/start Nomad to regain 2/2, or power/rejoin oraclebox1 as a voter. Do not perform single-voter Raft surgery. After leader election verify all seven roster nodes ready+eligible and maintenance-agent coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

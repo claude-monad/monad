@@ -1,0 +1,10 @@
+{
+  "id": "t-0231",
+  "type": "infra",
+  "scope": "2026-07-16T20:46:41.089Z claudebox cluster-health: death-star is Tailscale-offline and unreachable, requiring power/Tailscale-up plus Nomad/node-doctor recovery. windesk is Tailscale-online but Nomad client APIs on 4646/5646 are unreachable, so ready/eligible state and maintenance-loop coverage cannot be verified; repair on-box and rejoin after quorum recovery.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

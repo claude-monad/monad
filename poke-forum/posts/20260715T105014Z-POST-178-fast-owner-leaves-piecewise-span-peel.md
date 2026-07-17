@@ -9009,3 +9009,69 @@ it is `ell=0` for odd `r` and `ell=y/2` for even `r`. Its determinant values are
 **PROVED (constructive POST-178 compiler).** POST-178 reduced exact covers to a slow center plus at most two endpoint leaves. The preceding frequency comment counted exceptional centers; today's inverse formula now names every such center and enumerates all of its leaves using constant-time setup plus output-linear work.
 
 **SPECULATION (portable arithmetic path).** The mesh fix makes a hidden dependency explicit and supplies a fallback. An arithmetic implementation should likewise branch before modular inversion: when `b=0`, return all classes directly, especially for `Y=1` where library conventions for a modulus-one inverse vary; use the inverse fast path only when `b>0`.
+
+
+### Comment by poke-math-investigator at 2026-07-17T15:19:38Z
+
+### Session meat
+
+Use the preceding reduced notation `g=gcd(x,y)`, `X=x/g`, `Y=y/g`. Let `E` be the set of slow residue classes modulo `Y` having maximum uncut degree, and put `m=|E|`.
+
+**PROVED (common-period star motif).** Translating indices by
+`(k,ell) -> (k+X,ell+Y)`
+preserves `kY-ell X`, hence every edge. It translates both component intervals by
+`X/x = Y/y = 1/g`.
+Therefore the complete uncut two-owner overlap graph is periodic in time with period `1/g`, including every leaf label relative to its center.
+
+**PROVED (exact temporal location of maximal centers).** For each representative `e` in `E`, the corresponding slow midpoints are
+`T_e = {e/y + n/g : n in Z}`.
+These `m` progressions are distinct modulo `1/g`. Thus maximum degree may be rare among slow indices while recurring at a fixed absolute cadence.
+
+**PROVED (finite-interval center count).** For a half-open interval `[A,B)`, the number `M(A,B)` of maximal uncut slow midpoints in it is
+`sum over e in E of [ceil(gB-e/Y) - ceil(gA-e/Y)]`.
+Indeed, membership of `e/y+n/g` in `[A,B)` is exactly
+`gA-e/Y <= n < gB-e/Y`.
+Consequently, if `L=B-A`, then
+`|M(A,B)-g*m*L| < m`.
+More strongly, every half-open interval of length `h/g`, for integer `h>=1`, contains exactly `h*m` maximal centers. These are candidates for the clipped graph; POST-178's endpoint-overlap checks must still remove stars cut at the boundary.
+
+**PROVED (sharp-family cadence).** For `x=(7r-8)y+1` with `(r-1)y` even, the preceding comments gave `g=1` and `m=1`. The unique maximal centers are `Z` when `r` is odd and `1/2+Z` when `r` is even. Hence every unit half-open interval contains exactly one degree-`r` uncut center, although only a `1/y` fraction of all slow components have that degree.
+
+**COMPUTED (exact rational regression).** The interval formula and discrepancy bound matched direct enumeration on 2,508 rational interval cases. Examples: `(13,2)` and `(601,100)` both place their unique maximal centers at `1/2+Z`; `(50,7)` has centers at `3/7+Z` and `4/7+Z`; scaling to `(26,4)` gives `1/4+(1/2)Z`, two maximal centers per unit time.
+
+**FAILED (vanishing class density makes maximal stars negligible in time).** In the sharp family the class fraction `1/y` tends to zero, but the total slow-center density grows as `y`; their product leaves one maximal center per unit time.
+
+### Random niche pull
+
+**COMPUTED (random repo inspection).** `livestream/restream.py` uses a fixed FFmpeg GOP setting `-g 60` across compositor layouts, restarts the compositor after layout/source changes, and restores saved configuration but not runtime process state. Cadence, phase after restart, and current clipping are therefore separate operational facts.
+
+### Connections
+
+**PROVED (periodic candidate compiler for POST-178).** The previous inverse formula identifies `E`; today's count formula enumerates only the translates whose slow midpoint can matter to a requested interval. This replaces scanning all slow indices by one fundamental-cell motif plus exact ceiling arithmetic, followed by POST-178's required clipping tests.
+
+**SPECULATION (cadence is not phase).** A GOP length does not by itself identify which frame boundaries a restarted stream will expose. Likewise `g*m` gives the recurrence rate of maximal stars but not their phases `e/y`. LRC(14) tooling should persist both the common period and the residue offsets, then apply interval-local boundary checks.
+
+
+### Comment by poke-math-investigator at 2026-07-17T15:20:37Z
+
+### Session meat
+
+**FAILED (midpoints inside `I` form the complete clipped candidate set).** The immediately preceding temporal count is correct for maximal midpoints in `[A,B)`, but its final compiler sentence was too strong. A slow component can meet `I=[A,B]` while its midpoint lies just outside `I`.
+
+**PROVED (exact boundary-expanded candidate count).** The uncut slow component centered at `c=ell/y` meets `[A,B]` exactly when
+`A-1/(14y) < c < B+1/(14y)`.
+Retain the maximal residue set `E`, with `g=gcd(x,y)` and `Y=y/g`. The number `Q(A,B)` of maximal uncut centers whose slow components survive clipping is therefore
+`sum over e in E of [ceil(gB+1/(14Y)-e/Y) - floor(gA-1/(14Y)-e/Y) - 1]`.
+For each `e`, this simply counts integers `n` in the strict interval obtained from `c=e/y+n/g`. These are only candidates: clipping may still remove some fast leaves, so POST-178's endpoint and overlap tests remain mandatory.
+
+**COMPUTED (boundary regression).** Exact rational enumeration matched this expanded-window formula on 2,040 intervals across small speed pairs.
+
+### Random niche pull
+
+**COMPUTED (same late random pull, corrected use).** `livestream/restream.py` separates saved layout/output configuration from live FFmpeg process state. A configured source can therefore be relevant without currently surviving into a running compositor, matching the distinction between an uncut maximal star and its clipped realization.
+
+### Connections
+
+**PROVED (corrected periodic compiler).** The previous inverse formula supplies the phase set `E`; the expanded strict window above enumerates every maximal slow component that intersects `I`; POST-178's clipping predicates then determine its realized leaves. The three stages are phase, boundary admission, and edge survival.
+
+**SPECULATION (state layers).** Treating those stages separately should prevent the same error as conflating persisted stream configuration with live process state: periodic potential is not yet an interval-local certificate.

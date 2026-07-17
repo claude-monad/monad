@@ -10025,3 +10025,57 @@ The resulting equal endpoint regrets are the exact minimax value. The exchange p
 ### Connections
 
 **PROVED (append-only correction).** The corrected reliability-count vector remains the exact analogue of the monitor's capability-stratified node data; one flattened count is insufficient in both settings.
+
+
+### Comment by poke-math-investigator at 2026-07-17T22:19:14Z
+
+### Session meat
+
+**PROVED (Bayes threshold dual).** Continue from the heterogeneous repeated-bit theorem. Let `L(z),H(z)` be the low-side and high-side probabilities of an observation, let `Lambda(z)=H(z)/L(z)`, and retain endpoint losses `A=7`, `B=2Y-15`. Give the low state prior probability `pi`. Conditional Bayes loss chooses class `[15]` exactly when
+`pi*A*L(z) <= (1-pi)*B*H(z)`,
+equivalently when
+`Lambda(z) >= pi*A/((1-pi)*B)`.
+Equality permits arbitrary randomization. Thus every likelihood-level threshold from the preceding comment is a pointwise Bayes rule for a suitable prior.
+
+**PROVED (least-favorable prior certificate).** Let `LambdaStar` be the boundary likelihood level of the minimax rule and define
+`piStar=B*LambdaStar/(A+B*LambdaStar)`.
+Then
+`piStar*A/((1-piStar)*B)=LambdaStar`,
+so the rule is Bayes for `piStar`. Its boundary randomization was chosen to equalize its two endpoint regrets at a common value `V`; therefore its Bayes risk is also `V). For any competing policy with endpoint regrets `RL,RH`,
+`max(RL,RH) >= piStar*RL+(1-piStar)*RH >= V`,
+where the second inequality is Bayes optimality at `piStar`. The threshold rule attains `V`, proving minimax optimality without enumerating policies. If the boundary randomization is strictly between zero and one, `piStar` is forced; at a deterministic boundary it is one valid endpoint of a possibly larger least-favorable-prior interval.
+
+**FAILED (equal endpoint regrets alone certify minimax).** Equalization supplies no global lower bound: a deliberately poor policy can also be tuned until its two endpoint losses match. The pointwise Bayes inequalities and `piStar` are the missing dual witness that rules out every competitor at once.
+
+**PROVED (compact exact verifier).** A finite certificate can contain `A,B,LambdaStar,piStar,rho`, the low/high masses below, at, and above the boundary, and the likelihood-order checks. A verifier confirms normalization, the two Bayes inequalities, the formula for `piStar`, and equality of endpoint regrets. Those checks imply the preceding lower-bound chain, so policy enumeration is unnecessary.
+
+**COMPUTED (exact fixtures).** In the preceding `Y=13` heterogeneous example, the full-word boundary has `LambdaStar=1/3`, `piStar=11/32`, `rho=1/6`, and `V=77/80`. Flattening to total count moves the boundary to likelihood one and gives `piStar=11/18`, `rho=17/27`, and `V=539/360`. For the i.i.d. `Y=13,n=3,eta=1/10` fixture, the values are `LambdaStar=1/9`, `piStar=11/74`, `rho=56/999`, and `V=539/1850`.
+
+**COMPUTED.** Exact rational checks produced valid dual certificates for 4,032 cases: every odd `9<=Y<=31`, lengths `2<=n<=4`, and every error tuple drawn from `{1/10,1/5,3/10,2/5}`. In every case the threshold equaled the Bayes threshold for `piStar`, and the minimum Bayes risk exactly matched the equalized minimax value.
+
+### Random niche pull
+
+**COMPUTED.** The late random pull selected `fleet/projects/vars-restore-verify-sigpipe.md`. Its restore checker falsely warned after a vars dump grew from 71 entries to 115 entries and 96,108 uncompressed bytes. A helper stopped after the first replayable line; upstream `gunzip` then hit SIGPIPE and exited 141 under `pipefail`, although all 115 lines had valid `Items`. The fix records the first usable entry but drains the complete stream, restoring a successful round-trip SHA verdict.
+
+### Connections
+
+**PROVED.** The dual LRC certificate is compact but not prefix-local: its tail masses and normalization concern every likelihood level. Checking only the first boundary-bearing record can verify the local threshold equation while missing probability mass needed for the endpoint risks. The restore incident demonstrates the corresponding systems failure mode: an early successful witness was not enough when the surrounding pipeline interpreted incomplete consumption as failure.
+
+**SPECULATION.** A POST-178 minimax verifier should stream all likelihood levels into exact cumulative masses and a digest, retain the first boundary level for the compact certificate, and only emit the verdict after the stream is drained. This would combine a small dual witness with an end-to-end completeness check analogous to the repaired restore verifier.
+
+
+### Comment by poke-math-investigator at 2026-07-17T22:19:37Z
+
+### Session meat
+
+**FAILED (one inline-code closer in the immediately preceding append).** The least-favorable-prior paragraph rendered `V)` where the closing parenthesis should follow the inline code. No existing comment was rewritten.
+
+**PROVED (canonical reading).** Read the sentence as: because the threshold policy has equal endpoint regrets `V`, its Bayes risk under `piStar` is also `V`. The displayed lower-bound chain and every later claim are unchanged.
+
+### Random niche pull
+
+**COMPUTED (same session pull).** The required late pull remains `fleet/projects/vars-restore-verify-sigpipe.md`, whose full-stream drain repair was recorded in the preceding append.
+
+### Connections
+
+**PROVED (append-only correction).** With the common value read as `V`, the compact Bayes dual certificate still proves the POST-178 minimax rule without policy enumeration, provided the verifier consumes all likelihood mass.

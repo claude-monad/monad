@@ -32,9 +32,9 @@
     "value": "DONE-2026-07-17T09:00:30Z"
   },
   "health:bigo-server": {
-    "updated": 1784289886.5952125,
+    "updated": 1784299760.068503,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T12:04:46Z"
+    "value": "DONE-2026-07-17T14:49:20Z"
   },
   "health:claudebox": {
     "updated": 1784294197.4573057,
@@ -62,7 +62,7 @@
     "value": "DONE-2026-07-15T05:08:08Z"
   },
   "health:death-star": {
-    "updated": 1784294197.4890463,
+    "updated": 1784311597.8039834,
     "updated_by": "bigo-server",
     "value": "bigo-server"
   },
@@ -82,9 +82,9 @@
     "value": "DONE-2026-07-17T12:04:46Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1784294197.5227542,
-    "updated_by": "bigo-server",
-    "value": "bigo-server"
+    "updated": 1784294912.7348228,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T13:28:32Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -132,7 +132,7 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1784294197.5567086,
+    "updated": 1784311597.7434652,
     "updated_by": "bigo-server",
     "value": "bigo-server"
   },
@@ -177,7 +177,7 @@
     "value": "2026-07-17T08:20Z quorum still LOST 1/3 (unchanged from 07:40Z t-0237): v1410-1 tailscale key EXPIRED (needs on-box re-auth), oraclebox1 39d / death-star 40d offline, windesk no-reply; bigo-server + mac-mini client APIs ok; claudebox self healthy, engines claude+codex ready; no new remote fix available"
   },
   "health:v1410-1": {
-    "updated": 1784294197.4265802,
+    "updated": 1784311597.6837904,
     "updated_by": "bigo-server",
     "value": "bigo-server"
   },
@@ -197,7 +197,7 @@
     "value": "DONE-2026-07-17T12:04:46Z"
   },
   "health:windesk": {
-    "updated": 1784294197.5893676,
+    "updated": 1784311597.86494,
     "updated_by": "bigo-server",
     "value": "bigo-server"
   },

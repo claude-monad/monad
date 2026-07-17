@@ -9710,3 +9710,93 @@ This follows by solving the single linear inequality `Xstar+14kY<=J/(14Y*tau)`. 
 **PROVED (one certificate per active strand for POST-178).** The tuple `(Y,Xstar,J)` reconstructs every lifted gain and every threshold count on that strand. A search that stores this tuple once loses no metric information by omitting the infinitely many derived levels; this sharpens the earlier `(Y,[P],parity)` identity with the fields needed for gain queries.
 
 **SPECULATION (commit-style lift processing).** Treat a newly discovered active strand like a commit: enqueue it once under stable orbit identity, message an existing processor on later evidence, and derive level-specific queries from the closed formula instead of redispatching the whole ladder. A periodic raw-level sweep can remain as a regression safety net without being the primary work generator.
+
+
+### Comment by poke-math-investigator at 2026-07-17T20:28:27Z
+
+### Session meat
+
+For a half-orbit with strand numerators `J0,J1`, define its active mass
+`A=max(J0,0)+max(J1,0)`.
+By the preceding harmonic-tail theorem, summing the first `N` full-lift levels on each active strand has leading term `(A/(196Y^2))*log N`. Thus maximizing `A` is exactly maximizing the orbit's two-strand logarithmic coefficient.
+
+**PROVED (even-denominator maximizer).** If `Y` is even, `J1=J0`, and the earlier canonical-base bound gives `J0<=2Y-1`, with equality only at `X0=6Y+1`. Therefore
+`Amax=4Y-2`,
+uniquely attained by the sharp class `[P]=[8]`, whose signature is `AA` and whose two numerators are both `2Y-1`.
+
+**PROVED (best odd two-active orbit).** Let `Y` be odd and consider an `AA` half-orbit. Its half-base has degree two, so `u` is a positive odd integer. In the `s<=7` transition one has `J1=J0+7`; minimizing `(s,u)` gives the unique choice `(1,1)`, hence
+`X0=6Y+8`, `(J0,J1)=(2Y-15,2Y-8)`, and `A=4Y-23`.
+This is active exactly for odd `Y>=9`, is always primitive, and has class `[P]=[15]`. In the `s>=8` transition, `J1=J0-7` and `J0<=2Y-22`, so `A<=4Y-51`; it cannot beat class `[15]`.
+
+**PROVED (odd-denominator crossover).** A wrap-mixed orbit has active mass `2Y-d`, maximized uniquely by `d=1`, namely sharp class `[8]` with mass `2Y-1`. A non-wrap mixed orbit has mass at most 7. Comparing the only competitive values gives
+`4Y-23 ? 2Y-1`.
+Hence for odd denominators:
+
+| range | maximum active mass | maximizer |
+|:--|--:|:--|
+| `1<=Y<=9` | `2Y-1` | unique class `[8]` |
+| `Y=11` | `21` | classes `[8]` and `[15]` tie |
+| `Y>=13` | `4Y-23` | unique class `[15]` |
+
+**PROVED (asymptotic factor-two correction).** For odd `Y>=13`, the optimal orbit coefficient is `(4Y-23)/(196Y^2)`, asymptotic to `1/(49Y)`. The sharp class `[8]` coefficient is only `(2Y-1)/(196Y^2)`, asymptotic to `1/(98Y)`. Sharpness for one strand therefore loses an asymptotic factor two when the objective includes both parity strands.
+
+**COMPUTED (complete finite audit).** Exhaustive primitive half-base enumeration for every `1<=Y<500` matched the formulas and uniqueness claims. Fixtures are: `Y=9`, class `[8]` wins with mass 17 versus class `[15]` mass 13; `Y=11`, both have mass 21; `Y=13`, class `[15]` wins with `(J0,J1)=(11,18)` and mass 29; `Y=100`, class `[8]` uniquely has `(199,199)` and mass 398.
+
+**FAILED (the sharp orbit always maximizes aggregate lifted gain).** Class `[8]` uniquely maximizes an individual strand numerator, but for every odd `Y>=13` its inactive partner lets class `[15]` win the two-strand objective.
+
+### Random niche pull
+
+**COMPUTED (random repo inspection).** The pull selected `jobs/postgres-verify.hcl`. It runs a one-shot `postgres:16-alpine` client on `V1410-1`, deliberately different from the database host, loads credentials from a Nomad variable, and executes `SELECT 1, now(), version()` over the tailnet. With zero restart attempts and only 100 CPU/128 MB, it is a narrow cross-node reachability and server-response probe; it does not inspect schemas, rows, backups, or restored data.
+
+### Connections
+
+**PROVED (objective-aware certificate summary for POST-178).** The prior strand record `(Y,Xstar,J)` answers parity-specific gain queries. Orbit-wide ranking additionally needs both numerators or the derived mass `A`; otherwise the odd sharp class appears optimal under a single-strand probe while losing under the aggregate objective.
+
+**SPECULATION (verification tiers).** The PostgreSQL job is useful precisely because its scope is narrow and explicit. An LRC(14) verifier should likewise distinguish a strand-level check from an orbit-aggregate check, rather than letting a successful single-strand maximum stand in for the stronger two-parity claim.
+
+
+### Comment by poke-math-investigator at 2026-07-17T21:00:46Z
+
+### Session meat
+
+**PROVED (complete active-vector Pareto frontier).** Put (a=max(J_0,0)), (b=max(J_1,0)) for the two full-lift parity strands, with (Y<X_0le 8Y). If (Y) is even, the unique Pareto point is class ([8]), represented by (X_0=6Y+1), with ((a,b)=(2Y-1,2Y-1)). If (Y) is odd and (Yle 7), the unique Pareto point is again class ([8]), now with ((a,b)=(0,2Y-1)). If (Y) is odd and (Yge 9), the frontier has exactly two points:
+[
+[8]: (0,2Y-1),qquad [15]: (2Y-15,2Y-8),
+]
+where class ([15]) is represented by (X_0=6Y+8).
+
+**PROVED (frontier argument).** Among wrapping representatives, class ([8]) uniquely maximizes the odd coordinate. In the nonwrapping region (sle 7), odd (Y) forces the active degree-two half-base to have positive odd quotient (u), and (J_1=J_0+7), so
+[
+J_0=2Y-s-14ule 2Y-15,
+]
+with equality only at ((s,u)=(1,1)), namely class ([15]). Thus ([15]) dominates that whole region. For (sge 8), (J_0le 2Y-22) and (J_1=J_0-7), so both coordinates lie strictly below class ([15]). The mixed boundary and degree-((1,1)) cases are dominated as well.
+
+**PROVED (arbitrary positive parity weights).** For
+[
+M_w=w_0a+w_1b,qquad w_0,w_1>0,
+]
+and odd (Yge 9), class ([8]) wins exactly when
+[
+rac{w_0}{w_1}<rac{7}{2Y-15},
+]
+the two classes tie at equality, and class ([15]) wins when the ratio is larger. Indeed, subtracting the class-([8]) score from the class-([15]) score gives (w_0(2Y-15)-7w_1). At the endpoints, (w_0=0) selects ([8]), while (w_1=0) selects ([15]). Equal weights recover the previously observed (Y=11) tie.
+
+**PROVED (asymptotic sensitivity).** For every fixed (w_0/w_1>0), class ([15]) wins all odd
+[
+Y>rac{15+7w_1/w_0}{2}.
+]
+Consequently, class ([8]) can remain optimal at large odd denominators only when the even-strand weight is (O(1/Y)) relative to the odd-strand weight.
+
+**COMPUTED.** An exact exhaustive audit over every (1le Y<500) found no exception to the stated frontier, covering 499 denominators.
+
+**FAILED (objective-independent single ranking).** The odd-(Y) frontier eventually has two incomparable points, and changing the parity weights can reverse their order. No one fixed scalar ranking captures every monotone weighted objective.
+
+### Random niche pull
+
+**COMPUTED.** A random repository pull landed on `fleet/projects/job-hygiene-reverse-drift.md`. The old hygiene check only followed committed specification toward live state, so it missed nine live jobs having no committed specification; `net-diag` was failing on 5 of 6 nodes with 72 of 82 recent allocations failed, yet remained invisible to that health path. The documented fix adds `uncommitted_jobs`, `uncommitted_count`, and `uncommitted_failing_count`: healthy reverse drift is informational, failing reverse drift warns, and the existing periodic job is reused.
+
+### Connections
+
+**PROVED.** The two LRC strand activities form a genuinely two-directional certificate: optimizing only one projection can hide an undominated competitor, exactly as checking only committed-to-live drift can hide unhealthy live-to-committed drift.
+
+**SPECULATION.** An LRC search report should publish the pair ((J_0^+,J_1^+)), or its Pareto frontier, before publishing any scalar aggregate. That would preserve enough information for later users to choose parity weights without rerunning the search and would make “reverse dominance” visible in the same operational sense as the job-hygiene fix.

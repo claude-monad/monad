@@ -37,9 +37,9 @@
     "value": "DONE-2026-07-17T12:04:46Z"
   },
   "health:claudebox": {
-    "updated": 1784276502.5451941,
+    "updated": 1784294197.4573057,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-07-17T08:21:41Z"
+    "value": "bigo-server"
   },
   "health:claudebox-egress": {
     "updated": 1783435031.6642962,
@@ -62,24 +62,29 @@
     "value": "DONE-2026-07-15T05:08:08Z"
   },
   "health:death-star": {
-    "updated": 1784289886.3821185,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T12:04:46Z"
+    "updated": 1784294197.4890463,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
     "updated_by": "bigo-server",
     "value": "DONE-2026-07-17T09:00:30Z"
   },
-  "health:eliotts-mac-mini": {
-    "updated": 1784289886.4510455,
+  "health:death-star:claudebox-20260717T101039Z": {
+    "updated": 1784283039.1486425,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T10:10:39Z"
+  },
+  "health:death-star:claudebox-20260717T120446Z": {
+    "updated": 1784289886.3821185,
     "updated_by": "claudebox",
     "value": "DONE-2026-07-17T12:04:46Z"
   },
-  "health:eliotts-mac-mini:bigo-server-20260717T074127Z": {
-    "updated": 1784274087.8515253,
+  "health:eliotts-mac-mini": {
+    "updated": 1784294197.5227542,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-07-17T07:41:27Z"
+    "value": "bigo-server"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -95,6 +100,21 @@
     "updated": 1780646680.7174656,
     "updated_by": "V1410-1",
     "value": "V1410-1"
+  },
+  "health:eliotts-mac-mini:bigo-server-20260717T074127Z": {
+    "updated": 1784274087.8515253,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T07:41:27Z"
+  },
+  "health:eliotts-mac-mini:claudebox-20260717T101039Z": {
+    "updated": 1784283039.5333803,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T10:10:39Z"
+  },
+  "health:eliotts-mac-mini:claudebox-20260717T120446Z": {
+    "updated": 1784289886.4510455,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T12:04:46Z"
   },
   "health:eliotts-mac-mini:death-star-20260605T180950Z": {
     "updated": 1780682990.0538535,
@@ -112,14 +132,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1784289886.3052166,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T12:04:46Z"
-  },
-  "health:oraclebox1:bigo-server-20260717T090030Z": {
-    "updated": 1784278857.0304708,
+    "updated": 1784294197.5567086,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-07-17T09:00:30Z"
+    "value": "bigo-server"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -130,6 +145,21 @@
     "updated": 1781596350.608499,
     "updated_by": "bigo-server",
     "value": "DONE-2026-06-16T07:52:30Z-existing-queue-t0113"
+  },
+  "health:oraclebox1:bigo-server-20260717T090030Z": {
+    "updated": 1784278857.0304708,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T09:00:30Z"
+  },
+  "health:oraclebox1:claudebox-20260717T101038Z": {
+    "updated": 1784283038.9540796,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T10:10:38Z"
+  },
+  "health:oraclebox1:claudebox-20260717T120446Z": {
+    "updated": 1784289886.3052166,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T12:04:46Z"
   },
   "health:quorum": {
     "updated": 1781995719.0910268,
@@ -147,24 +177,44 @@
     "value": "2026-07-17T08:20Z quorum still LOST 1/3 (unchanged from 07:40Z t-0237): v1410-1 tailscale key EXPIRED (needs on-box re-auth), oraclebox1 39d / death-star 40d offline, windesk no-reply; bigo-server + mac-mini client APIs ok; claudebox self healthy, engines claude+codex ready; no new remote fix available"
   },
   "health:v1410-1": {
-    "updated": 1784289886.2308707,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T12:04:46Z"
+    "updated": 1784294197.4265802,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
     "updated_by": "bigo-server",
     "value": "DONE-2026-07-17T09:00:30Z"
   },
-  "health:windesk": {
-    "updated": 1784289886.5161533,
+  "health:v1410-1:claudebox-20260717T101038Z": {
+    "updated": 1784283038.763041,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T10:10:38Z"
+  },
+  "health:v1410-1:claudebox-20260717T120446Z": {
+    "updated": 1784289886.2308707,
     "updated_by": "claudebox",
     "value": "DONE-2026-07-17T12:04:46Z"
+  },
+  "health:windesk": {
+    "updated": 1784294197.5893676,
+    "updated_by": "bigo-server",
+    "value": "bigo-server"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,
     "updated_by": "bigo-server",
     "value": "DONE-2026-07-17T09:00:30Z"
+  },
+  "health:windesk:claudebox-20260717T101039Z": {
+    "updated": 1784283039.335339,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T10:10:39Z"
+  },
+  "health:windesk:claudebox-20260717T120446Z": {
+    "updated": 1784289886.5161533,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T12:04:46Z"
   },
   "issue:v1410-1-git-push": {
     "updated": 1782083682.186607,

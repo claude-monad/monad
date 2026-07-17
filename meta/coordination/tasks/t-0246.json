@@ -1,0 +1,10 @@
+{
+  "id": "t-0246",
+  "type": "infra",
+  "scope": "2026-07-17T09:45:22Z bigo-server peer handoff after claims: oraclebox1 and death-star remain Tailscale-offline/unreachable (~40d); windesk is offline/unreachable (~3h). Restore power/network/Tailscale on-box, then after quorum returns verify Nomad ready+eligible, engines, and maintenance coverage. claudebox is reachable with Nomad/engines healthy, but its maintenance allocation exposes no live task stats and a client-local maintainer restart returned Index 0 without restoring task stats; verify/restart its maintainer on-box after leader recovery.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

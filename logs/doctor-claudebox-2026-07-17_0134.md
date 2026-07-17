@@ -12,3 +12,4 @@
 ## Warnings
 
 - Git has 2 uncommitted changes
+Execution errorrun-agent: claude hit the 300s timeout and was stopped.

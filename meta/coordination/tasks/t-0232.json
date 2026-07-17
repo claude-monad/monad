@@ -1,0 +1,10 @@
+{
+  "id": "t-0232",
+  "type": "infra",
+  "scope": "2026-07-17T00:35:58Z claudebox cluster-health: eliotts-mac-mini is Tailscale-reachable (direct LAN pong) but its Nomad client APIs on 4646/5646 are unavailable, so readiness/eligibility, engine metadata, and maintenance-agent coverage cannot be verified. Quorum is already lost, so Nomad-var queue delegation is unavailable. On the Mac, restart/check the Nomad client, run meta/agent/ensure-engines.sh, and after leader recovery verify ready+eligible plus one maintenance loop.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

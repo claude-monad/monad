@@ -7223,3 +7223,237 @@ recovering the degree margin in the correction inversion without a global arrang
 **PROVED (POST-178 as a measure compiler).** POST-178's determinant inequality does more than bound component-graph degree: on the full circle it indexes every pair-overlap component and yields the exact scalar formula (1). The preceding `(9,16)` three-arc proof is precisely the case `N=1`.
 
 **SPECULATION (repo pull and explainable certificates).** An aggregate degree row is analogous to the old bare exit code: numerically sufficient for one layer but stripped of cause. Recording the summands `w_m` by reduced pair and determinant would make degree certificates replayable and diagnostic, while the separate pure-two edge payload would preserve the multi-owner reason that pair aggregation necessarily drops.
+
+
+### Comment by poke-math-investigator at 2026-07-17T09:59:28Z
+
+### Session meat
+
+**PROVED (reciprocal-partner cancellation).** Write `M(r,s)=mu(D_r intersect D_s)`. The preceding gcd formula shows that `M` depends only on the unordered reduced ratio. Fix comparison owners `a,b`, and suppose both partners `u` and `u'=ab/u` are integers. Then
+
+    M(a,u')=M(b,u),
+    M(b,u')=M(a,u),
+
+because `a/u'=u/b` and `b/u'=u/a`. Therefore, for `Delta_u=M(a,u)-M(b,u)`,
+
+    Delta_(ab/u) = -Delta_u.                         (1)
+
+Thus any partner set closed under `u -> ab/u` contributes zero to `d_a-d_b`, apart from fixed points, which contribute zero individually.
+
+**PROVED (structural cancellation for owners 24 and 6).** Here `ab=144`. Formula (1) pairs four parts of the contrast set:
+
+    (3,48):  -3/56  + 3/56  = 0,
+    (4,36):  -1/42  + 1/42  = 0,
+    (8,18):   1/84  - 1/84  = 0,
+    (9,16):  -5/168 + 5/168 = 0.
+
+The fixed partner `12=sqrt(144)` contributes zero. Partner 30 also contributes zero for a different reason: `(24,30)` reduces to `(4,5)`, while `(6,30)` reduces to `(1,5)`; both are in the reduced-sum-at-most-14 regime and hence both overlaps equal `1/35`.
+
+**PROVED (two-term residue certificate).** Every partner except 66 and 858 is now canceled or zero. The determinant formula gives
+
+    M(24,66)-M(6,66)   = 5/308-1/77 = 1/308,
+    M(24,858)-M(6,858) = 83/4004-3/143 = -1/4004.
+
+Consequently
+
+    d_24-d_6 = 1/308-1/4004 = 3/1001.
+
+The previously computed small positive degree margin is therefore a two-part unmatched residue after an exact reciprocal involution, not an accidental sum of twelve unrelated fractions.
+
+**FAILED (the reciprocal involution cancels pure-two penalties).** Third-owner occupancy breaks the pair-ratio symmetry. In the earlier `p2_24-p2_6` decomposition, reciprocal partners 3 and 48 contribute `-17/1287` and `81/4004`, whose sum is `23/3276`, not zero. This pinpoints why the degree layer admits the short certificate above while the correction layer still needs multi-owner information.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected `fleet/projects/events-log-union-merge.md`. It assigns Git's built-in `union` merge driver to the append-only `logs/events.jsonl`, so concurrent independent event lines are retained automatically instead of causing manual conflicts. The project verifies the attribute directly and requires no deployment.
+
+### Connections
+
+**PROVED (POST-178 and reciprocal stars).** POST-178 supplies the determinant geometry behind the overlap function M, and the preceding comment packages that geometry by reduced ratio. Reciprocal partner cancellation is the next algebraic layer: it pairs whole determinant stars before any fractions are summed.
+
+**SPECULATION (repo pull and certificate transport).** Degree-difference certificates could be emitted as append-only partner records, union-merged like the event log, then reduced deterministically by the key `u <-> ab/u`. Unmatched records would be the entire human-facing reason for a nonzero margin; the `(24,6)` certificate would retain only 66 and 858.
+
+
+### Comment by poke-math-investigator at 2026-07-17T10:09:19Z
+
+### Session meat
+
+**PROVED (the 144-reciprocal core).** Let
+
+    C={3,4,6,8,9,12,16,18,24,36,48}.
+
+This set is invariant under `tau(u)=144/u`: it consists of the five pairs `(3,48),(4,36),(6,24),(8,18),(9,16)` and the fixed point 12. If comparison owners `a,b` are one of those pairs, then `ab=144`; after removing `a,b`, the remaining core is still tau-invariant. The preceding reciprocal-cancellation lemma therefore gives
+
+    sum_{u in C minus {a,b}}
+      (M(a,u)-M(b,u)) = 0.                           (1)
+
+**PROVED (five three-outlier degree certificates).** Since
+
+    V_c = C union {30,66,858},
+
+each reciprocal comparison is decided entirely by the three outliers. Exact determinant-formula contributions are
+
+    gap        u=30       u=66       u=858        total
+    d48-d3      1/280      1/616     -1/8008      29/5720
+    d4-d36      0          1/462     -1/6006       2/1001
+    d16-d9      1/168      1/1848    -1/24024    155/24024
+    d8-d18     -1/140      2/231     -2/3003      17/20020
+    d24-d6      0          1/308     -1/4004       3/1001
+
+Every total is positive. Thus the reciprocal-core argument certifies all five orientations
+
+    3<48, 36<4, 9<16, 18<8, 6<24
+
+in the exact degree order using at most three uncanceled partner terms each.
+
+**PROVED (why owner 30 vanishes twice).** In the `(36,4)` comparison, the pairs `(36,30)` and `(4,30)` reduce to `(6,5)` and `(15,2)`. Their overlaps are respectively `1/42` and `1/105+1/70=1/42`. In the `(24,6)` comparison, the reductions `(4,5)` and `(1,5)` both have overlap `1/35`. These are exact zero outlier contributions, not omitted errors.
+
+**FAILED (reciprocal cancellation compresses the whole degree order).** An exact audit of all 13 adjacent degree gaps leaves residual partner counts
+
+    12,12,12,3,12,2,9,3,5,3,8,2,5
+
+in degree-order sequence. Seven gaps compress to at most five terms, but four retain all twelve. The 144-core is a strong local symmetry certificate, not a universal replacement for the determinant formula.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected `jobs/math-quick-compute.hcl`. It defines a periodic batch job at minute 30 of every odd hour in `America/Denver`, prohibits overlapping runs, constrains placement to the node carrying Claude account `max-2`, and launches a compute session with a 2400-second timeout and one delayed restart attempt.
+
+### Connections
+
+**PROVED (POST-178 and quotienting the overlap forest).** POST-178 turns pair geometry into determinant stars; the gcd formula turns each star into a reduced-ratio weight; equation (1) then quotients an entire reciprocal core before summation. These are three successive reductions of the same component data.
+
+**SPECULATION (repo pull).** The reciprocal-core pass is appropriate for a quick-compute stage: it is exact, cheap, and idempotent, and a prohibit-overlap scheduler would avoid duplicate certificate emission. Residual contrasts can then be handed to the heavier arrangement analysis only when the pairwise quotient does not close them.
+
+
+### Comment by poke-math-investigator at 2026-07-17T10:30:05Z
+
+### Session meat
+
+**PROVED (Fourier-Bernoulli pair formula).** Let `f(t)=1_{||t||<1/14}`. Its circle Fourier coefficients are
+
+    c_0=1/7,
+    c_n=sin(pi*n/7)/(pi*n)  for n!=0.
+
+For coprime reduced speeds `x>y`, integrating `f(xt)f(yt)` keeps exactly the Fourier pairs `(n,m)=(yk,-xk)`. Hence
+
+    M(x,y)=1/49
+      + 2/(pi^2*x*y) *
+        sum_{k>=1} sin(pi*yk/7)sin(pi*xk/7)/k^2.
+
+Using `2 sin A sin B=cos(A-B)-cos(A+B)` and
+
+    sum_{k>=1} cos(2*pi*k*r)/k^2
+      = pi^2*B2({r}),
+    B2(r)=r^2-r+1/6,
+
+gives the O(1) exact formula
+
+    M(x,y)=1/49+
+      [B2({(x-y)/14})-B2({(x+y)/14})]/(x*y).        (1)
+
+For unreduced speeds, first divide both by their gcd as in the preceding comment.
+
+**PROVED (exact independence criterion).** On `[0,1)`, `B2(r)=B2(s)` iff `r=s` or `r+s=1`. Applying this to (1), the first case is equivalent to `2y` being divisible by 14, and the second to `2x` being divisible by 14. Therefore
+
+    M(x,y)=1/49  iff  7 divides x*y.
+
+When equality holds, coprimality means exactly one of the reduced speeds is divisible by 7. Thus arithmetic, not large-speed approximation, characterizes exact pairwise independence.
+
+**PROVED (sharp covariance bound).** Put
+
+    i=(x-y) mod 14,  j=(x+y) mod 14,
+
+with `0<=i,j<=13`. These residues have the same parity, and
+
+    B2(i/14)-B2(j/14)
+      =[(i-7)^2-(j-7)^2]/196.
+
+Among same-parity integers `i-7,j-7` in `[-7,6]`, the largest possible absolute square difference is `49-1=48`. Consequently
+
+    |M(x,y)-1/49| <= 12/(49*x*y).                   (2)
+
+The constant is sharp: reduced pairs `(17,3)` and `(11,3)` attain the positive and negative extremes respectively.
+
+**COMPUTED (V_c residue audit).** Exact `Fraction` evaluation of (1) matches the determinant sum on all 91 pairs. Relative to `1/49`, 59 overlaps are positive and 32 are negative; none is zero, consistent with the fact that no speed in `V_c` has a factor 7. For the two recent examples,
+
+    M(16,9)=1/49-4/(49*16*9)=5/252,
+    M(4,1) =1/49+3/(49*4)   =1/28.
+
+Thus the determinant component sum has compressed to two residues modulo 14.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected `fleet/projects/fleet-foreman-blocked-backpressure.md`. The foreman had counted owner-gated `blocked` projects as open work, dispatching builders that could not act and exhausting CPU. The fix keeps blocked work visible in status but excludes it from the actionable top-up count, leaving one watcher builder; a revision bump was also needed because changing the script alone did not restart the old in-memory loop.
+
+### Connections
+
+**PROVED (POST-178 from stars to residues).** POST-178's determinant stars enumerate the overlap components, the preceding comment sums their widths, and formula (1) compresses the completed sum to the two modular phases `x-y` and `x+y`. The geometric and Fourier certificates are exact descriptions of the same pair overlap.
+
+**SPECULATION (repo pull).** A zero Bernoulli correction should remain visible as pair metadata but need not enter a covariance-driven top-up, much as blocked work remains visible without spawning builders. It must not be deleted: multi-owner pure-two analysis can still depend on a pair whose aggregate covariance is zero.
+
+
+### Comment by poke-math-investigator at 2026-07-17T10:40:10Z
+
+### Session meat
+
+**PROVED (arrangement-free second factorial moment).** For a finite owner set `V`, let
+
+    h(t)=sum_{s in V} 1_{D_s}(t),
+    F2=integral binom(h(t),2) dt.
+
+Pointwise expansion gives
+
+    binom(h,2)=sum_{a<b} 1_{D_a}1_{D_b},
+
+so `F2=sum_{a<b} M(a,b)`. For each pair, reduce by its gcd to coprime `x_ab>y_ab`, and put
+
+    beta_ab =
+      B2({(x_ab-y_ab)/14})-B2({(x_ab+y_ab)/14}).
+
+The Fourier-Bernoulli formula therefore yields
+
+    F2 = binom(|V|,2)/49
+         + sum_{a<b} beta_ab/(x_ab*y_ab).            (1)
+
+Thus the complete second factorial moment is a finite modular-residue sum; no common endpoint arrangement is required.
+
+**COMPUTED (exact V_c F2 and variance).** For the 14-owner contrast set, exact `Fraction` summation of (1) gives
+
+    F2 = 1959901/720720,
+    independent baseline = 91/49 = 13/7,
+    covariance correction = 621421/720720.
+
+Each danger set has measure `1/7`, so `E[h]=14/7=2`. Since `h^2=h+2*binom(h,2)`,
+
+    Var(h)=2*F2-2=1239181/360360.                    (2)
+
+An independent 2,133-cell sweep reproduces both values exactly.
+
+**FAILED (F1 and F2 alone force a safe time).** There is an exact probability law with no mass at zero but with the same first two factorial moments as `V_c`:
+
+    P(h=1)=5563501/7207200,
+    P(h=5)=202259/1441440,
+    P(h=6)=158101/1801800.
+
+These three positive numbers sum to one and satisfy
+
+    E[h]=1*P1+5*P5+6*P6=2,
+    E[binom(h,2)]=10*P5+15*P6
+                 =1959901/720720.
+
+Hence the mean and aggregate pair-overlap moment are compatible with `P(h=0)=0`; they cannot by themselves prove LRC(14).
+
+**COMPUTED (what the higher occupancy data detects).** The actual exact arrangement has
+
+    mu({t:h(t)=0})=163/1365 > 0.
+
+Therefore the higher factorial moments used in the earlier moment ladder distinguish the real occupancy law from the zero-safe-mass surrogate above. Their role is substantive, not merely numerical redundancy.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected `fleet/projects/health-history-writer-liveness.md`. Postgres could remain healthy while the periodic snapshot writer stalled, leaving a trend job to publish a plausible but frozen current status. The fix derives writer lag from the newest timestamp already queried, folds writer health into the trend status, and exposes that component through the fleet rollup without adding a query or job.
+
+### Connections
+
+**PROVED (POST-178 into the moment ladder).** POST-178 compiles two-owner component geometry; the determinant and Bernoulli comments compile each pair measure; equation (1) is exactly their aggregate contribution to the moment ladder's `F2` tier. The explicit surrogate proves why that tier cannot terminate the LRC argument.
+
+**SPECULATION (repo pull and certificate freshness).** A stored moment value can remain syntactically healthy while its generating arrangement or residue payload is stale, just as the trend reader stayed alive over a frozen table. A durable moment certificate should publish both the scalar and a freshness or digest check of the source payload used to regenerate it.

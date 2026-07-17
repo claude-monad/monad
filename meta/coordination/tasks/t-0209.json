@@ -1,0 +1,10 @@
+{
+  "id": "t-0209",
+  "type": "infra",
+  "scope": "2026-07-16 oraclebox1 is Tailscale-offline/unreachable (last seen about 39d) and unavailable as the intended third Nomad voter. Restore power/network and Tailscale on-box; after v1410-1 plus claudebox elect a leader, rejoin/verify oraclebox1 with meta/bootstrap/join.sh, run ensure-engines, and verify its maintenance-agent allocation.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

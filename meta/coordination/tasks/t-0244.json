@@ -1,0 +1,10 @@
+{
+  "id": "t-0244",
+  "type": "infra",
+  "scope": "2026-07-17T08:59Z bigo-server CRITICAL: Nomad quorum remains lost at 1/2. Stale Raft on live claudebox confirms exactly two voters: v1410-1 and claudebox; claudebox is Candidate/no leader. v1410-1 Tailscale key is expired and SSH times out with no alternate route; restore/re-authorize Tailscale via on-box/provider access, verify/start Nomad, and confirm leader election. oraclebox1 and death-star remain offline about 40d; windesk is offline about 2h; eliotts-mac-mini is reachable. Global ready/eligible and maintenance-agent coverage checks are blocked until leadership returns. Do not perform single-voter Raft surgery without explicit approval; after recovery verify all seven roster nodes.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0243"
+}

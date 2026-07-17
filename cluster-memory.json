@@ -27,9 +27,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1784250902.975469,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T01:15:02Z"
+    "updated": 1784278856.9576304,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T09:00:30Z"
   },
   "health:bigo-server": {
     "updated": 1784211228.6963415,
@@ -37,9 +37,9 @@
     "value": "DONE-2026-07-16T14:13:48Z"
   },
   "health:claudebox": {
-    "updated": 1784268955.9027815,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T06:15:55Z"
+    "updated": 1784276502.5451941,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T08:21:41Z"
   },
   "health:claudebox-egress": {
     "updated": 1783435031.6642962,
@@ -62,14 +62,14 @@
     "value": "DONE-2026-07-15T05:08:08Z"
   },
   "health:death-star": {
-    "updated": 1784274051.6847734,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T07:40:51Z"
+    "updated": 1784278857.0953987,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T09:00:30Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1784266466.6122923,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T05:34:26Z"
+    "updated": 1784274087.8515253,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T07:41:27Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1784274051.6158836,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T07:40:51Z"
+    "updated": 1784278857.0304708,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T09:00:30Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -132,14 +132,14 @@
     "value": "2026-07-17T08:20Z quorum still LOST 1/3 (unchanged from 07:40Z t-0237): v1410-1 tailscale key EXPIRED (needs on-box re-auth), oraclebox1 39d / death-star 40d offline, windesk no-reply; bigo-server + mac-mini client APIs ok; claudebox self healthy, engines claude+codex ready; no new remote fix available"
   },
   "health:v1410-1": {
-    "updated": 1784274051.5497282,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T07:40:51Z"
+    "updated": 1784278856.8960593,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T09:00:30Z"
   },
   "health:windesk": {
-    "updated": 1784274051.7568297,
-    "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T07:40:51Z"
+    "updated": 1784278857.1562996,
+    "updated_by": "bigo-server",
+    "value": "DONE-2026-07-17T09:00:30Z"
   },
   "issue:v1410-1-git-push": {
     "updated": 1782083682.186607,

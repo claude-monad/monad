@@ -1,0 +1,10 @@
+{
+  "id": "t-0240",
+  "type": "infra",
+  "scope": "2026-07-16 windesk answers Tailscale ping, but Nomad client ports 4646/5646 and maintenance gateway 8300 time out; global ready/eligible and allocation checks are blocked by quorum loss. On windesk, verify/restart the Nomad client or node-doctor equivalent and run ensure-engines; after leadership returns, confirm ready+eligible and one maintenance-agent allocation.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

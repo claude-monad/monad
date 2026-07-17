@@ -1,0 +1,10 @@
+{
+  "id": "t-0238",
+  "type": "infra",
+  "scope": "2026-07-16 bigo-server CRITICAL quorum recovery: v1410-1 (100.75.75.39) is the missing voter in the live two-voter Raft configuration and is Tailscale-offline with an expired node key; claudebox (100.87.219.108) is alive but Candidate/no leader. Restore or re-auth Tailscale on v1410-1, start/verify its Nomad server, then confirm leader election before checking client readiness and maintenance-agent coverage. Do not perform single-voter Raft surgery without explicit approval.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

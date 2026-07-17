@@ -127,9 +127,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1784253253.6083248,
+    "updated": 1784276520.8340535,
     "updated_by": "claudebox",
-    "value": "2026-07-17T01:54:13Z quorum still LOST 1/3 (unchanged, all escalated): v1410-1 tailscale-offline 14d (issue#6), oraclebox1 39d, death-star 39d (issue#4); windesk tailscale up but nomad API dead; bigo disk 74.1% ok, mac-mini 90.4% (t-0232); self healthy: disk 7%, repo synced, engines claude+codex ready, local server+maintenance loop alive"
+    "value": "2026-07-17T08:20Z quorum still LOST 1/3 (unchanged from 07:40Z t-0237): v1410-1 tailscale key EXPIRED (needs on-box re-auth), oraclebox1 39d / death-star 40d offline, windesk no-reply; bigo-server + mac-mini client APIs ok; claudebox self healthy, engines claude+codex ready; no new remote fix available"
   },
   "health:v1410-1": {
     "updated": 1784274051.5497282,

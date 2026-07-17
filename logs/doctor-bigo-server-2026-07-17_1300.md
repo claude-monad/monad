@@ -15,3 +15,4 @@
 
 - Nomad quorum/server access remains blocked on remote `v1410-1` recovery.
 - Pre-existing live log/metrics changes were left untouched.
+run-agent: codex hit the 300s timeout and was stopped.

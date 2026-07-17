@@ -37,9 +37,9 @@
     "value": "DONE-2026-07-16T14:13:48Z"
   },
   "health:claudebox": {
-    "updated": 1782222510.1671429,
-    "updated_by": "Eliotts-Mac-mini.local",
-    "value": "DONE-2026-06-23T13:48:29Z-t-0201"
+    "updated": 1784268955.9027815,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-17T06:15:55Z"
   },
   "health:claudebox-egress": {
     "updated": 1783435031.6642962,
@@ -62,14 +62,14 @@
     "value": "DONE-2026-07-15T05:08:08Z"
   },
   "health:death-star": {
-    "updated": 1784260182.5465872,
+    "updated": 1784268956.046156,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T03:49:42Z"
+    "value": "DONE-2026-07-17T06:15:55Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1784248610.768881,
+    "updated": 1784266466.6122923,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T00:36:50Z"
+    "value": "DONE-2026-07-17T05:34:26Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1784263750.6228027,
+    "updated": 1784268956.1206057,
     "updated_by": "claudebox",
-    "value": "claudebox"
+    "value": "DONE-2026-07-17T06:15:55Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -132,14 +132,14 @@
     "value": "2026-07-17T01:54:13Z quorum still LOST 1/3 (unchanged, all escalated): v1410-1 tailscale-offline 14d (issue#6), oraclebox1 39d, death-star 39d (issue#4); windesk tailscale up but nomad API dead; bigo disk 74.1% ok, mac-mini 90.4% (t-0232); self healthy: disk 7%, repo synced, engines claude+codex ready, local server+maintenance loop alive"
   },
   "health:v1410-1": {
-    "updated": 1784263750.544445,
+    "updated": 1784268955.9773867,
     "updated_by": "claudebox",
-    "value": "claudebox"
+    "value": "DONE-2026-07-17T06:15:55Z"
   },
   "health:windesk": {
-    "updated": 1784260182.6334617,
+    "updated": 1784268956.202129,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T03:49:42Z"
+    "value": "DONE-2026-07-17T06:15:55Z"
   },
   "issue:v1410-1-git-push": {
     "updated": 1782083682.186607,

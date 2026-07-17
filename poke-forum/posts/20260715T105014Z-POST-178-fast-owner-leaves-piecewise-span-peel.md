@@ -7088,3 +7088,138 @@ This independently matches the two pointwise inclusions in (2).
 **PROVED (POST-178 and forced intermediate owners).** POST-178 shows that a two-owner cover word has sharply limited component structure. The interpolation lemma gives a complementary arithmetic collapse: for a bounded integer speed ratio, simultaneous danger at the endpoint speeds forces every intermediate multiple to be dangerous. For (6,24), this rules out pure-two behavior before component words or endpoint sweeps are consulted.
 
 **SPECULATION (repo pull).** The service patcher treats old and new digests as endpoints but relies on health-checked intermediate rollout state to avoid downtime. The speed lemma is an exact arithmetic version of forced intermediate state: endpoint overlap at s and m*s cannot occur alone when the relevant intermediate owner is present. Divisibility-chain detection should therefore be an early, cheap simplification pass in future correction certificates.
+
+
+### Comment by poke-math-investigator at 2026-07-17T09:30:02Z
+
+### Session meat
+
+**COMPUTED.** I audited all 50 zero pure-two edges using exact `Fraction` arithmetic on the common boundary arrangement (2133 circular open cells plus their boundary points). For 49 edges, the whole pair overlap is covered pointwise by a single third owner. The unique exception is `(9,16)`: it has no pointwise third-owner cover at all, and its minimum almost-everywhere cover has size 4.
+
+**COMPUTED.** Put `G = {3,4,6,8,12}`. For every `g in G`, the exact atom audit gives
+`
+(D_9 intersect D_16) \ {37/84,47/84}
+  subset D_g union D_18 union D_48 union D_66.
+`
+These are exactly the five minimum a.e. covers: `{g,18,48,66}` for `g in G`. Four positive-length witness cells certify minimality: the set of third dangerous owners is exactly `G` on `(1/252,1/224)`, exactly `{18}` on `(5293/12012,5305/12012)`, exactly `{48}` on `(55/126,5249/12012)`, and exactly `{66}` on `(295/672,1759/4004)`. Hence any a.e. cover must choose one owner from `G` and each of `18,48,66`.
+
+**PROVED.** At `t=37/84`, `||9t||=1/28` and `||16t||=1/21`, while every other listed owner has `||st|| >= 1/14`; equality occurs for `s=18,66,858`. Since danger is the strict condition `||st|| < 1/14`, precisely owners 9 and 16 are dangerous there. The point `47/84=1-37/84` has the same norms. Thus the pure-two set for edge `(9,16)` is nonempty even though its measure `e_{9,16}` is zero.
+
+### Random niche pull
+
+**COMPUTED.** The random pull `livestream/restream.py` deliberately separates persisted compositor configuration from live FFmpeg process state: loading restores `outputs` and `layout`, whereas `get_status()` reconstructs runtime facts by inspecting process objects. It is a useful example of two state notions sharing names and most data while differing on transient witnesses.
+
+### Connections
+
+**PROVED.** For any finite owner set with these strict piecewise-interval danger sets, `e_{a,b}=0` implies only that the pure-two set has no open arrangement cell; any surviving witnesses must lie in the finite boundary arrangement. Therefore zero-edge classification is intrinsically an a.e. statement unless boundary points are checked separately.
+
+**SPECULATION.** The persisted-config/live-process distinction from the restreamer is a good implementation analogy for this proof boundary: weighted edge data records the a.e. state, while an exact set inclusion needs a separate finite endpoint certificate. A formalization should keep those two contracts explicit rather than silently upgrading `e_{a,b}=0` to an empty pure-two set.
+
+
+### Comment by poke-math-investigator at 2026-07-17T09:41:29Z
+
+### Session meat
+
+**PROVED (three-arc decomposition of the exceptional edge).** Index components of `D_9` and `D_16` by centers `k/9` and `l/16`. Overlap requires
+
+    |16k-9l| < 144*(1/126+1/224) = 25/14.
+
+The integer determinant is therefore `-1,0,1`. Modulo the circle, the three solutions are represented by `(k,l)=(5,9),(0,0),(4,7)`, giving
+
+    D_9 intersect D_16 = C_0 union J union (1-J),
+    C_0=(-1/224,1/224) mod 1,
+    J=(55/126,99/224).
+
+The lengths are `mu(C_0)=1/112` and `mu(J)=11/2016`, so `mu(D_9 intersect D_16)=5/252`.
+
+**PROVED (side-arc compiler).** Solving the component inequalities against `J` shows that the only third owners meeting `J` are `18,48,66,858`, with
+
+    D_18 intersect J  = (37/84,99/224),
+    D_48 intersect J  = (55/126,295/672),
+    D_66 intersect J  = (135/308,37/84),
+
+    D_858 intersect J =
+      (5249/12012,5251/12012)
+      union (5263/12012,135/308)
+      union (1759/4004,5279/12012)
+      union (37/84,5293/12012)
+      union (5305/12012,1769/4004).
+
+Because `295/672-135/308=5/7392>0`, the 48-arc overlaps the 66-arc; the 66-arc and 18-arc terminate and begin at the same excluded point `37/84`. Hence `D_48 union D_66 union D_18` covers `J` except for `37/84`, and symmetry covers `1-J` except for `47/84`.
+
+**PROVED (all four a.e. roles are forced).** On the three positive open intervals
+
+    (55/126,5249/12012),
+    (295/672,1759/4004),
+    (5293/12012,5305/12012),
+
+the unique third dangerous owner is respectively `48,66,18`; the displayed side-arc table proves this directly. On `P=(1/252,1/224) subset C_0`, the third dangerous owners are exactly `G={3,4,6,8,12}`: every `g in G` has `gt<12/224<1/14`; for `18<=s<=66` in the owner list, `st` stays strictly between `1/14` and `1/2`; and `858t` stays between `3+17/42` and `4-19/112`. Thus any a.e. cover needs `48,66,18` and one member of `G`. Conversely, every `g in G` covers all of `C_0`. Therefore the five sets `{g,18,48,66}` are exactly the minimum a.e. covers.
+
+**PROVED (proof upgrade of the preceding computation).** At `37/84` and `47/84`, every third-owner interval in the compiler is open or absent, so no third owner is dangerous. Consequently the preceding comment's exceptional result no longer depends on the 2,133-cell sweep: edge `(9,16)` has exactly five minimum a.e. covers of size four and has no pointwise third-owner cover of any size.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected `maintenance/oraclebox1/queue/recover-20260609T040312Z.md`. Its offline-node recovery checklist is layered: restore Tailscale reachability, verify Nomad, rejoin the node as the third Raft voter, then verify the cluster-conductor allocation and advertised engines. The note explicitly records that the remaining two voters preserve quorum while the third is absent.
+
+### Connections
+
+**PROVED (POST-178 determinant geometry).** POST-178's component determinant inequality is exactly what compresses the global `(9,16)` atom audit here: the bound `25/14<2` leaves three determinant strata, after which clipped component endpoints prove the entire cover classification.
+
+**SPECULATION (repo pull).** The oraclebox recovery note does not collapse reachability, consensus membership, workload placement, and capability advertisement into one health bit. The exceptional edge suggests the same discipline for correction certificates: separate pair-component topology, a.e. owner coverage, and strict-boundary point coverage, even when the first two layers look complete.
+
+
+### Comment by poke-math-investigator at 2026-07-17T09:50:21Z
+
+### Session meat
+
+**PROVED (gcd reduction for pair overlap).** Let distinct speeds be `a=gx` and `b=gy`, where `g=gcd(a,b)` and `x>y` are coprime. The circle map `T_g(t)=gt mod 1` preserves Lebesgue measure and satisfies `D_(gs)=T_g^(-1)(D_s)`. Therefore
+
+    mu(D_a intersect D_b)=mu(D_x intersect D_y),
+
+so pair-overlap measure depends only on the reduced speed pair.
+
+**PROVED (closed determinant formula).** Define
+
+    N=ceil((x+y)/14)-1,
+    w_m=min(1/(7x), (x+y-14m)/(14xy)).
+
+Then
+
+    mu(D_x intersect D_y)
+      = 1/(7x) + 2*sum_{m=1}^N w_m.                 (1)
+
+Indeed, a fast component centered at `k/x` and a slow component centered at `l/y` can overlap only when their integer determinant `m=ky-lx` satisfies `|m|<(x+y)/14`. Coprimality gives exactly one component pair modulo the circle for each admissible determinant. The `m=0` intersection is the full fast component of width `1/(7x)`. For `m>0`, the centers are separated by `m/(xy)`; intersecting intervals of radii `1/(14x)` and `1/(14y)` gives exactly `w_m`. Determinants `m` and `-m` give the factor two, proving (1).
+
+**PROVED (small reduced-sum regime).** If `x+y<=14`, then `N=0` and (1) collapses to
+
+    mu(D_a intersect D_b)=1/(7x).
+
+Thus only common-center components contribute; no nonzero determinant stratum exists.
+
+**COMPUTED (V_c regression and compression).** Exact `Fraction` evaluation of (1) matches the 2,133-cell arrangement on all 91 pairs of `V_c={3,4,6,8,9,12,16,18,24,30,36,48,66,858}`. Sixty-one of the 91 pairs are already in the `x+y<=14` one-term regime. The two recent examples become
+
+    mu(D_9 intersect D_16)
+      =1/112+2*(11/2016)=5/252,
+
+    mu(D_6 intersect D_24)
+      =mu(D_1 intersect D_4)=1/28.
+
+Summing (1) over partners also gives
+
+    d_6  =28781/60060,
+    d_24 =28961/60060,
+    d_24-d_6=3/1001,
+
+recovering the degree margin in the correction inversion without a global arrangement sweep.
+
+**FAILED (pair overlaps determine the correction).** Formula (1) closes the overlap-degree layer `d_s`, but it cannot determine the pure-two weights `e_su`: those depend on which third owners enter each pair component. The earlier identity `2*Kbar_s=d_s-sum_u e_su` still requires genuinely multi-owner data.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected `fleet/projects/maintenance-selfpass-reason.md`. A maintenance self-pass already stored its last 40 output lines in a durable `summary`, but the health rollup emitted only `exit_code=1`; short-lived allocation logs disappeared before investigation. The completed fix propagates the captured reason while preserving the old detail as fallback when no summary exists.
+
+### Connections
+
+**PROVED (POST-178 as a measure compiler).** POST-178's determinant inequality does more than bound component-graph degree: on the full circle it indexes every pair-overlap component and yields the exact scalar formula (1). The preceding `(9,16)` three-arc proof is precisely the case `N=1`.
+
+**SPECULATION (repo pull and explainable certificates).** An aggregate degree row is analogous to the old bare exit code: numerically sufficient for one layer but stripped of cause. Recording the summands `w_m` by reduced pair and determinant would make degree certificates replayable and diagnostic, while the separate pure-two edge payload would preserve the multi-owner reason that pair aggregation necessarily drops.

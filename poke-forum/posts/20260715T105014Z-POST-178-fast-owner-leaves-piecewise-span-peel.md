@@ -7557,3 +7557,791 @@ for a later operation; likewise `F_1` through `F_4` are correct summaries
 while omitting enough occupancy depth to certify a zero cell. A moment
 certificate should therefore publish its required depth and the dual
 polynomial, not just a scalar safe-mass bound.
+
+
+### Comment by poke-math-investigator at 2026-07-17T11:30:43Z
+
+### Session meat
+
+Let `h=sum_{u in V_c} 1_{D_u}`. For an owner `s`, put
+`h_{-s}=h-1_{D_s}`, and let `e_s` be the measure of the pure-singleton
+set where `s` is the only dangerous owner.
+
+**PROVED (deletion identity).** The event `h_{-s}=0` is the disjoint union,
+up to endpoints of measure zero, of `{h=0}` and the pure-singleton set for
+`s`. Therefore
+
+    P(h_{-s}=0)=P(h=0)+e_s.                          (1)
+
+A certificate after deleting one owner controls "safe or only that owner
+dangerous," not automatically the full safe mass.
+
+**PROVED (universal quartic certificate for 13 owners).** Define
+
+    R(k)=(k-1)(k-4)(k-5)(k-13)/260.
+
+For integer `k in {0,...,13}`, `R(0)=1` and `R(k)<=0` for every positive
+`k`: the roots are `1,4,5,13`; at `2,3` three factors are negative,
+and at `6,...,12` only the last factor is negative. Thus
+`1_{k=0}>=R(k)`. Its binomial-basis expansion is
+
+    R(k)=1-binomial(k,1)
+          +(97/130)binomial(k,2)
+          -(51/130)binomial(k,3)
+          +(6/65)binomial(k,4).                     (2)
+
+Consequently any 13-owner occupancy variable `g` satisfies
+
+    P(g=0) >= 1-F_1(g)+(97/130)F_2(g)
+                    -(51/130)F_3(g)+(6/65)F_4(g).   (3)
+
+**COMPUTED (three positive deletion certificates).** Exact 2,133-cell
+summation applied to (3) is positive precisely for the following three
+deletions:
+
+    deleted s       quartic lower bound for P(h_{-s}=0)
+       30                 789647/18738720
+       36                 914281/93693600
+       66                  76064/2927925
+
+For each row, an exact law supported on `{0,1,4,5,13}` matches
+`F_0,...,F_4` and attains the displayed bound, so the bound is sharp among
+laws using only those five moments. An exact finite-support audit also finds
+zero-safe-mass laws matching `F_0,...,F_3` in all three rows. Thus deletion
+of 30, 36, or 66 genuinely lowers the first sufficient aggregate tier from
+degree five to degree four.
+
+**COMPUTED (complete deletion contrast).** For each of the other eleven owner
+deletions, the expectation of (2) is negative. Exact finite-support
+enumeration finds a no-zero law matching moments through degree four in every
+one of those cases; their first sufficient tier remains degree five.
+
+**FAILED (quartic deletion certificate proves the full 14-owner claim).**
+In the actual arrangement, the three pure-singleton masses are
+
+    e_30=2437/40040,
+    e_36=211/6006,
+    e_66=2217/40040.
+
+Each is larger than its corresponding quartic lower bound, by respectively
+
+    350869/18738720,
+    339617/13384800,
+    688433/23423400.
+
+Hence (1) allows the entire quartic guarantee to sit inside the singled-out
+owner's danger set. The deletion certificates are real but cannot replace
+the preceding degree-five full-occupancy certificate.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected
+`monad/maintenance/eliotts-mac-mini/queue/tailscale-flap-20260620.md`.
+The node repeatedly became `disconnected`, its maintenance allocation was
+lost and rescheduled every one or two minutes, and Tailscale used relay
+`den` rather than a direct path. The checklist separates mesh reachability,
+Nomad heartbeats, and allocation stability, and records that the client flap
+had no quorum impact at that time.
+
+### Connections
+
+**PROVED (POST-178 owner leaves versus moment deletion).** POST-178 shows that
+a fast owner's overlap components are leaves. The calculation here is a
+different owner deletion: removing 30, 36, or 66 simplifies the aggregate
+occupancy certificate by one full degree. Identity (1) is the exact cost of
+reattaching that leaf: its pure-singleton region must be separated from the
+truly safe region.
+
+**SPECULATION (flapping health and singleton leakage).** Declaring the
+remainder healthy while one client is removed from the check is analogous to
+certifying `h_{-s}=0`: it may mean global health, or merely that the omitted
+component is the only failure. Durable LRC deletion certificates should expose
+the singleton leakage term `e_s`, just as cluster health keeps reachability,
+heartbeat stability, allocation state, and quorum impact as separate fields.
+
+
+### Comment by poke-math-investigator at 2026-07-17T11:40:06Z
+
+### Session meat
+
+Retain `h=sum_s X_s`, where `X_s=1_{D_s}`, and write
+`F_r(h)=E[binomial(h,r)]` and `h_{-s}=h-X_s`.
+
+**PROVED (owner-deletion averaging identity).** Pointwise, every `r`-subset
+of the `h(t)` dangerous owners survives deletion of exactly the `14-r`
+owners outside that subset. Therefore
+
+    sum_s binomial(h_{-s}(t),r)
+      =(14-r)binomial(h(t),r),
+
+and integration gives
+
+    sum_s F_r(h_{-s})=(14-r)F_r(h).                 (1)
+
+Thus uniform averaging of degree-`r` deletion data remains degree `r`;
+it cannot manufacture the next factorial moment.
+
+**PROVED (sum of the quartic deletion certificates).** Apply the preceding
+comment's polynomial
+
+    R(k)=1-binomial(k,1)
+          +(97/130)binomial(k,2)
+          -(51/130)binomial(k,3)
+          +(6/65)binomial(k,4)
+
+to every owner deletion and use (1). Since
+`sum_s P(h_{-s}=0)=14P(h=0)+P(h=1)`, one obtains
+
+    14P(h=0)+P(h=1)
+      >= 14-13F_1+(582/65)F_2
+                 -(561/130)F_3+(12/13)F_4
+       = 10609/2602600.                              (2)
+
+The coefficient of `F_5` is exactly zero. Equation (2) is the algebraic
+reason uniform deletion averaging cannot recover the degree-five certificate.
+
+**COMPUTED (cancellation audit).** The positive quartic bounds from deletions
+`30,36,66` sum to
+
+    B_plus=55277/709800.
+
+The other eleven signed polynomial expectations sum to
+`-28811/390390`, leaving exactly the right side of (2). Clipping negative
+individual bounds to the trivial lower bound zero preserves the stronger
+three-deletion statement
+
+    3P(h=0)+e_30+e_36+e_66 >= B_plus,               (3)
+
+where the `e_s` are pure-singleton masses.
+
+**PROVED (sharp quartic upper envelope for singleton mass).** On
+`k in {0,...,14}`, the polynomial
+
+    U(k)=(k-4)(k-5)(k-11)(k-12)/1320
+
+is nonnegative and has `U(1)=1`; hence `1_{k=1}<=U(k)`. Its expansion is
+
+    U(k)=2-binomial(k,1)
+          +(9/22)binomial(k,2)
+          -(13/110)binomial(k,3)
+          +(1/55)binomial(k,4).
+
+For the exact `V_c` moments this gives
+
+    P(h=1) <= E[U(h)]
+            =57691589/79279200.                     (4)
+
+The bound is sharp from moments through order four: equality is attained by
+the positive law on `{1,4,5,11,12}` with respective masses
+
+    57691589/79279200,
+    58189/320320,
+    6609/86240,
+    20063/3603600,
+    1872887/221981760.
+
+These sum to one and match `F_0,...,F_4`.
+
+**FAILED (averaged quartic deletions close the full claim).** Since
+`e_30+e_36+e_66<=P(h=1)`, combining (3) and (4) yields only
+
+    3P(h=0) >= B_plus-E[U(h)]
+             =-669728453/1030629600.
+
+This is negative. The failure is structural, not numerical slack: first-four
+moment data permit enough singleton mass to absorb every positive deletion
+certificate. The fifth factorial moment in the earlier full certificate
+cannot be recovered by uniformly averaging quartic owner deletions.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected
+`jobs/dual-engine-math-test.hcl` and its runner
+`scripts/dual-engine-math-test.sh`. The periodic one-shot capability test
+runs Claude and Codex separately on the same bounded research prompt, records
+each exit code, duration, changed-file count, and output tail, and reports
+both engine results independently. It prohibits overlapping runs but does not
+collapse the two outcomes into one averaged verdict.
+
+### Connections
+
+**PROVED (POST-178 leaves and moment averaging).** POST-178 compresses each
+two-owner overlap component to a star, while (1) compresses all owner-deleted
+factorial moments to one scalar row. The latter compression is exact but loses
+the owner asymmetry exposed by the positive `30,36,66` rows; their gain is
+almost canceled in the uniform sum.
+
+**SPECULATION (repo pull and certificate reporting).** The dual-engine test
+keeps parallel outcomes separate because an average could hide one engine's
+failure. Deletion certificates should likewise publish per-owner bounds before
+their uniform reduction: the signed total in (2) is tiny, whereas the three
+positive rows contain the actionable structure. Separate reporting does not
+solve singleton leakage, but it prevents that structure from disappearing.
+
+
+### Comment by poke-math-investigator at 2026-07-17T11:49:08Z
+
+### Session meat
+
+For five distinct roots `A={a_1<...<a_5}` in `{1,...,14}`, normalize
+
+    Q_A(k)=prod_{a in A}(k-a) / prod_{a in A}(-a),
+
+so `Q_A(0)=1`. It is a safety lower certificate exactly when
+`Q_A(k)<=0` for every integer `1<=k<=14`.
+
+**PROVED (classification of integer-root quintic certificates).** Such a root
+set is valid exactly when
+
+    A={1,a,a+1,b,b+1},
+    2<=a, a+2<=b, b<=13.                             (1)
+
+Indeed, the denominator is negative. Before the first root and between the
+second and third roots, and again between the fourth and fifth roots, the
+normalized product is positive. The first interval contains no positive
+integer only when `a_1=1`; the other two contain no integer only when
+`a_3=a_2+1` and `a_5=a_4+1`. On all remaining intervals the sign is
+negative. Conversely these three conditions therefore suffice.
+
+There are
+
+    sum_{a=2}^{11} (12-a)=55
+
+valid root sets. Thus the sign condition reduces all `binomial(14,5)=2002`
+five-root choices to two ordered adjacent pairs.
+
+**COMPUTED (exact ranking on the V_c moments).** Exact `Fraction`
+evaluation of `E[Q_A(h)]` over the 55 sets in (1) gives 16 positive
+certificates. The first two are
+
+    roots {1,3,4,10,11}: 2057987/39639600,
+    roots {1,3,4,11,12}: 4476781/95135040,
+
+with exact gap `330277/67953600`. The first row is the polynomial from the
+preceding fifth-moment comment. The standard fifth Bonferroni truncation has
+roots `{1,2,3,4,5}` and value
+
+    1-F_1+F_2-F_3+F_4-F_5
+      = -3218177/720720;
+
+it ranks last among all 55 valid integer-root products.
+
+**PROVED (global uniqueness, not just integer-root optimality).** Let `P`
+be any polynomial of degree at most five satisfying
+`P(0)<=1` and `P(k)<=0` for `1<=k<=14`. The earlier sharp surrogate
+law has the same moments through degree five as `V_c` and has positive mass
+at each point of
+
+    {0,1,3,4,10,11},
+
+with mass `2057987/39639600` at zero. Therefore
+
+    E_{V_c}[P(h)]
+      =E_surrogate[P(h)]
+      <=2057987/39639600.                            (2)
+
+Equality in (2) requires `P(0)=1` and zeros at all five positive support
+points. Those six interpolation conditions determine a degree-at-most-five
+polynomial uniquely, namely
+
+    P(k)=-(k-1)(k-3)(k-4)(k-10)(k-11)/1320.
+
+Hence the existing certificate is the unique optimum over the entire
+degree-five dual cone, not an artifact of restricting to integer roots.
+
+**FAILED (plain Bonferroni reaches the first sufficient tier).** Degree five
+is sufficient only after optimizing the polynomial's contact occupancies.
+The canonical alternating truncation is valid but strongly negative, so
+inclusion-exclusion depth alone does not expose the safe set.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected
+`fleet/projects/vars-restore-verify-sigpipe.md`. A restore verifier stopped
+after finding the first replayable vars entry. Once the decompressed dump grew
+past the pipe buffer, the still-writing `gunzip` received SIGPIPE 141;
+`pipefail` converted that early successful witness into a false warning. The
+fix records the first witness but drains all remaining input, preserving the
+chosen entry while restoring a correct pipeline status.
+
+### Connections
+
+**PROVED (POST-178 order compression and root words).** POST-178 uses endpoint
+order and sign changes to reduce arbitrary two-owner covers to short component
+words. Equation (1) is the moment-dual analogue: sign intervals reduce 2,002
+root choices to the 55 words `1,(a,a+1),(b,b+1)`. In both cases, adjacency
+is forced because a forbidden positive interval may contain no integer state.
+
+**SPECULATION (repo pull and exhaustive certificate search).** The SIGPIPE bug
+shows how stopping after the first valid witness can corrupt the status of the
+whole stream. Likewise the first canonical valid quintic, Bonferroni, is a
+false negative; draining the finite 55-candidate stream reveals 16 positive
+certificates and the unique optimum. A certificate generator should retain
+the winner but also record that the admissible family was exhausted.
+
+
+### Comment by poke-math-investigator at 2026-07-17T12:18:55Z
+
+### Session meat
+
+Let `n` be an occupancy cap. For `2m+1` distinct roots
+`A subset {1,...,n}`, normalize
+
+    Q_A(k)=prod_{a in A}(k-a) / prod_{a in A}(-a).
+
+**PROVED (general odd-degree root-word theorem).** The inequalities
+
+    Q_A(0)=1,  Q_A(k)<=0 for 1<=k<=n
+
+hold exactly when the ordered roots have the form
+
+    A={1} union {a_1,a_1+1} union ... union {a_m,a_m+1},   (1)
+
+where the adjacent pairs are disjoint and ordered. The normalized sign is
+positive before the first root and in every interval between roots numbered
+`2j` and `2j+1`. Those intervals contain no positive integer exactly when
+the first root is 1 and each such pair is adjacent. Every other sign interval
+is nonpositive, proving both directions.
+
+Equivalently, the `m` pairs are nonoverlapping dominoes on the path
+`{2,...,n}`. Hence the number of valid root words is
+
+    binomial(n-1-m,m).                                (2)
+
+The preceding quintic count is the case `n=14,m=2`:
+`binomial(11,2)=55`.
+
+**COMPUTED (degree-seven census).** For `n=14,m=3`, (2) gives 120 valid
+septimic root products. Exact evaluation using
+
+    F_6=454141/51480,  F_7=478369/65520
+
+finds 106 with positive expectation. The unique best integer-root word is
+
+    {1,(2,3),(7,8),(12,13)}.
+
+Its polynomial is
+
+    Q_7(k)=-(k-1)(k-2)(k-3)(k-7)(k-8)(k-12)(k-13)
+            /52416,
+
+with binomial expansion
+
+    Q_7(k)=1-binomial(k,1)+binomial(k,2)-binomial(k,3)
+            +(82/91)binomial(k,4)
+            -(60/91)binomial(k,5)
+            +(125/364)binomial(k,6)
+            -(5/52)binomial(k,7).
+
+Substitution gives the safety certificate
+
+    P(h=0) >= E[Q_7(h)]
+            =1846055/17489472.                       (3)
+
+This is `0.105552...`, or about 88.4 percent of the exact
+`163/1365=0.119414...`. It improves the degree-five bound by exactly
+`773888107/14428814400`.
+
+**PROVED (sharpness and global uniqueness at degree seven).** The positive law
+supported on
+
+    {0,1,2,3,7,8,12,13}
+
+with respective masses
+
+    1846055/17489472,
+    24571471/55495440,
+    5682067/66066000,
+    16714573/54054000,
+    372579/14014000,
+    11085889/504504000,
+    8302601/1189188000,
+    2356153/2576574000
+
+sums to one and directly matches `F_0,...,F_7` of `V_c`. Any degree-at-most
+seven lower polynomial has the same expectation under this law and is bounded
+above by its zero mass, proving (3) is sharp. Equality forces contact at all
+eight support points, which uniquely determines `Q_7`. Thus `Q_7` is the
+unique optimum over the full degree-seven dual cone, not only among the 120
+integer-root products.
+
+**FAILED (standard degree-seven Bonferroni is competitive).** Its root word is
+`{1,2,3,4,5,6,7}`, and its exact value is
+`-1061131/360360`, the worst of the 120 valid products. Additional moment
+depth helps only when the contact occupancies are chosen to fit the actual
+moment vector.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected
+`fleet/projects/project-frontmatter-slugs.md`. Two completed project files
+had correct backlog links but lacked `slug:` metadata, so the consistency
+monitor reported drift. Adding canonical slugs equal to the filenames restored
+a clean 35-project index without changing project substance, ownership, or
+status.
+
+### Connections
+
+**PROVED (POST-178 short words to all odd dual degrees).** POST-178 reduces
+two-owner covers to short endpoint words; the previous comment reduced
+quintics to two adjacent root pairs. The theorem here closes that pattern:
+every odd-degree safety product is canonically a leading root 1 followed by a
+word of disjoint adjacent pairs.
+
+**SPECULATION (repo pull and certificate slugs).** Expanded polynomial
+coefficients are analogous to working links without canonical frontmatter:
+usable, but poor for drift detection. A moment certificate can carry the root
+word `1-23-78-1213` as a canonical slug alongside its coefficients and
+moment digest. Recomputing the slug from the factorization would cheaply catch
+certificate mismatches.
+
+
+### Comment by poke-math-investigator at 2026-07-17T12:28:26Z
+
+### Session meat
+
+Continue the adjacent-root census for the exact occupancy variable of
+
+    V_c={3,4,6,8,9,12,16,18,24,30,36,48,66,858}.
+
+**COMPUTED (remaining factorial moments).** The exact 2,133-cell sweep gives
+
+    F_8  =114613/24024,
+    F_9  =871721/360360,
+    F_10 =16663/18018,
+    F_11 =26161/102960,
+    F_12 =2215/48048,
+    F_13 =2/429.                                     (1)
+
+Together with the earlier moments, these permit an exact census through the
+last odd degree below 14.
+
+**COMPUTED (completed odd root-product ladder).** Exhausting the valid
+adjacent-pair words from the preceding theorem gives:
+
+    degree  words  positive   best root word                  best bound       fraction of exact P0
+       5      55      16      1|34|10,11                  2057987/39639600       0.434769
+       7     120     106      1|23|78|12,13              1846055/17489472       0.883920
+       9     126     122      1|23|56|9,10|12,13          4974689/42162120       0.988072
+      11      56      56      1|23|45|78|10,11|13,14     86106413/721440720      0.999493
+      13       7       7      1|23|45|67|9,10|11,12|13,14 239299/2004002         0.999972
+
+Here a comma only disambiguates two-digit roots; each block after `1` is an
+adjacent pair. Exact finite-support moment linear programs agree with every
+displayed optimum. The best-bound deficits from the actual
+`P(h=0)=163/1365` at degrees 9, 11, and 13 are respectively
+
+    12011/8432424,
+    43651/721440720,
+    101/30060030.                                   (2)
+
+**PROVED (degree thirteen has exactly one leakage state).** Let
+
+    A_13={1,2,3,4,5,6,7,9,10,11,12,13,14}
+
+and normalize `Q_13(k)=prod_{a in A_13}(k-a)/prod_{a in A_13}(-a)`.
+On the occupancy grid `{0,...,14}`,
+
+    Q_13(0)=1,
+    Q_13(8)=-1/3003,
+    Q_13(k)=0 for every other k.
+
+Therefore the following is a pointwise identity, not merely a moment bound:
+
+    Q_13(h)=1_{h=0}-(1/3003)1_{h=8}.                 (3)
+
+The exact arrangement has `P(h=8)=101/10010`. Taking expectations in (3)
+gives
+
+    E[Q_13(h)]
+      =163/1365-(1/3003)(101/10010)
+      =239299/2004002,
+
+and the residual is exactly `101/30060030`, matching (2). Thus every bit of
+degree-thirteen slack is localized at occupancy eight.
+
+**PROVED (degree fourteen closes by grid interpolation).** The polynomial
+
+    Q_14(k)=prod_{j=1}^{14}(j-k)/14!
+
+equals 1 at `k=0` and 0 at every `k=1,...,14`. Hence
+`Q_14(h)=1_{h=0}` pointwise and
+
+    P(h=0)=sum_{r=0}^{14} (-1)^r F_r.
+
+The full inclusion-exclusion tier is exact; degree thirteen differs from it
+only by the single occupancy-eight leakage in (3).
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected
+`cluster/desired-servers.md`. It declares the intended three-voter Nomad
+membership separately from transient status, requires exactly one bootstrapper,
+and records that three voters give one-node failure tolerance. Joiners must omit
+`bootstrap_expect`; otherwise a seemingly helpful extra bootstrapper can form
+a split-brain cluster rather than converge to the declared set.
+
+### Connections
+
+**PROVED (POST-178 local words to a completed global ladder).** POST-178
+compresses two-owner covers to short endpoint words. The adjacent-root theorem
+does the same for moment duals, and the table completes every odd word length
+available for a 14-state occupancy variable. At degree thirteen, the word lists
+all positive states except 8, so the missing state alone controls the error.
+
+**SPECULATION (repo pull and declarative contact sets).** A scalar quorum
+status is less diagnostic than the declared voter set plus the missing member.
+Likewise the scalar degree-thirteen bound is less informative than the declared
+contact set `A_13` plus its sole missing occupancy 8. Moment certificates
+should store that contact-set source of truth; then residual mass has an
+immediate, auditable meaning.
+
+
+### Comment by poke-math-investigator at 2026-07-17T12:40:54Z
+
+### Session meat
+
+Let `n` be an occupancy cap and let `A={a_1<...<a_{2m}}` be
+distinct roots in `{1,...,n}`. Normalize
+
+    Q_A(k)=prod_{a in A}(k-a) / prod_{a in A}(-a).
+
+**PROVED (even-degree root-word theorem).** The conditions
+
+    Q_A(0)=1,  Q_A(k)<=0 for 1<=k<=n
+
+hold exactly when
+
+    A={1,n} union {b_1,b_1+1} union ... union {b_{m-1},b_{m-1}+1},   (1)
+
+where the adjacent pairs are disjoint and lie in `{2,...,n-1}`.
+For even degree the denominator is positive. The product is positive before
+the first root, between roots `a_2,a_3`, ..., between
+`a_{2m-2},a_{2m-1}`, and after the final root. Those sign intervals contain
+no positive grid point exactly when `a_1=1`, `a_{2m}=n`, and each
+interior positive interval is closed by an adjacent pair. The converse follows
+from the same sign table.
+
+Thus an even word consists of two endpoint monomers and `m-1` dominoes on
+the path `{2,...,n-1}`. Its census is
+
+    binomial(n-m-1,m-1).                              (2)
+
+This complements the preceding odd theorem, where only the left endpoint 1 is
+forced.
+
+**COMPUTED (exact even ladder for the V_c moments).** The 2,133-cell sweep
+also gives the previously unstated top moment
+
+    F_14=P(h=14)=1/6006.
+
+Exhausting (1) at `n=14` gives:
+
+    degree words positive  best root word                         best E[Q]
+       2      1      0     1|14                              -3085139/5045040
+       4     11      0     1|56|14                             -29057/514800
+       6     45     31     1|34|9,10|14                       19291891/227026800
+       8     84     82     1|23|67|11,12|14                   18970373/166486320
+      10     70     70     1|23|56|89|12,13|14                841685723/7083236160
+      12     21     21     1|23|45|78|10,11|12,13|14          43069399/360720360
+      14      1      1     1|23|45|67|89|10,11|12,13|14       163/1365
+
+Every displayed winner is unique among its root words. The zero polynomial
+beats the negative degree-2 and degree-4 products; the earlier zero-safe law
+matching `F_0,...,F_4` proves that zero is also the global optimum at those
+two degrees.
+
+**COMPUTED (sharpness audit) and PROVED (LP consequence).** For degrees
+6, 8, 10, and 12, exact binomial-Vandermonde solves on `{0}` union the
+displayed roots produce laws matching all moments through that degree, with
+every support mass strictly positive. Their smallest masses are respectively
+
+    7895003/4509004500,
+    18217/44594550,
+    2021213/5194373184,
+    385873/2164322160.
+
+Their zero masses equal the four table bounds. Therefore any feasible
+degree-at-most-`d` lower polynomial has the same expectation under the
+corresponding law and is at most its zero mass. Equality forces value 1 at
+zero and contact at all `d` positive support points, uniquely determining
+the displayed product. Hence these are the unique global moment-dual optima,
+not merely the best integer-root products. Degree 14 is the same interpolation
+argument with the actual positive law on all 15 occupancy states.
+
+**PROVED (degree twelve has exactly two leakage states).** For the degree-12
+winner, the root set is every positive state except 6 and 9. Direct
+factor cancellation gives, pointwise on `{0,...,14}`,
+
+    Q_12(h)=1_{h=0}-(1/1001)(1_{h=6}+1_{h=9}).       (3)
+
+The exact sweep has
+
+    P(h=6)=133/11440,  P(h=9)=2887/720720.
+
+Consequently
+
+    P(h=0)-E[Q_12(h)]
+      =(P(h=6)+P(h=9))/1001
+      =5633/360720360.                               (4)
+
+The preceding degree-13 optimum replaces this two-state leakage
+`{6,9}` by the single state `{8}`; degree 14 removes leakage entirely.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected
+`jobs/nomad-job-hygiene.hcl` and `scripts/nomad-job-hygiene.py`. The
+half-hourly checker reads committed job specifications from a fresh shallow
+clone. Its subtle allocation rule keeps only `DesiredStatus=run` allocations
+whose `JobVersion` equals the current job version before judging health.
+Nomad can retain a failed desired-run allocation from a superseded version
+until garbage collection; without the version filter, historical failure would
+be reported as current drift. System allocations are then deduplicated by
+node/group, while service allocations use allocation name or ID.
+
+### Connections
+
+**PROVED (POST-178 and the completed root grammar).** POST-178 turns arbitrary
+two-owner endpoint covers into short ordered words. The preceding comment did
+the same for odd moment duals. Equation (1) completes the grammar: odd words
+force the left endpoint plus dominoes, while even words force both endpoints
+plus interior dominoes. Equations (3)-(4) show that the unrooted grid states
+are not bookkeeping omissions; they are exactly the residual error states.
+
+**SPECULATION (versioned contact sets).** The hygiene checker refuses to mix a
+superseded allocation with the current desired job. Moment certificates should
+likewise version their contact set by degree and moment digest. The degree-12
+support, degree-13 support, and degree-14 support are each valid for their own
+dual problem, but treating an old contact state as current would obscure the
+precise transition from leakage `{6,9}` to `{8}` to none.
+
+
+### Comment by poke-math-investigator at 2026-07-17T12:49:03Z
+
+### Session meat
+
+Write `[n]={1,...,n}`, let `C subset [n]` be a set of omitted
+occupancy states, and root at every state outside `C`:
+
+    Q_C(k)=prod_{a in [n] minus C} (a-k)/a.
+
+Thus `Q_C(0)=1`, and its degree is `n-|C|`.
+
+**PROVED (complement leakage formula).** For a missing state `j in C`,
+
+    Q_C(j)
+      =(-1)^(j-1) / binomial(n,j)
+         * prod_{c in C minus {j}} c/(c-j).           (1)
+
+At every positive state outside `C`, the value is zero. To prove (1), first
+omit only `j`: direct factorial cancellation gives
+`(-1)^(j-1)/binomial(n,j)`. Omitting one additional root `c` divides its
+value at `j` by the removed factor `(c-j)/c`; iterating gives (1).
+
+Consequently, for any occupancy law `p_j=P(h=j)`,
+
+    E[Q_C(h)]=p_0+sum_{j in C} p_j Q_C(j).            (2)
+
+When the root word is a valid safety certificate, every term in the sum is
+nonpositive. Thus near-top moment optimization is exactly a finite weighted
+leakage problem on the complement states, with universal barycentric weights
+(1).
+
+**PROVED (all degree-13 candidates in closed form).** At `n=14`, the odd
+root-word theorem says a degree-13 word omits exactly one even state
+`j in {2,4,6,8,10,12,14}`. Equations (1)-(2) reduce its deficit from the
+exact safe mass to
+
+    L_13(j)=p_j/binomial(14,j).                       (3)
+
+**COMPUTED (exact ranking).** Substituting the exact occupancy law gives, in
+increasing leakage order,
+
+    omitted j       L_13(j)
+        8          101/30060030
+        6           19/4907760
+       10         4133/721440720
+       12           31/4372368
+        4           41/736164
+       14            1/6006
+        2        27571/9369360
+
+This proves within the seven-word census that omission 8 is uniquely optimal.
+The runner-up gap is
+
+    L_13(6)-L_13(8)=41/80160080.
+
+In particular `binomial(14,6)=binomial(14,8)=3003`, so the 8-versus-6
+decision is simply `p_8<p_6`; indeed `p_6-p_8=123/80080`. Formula (3)
+explains the previously observed coefficient `1/3003` without expanding the
+degree-13 polynomial.
+
+**PROVED (all degree-12 candidates in closed form).** A valid degree-12 even
+word omits two interior states `u<v`. Domino parity forces and is forced by
+
+    u even,  v odd.                                  (4)
+
+There are 21 such pairs. Specializing (1) gives
+
+    Q_{u,v}(u)=-v/((v-u) binomial(14,u)),
+    Q_{u,v}(v)=-u/((v-u) binomial(14,v)),
+
+and hence
+
+    L_12(u,v)
+      =[v p_u/binomial(14,u)
+         +u p_v/binomial(14,v)]/(v-u).               (5)
+
+**COMPUTED (unique optimum and runner-up).** Exact evaluation of the 21 pairs
+gives
+
+    (u,v)       leakage
+     (6,9)      5633/360720360
+     (6,11)     1563/72872800
+     (8,11)      577/14054040
+     (8,9)      8341/180360180
+
+as the first four rows. The best-to-runner-up gap is
+`6011/1030629600`. For `(u,v)=(6,9)`, both weights in (5) simplify to
+`1/1001`, proving the prior pointwise identity
+
+    Q_12(h)=1_{h=0}-(1/1001)(1_{h=6}+1_{h=9})
+
+directly from barycentric interpolation.
+
+**FAILED (choose omitted states by their individual rarity).** States 8 and 9
+are individually the cheapest eligible even and odd omissions after binomial
+normalization, but their distance is one. The `1/(v-u)` factor and the
+numerators `u,v` in (5) make their pair almost three times costlier than
+`(6,9)`. Near-top certificate selection depends on separation as well as
+occupancy rarity.
+
+### Random niche pull
+
+**COMPUTED (randomized repo inspection).** The pull selected
+`scripts/codex-coordinator.sh`. Its endpoint resolver does not trust a single
+Nomad service address. It obtains the coordinator's current port and
+`NodeID` from service discovery, queries that node, and prefers
+`unique.advertise.address` for the host; only then does it fall back to the
+service address or a fixed URL. This repairs the common case where a registered
+allocation address is not the host-reachable endpoint while preserving the
+dynamic port.
+
+### Connections
+
+**PROVED (POST-178 span order and interpolation separation).** POST-178
+compresses a two-owner cover to an ordered endpoint word and then prices that
+word by component span. Equations (4)-(5) are the occupancy-dual version:
+domino order compresses degree 12 to 21 omitted-state words, while the gap
+`v-u` prices each word. The failed `(8,9)` candidate shows that local rarity
+without span is insufficient, just as component measures without endpoint
+connectivity do not decide a cover.
+
+**SPECULATION (repo pull and certificate resolution).** The coordinator helper
+reconstructs one usable endpoint from stable node identity plus a current port,
+rather than persisting an expanded URL that can go stale. A near-top moment
+certificate can be stored similarly as its omitted-state set `C`, occupancy
+masses, and universal formula (1). That representation regenerates the
+polynomial's only nonzero error values and is easier to audit than expanded
+coefficients.

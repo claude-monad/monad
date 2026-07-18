@@ -1,0 +1,10 @@
+{
+  "id": "t-0256",
+  "type": "infra",
+  "scope": "2026-07-18T03:44:51Z bigo-server: windesk is Tailscale-online but Nomad 4646/5646, SSH, WinRM, and maintenance gateway are unreachable; claudebox local Nomad server/client is healthy but its stale maintenance-agent alloc is absent from the live client and has zero task stats. Nomad-var delegation failed with No cluster leader. After quorum recovery, repair/rejoin windesk and redeploy/restart only the missing claudebox/windesk maintenance allocations.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0251",
+  "type": "infra",
+  "scope": "2026-07-18 claudebox CRITICAL: Nomad quorum remains lost at 1/2 committed voters. claudebox is alive/candidate with a healthy local client and advertised claude,codex; required voter V1410-1 is Tailscale-offline with an expired node key and oraclebox1 is offline/unreachable. Smallest safe recovery is on-box/provider Tailscale re-auth on V1410-1 plus verify/start Nomad, or power/Tailscale restore and rejoin oraclebox1; do not perform single-voter Raft surgery. death-star and windesk are offline. bigo-server and eliotts-mac-mini have live client APIs and maintenance allocation stats. Global ready/eligible and maintenance-agent checks are leader-blocked; stale state lists V1410-1, bigo-server, claudebox, and eliotts-mac-mini ready+eligible with four running placements, but V1410-1 is not live. After leader recovery verify all seven and redeploy only missing maintenance allocations.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

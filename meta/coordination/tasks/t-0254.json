@@ -1,0 +1,10 @@
+{
+  "id": "t-0254",
+  "type": "infra",
+  "scope": "2026-07-18T03:44:51Z bigo-server CRITICAL quorum recovery: Nomad is at 1/2 committed voters. claudebox is alive but Candidate/no leader; v1410-1 is Tailscale-offline because its node key expired, and oraclebox1 is offline/no reply. Restore or re-authorize Tailscale on v1410-1 via on-box/provider access, verify/start its Nomad server, then confirm leader election; fallback restore/rejoin oraclebox1. Do not perform single-voter Raft surgery. After recovery verify all seven nodes ready+eligible and maintenance coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

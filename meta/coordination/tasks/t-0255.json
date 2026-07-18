@@ -1,0 +1,10 @@
+{
+  "id": "t-0255",
+  "type": "infra",
+  "scope": "2026-07-18T03:44:51Z bigo-server: death-star remains Tailscale-offline/no reply, so Nomad, engines, and maintenance coverage are unavailable. Restore power/network/Tailscale on-box, then rejoin/check Nomad, run ensure-engines, and confirm its maintenance loop after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

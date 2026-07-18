@@ -1,0 +1,10 @@
+{
+  "id": "t-0251",
+  "type": "infra",
+  "scope": "2026-07-17T20:51:54Z bigo-server cluster-health: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox is alive/Candidate with committed voters {v1410-1,claudebox}; v1410-1 is Tailscale-offline with expired key and oraclebox1 is offline. Smallest safe recovery is on-box/provider Tailscale re-auth plus verify/start Nomad on v1410-1; fallback restore/rejoin oraclebox1. Do not perform single-voter Raft surgery. death-star remains offline. windesk is tailnet-reachable but Nomad 4646/5646, SSH/WinRM, codex, and mesh endpoints are unavailable. bigo-server and eliotts-mac-mini client health plus maintainer telemetry are live; claudebox client health is live but its cached maintainer has no task telemetry and a scoped client-local restart timed out without recovery. Authoritative ready/eligible and maintenance job checks remain blocked until leader election; then verify all seven and repair only confirmed gaps.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0250"
+}

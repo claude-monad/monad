@@ -1,10 +1,10 @@
 {
   "id": "t-0252",
   "type": "infra",
-  "scope": "2026-07-17T21:33:14Z bigo-server cluster-health: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox is alive/Candidate but v1410-1 is Tailscale-offline with an expired node key; restore/re-authorize v1410-1 through on-box/provider access and verify/start Nomad, or restore/rejoin oraclebox1 as fallback. Do not perform single-voter Raft surgery. death-star remains Tailscale-offline; windesk is tailnet-online but its Nomad API is unreachable and it is absent from stale membership. bigo-server and eliotts-mac-mini have live clients/engines/maintainers; claudebox client/engines are live but its cached maintenance allocation has no live task telemetry. After leader recovery verify all seven nodes ready+eligible and one maintenance loop per member.",
+  "scope": "2026-07-17T21:33:14Z bigo-server cluster-health: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox is alive/Candidate but v1410-1 has an expired Tailscale key; restore/re-authorize it on-box and verify/start Nomad, or restore/rejoin oraclebox1. Do not perform single-voter Raft surgery. death-star is offline; windesk is reachable but Nomad is unavailable. bigo-server and eliotts-mac-mini clients/engines/maintainers are live; claudebox cached maintenance telemetry is absent. | 2026-07-18T19:30Z claudebox update: v1410-1 is offline 15d with ports 22/4646-4648 down and oraclebox1 is offline 41d. bigo-server and eliotts-mac-mini APIs remain live; disks are 80%/83% with 22GB/42GB free. After quorum recovery verify all seven and repair only confirmed gaps.",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",
   "owner": null,
-  "parent": null
+  "parent": "t-0251"
 }

@@ -31,15 +31,20 @@
     "updated_by": "bigo-server",
     "value": "DONE-2026-07-18T19:32:04Z"
   },
-  "health:bigo-server": {
-    "updated": 1784299760.068503,
+  "health:V1410-1:claudebox-20260718T193100Z": {
+    "updated": 1784403060.9253674,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-17T14:49:20Z"
+    "value": "DONE-2026-07-18T19:31:00Z"
+  },
+  "health:bigo-server": {
+    "updated": 1784347971.0604587,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-18T04:12:50Z"
   },
   "health:claudebox": {
-    "updated": 1784408048.7222297,
+    "updated": 1784410438.3995314,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-07-18T20:54:08Z"
+    "value": "bigo-server"
   },
   "health:claudebox-egress": {
     "updated": 1783435031.6642962,
@@ -55,6 +60,11 @@
     "updated": 1781596345.1969457,
     "updated_by": "bigo-server",
     "value": "DONE-2026-06-16T07:52:25Z-existing-queue-t0113"
+  },
+  "health:claudebox:claudebox-20260718T131904Z": {
+    "updated": 1784380744.9495254,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
     "updated": 1784408048.782015,
@@ -80,6 +90,11 @@
     "updated": 1784289886.3821185,
     "updated_by": "claudebox",
     "value": "DONE-2026-07-17T12:04:46Z"
+  },
+  "health:death-star:claudebox-20260718T193100Z": {
+    "updated": 1784403061.0313513,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
     "updated": 1784408048.6034172,
@@ -115,6 +130,11 @@
     "updated": 1784289886.4510455,
     "updated_by": "claudebox",
     "value": "DONE-2026-07-17T12:04:46Z"
+  },
+  "health:eliotts-mac-mini:claudebox-20260718T041250Z": {
+    "updated": 1784347971.2169955,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-18T04:12:50Z"
   },
   "health:eliotts-mac-mini:death-star-20260605T180950Z": {
     "updated": 1780682990.0538535,
@@ -161,6 +181,11 @@
     "updated_by": "claudebox",
     "value": "DONE-2026-07-17T12:04:46Z"
   },
+  "health:oraclebox1:claudebox-20260718T193100Z": {
+    "updated": 1784403060.9956656,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-18T19:31:00Z"
+  },
   "health:quorum": {
     "updated": 1781995719.0910268,
     "updated_by": "bigo-server",
@@ -172,9 +197,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1784276520.8340535,
+    "updated": 1784359078.5920982,
     "updated_by": "claudebox",
-    "value": "2026-07-17T08:20Z quorum still LOST 1/3 (unchanged from 07:40Z t-0237): v1410-1 tailscale key EXPIRED (needs on-box re-auth), oraclebox1 39d / death-star 40d offline, windesk no-reply; bigo-server + mac-mini client APIs ok; claudebox self healthy, engines claude+codex ready; no new remote fix available"
+    "value": "2026-07-18T07:16Z quorum still LOST 1/3 (unchanged from 06:39Z t-0249): claudebox own server alive but Candidate/No-cluster-leader; v1410-1 tailscale node key EXPIRED (needs on-box re-auth), oraclebox1 40d offline; death-star 41d offline; windesk went offline ~1h ago (was reachable 06:39Z); bigo-server + eliotts-mac-mini tailnet-online. claudebox self healthy: disk 8%, engines claude+codex ready (not advertisable w/o leader). t-0249 remains the live escalation; no new remote fix available."
   },
   "health:v1410-1": {
     "updated": 1784410324.8447897,
@@ -196,10 +221,15 @@
     "updated_by": "claudebox",
     "value": "DONE-2026-07-17T12:04:46Z"
   },
+  "health:v1410-1:claudebox-20260718T193100Z": {
+    "updated": 1784403060.961279,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-18T19:31:00Z"
+  },
   "health:windesk": {
-    "updated": 1784408048.6628282,
+    "updated": 1784410438.4898026,
     "updated_by": "bigo-server",
-    "value": "DONE-2026-07-18T20:54:08Z"
+    "value": "bigo-server"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,
@@ -215,6 +245,11 @@
     "updated": 1784289886.5161533,
     "updated_by": "claudebox",
     "value": "DONE-2026-07-17T12:04:46Z"
+  },
+  "health:windesk:claudebox-20260718T193100Z": {
+    "updated": 1784403061.069243,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-18T19:31:00Z"
   },
   "issue:v1410-1-git-push": {
     "updated": 1782083682.186607,

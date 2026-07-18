@@ -1,0 +1,10 @@
+{
+  "id": "t-0249",
+  "type": "infra",
+  "scope": "2026-07-18T06:39Z claudebox CRITICAL follow-up: Nomad remains leaderless at 1/2 committed voters. claudebox is alive/Candidate; v1410-1 is unreachable because its Tailscale node key expired, and oraclebox1 is offline, so safe recovery requires on-box/provider re-auth of v1410-1 plus verify/start Nomad, or restore/rejoin oraclebox1. death-star and windesk are currently Tailscale-offline. bigo-server and eliotts-mac-mini are reachable with live local Nomad APIs and maintenance allocation stats, but global ready/eligible and job coverage are non-authoritative until quorum returns. Existing per-peer queues are preserved; do not perform single-voter Raft surgery. Supersedes t-0248 with current windesk reachability.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

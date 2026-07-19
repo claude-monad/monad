@@ -1,0 +1,10 @@
+{
+  "id": "t-0292",
+  "type": "infra",
+  "scope": "2026-07-19T15:06Z bigo-server cluster-health follow-up to t-0291: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox is the sole reachable server, alive/Candidate with no leader; committed voters are {v1410-1,claudebox}. v1410-1 is Tailscale-offline with an expired key and SSH times out; safe recovery requires on-box/admin/provider Tailscale reauthorization while preserving Raft data, then verify/start Nomad and confirm election. Fallback: power/Tailscale-up and safely restore/rejoin oraclebox1, offline since 2026-06-07. Do not perform single-voter Raft surgery. death-star remains offline since 2026-06-07; eliotts-mac-mini is newly offline; windesk is tailnet-online but Nomad 4646/5646, SSH, WinRM, and Codex 8300 are unreachable. bigo-server local Nomad health is OK, claude+codex were re-advertised, and its maintainer stats are live. claudebox local server/client health and both engines are live, but cached maintenance alloc stats are empty/Timestamp=0; SSH needs interactive Tailscale approval. Authoritative ready/eligible and maintenance-agent coverage checks return No cluster leader; stale cache lists only bigo-server, v1410-1, claudebox, and Mac and falsely marks two offline nodes ready/running. Self disk is 80% with 22GB free and Docker active, so no cleanup; repo is dirty and 19 behind, so no fast-forward. After quorum recovery verify all seven and repair only confirmed gaps.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0291"
+}

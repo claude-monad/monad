@@ -1,0 +1,10 @@
+{
+  "id": "t-0276",
+  "type": "infra",
+  "scope": "URGENT quorum loss: v1410-1 Tailscale key expired/offline 16d and oraclebox1 offline 42d; claudebox is sole alive Nomad server with no leader. Restore either voter/Tailscale and verify 2-server quorum.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

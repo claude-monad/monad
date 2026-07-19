@@ -1,0 +1,10 @@
+{
+  "id": "t-0277",
+  "type": "infra",
+  "scope": "2026-07-19T15:57:19Z claudebox CRITICAL sweep: Nomad quorum remains lost at 1/2 committed voters; claudebox is healthy but Candidate/no leader, v1410-1 is unreachable because its Tailscale key expired, and oraclebox1 is offline. Restore/re-authorize v1410-1 on-box and verify/start Nomad, or power/restore/rejoin oraclebox1; preserve Raft data and do not force single-voter surgery. death-star remains offline; windesk is Tailscale-online but its Nomad API is down. bigo-server and eliotts-mac-mini client APIs and maintenance telemetry are live. After quorum returns, authoritatively verify all seven ready+eligible and one maintenance loop per member.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

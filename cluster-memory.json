@@ -72,9 +72,9 @@
     "value": "DONE-2026-07-18T20:54:08Z"
   },
   "health:death-star": {
-    "updated": 1784410325.0306282,
-    "updated_by": "bigo-server",
-    "value": "bigo-server"
+    "updated": 1784421282.4144223,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-19T00:34:42Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -152,9 +152,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1784410324.9396696,
-    "updated_by": "bigo-server",
-    "value": "bigo-server"
+    "updated": 1784421282.335577,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-19T00:34:42Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -202,9 +202,9 @@
     "value": "2026-07-18T07:16Z quorum still LOST 1/3 (unchanged from 06:39Z t-0249): claudebox own server alive but Candidate/No-cluster-leader; v1410-1 tailscale node key EXPIRED (needs on-box re-auth), oraclebox1 40d offline; death-star 41d offline; windesk went offline ~1h ago (was reachable 06:39Z); bigo-server + eliotts-mac-mini tailnet-online. claudebox self healthy: disk 8%, engines claude+codex ready (not advertisable w/o leader). t-0249 remains the live escalation; no new remote fix available."
   },
   "health:v1410-1": {
-    "updated": 1784410324.8447897,
-    "updated_by": "bigo-server",
-    "value": "bigo-server"
+    "updated": 1784421282.2521763,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-19T00:34:42Z"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -227,9 +227,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1784410438.4898026,
-    "updated_by": "bigo-server",
-    "value": "bigo-server"
+    "updated": 1784421282.4995377,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-19T00:34:42Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

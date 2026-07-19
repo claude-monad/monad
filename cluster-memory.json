@@ -42,9 +42,9 @@
     "value": "DONE-2026-07-18T04:12:50Z"
   },
   "health:claudebox": {
-    "updated": 1784483380.7020667,
+    "updated": 1784487585.0502162,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-19T17:49:40Z self healthy: server pid1490 up (leaderless-blocked), engines ready, disk 9pct, git clean@bf76cbb"
+    "value": "DONE-2026-07-19T18:59:44Z self healthy: server pid1490 up (leaderless-blocked), engines claude+codex ready, disk 9pct/799G free, git level@origin"
   },
   "health:claudebox-egress": {
     "updated": 1783435031.6642962,
@@ -67,9 +67,9 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1784483380.6693926,
+    "updated": 1784487585.0070975,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-19T17:49:40Z quorum still LOST 1/2 no-regression: claudebox sole alive voter (Candidate/no-leader, local API confirmed); v1410-1 key-expired-16d GH#8, oraclebox1 offline-42d, both un-fixable remotely; t-0276/t-0277+GH#6/#8 live; no single-voter surgery; self healthy disk9pct engines claude+codex ready"
+    "value": "DONE-2026-07-19T18:59:44Z quorum still LOST 1/2 no-regression: claudebox local server pid1490 up but leaderless (sole reachable voter of 3); v1410-1 key-expired-16d GH#8/t-0276, oraclebox1 offline-42d t-0277 - both need on-box intervention, un-fixable remotely; no single-voter Raft surgery per policy; escalations live, no dup"
   },
   "health:death-star": {
     "updated": 1784473718.5149255,

@@ -67,9 +67,10 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1784529902.7643332,
+    "expires": 1784834157.4351003,
+    "updated": 1784574957.4350994,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-20T06:45:02Z quorum still LOST 1/2 no-regression; blocked on owner: GH#8 v1410-1 tailscale re-auth, GH#4 power-on oraclebox1/death-star"
+    "value": "DONE-2026-07-20T19:15:16Z quorum still LOST 1/2 no-regression"
   },
   "health:death-star": {
     "updated": 1784473718.5149255,
@@ -197,10 +198,10 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "expires": 1784827497.5946372,
-    "updated": 1784568297.594636,
+    "expires": 1784834157.4022973,
+    "updated": 1784574957.4022963,
     "updated_by": "claudebox",
-    "value": "2026-07-20T17:25Z quorum LOST 1/2; claudebox sole live voter Candidate term=1648; v1410-1 offline 17d (GH#8 key expired); oraclebox1 43d; windesk nomad-http down; bigo+mac client 200 leaderless; no new actionable fix"
+    "value": "2026-07-20T19:15Z quorum LOST 1/2; claudebox sole live voter; no regression (windesk DERP-reachable, bigo+mac client agents up)"
   },
   "health:v1410-1": {
     "updated": 1784476132.3390386,

@@ -67,9 +67,9 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1784487585.0070975,
+    "updated": 1784519066.3581178,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-19T18:59:44Z quorum still LOST 1/2 no-regression: claudebox local server pid1490 up but leaderless (sole reachable voter of 3); v1410-1 key-expired-16d GH#8/t-0276, oraclebox1 offline-42d t-0277 - both need on-box intervention, un-fixable remotely; no single-voter Raft surgery per policy; escalations live, no dup"
+    "value": "DONE-2026-07-20T03:44:26Z quorum still LOST 1/2 no-regression"
   },
   "health:death-star": {
     "updated": 1784473718.5149255,
@@ -197,9 +197,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1784457537.644572,
+    "updated": 1784519066.2856488,
     "updated_by": "claudebox",
-    "value": "2026-07-19T10:38:57Z quorum LOST 1/2; claudebox sole live candidate; v1410-1 key expired; oraclebox1/death-star/mac-mini/windesk offline; bigo reachable; leader-blocked node/job checks; engines ready; escalations t-0276/t-0275"
+    "value": "2026-07-20T03:44:26Z quorum LOST 1/2; claudebox sole live voter, leaderless; no regression"
   },
   "health:v1410-1": {
     "updated": 1784476132.3390386,

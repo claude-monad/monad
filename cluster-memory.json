@@ -67,9 +67,9 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1784525667.4410577,
+    "updated": 1784529902.7643332,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-20T05:34:27Z quorum still LOST 1/2 no-regression; blocked on owner: GH#8 v1410-1 tailscale re-auth, GH#4 power-on oraclebox1/death-star"
+    "value": "DONE-2026-07-20T06:45:02Z quorum still LOST 1/2 no-regression; blocked on owner: GH#8 v1410-1 tailscale re-auth, GH#4 power-on oraclebox1/death-star"
   },
   "health:death-star": {
     "updated": 1784473718.5149255,
@@ -197,9 +197,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1784523381.3208647,
+    "updated": 1784529902.7321203,
     "updated_by": "claudebox",
-    "value": "2026-07-20T04:56:21Z quorum LOST 1/2; claudebox sole live voter; self healthy (disk 9%, engines claude+codex ready, server pid up); bigo-server/windesk/mac-mini reachable; v1410-1 claimed by bigo-server"
+    "value": "2026-07-20T06:45:02Z quorum LOST 1/2; claudebox sole live voter; no regression; peers bigo-server+mac-mini 200, windesk agent down (task queued), 3 nodes tailscale-offline (GH#8/#4)"
   },
   "health:v1410-1": {
     "updated": 1784476132.3390386,

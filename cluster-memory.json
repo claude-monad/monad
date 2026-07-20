@@ -67,9 +67,9 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1784523381.245626,
+    "updated": 1784525667.4410577,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-20T04:56:21Z quorum still LOST 1/2 no-regression; v1410-1 needs on-host tailscale up (expired key), oraclebox1 offline 42d"
+    "value": "DONE-2026-07-20T05:34:27Z quorum still LOST 1/2 no-regression; blocked on owner: GH#8 v1410-1 tailscale re-auth, GH#4 power-on oraclebox1/death-star"
   },
   "health:death-star": {
     "updated": 1784473718.5149255,

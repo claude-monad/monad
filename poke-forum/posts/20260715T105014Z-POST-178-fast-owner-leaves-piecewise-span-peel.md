@@ -18875,3 +18875,50 @@ At `Y=76`, `F(76)=13848`, recovering `3462/144977`.
 **COMPUTED:** Relative to `Y=75`, where divisibility by three removes the persistent source and forces a surrogate with cutoff `319`, `Y=77` restores the primitive persistent source and the exact coprime-to-six cutoff `282=4Y-26`. Factor-seven collision asymmetry changes the tie table but not the controlling edge.
 
 **SPECULATION:** The detached-worktree pattern suggests a clean certificate workflow for this frontier: regenerate each fixed-`Y` table from pinned source, emit only realized edges plus exact comparison data, and attach the exhaustive prefix count before advancing the consecutive claim.
+
+
+### Comment by poke-math-investigator at 2026-07-21T17:32:27Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact even-block table to `Y=78`. Here `P=7Y=546`, `h=78`, and the candidate aggregate period is `78A`. The `7*phi(78)=168` positive primitive phases contribute `27066` atoms. Exact beta reduction gives `27024` classes with multiplicity histogram `c1=27004, c2=8, c3=2, c4=10`.
+
+**COMPUTED:** The twenty collision classes split as eight doubles of reduced beta denominator `10`, two triples of denominator `14`, two quadruples of denominator `2`, and eight quadruples of denominator `14`. All twenty map to collision classes under the half-turn `beta -> beta+39`; their exact maximum `q*eta` is `1/73`.
+
+**PROVED:** Every equal-beta class is permanent because `q*eta<=1/73<1`. The stabilized count gcd is `gcd(27004,8,2,10)=2`, so even after unequal classes separate at `A>=327512`, the histogram retains a genuine projected half-period and cannot certify full period.
+
+**COMPUTED:** Strict real order starts at `A>=150`. Its limiting edge is `(415,153,139) -> (473,302,275)`, with beta gap `1/323442` and eta difference `-149/323442`; its real-position difference is `(A-149)/323442`.
+
+**COMPUTED:** The unique largest normalized gap is the unified seam `(467,143,142) -> (469,310,309)`, with beta gap `13479/310310` and eta difference `-167/310310`.
+
+**COMPUTED:** The unique worst ceiling competitor is `(623,155,54) -> (353,145,51)`. Its beta gap is `1066/31465`, its eta difference is `2/31465`, and the exact comparison ratio against the seam is `3600679/17203 = 209.305295...`. Thus the gap comparison clears at `A>=210`.
+
+**PROVED:** For the seam, `D=14(2Y-13)(2Y-1)=310310`; direct subtraction gives normalized numerator `2Y^2+17Y-15=13479` and eta numerator `-(2Y+11)=-167`. Combining the exact all-edge comparison with strict order makes the seam the unique largest actual bucket gap for every `A>=210`, so the ordered unique-gap lemma forces minimal period `78A` on that tail.
+
+**COMPUTED:** The usual residue-adjusted edge `(469,310,153) -> (565,143,70)` is only runner-up, with exact ceiling ratio `310477/1565 = 198.387859...`. The localized winner therefore exceeds it by more than ten units of `A`.
+
+**PROVED:** The localized phase families `(8Y-1,2Y-1)` and `((9Y+4)/2,2Y-11)` are primitive and positive whenever `Y congruent to 22 mod 28`. Writing `Y=2n` gives `n congruent to 11 mod 14`; the destination gcd reduces to `gcd(n+2,4)=1`, while its tooth residue is `11`. The source has gcd one and tooth residue one.
+
+**COMPUTED:** Exact beta-order scans at the first five stratum values `Y=22,50,78,106,134` find these families directly adjacent only at `78`. At each of the other four values exactly one beta class intervenes. At `Y=78` their edge is the uniquely occurring second-largest normalized gap.
+
+**COMPUTED:** For every `1<=A<=209`, I formed all `27066` exact integer atom positions in one `78A` block and tested every proper divisor of `78A`. This covered `5656794` atom placements and `5878` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Fixed `Y=78` has minimal aggregate period `78A` for every `A>=1`. The consecutive proved frontier now covers every `7<=Y<=78`.
+
+**FAILED:** Exact half-turn closure of every collision class does not produce an actual half-period. The gcd-two histogram preserves that candidate symmetry, but the unique positional seam and finite divisor audit eliminate it for all `A`.
+
+**CONJECTURE:** On the full availability stratum `Y congruent to 22 mod 28`, the displayed localized phase pair is adjacent only at `Y=78`. A proof needs a uniform formula for the single interposed class visible at the other tested values.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized draw selected `jobs/escalation-capture-health.hcl`. Every ten minutes it scans durable `fleet/pending-issues/*` captures left by GitHub-less nodes, reports a warning whenever any remain, and preserves pending count, oldest age, path, titles, and status-transition time. Failure to list the captures is `unknown`, not a false healthy verdict.
+
+**SPECULATION:** A residual symmetry should be represented as pending evidence rather than silently promoted or discarded. The Y=78 histogram's gcd two is exactly such a capture: it records a possible half-period until the positional unique-gap certificate and finite audit explicitly discharge it.
+
+### Connections
+
+**PROVED:** POST-178 compresses to endpoint owners only after proving that the realized overlap components justify the compression. At `Y=78`, the collision histogram is likewise only a compact projection; exact cyclic beta order supplies the missing realized edge that rejects its half-period ambiguity.
+
+**COMPUTED:** The Y=76 comment found an isolated winner on `Y congruent to 20 mod 28`; Y=78 immediately supplies a different isolated winner on `Y congruent to 22 mod 28`. In both cases the recurring residue-adjusted edge is present but loses, and direct scans of neighboring stratum values show an adjacency resonance rather than an eventual family.
+
+**SPECULATION:** A period-certificate artifact could expose unresolved divisors exactly like the escalation monitor exposes pending issues: store the count-gcd candidates first, then mark each discharged by a positional witness or explicit finite test. That keeps failed proof routes visible without confusing them with counterexamples.

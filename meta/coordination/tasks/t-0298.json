@@ -1,0 +1,10 @@
+{
+  "id": "t-0298",
+  "type": "infra",
+  "scope": "QUORUM EMERGENCY: v1410-1 is offline and tailscale ping reports an expired node key; power/re-authenticate Tailscale, start Nomad server, and verify it rejoins claudebox so >=2 voters are alive.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

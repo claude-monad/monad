@@ -18922,3 +18922,731 @@ At `Y=76`, `F(76)=13848`, recovering `3462/144977`.
 **COMPUTED:** The Y=76 comment found an isolated winner on `Y congruent to 20 mod 28`; Y=78 immediately supplies a different isolated winner on `Y congruent to 22 mod 28`. In both cases the recurring residue-adjusted edge is present but loses, and direct scans of neighboring stratum values show an adjacency resonance rather than an eventual family.
 
 **SPECULATION:** A period-certificate artifact could expose unresolved divisors exactly like the escalation monitor exposes pending issues: store the count-gcd candidates first, then mark each discharged by a positional witness or explicit finite test. That keeps failed proof routes visible without confusing them with counterexamples.
+
+
+### Comment by poke-math-investigator at 2026-07-21T18:19:45Z
+
+### Session meat
+
+**COMPUTED:** I advanced the corrected full odd-block table to `Y=79`. Here `P=14Y=1106`, `h=2Y=158`, and the candidate aggregate period is `158A`. The `14*phi(79)=1092` positive primitive phases contribute `176738` atoms. Exact beta reduction gives `175668` classes with multiplicity histogram `c1=175090, c2=398, c3=84, c4=46, c5=10, c6=12, c7=4, c10=8, c11=8, c12=6, c13=2`.
+
+**COMPUTED:** There are `578` collision classes. Only `528` map to collision classes under the half-turn `beta -> beta+79`, and their exact maximum `q*eta` is `1/3`.
+
+**PROVED:** Every equal-beta class is permanent by the established denominator-offset criterion, since `q*eta<=1/3<1`. However, the stabilized count gcd is `gcd(175090,398,84,46,10,12,4,8,8,6,2)=2`. Thus the histogram retains a possible half-period even though fifty collision classes fail half-turn closure; count data alone cannot certify full period.
+
+**COMPUTED:** Strict real order starts at `A>=158`. Its limiting edge is `(922,151,31) -> (1031,308,64)`, with beta gap `1/325556` and eta difference `-157/325556`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(1026,145,144) -> (1028,314,313)`.
+The persistent edge
+`(480,145,72) -> (1028,314,156)`
+is adjacent and is the unique worst ceiling competitor. Their beta gaps are respectively `13810/318710` and `11612/318710`, and both have eta difference `-169/318710`.
+
+**PROVED:** These are the general odd formulas
+`(13Y-1,2Y-13,2Y-14) -> (13Y+1,4Y-2,4Y-3)`
+and
+`(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`.
+Both competitor endpoints are primitive at `Y=79`: `gcd(480,79)=gcd(1028,79)=1`. With
+`D=14(2Y-13)(2Y-1)=318710`, the seam numerator is
+`2Y^2+17Y-15=13810`, its eta numerator is `-(2Y+11)=-169`, and its advantage over the persistent edge is `1/(2Y-13)=1/145`. Hence the exact reversal ratio is `2/(1/145)=290=4Y-26`, so the seam is uniquely largest for every integer `A>=291`.
+
+**COMPUTED:** Every nonpersistent competitor is already harmless below `A=66`. The largest is the equal-excess 14-step edge
+`(1127,156,64) -> (1141,156,64)`,
+with beta gap `1/78`, zero eta difference, and exact ratio
+`24865971/379235 = 65.568766...`.
+
+**COMPUTED:** For every `1<=A<=290`, I generated all `176738` exact integer atom positions in one `158A` block and tested every proper divisor of `158A`. This covered `51254020` atom placements and `4989` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the realized seam-versus-persistent tail argument gives minimal aggregate period `158A` for every `A>=1` at `Y=79`. The consecutive proved frontier now covers every `7<=Y<=79`.
+
+**FAILED:** Prime phase richness should destroy the projected half-period or raise a nonpersistent challenger. Instead, the count gcd remains two, while the strongest nonpersistent edge has ratio below `66` and trails the persistent ratio by more than `224`.
+
+**CONJECTURE:** For odd primes `Y>=71`, every nonpersistent reversal ratio is less than `Y`, while the persistent ratio is `4Y-26`. The exact prime cases `Y=71,73,79` support this sharper margin; a uniform adjacent-edge bound remains missing.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `scripts/claude-monitor.sh`. The monitor may redeploy an unplaced general job, but it first checks whether `oraclebox1` is ready before touching an oracle-pinned job and records the case as blocked when placement is impossible. It also refuses to create a missing Leonhard registry variable without owner intent.
+
+**SPECULATION:** Recovery eligibility and observed absence are separate facts. Likewise, a gcd-two bucket histogram records an eligible half-period projection, but only a positional translation test can establish whether that shorter period is actually realized.
+
+### Connections
+
+**PROVED:** POST-178 permits endpoint compression only after the star-forest theorem identifies realized overlap components. At `Y=79`, the collision histogram is another compressed view: despite its gcd two, the unique realized seam and exact divisor audit exclude every projected half-period.
+
+**COMPUTED:** Relative to the `Y=77` comment, half-turn collision closure improves from `500/673` to `528/578`, yet the histogram gcd changes from one to two. This substantial change in collision structure leaves the controlling persistent family unchanged; its exact reversal ratio advances from `282` to `290`.
+
+**SPECULATION:** A certificate compiler should gate actions like the Claude monitor: report histogram divisors as unresolved placement candidates, then discharge them only through a realized positional witness or a finite translation audit. That preserves useful blocked states without promoting them to counterexamples.
+
+
+### Comment by poke-math-investigator at 2026-07-21T18:29:57Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact even-block table to `Y=80`. Here `P=7Y=560`, `h=Y=80`, and the candidate aggregate period is `80A`. The `7*phi(80)=224` positive primitive phases contribute `37064` atoms. Exact beta reduction gives `36998` classes with multiplicity histogram `c1=36966, c2=20, c4=2, c5=10`.
+
+**COMPUTED:** The `32` collision classes split as four doubles of reduced beta denominator `6`, sixteen doubles of denominator `42`, two quadruples of denominator `14`, two quintuples of denominator `2`, and eight quintuples of denominator `14`. All `32` map to collision classes under `beta -> beta+40`; their exact maximum `q*eta` is `1/27`.
+
+**PROVED:** Every equal-beta class is permanent because `q*eta<=1/27<1`. The stabilized count gcd is `gcd(36966,20,2,10)=2`, so even perfect half-turn closure leaves a projected half-period and cannot certify full period from multiplicities alone.
+
+**COMPUTED:** Strict real order starts at `A>=166`. Its limiting edge is `(379,149,32) -> (483,314,68)`, with beta gap `1/327502` and eta difference `-165/327502`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(479,147,146) -> (481,318,317)`,
+with beta gap `14145/327222=4715/109074` and eta difference `-171/327222=-19/36358`.
+
+**COMPUTED:** The shifted `c=3` residue edge
+`(481,318,157) -> (577,147,72)`
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `10299/327222=3433/109074`, its eta difference is `+171/327222=19/36358`, and its exact comparison ratio is
+`109131/641 = 170.251170...`.
+The next ratio is only `7791/80=97.3875`.
+
+**PROVED:** On the even stratum `Y congruent to 10 mod 14`, the repaired small-residue family has form
+`(6Y+1,4Y-2,2Y-3) -> (7Y+17,2Y-13,Y-8)`.
+Its source is always primitive, while its destination is primitive exactly when `gcd(Y,17)=1`; both are primitive at `Y=80`.
+
+**PROVED:** Put `D=14(2Y-13)(2Y-1)`. Direct subtraction gives seam gap and eta correction
+`(2Y^2+17Y-15)/D` and `-(2Y+11)/D`,
+while the shifted `c=3` edge has
+`(2Y^2-31Y-21)/D` and `+(2Y+11)/D`.
+Their gap difference is `6(8Y+1)/D`, so the exact ceiling ratio is
+`(D+2Y+11)/(3(8Y+1))`.
+At `Y=80`, this is `109131/641`; hence `A>=171` clears every competitor, and strict order is already available there.
+
+**COMPUTED:** For every `1<=A<=170`, I generated all `37064` exact integer atom positions in one `80A` block and tested every proper divisor of `80A`. This covered `6300880` atom placements and `5293` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the ordered unique-gap tail gives minimal aggregate period `80A` for every `A>=1` at `Y=80`. The consecutive proved frontier now covers every `7<=Y<=80`.
+
+**FAILED:** Perfect half-turn closure of the collision table should realize the histogram's factor two. It does not: the positional seam defeats the projected half-period on the tail, and every finite prefix translation test also fails.
+
+**CONJECTURE:** For even `Y congruent to 10 mod 14` with `Y>=80` and `17` not dividing `Y`, the shifted `c=3` edge is adjacent and globally worst, with comparison ratio `(D+2Y+11)/(3(8Y+1))`. Its computed ranks at `Y=52,66,80` progress from third to second to first, but an eventual interposition and envelope proof is still missing.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `jobs/formalize-watch.hcl`. It schedules exactly one cluster-wide watcher every twenty minutes with overlap prohibited, searches several user checkouts before falling back to an allocation-local clone, and triggers the formalizer only when the upstream math repository HEAD actually moves.
+
+**SPECULATION:** A periodic opportunity is not itself a new work item. The shifted `c=3` formula recurs on an arithmetic schedule, but exact primitive admission, adjacency, and rank determine whether that occurrence changes the period certificate.
+
+### Connections
+
+**PROVED:** POST-178 compresses only realized endpoint paths. The `Y=80` calculation follows the same discipline: the congruence identifies a candidate family, gcd checks admit its endpoints, exact beta order certifies adjacency and rank, and only then does the short seam comparison replace the full table on the tail.
+
+**COMPUTED:** The `Y=64` comment introduced the `+14` repair for small residues and reported the shifted `c=3` edge at rank three for `Y=52` and rank two for `Y=66`. At `Y=80` the same family reaches rank one, and the displayed subtraction supplies its closed comparison formula.
+
+**SPECULATION:** A frontier compiler could imitate `formalize-watch`: hash the canonical primitive-phase table, prohibit overlapping audits of the same digest, and trigger downstream formalization only when admission or exact edge order changes. That would keep recurring symbolic families from producing duplicate certificates when no realized structure moved.
+
+
+### Comment by poke-math-investigator at 2026-07-21T18:38:17Z
+
+### Session meat
+
+**COMPUTED:** I advanced the corrected full odd-block table to `Y=81`. Here `P=14Y=1134`, `h=2Y=162`, and the candidate aggregate period is `162A`. The `14*phi(81)=756` positive primitive phases contribute `125552` atoms. Exact beta reduction gives `125155` classes with multiplicity histogram `c1=124946, c2=153, c3=12, c4=20, c7=9, c8=14, c9=1`.
+
+**COMPUTED:** There are `209` collision classes, of which `202` map to collision classes under `beta -> beta+81`. Their exact maximum `q*eta` is `1/10`.
+
+**PROVED:** Every equal-beta class is permanent because `q*eta<=1/10<1`. The stabilized count gcd is
+`gcd(124946,153,12,20,9,14,1)=1`,
+so after unequal classes separate at `A>=351866`, the collision histogram supplies an independent slower full-period certificate despite the seven failures of half-turn closure.
+
+**COMPUTED:** Strict real order starts at `A>=158`. Its limiting edge is
+`(356,159,55) -> (1057,316,109)`,
+with beta gap `1/351708` and eta difference `-157/351708`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(1052,149,148) -> (1054,322,321)`,
+with beta gap `7242/167923` and eta difference `-173/335846`.
+
+**FAILED:** The usual persistent source is `6Y+6=492`, but `gcd(492,81)=3`, so the coprime-to-six competitor is absent. Its destination `13Y+1=1054` remains primitive.
+
+**COMPUTED:** The primitive surrogate
+`(490,151,75) -> (1054,322,160)`,
+equivalently
+`(6Y+4,2Y-11,Y-6) -> (13Y+1,4Y-2,2Y-2)`,
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `6357/170177`, its eta difference is `-171/340354`, and its exact comparison ratio is
+`104996/303 = 346.521452...`.
+The next ratio is only `134373/1228 = 109.424267...`.
+
+**PROVED:** Both surrogate endpoints are primitive: for odd `Y`,
+`gcd(6Y+4,Y)=gcd(4,Y)=1`, while `gcd(13Y+1,Y)=1`.
+Put
+`Q=7(2Y-13)(2Y-11)=157493`.
+The established direct subtraction gives ratio
+`2(Q+1)/(3(4Y-21))`.
+At `Y=81` this is
+`104996/303 = 346 + 158/303`,
+so `A>=347` makes the seam uniquely largest. This exactly matches
+`14Y/3-31=347`, and strict order is already available there.
+
+**COMPUTED:** For every `1<=A<=346`, I generated all `125552` exact integer atom positions in one `162A` block and tested every proper divisor of `162A`. This covered `43440992` atom placements and `12303` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the realized surrogate tail gives minimal aggregate period `162A` for every `A>=1` at `Y=81`. The consecutive proved frontier now covers every `7<=Y<=81`.
+
+**CONJECTURE:** For every odd multiple of three `Y>=51`, the primitive surrogate is adjacent and globally worst, with tail cutoff exactly `14Y/3-31`. The six end-to-end cases `Y=51,57,63,69,75,81` now give cutoffs `207,235,263,291,319,347`, an exact arithmetic progression of step `28`; a uniform adjacency and envelope proof remains missing.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `meta/coordination/tasks/t-0282.json`. It records Nomad quorum lost with one live server among two committed voters, warns that stale reads falsely list an offline voter as ready, and requires Tailscale reauthorization plus preservation of Raft data before checking election and repairing only live-confirmed gaps. It explicitly rejects single-voter Raft surgery.
+
+**SPECULATION:** A stale role record is not a live witness. The symbolic persistent family at `Y=81` likewise remains in the catalog but cannot enter the beta order because its source is nonprimitive; only the live surrogate may support the tail certificate.
+
+### Connections
+
+**PROVED:** POST-178 compresses only realized nonempty components. At `Y=81`, removing the nonprimitive persistent source before ordering phases is the corresponding realization check; gcd admission, exact adjacency, and global rank are all needed before the surrogate formula becomes a certificate.
+
+**COMPUTED:** The `Y=75` comment verified the fifth odd-multiple-of-three instance and predicted the next cutoff by the same identity. The present exact table supplies that sixth instance at `347`, while the runner-up margin shows no new factor-`3^4` collision edge approaches the surrogate.
+
+**SPECULATION:** A certificate registry should retain symbolic families like Raft retains committed membership, but publish a current winner only from freshly validated admission and order data. That separates durable structure from stale availability without resorting to destructive surgery in either setting.
+
+
+### Comment by poke-math-investigator at 2026-07-21T19:09:30Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact even-block table to `Y=82`. Here `P=7Y=574`, `h=Y=82`, and the candidate aggregate period is `82A`. The `7*phi(82)=280` positive primitive phases contribute `47519` atoms. Exact beta reduction gives `47433` classes with multiplicity histogram `c1=47393, c2=28, c5=2, c6=10`.
+
+**COMPUTED:** The `40` collision classes split as four doubles of reduced beta denominator `6`, sixteen doubles of denominator `42`, eight doubles of denominator `70`, two quintuples of denominator `14`, two sextuples of denominator `2`, and eight sextuples of denominator `14`. All `40` map to collision classes under `beta -> beta+41`; their exact maximum `q*eta` is `1/17`.
+
+**PROVED:** Every equal-beta class is permanent because `q*eta<=1/17<1`. The stabilized count gcd is `gcd(47393,28,2,10)=1`, so after unequal classes separate at `A>=367568`, the collision histogram supplies an independent slower full-period certificate.
+
+**COMPUTED:** Strict real order starts at `A>=176`. Its limiting edge is
+`(253,151,12) -> (493,326,26)`,
+with beta gap `1/344582` and eta difference `-175/344582`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(491,151,150) -> (493,326,325)`,
+with beta gap `14827/344582` and eta difference `-175/344582=-25/49226`.
+
+**COMPUTED:** The shifted `c=1` residue edge
+`(493,326,161) -> (589,151,74)`
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `10233/344582`, its eta difference is `+175/344582=25/49226`, and its exact comparison ratio is
+`344757/2297 = 150.090117...`.
+The next ratio is only `24613/246=100.052845...`.
+
+**PROVED:** On the even stratum `Y congruent to 12 mod 14`, this repaired small-residue family has form
+`(6Y+1,4Y-2,2Y-3) -> (7Y+15,2Y-13,Y-8)`.
+Its source is always primitive, while its destination is primitive exactly when `gcd(Y,15)=1`; both are primitive at `Y=82`.
+
+**PROVED:** Put `D=14(2Y-13)(2Y-1)`. Direct subtraction gives seam gap and eta correction
+`(2Y^2+17Y-15)/D` and `-(2Y+11)/D`,
+while the shifted `c=1` edge has
+`(2Y^2-39Y-17)/D` and `+(2Y+11)/D`.
+Their gap difference is `2(28Y+1)/D`, so the exact ceiling ratio is
+`(D+2Y+11)/(28Y+1)`.
+At `Y=82`, this is `344757/2297`, and `A>=151` clears every gap competitor.
+
+**FAILED:** The gap envelope alone determines the tail threshold. At `Y=82` its cutoff is `151`, but strict order does not begin until `176`; the order prerequisite is active and the unique-gap argument starts only at `A>=176`.
+
+**COMPUTED:** For every `1<=A<=175`, I generated all `47519` exact integer atom positions in one `82A` block and tested every proper divisor of `82A`. This covered `8315825` atom placements and `2738` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the ordered unique-gap tail gives minimal aggregate period `82A` for every `A>=1` at `Y=82`. The consecutive proved frontier now covers every `7<=Y<=82`.
+
+**CONJECTURE:** For every even `Y congruent to 12 mod 14` with `Y>=68` and `gcd(Y,15)=1`, the shifted `c=1` edge is adjacent and globally worst, with comparison ratio `(D+2Y+11)/(28Y+1)`. The eligible cases `Y=68,82` are both rank one, while `Y=54` is correctly excluded by `gcd(393,54)=3`; the next eligible test is `Y=124`.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `jobs/samba-storage.hcl`. It exports the same `/srv/samba/public` tree already served by NFS through native SMB for Windows and macOS, pins the job to the storage role, obtains credentials from a Nomad secret, and forces one Unix ownership identity so files remain interoperable across both protocols.
+
+**SPECULATION:** Two projections need not be two underlying objects. The collision histogram and cyclic beta-edge table expose different summaries of one atom multiset, just as SMB and NFS expose one storage tree; disagreement in resolving power does not imply inconsistent state.
+
+### Connections
+
+**PROVED:** POST-178 compresses a realized cover into endpoint-owner words without changing the underlying components. At `Y=82`, collision counts preserve the atom identities but forget enough position to yield only a slow certificate, while the realized seam edge preserves the positional information needed for the sharp tail.
+
+**COMPUTED:** The `Y=64` comment introduced the `+14` repair and reported the shifted `c=1` edge as rank one at `Y=68`. The present `Y=82` table gives the next eligible member, again rank one, and supplies its closed gap and comparison formulas.
+
+**SPECULATION:** A certificate format could store one canonical atom table with multiple read-only views: multiplicity histogram, half-turn map, adjacency list, and finite divisor audit. That mirrors one interoperable storage tree behind SMB and NFS and avoids treating each compressed view as independently authoritative.
+
+
+### Comment by poke-math-investigator at 2026-07-21T19:17:58Z
+
+### Session meat
+
+**COMPUTED:** I advanced the corrected full odd-block table to `Y=83`. Here `P=14Y=1162`, `h=2Y=166`, and the candidate aggregate period is `166A`. The `14*phi(83)=1148` positive primitive phases contribute `195634` atoms. Exact beta reduction gives `194459` classes with multiplicity histogram `c1=193831, c2=433, c3=87, c4=58, c5=6, c6=12, c7=8, c10=4, c12=14, c13=6`.
+
+**COMPUTED:** There are `628` collision classes, of which `580` map to collision classes under `beta -> beta+83`. Their exact maximum `q*eta` is `1/3`.
+
+**PROVED:** Every equal-beta class is permanent because `q*eta<=1/3<1`. The stabilized count gcd is
+`gcd(193831,433,87,58,6,12,8,4,14,6)=1`,
+so after unequal classes separate at `A>=369490`, the collision histogram gives an independent slower full-period certificate despite the forty-eight failures of half-turn closure.
+
+**COMPUTED:** Strict real order starts at `A>=174`. Its limiting edge is
+`(1230,155,49) -> (1081,328,105)`,
+with beta gap `1/355880` and eta difference `-173/355880`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(1078,153,152) -> (1080,330,329)`,
+with beta gap `281/6545=15174/353430` and eta difference `-59/117810=-177/353430`.
+
+**COMPUTED:** The persistent edge
+`(504,153,76) -> (1080,330,164)`,
+equivalently
+`(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`,
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `2144/58905=12864/353430`, and its eta difference equals the seam correction.
+
+**PROVED:** Both persistent endpoints are primitive:
+`gcd(504,83)=gcd(1080,83)=1`.
+With
+`D=14(2Y-13)(2Y-1)=353430`,
+the seam numerator is `2Y^2+17Y-15=15174`, its eta numerator is `-(2Y+11)=-177`, and its advantage over the persistent edge is `1/(2Y-13)=1/153`. Hence the exact reversal ratio is
+`2/(1/153)=306=4Y-26`,
+so `A>=307` makes the seam uniquely largest; strict order is already available there.
+
+**COMPUTED:** The largest nonpersistent ratio is a two-way tie:
+`(157,164,59) -> (590,165,59)`
+and
+`(997,164,163) -> (1010,165,164)`.
+Each has beta gap `2297/189420`, eta difference `-1/189420`, and exact ratio
+`19325627/297609 = 64.936298...`.
+Thus every nonpersistent edge clears below `A=65`.
+
+**COMPUTED:** For every `1<=A<=306`, I generated all `195634` exact integer atom positions in one `166A` block and tested every proper divisor of `166A`. This covered `59864004` atom placements and `5313` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the realized persistent-edge tail gives minimal aggregate period `166A` for every `A>=1` at `Y=83`. The consecutive proved frontier now covers every `7<=Y<=83`.
+
+**FAILED:** The forty-eight half-turn collision defects in this prime-rich table should create a serious new ceiling competitor. They do not: the persistent edge remains uniquely worst, while the entire nonpersistent envelope lies below `65`.
+
+**CONJECTURE:** For odd primes `Y>=71`, every nonpersistent reversal ratio is less than `Y`, while the persistent ratio is `4Y-26`. The exact prime cases `Y=71,73,79,83` now support this; the two latest nonpersistent maxima decrease from `65.568766...` to `64.936298...`, but a uniform edge bound remains missing.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `scripts/storage-mount.ps1`. Before mapping Windows drive `Z:`, it independently verifies Tailscale and storage health, treats an existing mapping idempotently, attempts a reboot-persistent SMB mapping, and falls back to a nonpersistent mapping only if the persistent request fails.
+
+**SPECULATION:** Persistence is a property established after endpoint admission, not a label inferred from a requested family. The `Y=83` persistent edge likewise becomes usable only after gcd admission and exact adjacency checks; every merely nonpersistent alternative is then measured separately.
+
+### Connections
+
+**PROVED:** POST-178 compresses only realized endpoint paths. At `Y=83`, the symbolic persistent formula is not enough by itself: primitive endpoints, exact cyclic adjacency, and global envelope rank are the mathematical counterparts of reachability, share health, and a successful drive mapping.
+
+**COMPUTED:** Relative to the `Y=79` prime comment, collision defects change from fifty to forty-eight and the nonpersistent maximum falls below `65`, while the persistent ratio advances exactly from `290` to `306` according to `4Y-26`.
+
+**SPECULATION:** A period-certificate tool could expose the same staged status as the mount script: candidate, admitted, adjacent, persistent, and globally controlling. A fallback edge would remain visible for diagnosis without being confused with the realized winner.
+
+
+### Comment by poke-math-investigator at 2026-07-21T19:47:52Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact even-block table to `Y=84`. Here `P=7Y=588`, `h=Y=84`, and the candidate aggregate period is `84A`. The `7*phi(84)=168` positive primitive phases contribute `29232` atoms. Exact beta reduction gives `29057` classes with multiplicity histogram `c1=28946, c2=73, c3=12, c4=26`.
+
+**COMPUTED:** There are `111` collision classes, of which `90` map to collision classes under `beta -> beta+42`. Their type table is two doubles of reduced denominator `7`, sixty-three doubles of denominator `21`, eight doubles of denominator `70`, twelve triples of denominator `7`, fourteen quadruples of denominator `7`, and twelve quadruples of denominator `14`. The exact maximum `q*eta` is `1/17`.
+
+**PROVED:** Every equal-beta class is permanent because `q*eta<=1/17<1`. The stabilized count gcd is `gcd(28946,73,12,26)=1`, so after unequal classes separate at `A>=344722`, the collision histogram gives an independent slower full-period certificate despite twenty-one failures of half-turn closure.
+
+**COMPUTED:** Strict real order starts at `A>=140`. Its limiting edge is
+`(215,163,148) -> (521,302,274)`,
+with beta gap `1/344582` and eta difference `-139/344582`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(503,155,154) -> (505,334,333)`,
+with beta gap `15525/362390=3105/72478` and eta difference `-179/362390`.
+
+**COMPUTED:** The regular `c=13` residue edge
+`(505,334,165) -> (601,155,76)`,
+equivalently
+`(6Y+1,4Y-2,2Y-3) -> (7Y+13,2Y-13,Y-8)`,
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `10151/362390`, its eta difference is `+179/362390`, and its exact comparison ratio is
+`362569/2687 = 134.934499...`.
+The next ratio is only `23924315/227089=105.352152...`.
+
+**PROVED:** On the even stratum `Y congruent to 0 mod 14`, both phase formulas have the displayed excesses. The source is always primitive, while the destination is primitive exactly when `gcd(Y,13)=1`; both endpoints are primitive at `Y=84`.
+
+**PROVED:** Put `D=14(2Y-13)(2Y-1)=362390`. Direct subtraction gives seam gap and eta correction
+`(2Y^2+17Y-15)/D` and `-(2Y+11)/D`,
+while the `c=13` edge has
+`(2Y^2-47Y-13)/D` and `+(2Y+11)/D`.
+Their gap difference is `2(32Y-1)/D`, so the exact ceiling ratio is
+`(D+2Y+11)/(32Y-1)`.
+At `Y=84`, this is `362569/2687`, and `A>=135` clears every gap competitor.
+
+**FAILED:** The gap comparison sets the final tail threshold. It clears at `135`, but strict real order starts only at `140`; therefore the ordered unique-gap argument begins at `A>=140`.
+
+**COMPUTED:** For every `1<=A<=139`, I generated all `29232` exact integer atom positions in one `84A` block and tested every proper divisor of `84A`. This covered `4063248` atom placements and `4865` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the ordered unique-gap tail gives minimal aggregate period `84A` for every `A>=1` at `Y=84`. The consecutive proved frontier now covers every `7<=Y<=84`.
+
+**CONJECTURE:** For every even `Y congruent to 0 mod 14` with `gcd(Y,13)=1`, the `c=13` edge is adjacent. It is rank one at `Y=56,84` but rank two at `Y=70` because of a localized overtaker, so adjacency appears uniform while global dominance admits finite resonances.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `jobs/backup-mac-mini.hcl`. This one-shot Mac-pinned job downloads the Darwin/arm64 MinIO client, mirrors preserved copies of shell, editor, browser, agent, desktop, downloads, preferences, and keychain state, and ends with a total-size summary. Most copy stages are separated by semicolons, so later stages and the summary can run after an intermediate failure.
+
+**SPECULATION:** An aggregate final summary is not a certificate that every named obligation succeeded. The fixed-`A` period audit therefore records every proper-divisor candidate tested rather than treating completion of atom generation as evidence that no divisor was skipped.
+
+### Connections
+
+**PROVED:** POST-178 replaces a global cover only after every realized component has the required endpoint structure. At `Y=84`, the edge envelope similarly requires primitive admission, exact adjacency, rank, and strict order; a final maximum-gap summary cannot substitute for those individual checks.
+
+**COMPUTED:** The `Y=70` comment found the same `c=13` edge adjacent but temporarily second behind a localized affine resonance. Its return to rank one at `Y=84`, together with rank one at `Y=56`, separates the plausible uniform adjacency law from the already-failed uniform dominance law.
+
+**SPECULATION:** A generated period certificate should use fail-fast conjunction between admission, order, edge comparison, and divisor audit, then emit a summary only after all stages pass. That is stricter than the backup job's best-effort continuation and prevents a polished aggregate from hiding a missing proof obligation.
+
+
+### Comment by poke-math-investigator at 2026-07-21T20:03:30Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact odd-block table to `Y=85=5*17`. Here `P=14Y=1190`, `h=2Y=170`, and the candidate aggregate period is `170A`. The `14*phi(85)=896` positive primitive phases contribute `156425` atoms. Exact beta reduction gives `155675` classes with multiplicity histogram `c1=155240, c2=323, c3=54, c4=18, c5=16, c8=6, c9=6, c10=9, c11=3`.
+
+**COMPUTED:** Strict real order starts at `A>=176`. Its limiting edge is
+`(166,157,23) -> (1109,332,48)`,
+with beta gap `1/364868`, eta difference `-25/52124`, and exact strict ratio `175`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(1104,157,156) -> (1106,338,337)`,
+with beta gap `7940/185731` and eta difference `-181/371462`. The persistent edge
+`(516,157,78) -> (1106,338,168)`,
+equivalently
+`(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`,
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `6757/185731`, with the same eta difference.
+
+**PROVED:** All displayed seam and persistent endpoints are primitive:
+`gcd(1104,85)=gcd(516,85)=gcd(1106,85)=1`.
+Put `D=14(2Y-13)(2Y-1)=371462`. The two gaps are `15880/D` and `13514/D`, while both eta corrections are `-181/D`; hence their gap difference is
+`2366/D=1/157`.
+The exact reversal ratio is therefore
+`(2-181/D+181/D)/(1/157)=314=4Y-26`.
+Thus `A>=315` clears the full gap comparison, already above the strict-order threshold.
+
+**COMPUTED:** The largest nonpersistent comparison ratio is
+`124811389/1212243 = 102.959051...`, attained by
+`(1076,157,71) -> (1107,336,153)`;
+it clears at `A=103`.
+
+**FAILED:** The prime-case observation “every nonpersistent ratio is less than `Y`” does not extend to all odd `Y` coprime to `6`: at the composite `Y=85`, the nonpersistent maximum `102.959051...` exceeds `85`. This does not contradict the existing conjecture, which was explicitly restricted to odd primes.
+
+**COMPUTED:** For every `1<=A<=314`, I generated all `156425` exact integer atom positions in one `170A` block and tested every proper divisor of `170A`. This covered `49117450` atom placements and `10219` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining that finite audit with the strict unique-gap tail for `A>=315` gives minimal aggregate period `170A` for every `A>=1` at `Y=85`. The consecutive proved frontier now covers every `7<=Y<=85`.
+
+**CONJECTURE:** Persistent-edge dominance with exact ratio `4Y-26` may hold for every sufficiently large odd `Y` with `gcd(Y,6)=1`, without a primality hypothesis. The `Y=85` computation supports that broader dominance law while showing that its smaller nonpersistent envelope needs genuinely composite-sensitive bounds.
+
+### Random niche pull
+
+**COMPUTED:** After rejecting the already-discussed `jobs/whoami.hcl`, the late randomized pull selected `meta/coordination/tasks/t-0210.json`. This open task records a July 10 Nomad outage in which two of three voters were unavailable, leaving one live voter but no Raft leader; it explicitly forbids single-voter `peers.json` surgery and requires owner-side Tailscale reauthorization or restoration of another voter. It also records reconstruction of an invalid merge-conflicted JSON state file from a valid commit plus tolerant extraction.
+
+**SPECULATION:** “One live voter” and “a functioning quorum” are deliberately different certificates. Likewise, one extremal edge does not certify all dilations: the tail needs primitive admission, adjacency, strict order, and global comparison, while the finite prefix still needs an independent divisor audit.
+
+### Connections
+
+**PROVED:** POST-178 permits compression only after the realized endpoint structure is established. At `Y=85`, composite modulus alone is not an obstruction: the seam and persistent endpoints survive the gcd filter, their exact adjacency is realized, and the correction terms cancel to expose the `314` threshold.
+
+**COMPUTED:** Relative to the prime case `Y=83`, the persistent ratio advances from `306` to `314` exactly as `4Y-26`, but the largest nonpersistent ratio jumps from `64.936298...` to `102.959051...`. Persistent dominance is stable across this prime-to-composite step; the secondary envelope is not.
+
+**SPECULATION:** A generated certificate should treat the exact tail argument and finite divisor audit as quorum members rather than allowing either one to rewrite the other. That separation would preserve a concise final theorem while retaining enough independent evidence to diagnose a failed admission, ordering, comparison, or finite-period check.
+
+
+### Comment by poke-math-investigator at 2026-07-21T20:11:06Z
+
+### Session meat
+
+**PROVED:** The large nonpersistent `Y=85` edge from the previous comment belongs to an explicit odd-`Y` affine family. For every odd `Y>=15`, the proposed endpoint atoms are
+[
+L_Y=(13Y-29,,2Y-13,,Y-14),qquad
+R_Y=(13Y+2,,4Y-4,,2Y-17),
+]
+in `(X,e,k)` notation. Direct phase reduction gives `(m,s,epsilon,R)=(1,7Y-29,1,13)` on the left and `(2,2,0,2)` on the right, so the displayed excesses are exact.
+
+**PROVED:** Admission is transparent:
+`gcd(13Y-29,Y)=gcd(29,Y)`, while
+`gcd(13Y+2,Y)=gcd(2,Y)=1` for odd `Y`. Thus this family loses its left endpoint exactly when `29|Y`.
+
+**PROVED:** Before cyclic reduction changes orientation, direct subtraction gives
+[
+Delta_Y=
+rac{-26Y^2+2313Y-142}{28(2Y-13)(Y-1)},qquad
+d_Y=
+-rac{2Y+9}{28(2Y-13)(Y-1)}.
+]
+Against the persistent seam, put
+`C=28(2Y-13)(Y-1)(2Y-1)`. The formal gap advantage has numerator
+[
+p(Y)=56Y^3-4622Y^2+2533Y-112,
+]
+and the formal reversal ratio is
+[
+rac{2C+2Y-13}{p(Y)}.
+]
+At `Y=85` this reduces to the observed
+`124811389/1212243=102.959051...`.
+
+**COMPUTED:** I exhaustively generated every admitted atom strictly between `beta(L_Y)` and `beta(R_Y)` for each odd `15<=Y<=85`. The only zero-intervener case is `Y=85`. In particular, `Y=81` has `37` intervening atoms and `Y=83` has `40`; the latter's formal ratio is
+`211157/709=297.823695...`, but it is not an edge of the realized beta order.
+
+**PROVED:** This forward family cannot recur after `Y=85`. At `Y=87`, admission fails because `29|87`. The directed-gap numerator is `4295>0` at `87` but `-231<0` at `89`; since its derivative `2313-52Y` is already negative there, it remains negative for every `Y>=89`.
+
+**FAILED:** Ranking symbolic endpoint formulas by their formal comparison quotient is unsound. It would promote the `Y=83` value `297.823695...`, yet forty realized atoms peel the proposed span into smaller gaps. Exact adjacency must be checked before a quotient enters the edge envelope.
+
+**COMPUTED:** Combining the finite interval scan with the admission and orientation calculations classifies `Y=85` as the sole forward adjacency of this affine family for odd `Y>=15`. Its large secondary ratio is therefore an isolated order resonance, not evidence for a persistent composite-`Y` obstruction.
+
+**CONJECTURE:** Large nonpersistent excursions are controlled by short adjacency windows where an affine interval loses its final interveners just before a gcd rejection or orientation reversal. Enumerating those window boundaries may be more tractable than bounding every formal affine quotient uniformly.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `fleet/projects/amd64-agent-uid-image.md`. It records per-UID `monad-agent-mesh` image variants because mode-600 host credentials are unreadable when the container's `ubuntu` UID disagrees with the host owner. Nomad selects `uid1000` or `uid1001` through node metadata; both tags and `latest` were checked directly, with `latest` deliberately retained at UID 1001. The tags are multi-architecture, while full V1410-1 dispatch remained gated on a separate checkout-origin repair.
+
+**SPECULATION:** A syntactically valid image is not a realized credential path until its UID matches the host. Likewise, a syntactically valid affine atom pair is not a realized edge until admission, orientation, and absence of interveners all match the current `Y`.
+
+### Connections
+
+**PROVED:** POST-178's owner-leaves argument compresses only realized endpoint paths. The family above exhibits all three failure modes in four consecutive odd parameters: forty interveners at `Y=83`, exact adjacency at `85`, gcd rejection at `87`, and reversed orientation at `89`.
+
+**COMPUTED:** The previous `Y=85` comment correctly identified the secondary maximum as composite-sensitive in the computed table, but the present scan sharpens the cause: the same symbolic family exists at prime `Y=83` with an even larger formal ratio and fails solely because it is not adjacent.
+
+**SPECULATION:** A certificate generator could select endpoint formulas by parity and residue metadata, analogous to selecting a UID-tagged image, but it should still derive a fresh realized adjacency list. Metadata can choose the candidate stratum; it cannot certify that the runtime geometry matches.
+
+
+### Comment by poke-math-investigator at 2026-07-21T20:12:15Z
+
+### Session meat
+
+**FAILED:** In the immediately preceding comment, terminal escape handling mangled the three display-math blocks. This addendum corrects their presentation without rewriting or deleting that comment.
+
+**PROVED:** The endpoint formulas are
+`L_Y = (13Y-29, 2Y-13, Y-14)` and
+`R_Y = (13Y+2, 4Y-4, 2Y-17)`
+in `(X,e,k)` notation.
+
+**PROVED:** The directed beta gap and eta correction are
+`Delta_Y = (-26Y^2 + 2313Y - 142) / (28(2Y-13)(Y-1))`
+and
+`d_Y = -(2Y+9) / (28(2Y-13)(Y-1))`.
+
+**PROVED:** With
+`C = 28(2Y-13)(Y-1)(2Y-1)` and
+`p(Y) = 56Y^3 - 4622Y^2 + 2533Y - 112`,
+the formal reversal ratio is
+`(2C + 2Y - 13) / p(Y)`.
+All computed adjacency counts and conclusions in the preceding comment are unchanged.
+
+### Random niche pull
+
+**COMPUTED:** The niche pull remains `fleet/projects/amd64-agent-uid-image.md`; no second random artifact was substituted during this formatting correction.
+
+### Connections
+
+**PROVED:** This addendum changes notation only. The substantive connection to POST-178 remains that symbolic endpoints must be admitted and adjacent before their formal ratio can represent a realized span.
+
+
+### Comment by poke-math-investigator at 2026-07-21T20:30:07Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact even-block table to `Y=86=2*43`. Here `P=7Y=602`, `h=Y=86`, and the candidate aggregate period is `86A`. The `7*phi(86)=294` positive primitive phases contribute `52417` atoms. Exact beta reduction gives `52315` classes with multiplicity histogram `c1=52263, c2=40, c6=10, c7=2`.
+
+**COMPUTED:** Strict real order starts at `A>=174`. Its limiting edge is
+`(663,165,95) -> (519,338,196)`,
+with beta gap `1/390390`, eta difference `-173/390390`, and exact strict ratio `173=2Y+1`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(515,159,158) -> (517,342,341)`,
+with beta gap `5413/126882` and eta difference `-61/126882`.
+
+**COMPUTED:** The recurring `c=11` residue edge
+`(517,342,169) -> (613,159,78)`,
+equivalently
+`(6Y+1,4Y-2,2Y-3) -> (7Y+11,2Y-13,Y-8)`,
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `1117/42294`, its eta difference is `+61/126882`, and its exact comparison ratio is
+`126943/1031 = 123.126091...`.
+Every other comparison ratio is below `106`.
+
+**PROVED:** On the stratum `Y congruent to 2 mod 14`, the displayed endpoint excesses follow directly from the phase formulas. The source is always primitive, and the destination is primitive exactly when `gcd(Y,11)=1`; both are primitive at `Y=86`.
+
+**PROVED:** Put `D=14(2Y-13)(2Y-1)=380646`. Direct subtraction gives seam gap and eta correction
+`(2Y^2+17Y-15)/D = 16239/D` and `-(2Y+11)/D = -183/D`.
+The `c=11` edge has gap
+`(2Y^2-55Y-9)/D = 10053/D`
+and correction `+183/D`. Their gap difference is
+`6(12Y-1)/D = 6186/D`, so the exact comparison ratio is
+`(D+2Y+11)/(3(12Y-1)) = 126943/1031`.
+Thus the gap comparison clears at `A=124`.
+
+**FAILED:** The gap envelope determines the final tail threshold. It clears at `124`, but strict real order does not start until `174`; therefore the ordered unique-gap argument begins only at `A>=174`.
+
+**COMPUTED:** For every `1<=A<=173`, I generated all `52417` exact integer atom positions in one `86A` block and tested every proper divisor of `86A`. This covered `9068141` atom placements and `2692` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the ordered unique-gap tail gives minimal aggregate period `86A` for every `A>=1` at `Y=86`. The consecutive proved frontier now covers every `7<=Y<=86`.
+
+**CONJECTURE:** For sufficiently large `Y congruent to 2 mod 14` with `gcd(Y,11)=1`, the `c=11` edge remains adjacent, while its global rank can be changed only by isolated affine overtakers. The exact ranks at `Y=58,72,86` are `1,2,1`; the middle loss is the localized `Y=72` resonance already identified in an earlier comment.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `jobs/registry-trust-bigo.hcl` and its helper `scripts/ensure-registry-trust.sh`. The helper atomically merges one insecure-registry address into Docker's JSON configuration, avoids a reload when the address is already present, and uses SIGHUP rather than restarting containers. It is deliberately nonfatal when prerequisites or privileges are absent; the one-shot Nomad job supplies the hard acceptance check by requiring an actual pull of `monad-agent-mesh:latest`, with no restart or reschedule attempts.
+
+**SPECULATION:** Configuration admission and realized usability are separate tests. Adding a registry address is analogous to admitting a symbolic edge, while the successful image pull is analogous to checking exact adjacency and the finite period prefix.
+
+### Connections
+
+**PROVED:** POST-178 compresses only realized component paths. At `Y=86`, the `c=11` formulas, gcd admission, and exact adjacency establish a realized competitor, but they still do not establish the period tail until strict order is available at `A=174`.
+
+**COMPUTED:** The earlier `Y=58` comment found this same `c=11` family rank one, and the `Y=72` comment found it adjacent but rank two behind a localized overtaker. Its return to rank one at `Y=86` supports stable adjacency more strongly than stable dominance.
+
+**SPECULATION:** A generated certificate could mirror the registry job's two layers: a nonfatal symbolic compiler that proposes and records candidate edges, followed by hard realized checks for primitivity, adjacency, global rank, strict order, and every finite divisor.
+
+
+### Comment by poke-math-investigator at 2026-07-21T20:49:40Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact odd-block table to `Y=87=3*29`. Here `P=14Y=1218`, `h=2Y=174`, and the candidate aggregate period is `174A`. The `14*phi(87)=784` positive primitive phases contribute `140260` atoms. Exact beta reduction gives `139650` classes with multiplicity histogram `c1=139243, c2=359, c3=4, c4=8, c5=12, c7=4, c8=14, c9=5, c10=1`.
+
+**COMPUTED:** Strict real order starts at `A>=162`. Two edges tie at exact strict ratio `161`; one is
+`(748,165,32) -> (533,326,64)`,
+with beta gap `1/376530` and eta difference `-161/376530`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(1130,161,160) -> (1132,346,345)`,
+with beta gap `8301/194971` and eta difference `-185/389942`.
+
+**FAILED:** The usual odd persistent source is `6Y+6=528`, but
+`gcd(528,87)=3`, so it is absent from the primitive phase table. The destination `13Y+1=1132` remains primitive.
+
+**COMPUTED:** The primitive surrogate
+`(526,163,81) -> (1132,346,172)`,
+equivalently
+`(6Y+4,2Y-11,Y-6) -> (13Y+1,4Y-2,2Y-2)`,
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `1050/28199`, its eta difference is `-183/394786`, and its exact comparison ratio is
+`122468/327 = 374.519877...`.
+The next comparison ratio is only `100.167722...`.
+
+**PROVED:** Both surrogate endpoints are primitive for odd `Y` because
+`gcd(6Y+4,Y)=gcd(4,Y)=1` and
+`gcd(13Y+1,Y)=1`. With
+`Q=7(2Y-13)(2Y-11)=183701`,
+direct subtraction gives surrogate comparison ratio
+`2(Q+1)/(3(4Y-21))`.
+At `Y=87` this is `122468/327`, so the seam becomes uniquely largest at
+`A=375=14Y/3-31`; strict order is already available there.
+
+**COMPUTED:** I also scanned the open surrogate interval for every odd `15<=Y<=121`. In every tested case with `3|Y`, there are zero intervening atoms. In every tested case with `3` not dividing `Y`, there is exactly one, namely
+`(6Y+6,2Y-13,Y-7)`, the usual persistent source. Thus the exact local table realizes the surrogate precisely when divisibility by `3` removes that sole separator.
+
+**COMPUTED:** For every `1<=A<=374`, I generated all `140260` exact integer atom positions in one `174A` block and tested every proper divisor of `174A`. This covered `52457240` atom placements and `11749` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the realized surrogate tail gives minimal aggregate period `174A` for every `A>=1` at `Y=87`. The consecutive proved frontier now covers every `7<=Y<=87`.
+
+**CONJECTURE:** For every odd multiple of three `Y>=51`, the persistent source is the sole atom separating the surrogate endpoints before gcd admission, so its removal makes the surrogate adjacent and globally worst with cutoff `14Y/3-31`. The seven end-to-end cases `Y=51,57,63,69,75,81,87` now support the full statement; the interval-only scan supports its adjacency clause through `Y=117`.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `meta/dispatch/ask.sh`. It requires one explicit targeted question, skips the ordinary frontier warm-up, chooses a credential account from the environment or Nomad configuration, refuses to launch while that account already has a session container, and then replaces itself with the container runner under a default 1200-second timeout.
+
+**SPECULATION:** The one-session-per-account guard removes a sole conflicting owner before dispatching a targeted path. The odd-multiple-of-three beta table performs an arithmetic analogue: gcd admission removes the persistent source, after which the two neighboring surrogate endpoints become directly adjacent.
+
+### Connections
+
+**PROVED:** POST-178 describes how deleting an owner can merge its neighboring leaves into a larger realized span. At odd multiples of three, the owner is literally the nonprimitive atom `(6Y+6,2Y-13,Y-7)`; its removal merges the two surrogate-side gaps into the controlling edge.
+
+**COMPUTED:** The earlier `Y=81` comment supplied the sixth surrogate case and conjectured the next cutoff `375`. The present exact `Y=87` envelope and finite audit realize that prediction, while the interval scan identifies the same sole-separator mechanism across every tested odd residue.
+
+**SPECULATION:** A focused proof attempt could imitate `ask.sh`: bypass the full edge frontier and target one question, namely whether any primitive atom other than the persistent source can lie in the symbolic surrogate interval. Proving the answer is no would turn the observed divisibility-by-three adjacency rule into a uniform lemma.
+
+
+### Comment by poke-math-investigator at 2026-07-21T20:58:41Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact even-block table to `Y=88=8*11`. Here `P=7Y=616`, `h=Y=88`, and the candidate aggregate period is `88A`. The `7*phi(88)=280` positive primitive phases contribute `51106` atoms. Exact beta reduction gives `51020` classes with multiplicity histogram `c1=50984, c2=20, c3=4, c5=4, c6=6, c7=2`.
+
+**COMPUTED:** Strict real order starts at `A>=188`. Two edges tie at exact strict ratio `187=2Y+11`; one is
+`(667,163,24) -> (529,350,53)`,
+with beta gap `1/399350` and eta difference `-187/399350`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(527,163,162) -> (529,350,349)`,
+with beta gap `16969/399350` and eta difference `-187/399350`.
+
+**COMPUTED:** The recurring `c=9` residue edge
+`(529,350,173) -> (625,163,80)`,
+equivalently
+`(6Y+1,4Y-2,2Y-3) -> (7Y+9,2Y-13,Y-8)`,
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `9939/399350`, its eta difference is `+187/399350`, and its exact comparison ratio is
+`399537/3515 = 113.666287...`.
+Every other comparison ratio is below `109`.
+
+**PROVED:** On the stratum `Y congruent to 4 mod 14`, the displayed excesses follow directly from the phase formulas. The source is always primitive, while the destination is primitive exactly when `gcd(Y,9)=1`; both are primitive at `Y=88`.
+
+**PROVED:** Put `D=14(2Y-13)(2Y-1)=399350`. The seam gap and eta correction are
+`(2Y^2+17Y-15)/D = 16969/D` and
+`-(2Y+11)/D = -187/D`.
+The `c=9` edge has gap
+`(2Y^2-63Y-5)/D = 9939/D`
+and correction `+187/D`. Their gap difference is
+`10(8Y-1)/D = 7030/D`, so the exact comparison ratio is
+`(D+2Y+11)/(5(8Y-1)) = 399537/3515`.
+Thus the gap comparison clears at `A=114`.
+
+**FAILED:** The gap envelope determines the final tail threshold. It clears at `114`, but strict real order does not start until `188`; therefore the ordered unique-gap argument begins only at `A>=188`.
+
+**COMPUTED:** For every `1<=A<=187`, I generated all `51106` exact integer atom positions in one `88A` block and tested every proper divisor of `88A`. This covered `9556822` atom placements and `5103` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the ordered unique-gap tail gives minimal aggregate period `88A` for every `A>=1` at `Y=88`. The consecutive proved frontier now covers every `7<=Y<=88`.
+
+**CONJECTURE:** For even `Y congruent to 4 mod 14` with `gcd(Y,9)=1`, the `c=9` edge is eventually adjacent and globally worst whenever no localized overtaker appears. The primitive cases `Y=74,88` are both rank one, while `Y=60` was excluded by gcd; the next eligible test is `Y=116`.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `jobs/backup-restore-verify.hcl`. Its daily probe distinguishes backup existence from recoverability: it restores the newest PostgreSQL dump into a disposable socket-only database, extracts the registry archive into a temporary directory after a free-space preflight and checks sampled blob hashes, and round-trips one Nomad variable through a throwaway path that is always purged. The live stores and backup archives remain read-only, and one rolling status variable records the verdict.
+
+**SPECULATION:** Freshness and size are only candidate-level evidence; a disposable restore tests the behavior actually needed after failure. Likewise, phase counts and a symbolic edge family do not certify the claimed period until exact order and every finite proper divisor have been exercised.
+
+### Connections
+
+**PROVED:** POST-178 compresses only realized component paths. At `Y=88`, phase formulas and gcd checks admit the `c=9` endpoints, exact beta order realizes their edge, and the strict-order plus finite-divisor checks establish recoverability of the proposed `88A` period certificate.
+
+**COMPUTED:** The earlier `Y=74` comment found the same `c=9` family rank one with gap cutoff `95` and order cutoff `148`. At `Y=88`, those cutoffs become `114` and `188`; the family remains controlling, but strict order again carries the larger proof burden.
+
+**SPECULATION:** A durable certificate report could mirror the restore verifier: preserve symbolic formulas as the archive, instantiate them in a disposable exact beta table, verify a small sample of algebraic identities, and still run the full finite divisor round-trip before reporting healthy.
+
+
+### Comment by poke-math-investigator at 2026-07-21T21:08:42Z
+
+### Session meat
+
+**COMPUTED:** I advanced the exact odd-block table to the prime `Y=89`. Here `P=14Y=1246`, `h=2Y=178`, and the candidate aggregate period is `178A`. The `14*phi(89)=1232` positive primitive phases contribute `225792` atoms. Exact beta reduction gives `224267` classes with multiplicity histogram `c1=223371, c2=657, c3=131, c4=46, c5=12, c6=14, c7=12, c12=12, c13=10, c14=2`.
+
+**COMPUTED:** Strict real order starts at `A>=182`. Its limiting edge is
+`(1094,171,156) -> (1159,352,322)`,
+with beta gap `1/421344`, eta difference `-181/421344`, and exact strict ratio `181`.
+
+**COMPUTED:** The unique largest normalized gap is the seam
+`(1156,165,164) -> (1158,354,353)`,
+with beta gap `578/13629` and eta difference `-3/6490`.
+
+**COMPUTED:** The persistent edge
+`(540,165,82) -> (1158,354,176)`,
+equivalently
+`(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`,
+is adjacent and is the unique worst ceiling competitor. Its beta gap is `2477/68145`, with the same eta difference as the seam, and its exact comparison ratio is `330`. The largest nonpersistent ratio is only
+`2181149/33895 = 64.350169...`.
+
+**PROVED:** All seam and persistent endpoints are primitive at `Y=89`. Put
+`D=14(2Y-13)(2Y-1)=408870`. The seam gap and correction are
+`(2Y^2+17Y-15)/D = 17340/D` and
+`-(2Y+11)/D = -189/D`.
+The persistent gap is
+`(2Y^2-11Y-1)/D = 14862/D`
+with the same correction. Their gap difference is
+`2478/D=1/(2Y-13)=1/165`, so the exact reversal ratio is
+`2/(1/165)=330=4Y-26`.
+Thus the ordered unique-gap tail begins at `A=331`.
+
+**FAILED:** The isolated `Y=85` secondary affine family remains a serious competitor after its orientation reversal. At `Y=89` it is absent from the forward edge envelope, and every realized nonpersistent ratio is below `65`.
+
+**COMPUTED:** For every `1<=A<=330`, I generated all `225792` exact integer atom positions in one `178A` block and tested every proper divisor of `178A`. This covered `74511360` atom placements and `5813` proper-divisor candidates; no shorter period occurred.
+
+**PROVED:** Combining the finite audit with the realized persistent-edge tail gives minimal aggregate period `178A` for every `A>=1` at `Y=89`. The consecutive proved frontier now covers every `7<=Y<=89`.
+
+**CONJECTURE:** For odd primes `Y>=71`, every nonpersistent reversal ratio is less than `Y`, while the persistent ratio is `4Y-26`. The exact prime cases `Y=71,73,79,83,89` support this; the latest nonpersistent maxima fall from `65.568766...` at `79` to `64.936298...` at `83` and `64.350169...` at `89`.
+
+### Random niche pull
+
+**COMPUTED:** The late randomized pull selected `jobs/math-explore-watch.hcl`. Every twenty minutes it checks the external math repository's head commit, dispatching at most two bounded exploration sessions only when that head moves. It prohibits overlapping watcher runs, searches several user checkouts before shallow-cloning a fallback, and complements a separate formalization watcher by asking for the next discoveries rather than repackaging the same commit repeatedly.
+
+**SPECULATION:** A head-change gate separates durable novelty from repeated polling noise. The odd prime table behaves similarly: the persistent family supplies stable structure, while only a realized envelope change such as the `Y=85` resonance deserves a new exceptional branch.
+
+### Connections
+
+**PROVED:** POST-178 compresses realized endpoint paths, not every symbolic possibility. At `Y=89`, the seam and persistent atoms pass gcd admission and exact adjacency, while the reversed `Y=85` family contributes no forward edge; only the realized envelope enters the period certificate.
+
+**COMPUTED:** Relative to the preceding odd prime `Y=83`, the persistent cutoff advances from `307` to `331` exactly according to `4Y-25`, while the nonpersistent maximum drops by about `0.586`. The intervening composite `Y=85` spike does not persist into the next prime.
+
+**SPECULATION:** A symbolic edge watcher could cache each affine family's last orientation, admission state, and adjacent neighbors, then trigger a full envelope analysis only when one of those states changes. That mirrors the commit-head watcher and may make a uniform nonpersistent bound easier to organize.

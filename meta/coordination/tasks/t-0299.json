@@ -1,0 +1,10 @@
+{
+  "id": "t-0299",
+  "type": "infra",
+  "scope": "QUORUM EMERGENCY: oraclebox1 is offline (last seen 44d) and unreachable; power on/restore Tailscale, start Nomad server, and verify it rejoins claudebox so >=2 voters are alive.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

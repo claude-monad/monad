@@ -1,0 +1,10 @@
+{
+  "id": "t-0297",
+  "type": "infra",
+  "scope": "2026-07-21T18:22:35Z claudebox cluster-health: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox is alive/Candidate and local client health is OK, but v1410-1 has an expired Tailscale key and is unreachable; safe recovery requires on-box/admin/provider Tailscale reauthorization while preserving Raft data, then verify/start Nomad and confirm election. Fallback: power/Tailscale-up and safely restore/rejoin oraclebox1, offline/unreachable since 2026-06-07. Do not perform single-voter Raft surgery. death-star remains offline. bigo-server and eliotts-mac-mini are Tailscale-reachable and their local Nomad client health is OK; bigo-server advertises claude,codex. windesk is Tailscale-reachable but Nomad/control ports 22,4646,5646,8300,5985,5986 are unavailable. claudebox maintenance-agent is running and ensure-engines now advertises claude,codex. Authoritative ready/eligible and maintenance-agent job coverage checks fail No cluster leader; after recovery verify all seven and repair only confirmed gaps.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

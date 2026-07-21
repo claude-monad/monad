@@ -1,0 +1,10 @@
+{
+  "id": "t-0301",
+  "type": "infra",
+  "scope": "windesk is Tailscale-reachable but its Nomad API on :4646 is unreachable, it is absent from stale ready/eligible nodes, and has no maintenance-agent allocation; restart/rejoin the Windows Nomad client and redeploy/verify maintenance-agent after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

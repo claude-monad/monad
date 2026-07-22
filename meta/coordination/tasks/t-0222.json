@@ -4,7 +4,9 @@
   "scope": "2026-07-16T07:55:57Z claudebox sweep: CRITICAL Nomad quorum remains lost; claudebox is the sole alive voter/candidate in the 2-voter Raft config (V1410-1 + claudebox). V1410-1 is Tailscale-offline 13d, oraclebox1 offline 38d; restore/re-auth V1410-1 and start/check Nomad, or restore/rejoin oraclebox1; do not perform single-voter Raft surgery. death-star is offline 39d; windesk offline ~18m. Live client APIs and maintenance allocation stats/logs answer on claudebox, bigo-server, and eliotts-mac-mini; authoritative ready/eligible and allocation coverage remain unavailable until leader election. bigo-server allocation disk is 98.92% used (~1.2GB free); safe cleanup needs on-host review. Fixed its maintenance crash on late mesh reattach in e56c1d0 and issued a client-local maintainer restart; verify the host pulled the fix and survives its next self-pass. Mac allocation disk is 87.24% used. Existing peer return queues remain in place; after quorum returns verify all seven nodes and redeploy only missing agents.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": "t-0221"
+  "status": "done",
+  "owner": "claudebox",
+  "parent": "t-0221",
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

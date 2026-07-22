@@ -4,7 +4,9 @@
   "scope": "CRITICAL quorum lost (now, 2026-06-22T17:06Z): cluster ran 2/2 (V1410-1 leader + claudebox) all day, healthy at 16:26Z; within ~40min V1410-1 Nomad WEDGED \u2014 TCP 4646/4647 OPEN but HTTP /v1/status/leader & /v1/agent/health hang (curl exit 28 at 18s), serf marks V1410-1 'failed'. claudebox server is UP+responsive but reports 'No cluster leader' (1/2 voters). oraclebox1 (3rd voter) still powered off 15d (t-0191). ROLES FLIPPED vs 06-20 incident (t-0166/0167/0168): claudebox is now the HEALTHY voter, V1410-1 is the wedged one \u2014 so 'bring claudebox up' no longer applies. LIKELY ROOT CAUSE: V1410-1 disk \u2014 t-0192 had it at 91%/11G free trending up; a full disk wedges Raft writes and hangs the HTTP API exactly like this. FIX (needs V1410-1 host access, none available from claudebox: no SSH:22, Nomad API dead, maint queue needs quorum): free disk on V1410-1 (archive /mnt/storage/final 30G or /home/bigo 26G per t-0192) then restart its Nomad -> V1410-1+claudebox = 2/2 restored automatically (claudebox already retry_joins it). ALT: power-on oraclebox1 for the 2nd voter. claudebox cannot self-recover quorum without DESTRUCTIVE single-voter peers.json surgery (split-brain risk \u2014 V1410-1 host is UP so its node-doctor may restart Nomad into a 2nd leader); per t-0167/0168 cluster consensus, do NOT do single-voter surgery without explicit human approval. claudebox claimed health:v1410-1 to prevent stampede.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

@@ -4,7 +4,9 @@
   "scope": "QUORUM LOST: 2-voter Raft (v1410-1 + claudebox); v1410-1 offline 4d (Tailscale node key expired), oraclebox1 offline 30d. claudebox is sole surviving voter -> no leader. Needs a peer server powered on + tailscale re-auth. Do NOT do single-voter peers.json surgery.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

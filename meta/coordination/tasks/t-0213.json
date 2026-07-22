@@ -4,7 +4,9 @@
   "scope": "2026-07-14 claudebox sweep: CRITICAL Nomad quorum lost/no leader. NOMAD_ADDR v1410-1 times out because v1410-1 is offline with expired Tailscale node key; claudebox local Nomad agent is alive but Raft state=Candidate with latest configuration [v1410-1, claudebox], so only 1/2 voters is reachable. oraclebox1 is offline/unreachable and not in current voter config; death-star is offline/unreachable. bigo-server, eliotts-mac-mini, windesk, and claudebox are reachable on Tailscale. nomad node status and maintenance-agent job status cannot be trusted until a leader returns. Smallest safe fix: re-auth/power v1410-1 Tailscale and restart/check Nomad, or restore oraclebox1 and rejoin; avoid single-voter Raft peers surgery unless explicitly approved. After quorum returns verify node readiness/eligibility and one maintenance-agent alloc per roster member.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

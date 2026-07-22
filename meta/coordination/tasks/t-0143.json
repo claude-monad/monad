@@ -4,7 +4,9 @@
   "scope": "bigo-server: 2026-06-19 bigo-server sweep: local Nomad client revived on 100.78.218.70:5646, but quorum remains lost. monad nomad servers shows V1410-1 alive and claudebox failed with no leader; oraclebox1 times out on 22/4646/4647/4648; direct client probes show eliotts-mac-mini 4646 open while claudebox/death-star/oraclebox1/windesk time out. Smallest safe next action is on-box claudebox recovery via scripts/claudebox-server.sh keepalive/start, else oraclebox1 power/network/Tailscale/Nomad recovery, then verify leader election, node readiness, and maintenance-agent coverage. | eliotts-mac-mini: Restore death-star tailnet/Nomad peer health: user roster includes death-star, but tailscale ping 100.96.31.66 timed out from eliotts-mac-mini; Nomad node status could not be checked because the cluster has no leader.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

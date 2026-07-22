@@ -4,7 +4,9 @@
   "scope": "2026-07-17T06:56:52Z bigo-server CRITICAL quorum recovery: live claudebox Raft is Candidate with no leader and latest_configuration has exactly two voters (v1410-1 + claudebox); v1410-1 is Tailscale-offline because its node key expired and has no configured out-of-band route from bigo-server. Restore/re-authorize Tailscale on v1410-1 via on-box/admin/provider access, start or verify Nomad, and confirm leader election. Do not perform single-voter Raft surgery without explicit approval. oraclebox1 and death-star remain offline/unreachable; windesk went offline at 06:10Z; eliotts-mac-mini is Tailscale-reachable but readiness and maintenance coverage remain unconfirmable until quorum returns. After recovery verify all seven ready+eligible and one running maintenance allocation each.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

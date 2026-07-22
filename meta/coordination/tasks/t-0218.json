@@ -4,7 +4,9 @@
   "scope": "2026-07-15T08:57Z claudebox sweep: CRITICAL Nomad quorum remains lost; claudebox is sole alive server/candidate and V1410-1's Tailscale key is expired, while oraclebox1 is offline. Restore/re-auth V1410-1 and start/check Nomad (or restore/rejoin oraclebox1) to regain >=2 voters; do not perform single-voter Raft surgery. NEW: bigo-server Nomad client is reachable but AllocDirStats is 98.92% used with only ~1.2GB available; forced Nomad client GC returned 200 but freed nothing, and Tailscale SSH needs interactive approval. Inspect on-host and remove only clearly safe junk/archive data with owner judgment. death-star and windesk are also Tailscale-offline; eliotts-mac-mini is reachable with maintenance-agent live. After quorum returns, verify all seven ready+eligible and one maintenance-agent alloc/member; reconcile meta/CLUSTER-HEALTH.md's stale five-node roster.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

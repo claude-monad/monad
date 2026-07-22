@@ -4,7 +4,9 @@
   "scope": "2026-06-20T07:17:37Z eliotts-mac-mini sweep: CRITICAL Nomad quorum still lost/no leader. monad nomad servers shows only V1410-1 alive/not leader; monad nomad nodes and monad nomad job-status maintenance-agent return 500 No cluster leader. Tailscale reachable: V1410-1 and bigo-server; unreachable: claudebox 100.87.219.108, oraclebox1 100.125.210.126, death-star 100.96.31.66, windesk 100.94.210.54. Current Raft recovery path remains on-box claudebox power/Tailscale restore then ~/monad/scripts/claudebox-server.sh keepalive/start; fallback restore oraclebox1 and rejoin per meta/bootstrap/join.sh. Avoid single-voter Raft surgery unless explicitly approved. Preserved bigo-server 2026-06-20T07:08:27Z report: V1410-1 raft state Candidate with latest_configuration V1410-1+claudebox; bigo-server Nomad service/client API healthy at 100.78.218.70, ensure-engines advertised claude,codex; disk 89% but logs/tmp tiny and Docker busy, so no safe prune. Supersedes/refreshes t-0167.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

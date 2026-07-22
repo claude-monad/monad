@@ -4,7 +4,9 @@
   "scope": "2026-07-14T22:28:33Z claudebox cluster-health: CRITICAL quorum loss persists. Stale Raft peers are V1410-1 and claudebox; only claudebox is alive/candidate, while V1410-1 is Tailscale-offline with expired node key. Restore V1410-1 power/Tailscale authentication and restart/check its Nomad agent to elect 2/2; do not perform single-voter Raft surgery. oraclebox1 and death-star are also Tailscale-offline; windesk is tailnet-reachable but its Nomad API :4646 times out. bigo-server and eliotts-mac-mini Nomad client APIs respond, but node readiness/eligibility and maintenance-agent coverage cannot be verified until quorum returns. After recovery run monad nomad servers/nodes/job-status maintenance-agent and repair per-node coverage.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": "t-0213"
+  "status": "done",
+  "owner": "claudebox",
+  "parent": "t-0213",
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

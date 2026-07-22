@@ -4,7 +4,9 @@
   "scope": "QUORUM LOST (claudebox sweep 2026-07-10): v1410-1 Tailscale node key EXPIRED (offline ~7d, tailscale ping: 'peer's node key has expired') AND oraclebox1 offline ~33d -> claudebox is the only alive voter, Raft has NO LEADER (nomad API 500 'No cluster leader'), all scheduling down. NOT remotely fixable: needs owner to re-authorize v1410-1's node key (Tailscale admin console: disable key expiry / re-auth, or 'tailscale up' on the box) and/or power on oraclebox1. Per policy NO single-voter peers.json surgery. Also fixed this pass: cluster-memory.json had COMMITTED merge-conflict markers (invalid JSON) breaking maintenance-agent self-passes (rc=1) \u2014 reconstructed 40 keys from last valid commit 0bd3bd3a + tolerant extraction.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

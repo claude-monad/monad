@@ -4,7 +4,9 @@
   "scope": "Combined 2026-07-17 reports. bigo-server sweep: eliotts-mac-mini is Tailscale-reachable and its maintenance task has live telemetry, but local Nomad stats report disk 90.7% used (~22.9 GB free) and memory ~94% used during the check. Claimed health:eliotts-mac-mini; SSH :22 is refused and Nomad variable delegation to monad/maintenance/eliotts-mac-mini/queue failed because the cluster has no leader. Inspect on-box, clean only obviously-safe old logs/tmp (or Docker prune only if idle), identify memory pressure, then verify local Nomad/engines/maintainer. Quorum recovery remains prerequisite for authoritative roster status. claudebox sweep (16:07Z): CRITICAL Nomad quorum remains lost at 1/2; claudebox is alive/candidate with healthy local client but no leader, while required voter v1410-1 is Tailscale-offline 14d with expired key and oraclebox1 is offline about 40d. Smallest safe recovery is on-box/provider Tailscale re-auth on v1410-1 plus verify/start Nomad, or restore/rejoin oraclebox1; do not perform single-voter Raft surgery. death-star remains offline; windesk is tailnet-online but Nomad :4646 is unreachable. bigo-server and eliotts-mac-mini local clients and maintenance allocations respond live. Global ready/eligible and maintenance coverage remain non-authoritative until leader election; then verify all seven and repair only confirmed gaps.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": "t-0246"
+  "status": "done",
+  "owner": "claudebox",
+  "parent": "t-0246",
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

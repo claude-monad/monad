@@ -4,7 +4,9 @@
   "scope": "Combined 2026-07-17 reports. bigo-server (09:45:22Z): oraclebox1 and death-star remain Tailscale-offline/unreachable (~40d); windesk is offline/unreachable (~3h). Restore power/network/Tailscale on-box, then after quorum returns verify Nomad ready+eligible, engines, and maintenance coverage. claudebox is reachable with Nomad/engines healthy, but its maintenance allocation exposes no live task stats and a client-local maintainer restart returned Index 0 without restoring task stats; verify/restart its maintainer on-box after leader recovery. claudebox sweep: CRITICAL Nomad quorum remains lost at 1/2. Direct stale Raft state on claudebox has exactly two voters (v1410-1 + claudebox); claudebox is alive/candidate, while v1410-1 is Tailscale-offline with an expired node key. Restore/re-auth v1410-1 through on-box/provider access and verify/start Nomad, or restore/rejoin oraclebox1; do not perform single-voter Raft surgery without explicit approval. oraclebox1 and death-star remain offline about 40d. After claudebox restarted Tailscale, eliotts-mac-mini became directly reachable and its Nomad client health is OK; windesk became tailnet-reachable but Nomad ports 4646/5646 still time out and need on-node service verification. bigo-server is reachable and its local Nomad client API is healthy. Global ready/eligible and maintenance-agent job coverage are blocked until leader election; then verify all seven roster nodes and repair only confirmed gaps.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

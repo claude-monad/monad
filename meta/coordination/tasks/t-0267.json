@@ -4,7 +4,9 @@
   "scope": "2026-07-18T12:35Z bigo-server cluster-health: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox is reachable and alive but Candidate/no leader; committed voters are {v1410-1,claudebox}. v1410-1 is Tailscale-offline with an expired key, so restore/re-authorize it through on-box/admin/provider access, verify/start Nomad, and confirm leader election; fallback power/restore/rejoin oraclebox1, offline since 2026-06-07. Do not perform single-voter Raft surgery. death-star remains offline since 2026-06-07 and windesk since 2026-07-18T07:20Z. bigo-server and eliotts-mac-mini local clients, engines, and maintainer processes are live; claudebox client/server and both engines are live but its cached maintenance alloc has Timestamp=0/Tasks={} and prior direct restarts failed without a leader. Stale data lists only bigo-server, V1410-1, claudebox, and eliotts-mac-mini as ready+eligible with cached allocs; authoritative live node/job checks are blocked until quorum returns. After recovery verify all seven and restore missing maintenance loops.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

@@ -4,7 +4,9 @@
   "scope": "2026-06-16 bigo-server sweep: quorum is lost. V1410-1 (100.75.75.39) is reachable but /v1/agent/self shows Raft state=Candidate, num_peers=1, last_contact~2h, and latest_configuration contains only V1410-1 + claudebox. monad nomad servers shows V1410-1 alive, claudebox failed, and no cluster leader; nomad node status and nomad job status maintenance-agent both return 500 No cluster leader. Direct TCP probes from bigo-server: V1410-1 ports 22/4646/4647/4648 open; claudebox (100.87.219.108) and oraclebox1 (100.125.210.126) time out on 22/4646/4647/4648; eliotts-mac-mini 4646 open, windesk/death-star time out. Existing self-heal queue files already exist for claudebox and oraclebox1, but this session cannot SSH (sandbox denies /usr/bin/ssh) and no Nomad leader exists for var-based delegation. Smallest safe recovery: on-box revive claudebox first or oraclebox1 second (power/network, tailscale up, nomad up/rejoin); after a second server is alive, verify leader election and only then inspect/restart Nomad on V1410-1 if it remains candidate.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": "t-0112"
+  "status": "done",
+  "owner": "claudebox",
+  "parent": "t-0112",
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

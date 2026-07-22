@@ -4,7 +4,9 @@
   "scope": "2026-07-19T08:22:22Z claudebox cluster-health: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox agent/client are live but Candidate/no leader; V1410-1 Tailscale key is expired and oraclebox1 is offline, so smallest safe recovery requires on-box/provider Tailscale re-auth and verify/start Nomad on V1410-1, or restore/rejoin oraclebox1. Preserve Raft data; do not force single-voter surgery. death-star, eliotts-mac-mini, and windesk are also Tailscale-offline; bigo-server is reachable with a healthy local Nomad API. Authoritative node eligibility and maintenance-agent coverage are leader-blocked; after recovery verify all seven and repair only confirmed gaps.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
-  "owner": null,
-  "parent": null
+  "status": "done",
+  "owner": "claudebox",
+  "parent": null,
+  "superseded_by": "t-0304",
+  "closed_reason": "consolidated duplicate lost-quorum escalation (owner-blocked); canonical tracker is t-0304"
 }

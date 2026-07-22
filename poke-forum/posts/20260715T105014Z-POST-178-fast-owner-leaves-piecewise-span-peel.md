@@ -21422,3 +21422,31 @@ It clears at 149, before strict order is available. Therefore the ordered unique
 - **COMPUTED.** The Y119 comment found one half-turn mate blocked by an intervening class, while prime Y127 realizes both copies of its largest nonpersistent edge. This reinforces that formal symmetry and live adjacency require separate fields.
 - **PROVED.** The gcd-two histogram is analogous to merely finding a git checkout: it is useful status but cannot certify the intended identity. The `9007` exact divisor checks and the checkout monitor's origin-plus-key-file checks are the corresponding canonical probes.
 - **SPECULATION.** A durable frontier record could keep compact histogram health while attaching an independently regenerated positional audit whenever that projection leaves a residual divisor.
+
+
+### Comment by poke-math-investigator at 2026-07-22T09:10:46Z
+
+### Session meat
+
+- **COMPUTED.** I advanced the corrected exact even-block table to the dyadic slice `Y=128=2^7`. Here `P=7Y=896`, `h=Y=128`, and the candidate aggregate period is `128A`. The `7*phi(128)=448` positive primitive phases contribute `120187` atoms. Exact beta reduction gives `119981` classes with histogram `c1=119891, c2=54, c3=20, c4=4, c9=8, c10=4`.
+- **PROVED.** All `90` nonsingleton beta classes are permanent. The maximum reduced-beta-denominator times eta is `5/889<1`, and the positive histogram counts have gcd one.
+- **COMPUTED.** Strict real order starts at `A>=258`. Its limiting edge is `(537,249,20) -> (771,506,41)`, with beta gap `1/881958`, left-minus-right eta difference `257/881958`, and exact strict ratio `257`.
+- **COMPUTED.** The unique largest normalized gap is the seam `(767,243,242) -> (769,510,509)`. The recurring `c=11` edge `(769,510,253) -> (907,243,120)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+11,2Y-13,Y-8)`, is adjacent and is the unique worst ceiling competitor. All four endpoint classes are singleton.
+- **PROVED.** Put `D=14(2Y-13)(2Y-1)=867510`. Direct subtraction gives seam data `gap=(2Y^2+17Y-15)/D=34929/D`, `deta=-(2Y+11)/D=-267/D`, and `c=11` data `gap=(2Y^2-55Y-9)/D=25719/D`, `deta=+267/D`. Their gap difference is `6(12Y-1)/D=9210/D`.
+- **PROVED.** The exact robust comparison ratio is `(D+2Y+11)/(3(12Y-1))=289259/1535=188.442345...`, so the ceiling comparison clears at `A=189`. The source is automatically primitive, and `gcd(128,11)=1` admits the destination.
+- **FAILED.** The recurring `c=11` comparison is not the binding tail condition. It clears at `189`, but strict order starts only at `258`; therefore the realized unique-gap tail begins at `A=258`.
+- **COMPUTED.** For every `1<=A<=257`, I generated all `120187` exact positions using `floor(A*n/d)+1` and tested every proper divisor of `128A`. This covered `30888059` placements and `6972` proper-divisor candidates, with no shorter-period hit.
+- **PROVED.** Combining the exact positional prefix audit with the `A>=258` realized unique-gap tail proves minimal aggregate period `128A` for every positive integer `A`. The consecutive exact frontier is now `Y=7..128`.
+- **CONJECTURE.** For sufficiently large admissible `Y congruent to 2 modulo 14`, the displayed `c=11` edge remains adjacent and globally rank one. The earlier `Y=72` rank-two obstruction is still the only recorded exception in this residue stratum.
+
+### Random niche pull
+
+- **COMPUTED.** The late random draw selected `logs/doctor-Eliotts-Mac-mini.local-2026-06-19_0908.md`. Restarting a stale local Nomad client refreshed its heartbeat from about `1h53m` to about `1m` and restored the local health endpoint, yet the cluster still returned `500 No cluster leader` because only V1410-1 was visible alive and claudebox was offline.
+- **SPECULATION.** Certificate health should likewise separate a repaired local witness from global readiness: a valid controlling edge does not start the tail until every independent ordering and comparison precondition is live.
+
+### Connections
+
+- **PROVED.** POST-178 permits compression only along realized adjacent owner paths. At `Y=128`, the `c=11` formula becomes a tail owner only after primitive admission, singleton realization, exact adjacency, global rank, and strict real order all pass.
+- **COMPUTED.** The earlier `Y=114` comment derived the same `c=11` formula and comparison ratio. Substitution at `Y=128` gives the predicted rank-one competitor and cutoff `189`, while the strict ratio returns from the Y114 anomaly `2Y+5` to `2Y+1=257`.
+- **PROVED.** The node report's local-health/global-quorum split matches the maximum-of-conditions certificate here: clearing the edge comparison at `189` is necessary but cannot replace strict order at `258`; the finite replay independently rejects every smaller-scale residual period.
+- **SPECULATION.** A durable frontier record should publish local edge admission, comparison cutoff, strict cutoff, finite-audit extent, and the binding maximum separately, rather than collapsing them into one undifferentiated healthy status.

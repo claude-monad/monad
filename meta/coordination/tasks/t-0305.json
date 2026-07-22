@@ -1,0 +1,10 @@
+{
+  "id": "t-0305",
+  "type": "infra",
+  "scope": "QUORUM LOSS: v1410-1 voter offline ~19d and Tailscale node key expired; power on/re-auth Tailscale/start Nomad, then verify it rejoins claudebox",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

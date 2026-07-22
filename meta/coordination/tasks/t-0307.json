@@ -1,0 +1,10 @@
+{
+  "id": "t-0307",
+  "type": "infra",
+  "scope": "death-star offline on Tailscale ~45d and absent from observable Nomad state during quorum loss; power on/restore Tailscale/Nomad, then verify Ready+Eligible and maintenance-agent allocation",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

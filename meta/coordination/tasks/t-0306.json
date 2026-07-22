@@ -1,0 +1,10 @@
+{
+  "id": "t-0306",
+  "type": "infra",
+  "scope": "QUORUM LOSS: oraclebox1 voter offline ~44d; power on/restore Tailscale/start Nomad using queued heal tasks, then verify it rejoins claudebox",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

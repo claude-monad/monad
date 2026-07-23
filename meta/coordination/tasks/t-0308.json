@@ -3,8 +3,11 @@
   "type": "infra",
   "scope": "quorum still DOWN 2026-07-23: only claudebox server alive (leaderless). v1410-1 Tailscale node-key EXPIRED (offline 20d), oraclebox1 offline 45d. 3-voter set needs 2 alive; owner-blocked (re-auth v1410-1 TS key / power on oraclebox1). No single-voter surgery. See GH #8/#6.",
   "repo": "eliott-monad/monad",
-  "payload": {},
-  "status": "open",
+  "payload": {
+    "superseded_by": "t-0304",
+    "note": "per t-0304 convention: no per-pass quorum task; 2026-07-23 sweep confirmed still-down, tracked by t-0304 + GH #8/#6"
+  },
+  "status": "done",
   "owner": null,
   "parent": null
 }

@@ -1,0 +1,10 @@
+{
+  "id": "t-0312",
+  "type": "infra",
+  "scope": "2026-07-27 claudebox sweep: CRITICAL quorum remains lost; claudebox is sole live voter/Candidate, V1410-1 is offline with expired Tailscale key, and oraclebox1 is offline. Restore either voter out-of-band without altering Raft state. death-star is offline; windesk is Tailscale-online but Nomad/SSH/WinRM/maintenance ports are unreachable. After quorum returns, verify all seven nodes Ready+Eligible, engines advertised, and one maintenance-agent allocation per roster member.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

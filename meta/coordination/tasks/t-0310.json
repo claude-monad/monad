@@ -1,0 +1,13 @@
+{
+  "id": "t-0310",
+  "type": "infra",
+  "scope": "2026-07-27T01:03:35Z claudebox sweep: CRITICAL Nomad quorum remains lost; claudebox is the sole alive server/Candidate (committed voter set v1410-1+claudebox), so node eligibility and global maintenance-agent status return No cluster leader. Restore/re-authenticate v1410-1 Tailscale (expired node key) and start/verify Nomad while preserving Raft data; fallback power on and safely rejoin oraclebox1. death-star remains offline; windesk is Tailscale-reachable but Nomad :4646 is unavailable. Direct Nomad clients and maintenance logs are live on claudebox, bigo-server, and eliotts-mac-mini. Do not perform single-voter Raft surgery; after quorum returns verify all 7 ready+eligible and maintenance coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {
+    "superseded_by": "t-0304",
+    "note": "per-pass quorum sweep duplicate; folded into canonical tracker t-0304 per convention (same as t-0308/t-0309). Owner-blocked total quorum loss unchanged."
+  },
+  "status": "done",
+  "owner": null,
+  "parent": null
+}

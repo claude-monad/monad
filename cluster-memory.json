@@ -73,9 +73,9 @@
     "value": "DONE-2026-07-20T19:53:32Z quorum still LOST 1/2 no-regression; blocked on owner: GH#8 v1410-1 tailscale re-auth, GH#4/#6 power-on oraclebox1/death-star"
   },
   "health:death-star": {
-    "updated": 1785109230.8198829,
+    "updated": 1785114236.850214,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-26T23:40:05Z"
+    "value": "DONE-2026-07-27T01:03:56Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -153,9 +153,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785109230.732926,
+    "updated": 1785114236.7614696,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-26T23:40:05Z"
+    "value": "DONE-2026-07-27T01:03:56Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -209,9 +209,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785109230.6439638,
+    "updated": 1785114236.6949658,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-26T23:40:05Z"
+    "value": "DONE-2026-07-27T01:03:56Z"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -234,9 +234,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785109230.9054399,
+    "updated": 1785114236.94215,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-26T23:40:05Z"
+    "value": "DONE-2026-07-27T01:03:56Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

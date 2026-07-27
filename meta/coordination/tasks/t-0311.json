@@ -1,0 +1,10 @@
+{
+  "id": "t-0311",
+  "type": "infra",
+  "scope": "2026-07-27 claudebox sweep: CRITICAL Nomad quorum remains lost. Claudebox is the sole reachable voter/Candidate; stale Raft set is V1410-1+claudebox. V1410-1 is Tailscale-offline with expired key and unreachable on SSH/Nomad ports; oraclebox1 is offline/unreachable. Restore either voter out-of-band without Raft surgery, then verify leader, seven-node ready+eligible roster, engine metadata, and maintenance-agent coverage. death-star remains offline; windesk is currently offline/unreachable. Existing recovery queues and t-0304 remain relevant.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

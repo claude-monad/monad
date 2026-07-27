@@ -1,0 +1,10 @@
+{
+  "id": "t-0309",
+  "type": "infra",
+  "scope": "2026-07-26 claudebox sweep: CRITICAL Nomad quorum lost at 1/2 voters. claudebox is alive/candidate; required voter V1410-1 is Tailscale-offline 24d with expired node key. Restore V1410-1 Tailscale auth and start/verify Nomad, or power on and safely rejoin oraclebox1; do not perform single-voter Raft surgery. death-star is offline 49d. windesk is tailnet-reachable but its Nomad API times out and it is absent from stale node/maintenance coverage. After leader election verify all 7 nodes ready+eligible and redeploy/restart maintenance-agent only where confirmed missing.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

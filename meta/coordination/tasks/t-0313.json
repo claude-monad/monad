@@ -1,0 +1,10 @@
+{
+  "id": "t-0313",
+  "type": "infra",
+  "scope": "2026-07-27T20:36Z claudebox sweep: CRITICAL Nomad quorum remains lost. Claudebox is the sole live committed voter/Candidate; V1410-1 has an expired Tailscale key and is unreachable, while oraclebox1 and death-star remain offline. Restore/re-authenticate V1410-1 out-of-band and start its existing Nomad server without Raft surgery (or safely revive oraclebox1 if it is still a valid recovery path), then verify a leader, all seven roster nodes ready+eligible, engine metadata, and maintenance-agent coverage. Windesk is tailnet-reachable through DERP but its Nomad API is unavailable.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

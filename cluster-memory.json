@@ -27,9 +27,9 @@
     "value": "ROUND-TRIP ACHIEVED 2026-06-03 (intent i-0002): agent-windesk(100.64.162.0)+agent-mac-mini(100.110.232.73) live tsnet peers via Nomad jobs windesk-tsnet-sidecar.hcl + mac-tsnet-sidecar.hcl; bidirectional agent-msg verified. Mac built darwin/arm64 natively. WARNING: V1410-1/conductor fetch eliottcassidy2000/monad FORK (no sidecar source) not canonical eliott-monad/monad \u2014 mac job clones canonical URL explicitly. Remaining: codex worker on mac (windesk has_codex already advertised); OS-aware mesh-attach (t-0073)."
   },
   "health:V1410-1": {
-    "updated": 1785187014.1201262,
+    "updated": 1785198321.1417577,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-27T21:16:54Z"
+    "value": "DONE-2026-07-28T00:25:21Z"
   },
   "health:V1410-1:claudebox-20260718T193100Z": {
     "updated": 1784403060.9253674,
@@ -72,9 +72,9 @@
     "value": "DONE-2026-07-27T17:21:24Z quorum still LOST 1/3 no-regression: claudebox local server ALIVE(2.0.2)+leaderless (retry_join v1410-1/oraclebox1 both offline); v1410-1 TS node-key EXPIRED(24d) GH#8, oraclebox1 offline(50d) GH#4/#6, death-star offline(50d); engines claude+codex ready(unadvertised, no reachable leader); owner-blocked, no single-voter surgery"
   },
   "health:death-star": {
-    "updated": 1785187014.2560604,
+    "updated": 1785198321.2327833,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-27T21:16:54Z"
+    "value": "DONE-2026-07-28T00:25:21Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -97,9 +97,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1784473718.590401,
-    "updated_by": "bigo-server",
-    "value": "DONE-2026-07-19T15:08:38Z"
+    "updated": 1785198321.3174555,
+    "updated_by": "claudebox",
+    "value": "DONE-2026-07-28T00:25:21Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -152,9 +152,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785187014.192257,
+    "updated": 1785198321.1868846,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-27T21:16:54Z"
+    "value": "DONE-2026-07-28T00:25:21Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -233,9 +233,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785187014.3387516,
+    "updated": 1785198321.278861,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-27T21:16:54Z"
+    "value": "DONE-2026-07-28T00:25:21Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

@@ -1,0 +1,10 @@
+{
+  "id": "t-0316",
+  "type": "infra",
+  "scope": "2026-07-29 claudebox sweep: CRITICAL Nomad quorum remains lost; claudebox is the sole live server and has no leader. V1410-1 is Tailscale-offline with Expired=true and needs on-box/admin reauthentication plus verification/start of its existing Nomad server while preserving Raft data; fallback power/restore/rejoin oraclebox1, offline since 2026-06-07. Do not perform single-voter Raft surgery. death-star remains offline; windesk is tailnet-online but Nomad API is unavailable. bigo-server and eliotts-mac-mini local Nomad clients and claude+codex metadata are healthy. After leader election verify all seven Ready+Eligible and one maintenance-agent loop per member, then repair only confirmed gaps.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0304"
+}

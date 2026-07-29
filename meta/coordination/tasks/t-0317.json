@@ -1,0 +1,10 @@
+{
+  "id": "t-0317",
+  "type": "infra",
+  "scope": "2026-07-29 claudebox follow-up to t-0316: quorum still LOST at 1/2 committed voters after fresh direct checks. claudebox is alive/Candidate with local client and maintenance loop running; ensure-engines re-advertised claude+codex through the local API. v1410-1 has an expired Tailscale key and SSH times out; oraclebox1 and death-star are tailnet/SSH unreachable; windesk is tailnet-listed but ports 22/4646/5646/5985/5986/8300 are unavailable. bigo-server and eliotts-mac-mini local client health and live maintainer telemetry are OK. Restore/re-auth v1410-1 out-of-band while preserving Raft data, or safely restore oraclebox1; do not perform single-voter surgery. After election, verify all seven Ready+Eligible and one maintenance-agent allocation each.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0316"
+}

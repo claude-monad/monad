@@ -1,0 +1,10 @@
+{
+  "id": "t-0332",
+  "type": "infra",
+  "scope": "2026-07-30 claudebox sweep: CRITICAL Nomad quorum remains lost; claudebox is the sole alive committed voter/Candidate and v1410-1 is offline with an expired Tailscale key, while oraclebox1 is offline. Restore either remote voter out-of-band while preserving Raft data; do not perform single-voter surgery. death-star remains offline. windesk is tailnet-listed online but its Nomad API is unreachable. bigo-server is live Ready+Eligible with claude+codex and maintenance telemetry. eliotts-mac-mini is live Ready+Eligible with claude+codex; safe client GC returned HTTP 200, but disk worsened to 96.321% (~9.0 GB free), its stale maintenance allocation ID is no longer queryable after a recent client restart, and SSH port 22 refuses connections. Perform on-box safe cache/log cleanup urgently. After leader recovery verify all seven Ready+Eligible and exactly one live maintenance-agent allocation per roster member.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

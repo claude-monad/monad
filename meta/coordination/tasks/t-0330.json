@@ -1,0 +1,10 @@
+{
+  "id": "t-0330",
+  "type": "infra",
+  "scope": "2026-07-30T11:53:38Z claudebox cluster-health: CRITICAL quorum remains lost at 1/2 committed voters; claudebox is alive/Candidate, v1410-1 Tailscale key is expired, and oraclebox1 is offline. Restore either remote voter out-of-band while preserving Raft data; no single-voter surgery. death-star is offline; windesk is reachable but Nomad API is down; eliotts-mac-mini is eligible but has no maintenance allocation and its AllocDir is 99.95% full, with safe client GC reclaiming nothing. bigo-server is eligible with one maintenance allocation. After leader recovery verify all seven Ready+Eligible and maintenance coverage.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0304"
+}

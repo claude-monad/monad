@@ -1,0 +1,10 @@
+{
+  "id": "t-0319",
+  "type": "infra",
+  "scope": "2026-07-29T18:19:39Z claudebox cluster-health follow-up: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox is alive/Candidate with local API, maintenance loop, and claude+codex engines healthy; committed voters are {v1410-1, claudebox}. Restore/re-authorize v1410-1 out-of-band (expired Tailscale key; offline 26d), preserve Raft data, verify/start Nomad, and confirm leader election; fallback safely restore/rejoin oraclebox1 (offline 52d). Do not perform single-voter surgery. death-star is offline 52d. windesk is Tailscale-reachable but ports 22/4646/5646/5985/5986/8300 are unavailable. bigo-server and eliotts-mac-mini local Nomad APIs respond. Global ready/eligible and maintenance-agent job coverage checks are leader-blocked; after recovery verify all seven nodes and repair only confirmed gaps.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0318",
+  "type": "infra",
+  "scope": "URGENT: restore Nomad quorum by powering on/re-authing Tailscale and restarting Nomad on v1410-1 (node key expired; offline 26d) or oraclebox1 (offline 52d). claudebox is the sole alive voter and reports No cluster leader. Then verify raft peers/autopilot, all seven nodes ready+eligible, one maintenance-agent alloc per member, restore death-star (offline 52d), and verify windesk Nomad (Tailscale online but agent API unreachable).",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

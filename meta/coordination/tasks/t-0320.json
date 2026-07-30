@@ -1,0 +1,10 @@
+{
+  "id": "t-0320",
+  "type": "infra",
+  "scope": "2026-07-29 claudebox sweep: CRITICAL Nomad quorum remains lost; claudebox is the sole alive server and reports No cluster leader. Restore/re-authenticate v1410-1 out-of-band (Tailscale key expired, offline 26d) and start its existing Nomad server while preserving Raft data, or safely restore oraclebox1 (offline 52d); do not perform single-voter surgery. death-star is offline 52d. bigo-server is tailnet/Nomad reachable and its alloc disk is healthy at 79.6%. eliotts-mac-mini and windesk are tailnet-reachable but Nomad APIs are unavailable. Stale control-plane data lists bigo-server, V1410-1, claudebox, and eliotts-mac-mini Ready+Eligible with running maintenance allocations, but V1410-1 is actually offline; after quorum recovery verify all seven Ready+Eligible and one maintenance-agent allocation per member.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

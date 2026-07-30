@@ -1,0 +1,10 @@
+{
+  "id": "t-0324",
+  "type": "infra",
+  "scope": "2026-07-30 windesk repair: base Tailscale node responds, but Nomad APIs on 4646/5646 and remote-management ports are unavailable; agent-windesk sidecar is absent, so claudebox cannot delegate remotely. On windesk, run the scheduled node-doctor or restart/rejoin the Nomad client, run meta/agent/ensure-engines.ps1, restore the maintenance/agent sidecar equivalent, then after quorum recovery verify Ready+Eligible.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

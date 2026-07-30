@@ -1,0 +1,10 @@
+{
+  "id": "t-0326",
+  "type": "infra",
+  "scope": "2026-07-30 claudebox health sweep: CRITICAL Nomad quorum remains lost; claudebox is the sole alive committed voter/Candidate and v1410-1 has an expired Tailscale key, while oraclebox1 is offline. Preserve Raft data and restore v1410-1 power/Tailscale/Nomad out-of-band (or oraclebox1 voter) before verifying >=2 voters. death-star is offline; windesk is tailnet-reachable but Nomad/management APIs are down; eliotts-mac-mini client/maintenance alloc is live but root/AllocDir is 99.989% full with only 26,853,376 bytes free and SSH unavailable. Existing t-0322..t-0325 contain per-host repair steps. No single-voter Raft surgery or unsafe cleanup.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

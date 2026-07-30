@@ -1,0 +1,10 @@
+{
+  "id": "t-0323",
+  "type": "infra",
+  "scope": "2026-07-30 claudebox sweep: CRITICAL Nomad quorum lost; committed voters are only v1410-1 and claudebox. claudebox is alive but Candidate/No cluster leader; v1410-1 Tailscale node key is expired and has been offline 27d. Restore power/network and re-auth Tailscale on v1410-1 out-of-band, preserve its Raft data, start its existing Nomad server, then verify leader election, all seven clients Ready+Eligible, and maintenance-agent coverage. Do not perform single-voter Raft surgery. oraclebox1 and death-star are also offline 52d.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

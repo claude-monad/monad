@@ -1,0 +1,10 @@
+{
+  "id": "t-0322",
+  "type": "infra",
+  "scope": "Restore death-star: Tailscale offline/no reply for 52 days; power on or run tailscale up, then verify Nomad ready+eligible and maintenance-agent allocation",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

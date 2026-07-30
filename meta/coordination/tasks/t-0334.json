@@ -1,0 +1,10 @@
+{
+  "id": "t-0334",
+  "type": "infra",
+  "scope": "2026-07-30 claudebox follow-up to t-0333: eliotts-mac-mini root disk degraded further to 99.05% used / 2.34GB free (was 2.78GB at 22:04Z) and is actively filling; remote paths exhausted (client GC 200/no-reclaim x2, ssh port closed, no server-mediated exec while quorum is lost). Escalated to owner via GH issue for on-box cleanup or Tailscale SSH enablement. Quorum unchanged: claudebox alive/Candidate 1/2 committed voters, v1410-1 TS key expired, oraclebox1/death-star offline; bigo-server client+engines respond (ssh gated by Tailscale check-mode); windesk tailnet-online, no Nomad API. No regression on claudebox self (disk 9%, repo synced, engines ensured).",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

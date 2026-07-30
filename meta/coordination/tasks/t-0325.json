@@ -1,0 +1,10 @@
+{
+  "id": "t-0325",
+  "type": "infra",
+  "scope": "CRITICAL eliotts-mac-mini disk exhaustion: live Nomad client stats at 2026-07-30 show AllocDir/root APFS 99.984% used with only 39,305,216 bytes available. Client and maintenance-agent alloc are currently live, but SSH is refused and maintenance gateway :8300 is unavailable, so claudebox cannot safely clean it remotely. On-box: inspect df/du, remove only obvious caches/tmp/old logs (Docker prune only if idle), verify healthy free space, then rerun ensure-engines and confirm maintenance allocation. This worsens open task t-0035; do not delete user data.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

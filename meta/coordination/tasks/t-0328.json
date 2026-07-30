@@ -1,0 +1,10 @@
+{
+  "id": "t-0328",
+  "type": "infra",
+  "scope": "2026-07-30 claudebox sweep: CRITICAL quorum remains lost at 1/2 committed voters; claudebox is alive/Candidate with its local server+client and claude,codex engines healthy, while v1410-1 is offline with an expired Tailscale key and oraclebox1 is offline. Restore either voter out-of-band while preserving Raft data; do not perform single-voter surgery. death-star is offline. windesk is tailnet-reachable but its Nomad API is down. eliotts-mac-mini client is alive but AllocDir is 99.93% full and needs on-box safe cleanup. After leader recovery verify all seven Ready+Eligible and one maintenance allocation per roster member.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

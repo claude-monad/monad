@@ -1,0 +1,10 @@
+{
+  "id": "t-0321",
+  "type": "infra",
+  "scope": "URGENT QUORUM LOSS: power on or re-auth Tailscale on v1410-1 (node key expired) or oraclebox1, start/rejoin Nomad server, then verify >=2 voters and reconcile all roster clients plus maintenance-agent allocations",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

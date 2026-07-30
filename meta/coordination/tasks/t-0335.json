@@ -1,0 +1,10 @@
+{
+  "id": "t-0335",
+  "type": "infra",
+  "scope": "2026-07-30T23:24Z claudebox cluster-health: CRITICAL Nomad quorum remains lost with only claudebox alive (Candidate/no leader); v1410-1 Tailscale key expired and oraclebox1 offline. Restore either remote voter out-of-band while preserving Raft data; do not attempt single-voter Raft surgery. death-star remains offline; windesk is tailnet-reachable via DERP but Nomad API is unreachable. bigo-server client is healthy/eligible with maintenance-agent alloc 1bf9072d. eliotts-mac-mini client is healthy/eligible but has no visible maintenance-agent telemetry and disk worsened to 99.255% used (~1.83GB free); claimed safe client GC returned HTTP 200 but free space fell another ~10MB, so urgent on-box safe cleanup remains required (follow GH #9/t-0334). No leader prevents global Ready+Eligible and one-alloc-per-member verification.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

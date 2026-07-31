@@ -16,11 +16,16 @@ if [ ! -d "$REPO_DIR/.git" ]; then
     fi
 fi
 
-# Default to the live Nomad server (v1410-1 leader). Was claudebox (100.87.219.108),
-# which is offline — that made every monad nomad/deploy command hang. Override with
-# NOMAD_ADDR=... for a different server (e.g. local oraclebox1 http://100.125.210.126:4646).
-NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
-export NOMAD_ADDR
+# Point at a Nomad server that actually answers — an unreachable one makes every
+# monad nomad/deploy command hang ~30s per call. An explicit NOMAD_ADDR still wins
+# whenever it is reachable; otherwise we fall through the candidate servers.
+if [ -f "$REPO_DIR/scripts/nomad-addr.sh" ]; then
+    . "$REPO_DIR/scripts/nomad-addr.sh"
+    resolve_nomad_addr || true
+else
+    NOMAD_ADDR="${NOMAD_ADDR:-http://100.75.75.39:4646}"
+    export NOMAD_ADDR
+fi
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'

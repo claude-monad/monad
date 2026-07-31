@@ -25,6 +25,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 SERVER_IP="${SERVER_IP:-100.75.75.39}"
 NOMAD_ADDR="${NOMAD_ADDR:-http://${SERVER_IP}:4646}"
+# A dead server costs ~30s per nomad call, which blew this doctor's own wall-clock
+# budget and failed every maintenance self-pass. Fall through to a reachable server.
+if [ -f "$REPO_DIR/scripts/nomad-addr.sh" ]; then
+    . "$REPO_DIR/scripts/nomad-addr.sh"
+    resolve_nomad_addr || true
+    SERVER_IP="$(printf '%s' "${NOMAD_ADDR#*://}" | cut -d: -f1)"
+fi
 NODE_NAME="$(hostname)"
 LOG_DIR="$REPO_DIR/logs"
 METRICS_FILE="$LOG_DIR/metrics-${NODE_NAME}.csv"

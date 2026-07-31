@@ -42,9 +42,9 @@
     "value": "DONE-2026-07-31T21:22:16Z healthy 79.9pct/22.3GB, pointed at claudebox:4647"
   },
   "health:claudebox": {
-    "updated": 1785412435.6015885,
+    "updated": 1785541907.8752308,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-30T11:53:55Z"
+    "value": "claudebox"
   },
   "health:claudebox-egress": {
     "updated": 1783435031.6642962,

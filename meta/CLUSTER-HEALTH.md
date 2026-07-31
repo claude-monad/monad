@@ -10,7 +10,7 @@ it whenever you have a spare cycle.
 
 | node | Tailscale IP | OS | Nomad role |
 |------|--------------|----|------------|
-| `v1410-1`           | 100.75.75.39    | Linux  | server (leader) + client |
+| `v1410-1`           | 100.75.75.39    | Linux  | server (voter) + client — *DOWN since ~2026-07-02, Tailscale key expired; quorum blocker, GH #8* |
 | `bigo-server`       | 100.78.218.70    | Linux  | client |
 | `claudebox`         | 100.87.219.108   | Linux  | server (voter, RaftProtocol 3) + client |
 | `death-star`        | 100.96.31.66     | Linux  | client |
@@ -18,9 +18,13 @@ it whenever you have a spare cycle.
 | `oraclebox1`        | 100.125.210.126 | Linux  | server (voter) + client — *offline since ~2026-06-07, queue holds heal/restore tasks* |
 | `windesk`           | 100.94.210.54   | Windows| client |
 
-Server RPC / `NOMAD_ADDR`: `http://100.75.75.39:4646` (or any alive server). The 3-voter Raft
-target is **v1410-1 + oraclebox1 + claudebox**; the rest are clients. Keep this table current —
-if a node is added/removed, update it here and in `CLAUDE.md`.
+Server RPC / `NOMAD_ADDR`: **`http://100.87.219.108:4646` (claudebox — the only server that
+answers).** `100.75.75.39` is unreachable and each `nomad` call against it blocks ~30s; sourcing
+`scripts/nomad-addr.sh` and calling `resolve_nomad_addr` picks a reachable server automatically.
+The committed voter set is **{v1410-1, claudebox}** (oraclebox1 is *not* a voter), so Raft is at
+**1/2 — no leader** until v1410-1 returns. The 3-voter target remains **v1410-1 + oraclebox1 +
+claudebox**; the rest are clients. Keep this table current — if a node is added/removed, update
+it here and in `CLAUDE.md`.
 
 ## What "healthy" means, per node
 

@@ -406,18 +406,30 @@ noise while ensuring every problem is git-tracked and visible to the cluster.
 
 | Node | IP | OS | Role | Capabilities |
 |------|----|----|------|-------------|
-| `v1410-1` | 100.75.75.39 | Linux | **server (leader) + client** | the live control plane; Raft leader |
-| `oraclebox1` | 100.125.210.126 | Linux | **server (voter) + client** | hosts the `cluster-conductor` (holds Claude creds); raw_exec, docker |
-| `claudebox` | 100.87.219.108 | Linux | client (3rd-server target) | revived 2026-06-02 (old orphaned single-node server wiped); rejoin with `meta/bootstrap/join.sh 100.75.75.39 pro` to become the 3rd Raft voter |
+| `v1410-1` | 100.75.75.39 | Linux | **server (voter) + client** | **DOWN since ~2026-07-02** — Tailscale node key expired, needs interactive re-auth (GH #8). Quorum blocker |
+| `oraclebox1` | 100.125.210.126 | Linux | **server (voter) + client** | **offline ~54d**; hosts the `cluster-conductor` (holds Claude creds); raw_exec, docker |
+| `claudebox` | 100.87.219.108 | Linux | **server (voter) + client** | **the only alive server** — runs `nomad agent -config=~/nomad/server.hcl`, joined (no `bootstrap_expect`). Leaderless at 1/2 voters |
 | `eliotts-mac-mini` | 100.113.252.45 | macOS | client | `ready` Nomad client; flaky on Tailscale |
 | `windesk` | 100.94.210.54 | Windows | client | native Claude Code, PowerShell/raw_exec; uses `meta/agent/ensure-engines.ps1` |
 
-> **Control plane note (updated 2026-06-02):** the Nomad server moved off the long-offline
-> `bigo-server` → `claudebox` → and now lives on **`v1410-1`** (Raft leader), with `oraclebox1`
-> a 2nd voter. `claudebox` was reachable again on 2026-06-02 and its **old orphaned single-node
-> server (build 1.9.3) was torn down** (split-brain removed); it now runs no Nomad and should
-> **rejoin as the 3rd voter** via `meta/bootstrap/join.sh 100.75.75.39 pro`. The live server RPC
-> is `100.75.75.39:4647`; older docs may still point at `100.87.219.108` (the dead orphan).
+> **Control plane note (updated 2026-07-31):** ⚠️ **the cluster has NO Raft leader.** The
+> committed voter set is exactly **{`v1410-1`, `claudebox`}** (per t-0340 — `oraclebox1` is
+> *not* a voter), and only `claudebox` is alive, so Raft sits at **1/2 = no majority**.
+> `v1410-1`'s Tailscale node key **expired ~2026-07-02**; recovery needs interactive re-auth
+> on that machine and is **owner-blocked** (GH #8, #6). Do **not** attempt single-voter
+> `peers.json` surgery to force quorum.
+>
+> `claudebox` **does run a Nomad server** — it rejoined after the 2026-06-02 teardown of its
+> old orphaned single-node server, and its config deliberately omits `bootstrap_expect` so it
+> can never re-form a private Raft. Earlier revisions of this note said claudebox "runs no
+> Nomad" and called `v1410-1` the live leader; both were stale.
+>
+> **Point tooling at `http://100.87.219.108:4646` (RPC `:4647`) — the only server that answers.**
+> `100.75.75.39` is unreachable and every `nomad` call against it blocks ~30s before failing.
+> `scripts/nomad-addr.sh` now does this automatically: it TCP-probes the configured
+> `NOMAD_ADDR` and falls through to a reachable server, so a dead default can no longer wedge
+> node-doctor or the maintenance loop. Reads/writes still fail with "No cluster leader" until
+> quorum returns — that is the real, expected state, not a tooling bug.
 
 ### Offline / not-yet-joined (potential nodes — join with `meta/bootstrap/join.sh`)
 

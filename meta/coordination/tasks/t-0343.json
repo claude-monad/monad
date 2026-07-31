@@ -1,0 +1,10 @@
+{
+  "id": "t-0343",
+  "type": "infra",
+  "scope": "windesk Nomad client down 57d: tailnet-reachable but no on-box agent drains maintenance/windesk/queue (metrics 57d stale, no leader so no alloc schedulable). Needs on-box 'nomad agent -config=C:\\nomad\\config\\nomad.hcl' pointed at 100.87.219.108:4647. See GH #10.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

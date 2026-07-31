@@ -42,9 +42,9 @@
     "value": "DONE-2026-07-31T21:22:16Z healthy 79.9pct/22.3GB, pointed at claudebox:4647"
   },
   "health:claudebox": {
-    "updated": 1785541907.8752308,
+    "updated": 1785542166.043398,
     "updated_by": "claudebox",
-    "value": "claudebox"
+    "value": "DONE-2026-07-31T23:56:05Z NOMAD_ADDR resolver fixed self-pass timeouts; doctor 38s rc=0; engines advertised claude+codex"
   },
   "health:claudebox-egress": {
     "updated": 1783435031.6642962,
@@ -67,9 +67,9 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1785537310.444084,
+    "updated": 1785542166.1423376,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T22:35:10Z quorum LOST 1/2 {v1410-1,claudebox}; v1410-1 TS key expired owner-blocked GH #8; no regression; t-0342"
+    "value": "DONE-2026-07-31T23:56:05Z LOST 1/2 {v1410-1,claudebox}; v1410-1 TS key expired owner-blocked GH #8"
   },
   "health:death-star": {
     "updated": 1785476484.4604936,
@@ -233,9 +233,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785542060.4471633,
+    "updated": 1785542166.0910394,
     "updated_by": "claudebox",
-    "value": "claudebox"
+    "value": "DONE-2026-07-31T23:56:05Z tailnet OK, nomad down 4646/47/48; queue undrained 57d -> escalated GH #10"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

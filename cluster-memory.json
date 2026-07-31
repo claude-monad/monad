@@ -72,9 +72,9 @@
     "value": "DONE-2026-07-27T17:21:24Z quorum still LOST 1/3 no-regression: claudebox local server ALIVE(2.0.2)+leaderless (retry_join v1410-1/oraclebox1 both offline); v1410-1 TS node-key EXPIRED(24d) GH#8, oraclebox1 offline(50d) GH#4/#6, death-star offline(50d); engines claude+codex ready(unadvertised, no reachable leader); owner-blocked, no single-voter surgery"
   },
   "health:death-star": {
-    "updated": 1785456457.664209,
+    "updated": 1785466622.686112,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T00:07:37Z"
+    "value": "DONE-2026-07-31T02:57:02Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -97,9 +97,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785459379.9867365,
+    "updated": 1785466622.6496322,
     "updated_by": "claudebox",
-    "value": "claudebox"
+    "value": "DONE-2026-07-31T02:57:02Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -152,9 +152,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785456457.517347,
+    "updated": 1785466622.6119795,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T00:07:37Z"
+    "value": "DONE-2026-07-31T02:57:02Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -208,9 +208,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785456457.3295932,
+    "updated": 1785466622.575653,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T00:07:37Z"
+    "value": "DONE-2026-07-31T02:57:02Z"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -233,9 +233,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785456457.8223352,
+    "updated": 1785466622.7241023,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T00:07:37Z"
+    "value": "DONE-2026-07-31T02:57:02Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

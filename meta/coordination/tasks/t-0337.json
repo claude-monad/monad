@@ -1,0 +1,10 @@
+{
+  "id": "t-0337",
+  "type": "infra",
+  "scope": "2026-07-31 claudebox sweep: CRITICAL Nomad quorum remains lost at 1/2 committed voters; claudebox is alive/Candidate, v1410-1 has an expired Tailscale key and is unreachable, and oraclebox1 is offline/unreachable. Restore either voter out-of-band while preserving Raft data; do not perform single-voter surgery. death-star remains offline. windesk is tailnet-reachable but Nomad :4646 is unavailable. bigo-server and eliotts-mac-mini local Nomad clients advertise claude+codex; bigo has a live maintenance allocation, mac has none. Claimed mac and removed 72 Codex desktop log files older than 7 days, reducing that log tree 718MB to 371MB and improving Nomad-reported free space to 7.36GB (97.0% used); on-box cleanup/maintenance-agent restoration remains needed. After quorum recovery verify all seven Ready+Eligible and exactly one maintenance allocation each.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0336"
+}

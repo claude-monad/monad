@@ -11009,3 +11009,66 @@
 {"ts":"2026-07-31T02:45:37Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-07-31T02:49:36Z","node":"claudebox","source":"node-doctor","action":"auto-repair","result":"fail","detail":"1 issues"}
 {"ts":"2026-07-31T02:56:40Z","node":"claudebox","source":"codex-maintenance","type":"cluster-health","action":"roster-sweep","status":"critical","detail":"Quorum lost at 1/2 committed voters: claudebox alive/Candidate; v1410-1 Tailscale key expired and unreachable; oraclebox1 and death-star offline. windesk tailnet-reachable but Nomad API unavailable. bigo-server and eliotts-mac-mini local Nomad clients healthy with claude+codex; bigo maintenance allocation live, mac missing maintenance allocation. Claimed mac and safely removed 72 Codex desktop logs older than 7 days, reducing logs 718MB to 371MB and improving Nomad-reported free disk to 7.36GB/97.0% used. Escalated remaining quorum, offline-node, windesk, mac-disk, and maintenance coverage work as t-0337; no unsafe Raft surgery attempted."}
+{"ts":"2026-07-31T02:59:04Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-07-31T03:31:09Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T03:38:31Z","node":"claudebox","source":"codex-maintenance","type":"cluster-health","action":"roster-sweep","status":"critical","detail":"Quorum remains lost at 1/2 committed voters: claudebox alive/Candidate; v1410-1 Tailscale key expired; oraclebox1 and death-star offline. bigo-server client and maintainer telemetry live; windesk tailnet-reachable but Nomad/gateway unavailable. eliotts-mac-mini recovered after a transient restart with 14.9GB free/93.9% used and was repointed at claudebox, but its maintenance allocation remains unverifiable. Local disk healthy, repo dirty/preserved, engines ready and advertised via the local API. Claimed/released unhealthy peers and escalated remaining recovery/on-box work as t-0338; no unsafe Raft surgery attempted."}
+{"ts":"2026-07-31T03:42:22Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-07-31T04:14:25Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T04:30:25Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-07-31T05:02:30Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T05:03:33Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T05:35:36Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T05:41:07Z","node":"claudebox","source":"codex-maintenance","type":"cluster-health","action":"roster-sweep","status":"critical","detail":"Quorum remains lost at 1/2 committed voters: claudebox is alive/Candidate; v1410-1 has an expired Tailscale key and oraclebox1 is offline. death-star is offline; windesk is tailnet-reachable but Nomad APIs are unavailable. bigo-server client, engines, and maintenance telemetry are healthy. eliotts-mac-mini client and engines are live, but disk is 98.35% used (~4.04GB free), its cached maintenance allocation returns 404, and a claimed safe client-GC pass reclaimed nothing. Self disk 9%, Git 0/0 with origin/main and existing work preserved, local Nomad server/client and maintenance loop healthy, claude+codex ensured and advertised. Claimed five unhealthy peers, escalated as t-0339, and avoided unsafe Raft surgery."}
+{"ts":"2026-07-31T05:42:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-07-31T06:14:46Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T06:15:49Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T06:47:52Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T06:49:01Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T07:21:04Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T07:22:12Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T07:54:15Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T07:55:19Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T08:27:22Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T08:28:24Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T09:00:27Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T09:01:32Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T09:33:35Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T09:34:39Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T10:06:42Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T10:07:45Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T10:39:48Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T10:40:51Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T11:12:54Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T11:13:58Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T11:46:01Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T11:47:06Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T12:19:09Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T12:20:11Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T12:52:14Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T12:53:17Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T13:25:20Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T13:26:25Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T13:58:28Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T13:59:36Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T14:31:39Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T14:32:42Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T15:04:46Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T15:05:50Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T15:37:53Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T15:39:01Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T16:11:04Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T16:12:07Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T16:44:10Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T16:45:13Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T17:17:16Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T17:18:20Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T17:50:23Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T17:51:32Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T18:23:35Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T18:24:37Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T18:56:40Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T18:57:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T19:28:46Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T19:29:51Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-07-31T20:01:54Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-07-31T20:09:28Z","node":"claudebox","source":"cluster-health","type":"sweep","action":"roster-sweep","status":"warn","detail":"quorum 1/2 voters (v1410-1 down, TS key expired); voter set authoritatively {v1410-1,claudebox} - oraclebox1 NOT a voter; mac-mini disk recovered 99.05->95.42pct; mac+bigo repointed at claudebox:4647; self engines readvertised"}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0338",
+  "type": "infra",
+  "scope": "2026-07-31T03:37Z claudebox follow-up to t-0337: CRITICAL Nomad quorum remains lost at 1/2 committed voters. claudebox is alive/Candidate with local server/client and maintenance loop running; v1410-1 is unreachable because its Tailscale key expired, and oraclebox1 is offline. Restore either remote voter out-of-band while preserving Raft data; do not perform single-voter surgery. death-star remains offline. windesk is tailnet-reachable through DERP but Nomad and maintenance gateways time out. bigo-server local client and maintenance telemetry are live. eliotts-mac-mini transiently stopped answering during a restart, then recovered with 14.9GB free/93.9% used; its runtime Nomad server target was safely repointed from dead v1410-1 to claudebox, but no live maintenance allocation is verifiable. Global Ready+Eligible and one-allocation-per-member checks are leader-blocked; repeat them after quorum recovery.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0337"
+}

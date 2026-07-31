@@ -1,0 +1,10 @@
+{
+  "id": "t-0340",
+  "type": "infra",
+  "scope": "2026-07-31T20:2xZ claudebox sweep \u2014 CORRECTION to t-0335..t-0339: the committed Raft voter set is EXACTLY {v1410-1 100.75.75.39:4647, claudebox 100.87.219.108:4647} per snapshot meta Index 752621/Term 1647. oraclebox1 is NOT a voter, so reviving it CANNOT restore quorum; prior 'restore either remote voter' guidance is wrong. Only re-authenticating the expired Tailscale key on v1410-1 restores quorum (owner action, GH #8). Do NOT do single-voter peers.json surgery. This sweep: claudebox server+client healthy (raw process /home/claude/bin/nomad, no systemd unit \u2014 'systemctl is-active nomad' is a false negative), engines re-advertised has_claude+has_codex after pointing ensure-engines at the local API instead of the dead NOMAD_ADDR default. bigo-server healthy (79.9%% disk, 22.3GB free) and already repointed at claudebox. eliotts-mac-mini disk RECOVERED to 95.42%% / 11.22GB free (was 99.05%%) and was repointed from dead v1410-1 to claudebox:4647; both repoints are RUNTIME-ONLY and revert on restart \u2014 a durable fix needs the on-disk client configs edited. windesk unreachable on 4646; death-star and oraclebox1 Tailscale-offline 54d. Remaining verification (all seven Ready+Eligible, one maintenance alloc each) stays leader-blocked.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0339"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0342",
+  "type": "infra",
+  "scope": "2026-07-31T22:3xZ claudebox sweep (follow-up to t-0341). QUORUM STILL LOST 1/2 committed voters {v1410-1, claudebox} \u2014 v1410-1 Tailscale node key EXPIRED; owner-interactive re-auth remains the ONLY path (GH #8). No single-voter peers.json surgery attempted (oraclebox1 is NOT a voter per t-0340, so reviving it cannot restore quorum). CHANGE SINCE t-0341: windesk RECOVERED on the tailnet without intervention \u2014 tailscale ping now pongs (64-199ms, IPv6 direct 2607:fb90:...:41641) and status shows 'idle, tx 780 rx 124', reversing the 21:22Z full-unreachability regression. Its Nomad is still down: TCP 4646/4647/4648 on 100.94.210.54 all refuse from claudebox. Corrected maintenance/windesk/queue/reconnect-tailscale-20260731T213000Z.md so it no longer asserts the (now false) 'fully unreachable' premise \u2014 step 1 Tailscale marked DONE, restart-Nomad is the live ask, supersedes the 2026-07-17 item. Peers via leaderless client HTTP API (/v1/client/stats works without a leader \u2014 this is the reliable read path while Raft is down): eliotts-mac-mini HOLDING at 95.7%/10.6GB free, mem 75.5% (no regression from the 99.05% crisis, GH #9 still open); bigo-server healthy 79.9%/22.3GB, mem 28.7%. oraclebox1 and death-star still Tailscale-offline 54d. Self healthy: disk 9%/794GB, mem 2.3/7.6GB, repo synced, engines claude+codex ready but node-meta advertise stays leader-blocked (ensure-engines still defaults to the dead NOMAD_ADDR http://100.75.75.39:4646). REMAINING LEADER-BLOCKED WORK: all-nodes Ready+Eligible verification, one maintenance alloc per member, and durable on-disk client-config repoints (mac/bigo repoints are runtime-only and revert on restart) \u2014 no remote shell into any peer, so these stay on-box work.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0341"
+}

@@ -37,9 +37,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:bigo-server": {
-    "updated": 1785528561.1782997,
+    "updated": 1785532936.6745749,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T20:09:21Z"
+    "value": "DONE-2026-07-31T21:22:16Z healthy 79.9pct/22.3GB, pointed at claudebox:4647"
   },
   "health:claudebox": {
     "updated": 1785412435.6015885,
@@ -97,9 +97,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785528561.0922115,
+    "updated": 1785532936.5489652,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T20:09:21Z"
+    "value": "DONE-2026-07-31T21:22:16Z disk RECOVERED 95.7pct/10.4GB; repoint at claudebox held (runtime-only); GH #9 updated"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -208,9 +208,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785476484.3826158,
+    "updated": 1785532936.788512,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T05:41:24Z"
+    "value": "DONE-2026-07-31T21:22:16Z TS node key EXPIRED, quorum blocked on owner re-auth GH #8"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -233,9 +233,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785476484.5022666,
+    "updated": 1785532936.449911,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T05:41:24Z"
+    "value": "DONE-2026-07-31T21:22:16Z regressed to fully TS-unreachable; queued reconnect-tailscale task; owner-blocked"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

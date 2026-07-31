@@ -1,0 +1,10 @@
+{
+  "id": "t-0341",
+  "type": "infra",
+  "scope": "2026-07-31T21:2xZ claudebox sweep (follow-up to t-0340). QUORUM STILL LOST 1/2 committed voters {v1410-1, claudebox} \u2014 v1410-1 Tailscale node key EXPIRED, owner-interactive re-auth is the ONLY path (GH #8); no single-voter peers.json surgery attempted. NOTE for future sweeps: 'systemctl is-active nomad' on claudebox is a FALSE NEGATIVE \u2014 the server is a raw user process (/home/claude/bin/nomad agent -config=/home/claude/nomad/server.hcl) and it binds the Tailscale IP, NOT localhost, so NOMAD_ADDR must be http://100.87.219.108:4646 (localhost:4646 refuses). Self healthy: disk 9% (794GB free), repo in sync with origin/main, engines re-advertised has_claude+has_codex. bigo-server healthy (79.9%/22.3GB) and eliotts-mac-mini RECOVERED (95.7%/10.4GB, was 99.05%/2.34GB \u2014 GH #9 updated and proposed for downgrade); both still pointed at claudebox:4647, repoints HELD but remain runtime-only and revert on restart. WINDESK REGRESSED: was tailnet-reachable-with-Nomad-down at 05:41Z, now fully Tailscale-unreachable (ping no reply) \u2014 queued maintenance/windesk/queue/reconnect-tailscale-20260731T213000Z.md (Tailscale re-auth FIRST, then Nomad, point at claudebox not dead v1410-1). oraclebox1 and death-star still Tailscale-offline 54d. No remote shell to any peer (mac ssh port 22 refused, bigo ssh times out), so all durable on-disk client-config fixes remain on-box work, leader-blocked.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0340"
+}

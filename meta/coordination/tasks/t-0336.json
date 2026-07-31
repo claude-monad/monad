@@ -3,8 +3,10 @@
   "type": "infra",
   "scope": "2026-07-31 claudebox follow-up to t-0335: CRITICAL Nomad quorum remains lost at 1/2 committed voters; claudebox is alive/Candidate, v1410-1 is Tailscale-offline with an expired key, and oraclebox1 is offline. Restore either remote voter out-of-band while preserving Raft data; do not perform single-voter surgery. death-star remains offline. windesk is tailnet-reachable but ports 22/4646/5646/5985/5986/8300 are unavailable. Stale control-plane state has V1410-1, bigo-server, claudebox, and eliotts-mac-mini Ready+Eligible with one maintenance allocation each, but V1410-1 is actually offline and global verification is leader-blocked. Live bigo/claudebox clients and bigo maintenance telemetry respond. eliotts-mac-mini is live with both engines but critically full at 99.939% / 149086208 bytes free; claimed safe client GC returned HTTP 200 and reclaimed 0 bytes, while SSH and gateway are unavailable. Perform urgent on-box safe cleanup, then after leader recovery verify all seven Ready+Eligible and exactly one live maintenance-agent allocation per member.",
   "repo": "eliott-monad/monad",
-  "payload": {},
-  "status": "open",
-  "owner": null,
+  "payload": {
+    "progress-2026-07-30": "claudebox found a leaderless exec path into eliotts-mac-mini: its Nomad client API (4646) is open and serves alloc exec locally for live allocs (remote-control alloc 6585e9c6, task 'remote', runs as user 'e'). GH #9 blocker 'no exec path without a leader' is resolved; on-box cleanup in progress. Also: both live clients (mac-mini, bigo-server) had server list ['100.75.75.39:4647'] (dead v1410-1) \u2014 repointed at claudebox 100.87.219.108:4647 via /v1/agent/servers so they re-register on leader recovery. On-disk client configs unchanged; restart reverts. Quorum itself still owner-blocked (v1410-1 TS key expired, oraclebox1 offline)."
+  },
+  "status": "in-progress",
+  "owner": "claudebox",
   "parent": "t-0335"
 }

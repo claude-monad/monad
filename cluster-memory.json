@@ -51,6 +51,11 @@
     "updated_by": "claudebox",
     "value": "DONE-2026-08-01T04:38:55Z RESTORED github 200 in 0.67s, git fetch clean; t-0344 closed, ensure-engines hardening split to t-0345"
   },
+  "health:claudebox-tailscale": {
+    "updated": 1785561374.4739418,
+    "updated_by": "claudebox",
+    "value": "claudebox"
+  },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
     "updated_by": "Eliotts-Mac-mini.local",
@@ -97,9 +102,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785559136.0243578,
+    "updated": 1785561373.5061293,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T04:38:55Z up, nomad:4646 open, disk 95.8pct/10.4GB (recovered from 99pct GH#9), runtime srv=claudebox OK; queued config repoint + ensure-engines"
+    "value": "claudebox"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,

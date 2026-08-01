@@ -28,7 +28,8 @@ it here and in `CLAUDE.md`.
 
 ## What "healthy" means, per node
 
-1. **Reachable** on the tailnet (`tailscale ping <ip>` succeeds; not "offline").
+1. **Reachable** on the tailnet — judged by `tailscale ping <ip>` succeeding, *not* by the
+   `offline` column in `tailscale status` (see the probe note in the sweep section below).
 2. **Nomad up**: a server node is an alive Raft peer; a client node shows `ready` in
    `nomad node status` and is `eligible` (not down/draining).
 3. **Quorum**: at least 2 of the server set are alive (Raft majority). Losing quorum is a
@@ -51,12 +52,36 @@ For **self** and then **every peer** in the roster:
 ~/monad/meta/agent/ensure-engines.sh      # keep engines installed + advertised
 
 # then the peers, from any node that can reach a server:
-export NOMAD_ADDR=http://100.75.75.39:4646
+export NOMAD_ADDR=$(~/monad/scripts/nomad-addr.sh)   # NEVER hardcode 100.75.75.39 — it is dead
 nomad server members            # are both voters alive? quorum?
 nomad node status               # is every roster client 'ready' + 'eligible'?
-tailscale status                # which roster nodes are offline?
 nomad job status maintenance-agent   # one running alloc per member?
 ```
+
+### Probe reachability with `tailscale ping`, NOT the `tailscale status` column
+
+`tailscale status` reports each peer's online flag **from the local netmap**, which is only as
+fresh as this node's connection to the Tailscale coordination server. When that control
+connection is stale — check `tailscale status --json | jq .Health`, and note that a *frozen*
+age string ("hasn't received a network map in 2m10s", unchanged across successive minutes) means
+the health tracker itself is stuck — every peer can be misreported as `offline` even though DERP
+and direct paths still carry traffic fine.
+
+This has repeatedly produced **false flapping** in the sweep history: windesk was recorded as
+"regressed to tailnet-unreachable" and then "recovered" (commits `84eb90e`, `a637949`) on
+consecutive passes with no change on windesk's side at all. On 2026-08-01 claudebox's status
+listed windesk `offline, last seen 12m ago` while `tailscale ping 100.94.210.54` returned pongs
+via DERP(den) in ~70-90ms.
+
+So, before escalating or queueing anything on a "peer is offline" reading:
+
+```bash
+tailscale ping <ip>     # authoritative: does traffic actually reach the peer?
+bash -c 'cat </dev/null >/dev/tcp/<ip>/4646' && echo OPEN || echo CLOSED   # is its Nomad up?
+```
+
+A peer that pings but refuses :4646 is **up on the tailnet with Nomad down** — that is a queue
+item for its own node-doctor, not a Tailscale re-auth. Do not file a re-auth task for it.
 
 ## Acting on an unhealthy peer — COORDINATE, do not stampede
 

@@ -1,0 +1,10 @@
+{
+  "id": "t-0346",
+  "type": "infra",
+  "scope": "claudebox tailscaled is stuck talking to the Tailscale coordination server: 'Self online: False' and health frozen at 'no network map in 2m10s' (identical string across 5+ min = stuck tracker), while egress is FINE (github 200 in 0.57s, DNS ok, netcheck UDP:true DERP:Denver) and DERP peer traffic works (tailscale ping windesk = pongs 70-90ms). Impact: this node's netmap view of peers is stale, so 'tailscale status' misreports live peers as offline \u2014 already caused false windesk flap escalations (84eb90e/a637949). DELIBERATELY NOT auto-fixed: the usual remedy (systemctl restart tailscaled / tailscale up) risks a re-auth prompt on claudebox, which is the ONLY live Nomad server \u2014 a failed restart strands the entire cluster the same way v1410-1 died (GH #8). Needs an owner/interactive pass with console access as a safety net. Workaround already in place: meta/CLUSTER-HEALTH.md now mandates 'tailscale ping' over the status column.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

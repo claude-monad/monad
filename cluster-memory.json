@@ -102,9 +102,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785571969.450239,
+    "updated": 1785597670.3716128,
     "updated_by": "claudebox",
-    "value": "claudebox"
+    "value": "DONE-2026-08-01T15:21:10Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -237,9 +237,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785580835.6271646,
+    "updated": 1785597670.2643476,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T10:40:35Z"
+    "value": "DONE-2026-08-01T15:21:10Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

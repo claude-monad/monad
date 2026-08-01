@@ -76,9 +76,22 @@ via DERP(den) in ~70-90ms.
 So, before escalating or queueing anything on a "peer is offline" reading:
 
 ```bash
-tailscale ping <ip>     # authoritative: does traffic actually reach the peer?
+tailscale ping -c 5 <ip>   # authoritative — see the -c 5 note below; -c 1 lies
 bash -c 'cat </dev/null >/dev/tcp/<ip>/4646' && echo OPEN || echo CLOSED   # is its Nomad up?
 ```
+
+**Always pass `-c 5`; a single-shot `tailscale ping` produces false "down" readings.** A peer
+reached only over DERP has no warm path until the relay handshake completes, and the first
+probe (sometimes the first four) times out before it does. Declare a peer unreachable **only
+when every one of 5+ probes fails.**
+
+Measured on claudebox 2026-08-01T11:0xZ, in the same sweep: `-c 1` reported windesk *and*
+eliotts-mac-mini as no-reply; `-c 5` got pongs from both — windesk on probe 2 (DERP(den) 964ms,
+then direct IPv6 474ms) and mac-mini on probe 5 (DERP(den) 1.98s). Both had just been escalated
+as "tailnet-unreachable" off single-shot probes (t-0350). By contrast death-star, oraclebox1 and
+v1410-1 stayed silent across all 6 probes — that is what genuinely down looks like. Slow ≠ down:
+mac-mini's Nomad API answered HTTP 200 in ~10s, so use a generous `curl -m` (30-40s) on
+DERP-only peers rather than reading a short timeout as "Nomad down".
 
 A peer that pings but refuses :4646 is **up on the tailnet with Nomad down** — that is a queue
 item for its own node-doctor, not a Tailscale re-auth. Do not file a re-auth task for it.

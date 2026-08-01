@@ -1,0 +1,10 @@
+{
+  "id": "t-0351",
+  "type": "infra",
+  "scope": "2026-08-01T11:0xZ claudebox cluster-health sweep (follow-up to t-0350). QUORUM UNCHANGED at 1/2 committed voters {v1410-1, claudebox}: claudebox alive, Leader=false, all reads/writes 500 'No cluster leader'; v1410-1 ping = 'peer node key has expired'. Owner-interactive re-auth remains the only unblock (GH #8); no peers.json surgery. Adding a 3rd voter is ALSO impossible without a leader (Raft config change needs one), so bigo-server cannot be promoted to break the tie -- the block is structural, owner-only. FIXED THIS PASS: (1) claudebox EGRESS RECOVERED -- git ls-remote + push both succeed, so the t-0349 outage that blocked publishing findings is over; pushed the stranded commit 1a7a229. (2) CORRECTED A MEASUREMENT BUG that caused the last 3 sweeps of false 'peer down' escalations: single-shot 'tailscale ping' gives false no-reply on DERP-only peers because the relay handshake outlives the first probes. With -c 5, windesk pongs on probe 2 (DERP 964ms, then DIRECT IPv6 474ms) and eliotts-mac-mini on probe 5 (DERP 1.98s) -- BOTH ARE UP, contradicting t-0350's 'windesk fully tailnet-unreachable'. Genuinely-down peers (death-star, oraclebox1, v1410-1) stay silent across all 6 probes, so the test still discriminates. Documented the -c 5 rule in meta/CLUSTER-HEALTH.md and rewrote windesk's queue item to skip the misdirected Tailscale re-auth and START AT STEP 2 (its :4646 is genuinely refusing while the host pings fine = dead local agent). REAL REMAINING WORK: windesk Nomad down (needs local start + boot-service check); eliotts-mac-mini disk 95.93% / 9.96GB free, drifting worse (~0.28GB/h vs 10.24GB at 10:33Z), needs a local shell, GH #9; oraclebox1 + death-star still hard-down ~55d. bigo-server healthy, runtime server list correctly repointed to 100.87.219.108:4647.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

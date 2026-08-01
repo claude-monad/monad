@@ -52,9 +52,9 @@
     "value": "DONE-2026-08-01T04:38:55Z RESTORED github 200 in 0.67s, git fetch clean; t-0344 closed, ensure-engines hardening split to t-0345"
   },
   "health:claudebox-tailscale": {
-    "updated": 1785561374.4739418,
+    "updated": 1785561479.6152558,
     "updated_by": "claudebox",
-    "value": "claudebox"
+    "value": "DONE-2026-08-01T05:17:59Z tailscaled ctrl-conn stuck, egress+DERP fine, NOT restarted (lone server), escalated t-0346"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -72,14 +72,14 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1785559136.0917907,
+    "updated": 1785561479.6516383,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T04:38:55Z STILL LOST 1/2 voters {v1410-1 dead 29d, claudebox alive}; owner-blocked GH#8/#6; no peers.json surgery"
+    "value": "DONE-2026-08-01T05:17:59Z STILL LOST 1of2 voters, v1410-1 TS-key-expired 29d, owner-blocked GH#8/#6"
   },
   "health:death-star": {
-    "updated": 1785476484.4604936,
+    "updated": 1785566731.9417114,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T05:41:24Z"
+    "value": "DONE-2026-08-01T06:45:31Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -102,7 +102,7 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785561373.5061293,
+    "updated": 1785571969.450239,
     "updated_by": "claudebox",
     "value": "claudebox"
   },
@@ -157,9 +157,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785476484.422802,
+    "updated": 1785566731.824949,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T05:41:24Z"
+    "value": "DONE-2026-08-01T06:45:31Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -202,10 +202,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "expires": 1784836412.6700366,
-    "updated": 1784577212.6700354,
+    "updated": 1785580835.659362,
     "updated_by": "claudebox",
-    "value": "2026-07-20T19:53Z quorum LOST 1/2; claudebox sole live voter; no regression (windesk DERP-reachable nomad-http closed, bigo+mac client 4646 open, engines claude+codex ready)"
+    "value": "2026-08-01T10:40:35Z quorum LOST 1/2 (claudebox sole live voter, no leader); windesk REGRESSED to tailnet-unreachable (queue item corrected); claudebox egress DOWN again = t-0349, cannot push; bigo+mac healthy, mac disk 95.82% flat; oraclebox1+death-star still down ~55d"
   },
   "health:task-backlog": {
     "updated": 1784680657.8290467,
@@ -213,9 +212,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785532936.788512,
+    "updated": 1785566731.7213206,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T21:22:16Z TS node key EXPIRED, quorum blocked on owner re-auth GH #8"
+    "value": "DONE-2026-08-01T06:45:31Z"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -238,9 +237,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785542166.0910394,
+    "updated": 1785580835.6271646,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T23:56:05Z tailnet OK, nomad down 4646/47/48; queue undrained 57d -> escalated GH #10"
+    "value": "DONE-2026-08-01T10:40:35Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

@@ -1,0 +1,10 @@
+{
+  "id": "t-0349",
+  "type": "infra",
+  "scope": "REGRESSION of t-0344 (which is marked done): claudebox HTTPS egress is DOWN again as of 2026-08-01T~10:35Z, same signature as the original. DNS resolves fine (getent returns both A 140.82.113.5 and AAAA), raw TCP connect to 140.82.113.5:443 SUCCEEDS, but every TLS handshake hangs until timeout -- curl -4 to api.github.com/github.com/registry.npmjs.org all hang past 12s with no bytes; curl -6 fails instantly (000, no v6 route). Consequences observed this sweep: (1) 'git ls-remote origin' hangs, so this node CANNOT push -- all sweep commits are LOCAL-ONLY until egress returns and someone pushes; (2) meta/agent/ensure-engines.sh HANGS (killed at 240s) because it npm-installs codex over the dead TLS path, which is why claudebox advertises has_claude only and codex is MISSING -- that is a symptom of this outage, not an independent engine fault. t-0345 (ensure-engines hardening: bound the install with a timeout and skip cleanly when egress is down) is the correct mitigation and is still open. Reopen or supersede t-0344.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0348"
+}

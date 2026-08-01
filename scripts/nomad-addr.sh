@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 # nomad-addr.sh — resolve NOMAD_ADDR to a Nomad server that is actually reachable.
 #
-# Source this, then call resolve_nomad_addr. It exports NOMAD_ADDR.
+# Two supported usages, both of which work:
+#   . scripts/nomad-addr.sh && resolve_nomad_addr   # sourced: exports NOMAD_ADDR
+#   export NOMAD_ADDR=$(scripts/nomad-addr.sh)      # executed: prints the address
+#
+# The executed form matters because CLUSTER-HEALTH.md tells every agent to run it that
+# way by hand. Before this printed anything, `$(...)` captured the empty string, so
+# NOMAD_ADDR="" sent every subsequent `nomad` call to its 127.0.0.1:4646 default and the
+# sweep reported "connection refused" on a node whose server was in fact alive and
+# listening on its Tailscale IP.
 #
 # Why this exists: the server set is {v1410-1, claudebox} (+ oraclebox1 as a client/
 # former voter). Whichever one is down still answers TCP nowhere, and every `nomad`
@@ -55,3 +63,13 @@ resolve_nomad_addr() {
     export NOMAD_ADDR="${configured:-http://${NOMAD_ADDR_CANDIDATES%% *}:4646}"
     return 1
 }
+
+# Executed rather than sourced? Resolve and print, so `$(nomad-addr.sh)` yields an address.
+# Even on failure we print the fallback: a caller that gets an honest dead address reports
+# a real error, while an empty one silently retargets it at loopback.
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
+    resolve_nomad_addr
+    rc=$?
+    printf '%s\n' "$NOMAD_ADDR"
+    exit $rc
+fi

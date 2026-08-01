@@ -1,0 +1,10 @@
+{
+  "id": "t-0350",
+  "type": "infra",
+  "scope": "2026-08-01T10:33Z claudebox cluster-health sweep (follow-up to t-0348). QUORUM STILL LOST at 1/2 committed voters {v1410-1, claudebox}: claudebox alive but Leader=false, all reads/writes return 500 'No cluster leader'; v1410-1 tailscale ping returns 'peer node key has expired'. Owner-interactive re-auth on v1410-1 remains the only unblock (GH #8); do NOT attempt single-voter peers.json surgery. NEW this pass: windesk REGRESSED to fully tailnet-unreachable (8/8 tailscale pings timed out, last seen ~05:30Z) after having recovered on 07-31T22:3x -- third flap in four days, rx 0 on every observation suggests the machine is sleeping/powering off rather than a Tailscale auth fault; its queue item reconnect-tailscale-20260731T213000Z.md had stale 'skip step 1, Tailscale is fixed' guidance and has been corrected to start at step 1 again. Unchanged: oraclebox1 and death-star still no-reply + 4646 closed (~55d). Healthy: bigo-server (client API up, disk 80.05% used / 22.14GB free, mem 25.3%) and eliotts-mac-mini (client API up, mem 76%). Mac disk still critical but stable at 95.82% used / 10.24GB free -- essentially flat vs 95.80% at 08:15Z, safe Nomad client GC has now returned zero reclaim on four separate sweeps, so it is on-box data needing a local shell (GH #9, queue item filed). See t-0349 for the claudebox egress regression that blocks pushing these findings.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0348"
+}

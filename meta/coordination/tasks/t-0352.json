@@ -1,0 +1,10 @@
+{
+  "id": "t-0352",
+  "type": "infra",
+  "scope": "2026-08-01T16:45Z claudebox sweep follow-up to t-0351: CRITICAL quorum remains lost at 1/2 committed voters {v1410-1, claudebox}; claudebox is alive/Candidate and v1410-1's Tailscale node key is expired. Owner-interactive re-auth of v1410-1 is the only safe recovery; preserve Raft data and do not perform single-voter surgery. oraclebox1 and death-star fail all five Tailscale probes; oraclebox1 is not a current voter. windesk is tailnet-reachable but Nomad/control ports are closed, so its existing on-box restart queue remains active. bigo-server local client is healthy. eliotts-mac-mini local client is healthy but disk regressed to 96.53% used / 8.52GB free; prior client GC reclaimed nothing and no remote shell is available, so its on-box cleanup queue was refreshed. No leader blocks authoritative Ready+Eligible and maintenance-agent allocation verification; repeat after v1410-1 recovery.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0351"
+}

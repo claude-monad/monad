@@ -37,9 +37,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:bigo-server": {
-    "updated": 1785532936.6745749,
+    "updated": 1785559135.990898,
     "updated_by": "claudebox",
-    "value": "DONE-2026-07-31T21:22:16Z healthy 79.9pct/22.3GB, pointed at claudebox:4647"
+    "value": "DONE-2026-08-01T04:38:55Z up, nomad:4646 open, disk 80pct/22.3GB, runtime srv=claudebox OK; queued durable config repoint off dead v1410-1"
   },
   "health:claudebox": {
     "updated": 1785556898.5780728,
@@ -47,9 +47,9 @@
     "value": "DONE-2026-08-01T04:01:38Z disk 9pct, nomad agent healthy, engines claude+codex advertised; EGRESS DOWN see t-0344"
   },
   "health:claudebox-egress": {
-    "updated": 1785556898.544537,
+    "updated": 1785559136.0581253,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T04:01:38Z HTTPS egress DOWN (TLS hangs, TCP:443 OK, DNS OK); git+gh broken; escalated t-0344"
+    "value": "DONE-2026-08-01T04:38:55Z RESTORED github 200 in 0.67s, git fetch clean; t-0344 closed, ensure-engines hardening split to t-0345"
   },
   "health:claudebox:Eliotts-Mac-mini.local-20260617T035441Z": {
     "updated": 1781668481.9066749,
@@ -67,9 +67,9 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1785556898.6179528,
+    "updated": 1785559136.0917907,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T04:01:38Z STILL LOST 1/2 {v1410-1,claudebox}; owner-blocked GH #8; NEW: claudebox egress down so escalations cannot reach GitHub (t-0344)"
+    "value": "DONE-2026-08-01T04:38:55Z STILL LOST 1/2 voters {v1410-1 dead 29d, claudebox alive}; owner-blocked GH#8/#6; no peers.json surgery"
   },
   "health:death-star": {
     "updated": 1785476484.4604936,
@@ -97,9 +97,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785544531.486996,
+    "updated": 1785559136.0243578,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T00:35:31Z engines unadvertised (no has_claude/has_codex); queue task filed; disk stable 95.7pct/10.4GB"
+    "value": "DONE-2026-08-01T04:38:55Z up, nomad:4646 open, disk 95.8pct/10.4GB (recovered from 99pct GH#9), runtime srv=claudebox OK; queued config repoint + ensure-engines"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,

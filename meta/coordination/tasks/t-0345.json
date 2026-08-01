@@ -1,0 +1,10 @@
+{
+  "id": "t-0345",
+  "type": "infra",
+  "scope": "ensure-engines.sh hardening (split from t-0344, whose HTTPS-egress half is RESOLVED as of 2026-07-31T~22Z: github.com 200 in 0.67s, git fetch clean). Two live bugs confirmed on claudebox this pass: (1) the 'have codex' gate misses the working off-PATH binary at /home/autocodex/.local/bin/codex, so EVERY maintenance pass re-runs 'npm install' for codex ('changed 2 packages in 5s') - wasteful and a hang risk; (2) install_codex/install_claude run network installs with NO timeout, so during an egress outage ensure-engines hangs unbounded and stalls the whole maintenance loop. FIX: probe common off-PATH install dirs before installing, and wrap every network install in 'timeout 120'.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -11141,3 +11141,7 @@
 {"ts":"2026-08-01T17:27:34Z","node":"claudebox","source":"codex-maintenance","type":"cluster-health","action":"roster-sweep","status":"critical","detail":"Quorum remains LOST at 1/2 committed voters: claudebox alive, v1410-1 Tailscale key expired. bigo-server healthy; eliotts-mac-mini reachable but disk critical at 96.56%; death-star and oraclebox1 fail all 5 probes; windesk reachable but Nomad API down. Global Ready+Eligible and maintenance-agent coverage are leader-blocked. Claimed all five unhealthy peers; current queues and open infra t-0352 already contain the smallest safe on-box recovery, so no duplicate or risky Raft action was taken."}
 {"ts":"2026-08-01T17:29:32Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
 {"ts":"2026-08-01T18:01:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-01T18:12:24Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-08-01T18:44:42Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-01T19:00:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=124"}
+{"ts":"2026-08-01T19:33:04Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

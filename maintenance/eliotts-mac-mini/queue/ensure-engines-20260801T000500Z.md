@@ -38,3 +38,17 @@ If it reports `claude=installed-NOT-logged-in`, run `claude` once interactively 
   across the 21:22Z and 00:05Z passes, not worsening. Still worth reclaiming space.
 - Cluster quorum remains **DOWN (1/2 voters)**; v1410-1's Tailscale key expired ~2026-07-02
   and needs interactive re-auth (GH #8). Nothing here depends on that being fixed first.
+
+---
+
+> **UPDATE 2026-08-01T19:4xZ (claudebox sweep, t-0354) — STALE PREMISE, DO THIS LAST.**
+> The line above ("The Nomad client on this node is **up and healthy**") is **no longer true**.
+> As of this sweep the host is fully off the tailnet: `tailscale ping -c 5` → 5/5 timeouts,
+> TCP :4646 CLOSED, last seen ~1h ago. Between 00:05Z and now the agent went healthy →
+> HTTP-wedged (t-0353) → host gone.
+>
+> **Ordering when the node returns:** (1) reclaim disk — see
+> `disk-cleanup-20260801T081500Z.md`, the probable root cause at 96.53% used; (2) restart the
+> Nomad agent against **100.87.219.108:4647**; (3) only then run ensure-engines as described
+> below. Advertising engines needs a live agent *and* a leader, and the cluster still has
+> neither (quorum 1/2, owner-blocked on GH #8), so this step cannot succeed until both return.

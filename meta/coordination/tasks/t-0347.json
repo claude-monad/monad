@@ -1,0 +1,10 @@
+{
+  "id": "t-0347",
+  "type": "infra",
+  "scope": "2026-08-01T05:xxZ claudebox sweep follow-up to t-0342: CRITICAL Nomad quorum remains lost at 1/2 committed voters, with only claudebox alive and no leader. v1410-1 reports an expired Tailscale node key; owner-interactive re-auth on v1410-1 is the only safe quorum recovery path (GH #8). Do not perform single-voter Raft surgery; oraclebox1 is not a committed voter. death-star, oraclebox1, and windesk fail authoritative Tailscale pings and TCP 4646. bigo-server and eliotts-mac-mini answer local Nomad APIs; bigo disk is healthy at 80.0%, while mac disk remains critical at 95.8% with 10.3GB free and existing on-box cleanup queue work. Self is healthy at 9% disk, repo synced with origin/main, and claude+codex dynamic metadata advertised. No leader blocks global Ready+Eligible and maintenance-agent allocation verification; repeat after v1410-1 recovery.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0342"
+}

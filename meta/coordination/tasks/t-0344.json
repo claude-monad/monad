@@ -1,0 +1,10 @@
+{
+  "id": "t-0344",
+  "type": "infra",
+  "scope": "claudebox HTTPS egress DOWN (~2026-08-01T02:00Z): TCP:443 connects but ALL TLS hangs (github.com, api.github.com, example.com, api.anthropic.com); DNS resolves fine; no proxy vars; persists with sandbox disabled. Impact: git fetch/push, monad-sync GitOps drift detection, and 'monad gh' escalation all broken on the ONLY live Nomad server -- new escalations cannot reach GitHub. Last successful fetch 2026-07-31T21:57Z. Secondary: meta/agent/ensure-engines.sh hangs unbounded during outages because install_codex/install_claude run network installs with no timeout, and its 'have codex' gate misses the working off-PATH binary at /home/autocodex/.local/bin/codex (v0.137.0), so it retries npm install every pass. Needs on-box network/TLS triage (MTU, Tailscale exit-node, firewall).",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

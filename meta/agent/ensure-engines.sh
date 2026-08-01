@@ -72,18 +72,28 @@ log "engine status:${SUMMARY}"
 ENGINES_CSV="$(engines_ready | tr ' ' ',')"
 
 # Advertise via dynamic node metadata (no nomad restart; ~10s to propagate).
-# On macOS (and Linux nodes that bind to Tailscale IP not 127.0.0.1), probe the
-# local client first, then fall back to the Tailscale IP (the actual bind_addr).
-if [ -z "${NOMAD_ADDR:-}" ]; then
+# Prefer the repo's resolver: it probes the configured NOMAD_ADDR and falls through to
+# a reachable server. Without this we trusted a preset NOMAD_ADDR blindly, so a stale
+# default pointing at a decommissioned master (e.g. a node whose Tailscale key expired)
+# made every call block ~30s and then blame "the local nomad client" at an address that
+# was never local. Only the empty case was probed before; unreachable-but-set was not.
+if [ -f "$HERE/../../scripts/nomad-addr.sh" ]; then
+  # shellcheck source=/dev/null
+  . "$HERE/../../scripts/nomad-addr.sh" 2>/dev/null && resolve_nomad_addr || true
+fi
+# Still nothing answering? On macOS (and Linux nodes that bind to the Tailscale IP not
+# 127.0.0.1), the local client is the only thing that responds — probe it directly.
+if [ -z "${NOMAD_ADDR:-}" ] || \
+   ! curl -sf --max-time 3 "${NOMAD_ADDR}/v1/agent/self" >/dev/null 2>&1; then
   # macOS: Tailscale CLI may live in the .app bundle, not in PATH.
   _ts_bin="tailscale"
   have tailscale || { [ -x "/Applications/Tailscale.app/Contents/MacOS/Tailscale" ] && \
     _ts_bin="/Applications/Tailscale.app/Contents/MacOS/Tailscale"; }
   tip="$($_ts_bin ip -4 2>/dev/null | head -1)"
   # Prefer localhost; fall back to Tailscale IP (macOS Nomad clients bind there)
-  if curl -sf http://127.0.0.1:4646/v1/agent/self >/dev/null 2>&1; then
+  if curl -sf --max-time 3 http://127.0.0.1:4646/v1/agent/self >/dev/null 2>&1; then
     export NOMAD_ADDR="http://127.0.0.1:4646"
-  elif [ -n "$tip" ] && curl -sf "http://${tip}:4646/v1/agent/self" >/dev/null 2>&1; then
+  elif [ -n "$tip" ] && curl -sf --max-time 3 "http://${tip}:4646/v1/agent/self" >/dev/null 2>&1; then
     export NOMAD_ADDR="http://${tip}:4646"
   else
     export NOMAD_ADDR="http://${tip:-127.0.0.1}:4646"

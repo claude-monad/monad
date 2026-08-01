@@ -77,9 +77,9 @@
     "value": "DONE-2026-08-01T19:42:53Z STILL LOST 1of2 voters {v1410-1,claudebox}; v1410-1 TS key expired 29d, owner-blocked GH #8; bigo-server cannot be promoted (Raft config change needs a leader)"
   },
   "health:death-star": {
-    "updated": 1785605283.368837,
+    "updated": 1785615869.3109007,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T17:28:03Z"
+    "value": "DONE-2026-08-01T20:24:28Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785613373.245359,
+    "updated": 1785615869.6942983,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T19:42:53Z OFFLINE 5of5 ping timeouts + :4646 CLOSED (regressed from t-0353 wedge); disk 96.53pct probable root cause; queue items reordered disk-first; escalated GH #9 + t-0354; no off-box remedy"
+    "value": "DONE-2026-08-01T20:24:28Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -157,9 +157,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785605283.6097233,
+    "updated": 1785615870.141912,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T17:28:03Z"
+    "value": "DONE-2026-08-01T20:24:28Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -212,9 +212,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785605283.145831,
+    "updated": 1785615868.9482617,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T17:28:03Z"
+    "value": "DONE-2026-08-01T20:24:28Z"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -237,9 +237,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785613373.9225497,
+    "updated": 1785615870.5093007,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T19:42:53Z tailnet OK 252ms but Nomad :4646 refuses, 57d down; queue already correct, on-box start only fix (t-0343/GH #10); not re-queued"
+    "value": "DONE-2026-08-01T20:24:28Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

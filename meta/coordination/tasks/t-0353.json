@@ -1,0 +1,10 @@
+{
+  "id": "t-0353",
+  "type": "infra",
+  "scope": "2026-08-01T18:0xZ claudebox sweep, follow-up to t-0352. NEW: eliotts-mac-mini Nomad agent went from responsive to fully HTTP-WEDGED mid-sweep (/v1/agent/self answered, then /v1/agent/health hung 20s+ returning 0 bytes; TCP :4646 still accepts). This is beyond the 99pct disk of GH #9 - the agent itself is hung, and :22 is closed so there is no off-box remedy. Escalated as a comment on GH #9. ALSO (good news, escalated on GH #8): both surviving clients bigo-server and eliotts-mac-mini already return 100.87.219.108:4647 from /v1/agent/servers at runtime, so NO client reconfig is needed after recovery - only the cosmetic startup config still lists dead 100.75.75.39. bigo-server is healthy: direct 1ms, 80.1pct root / 22.1GB free, mem 25.4pct, sees claudebox.global alive. Quorum unchanged at 1/2, owner-blocked on v1410-1 Tailscale re-auth; confirmed bigo-server CANNOT be promoted to 3rd voter because Raft config changes themselves require a leader.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0352"
+}

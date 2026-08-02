@@ -1,0 +1,10 @@
+{
+  "id": "t-0368",
+  "type": "infra",
+  "scope": "2026-08-02T23:4xZ claudebox sweep follow-up to t-0367: CRITICAL quorum remains lost at 1/2 committed voters; v1410-1 Tailscale key expired and needs owner-interactive re-auth/start without Raft surgery. oraclebox1 and death-star failed 5/5 probes and require on-box power/Tailscale/Nomad recovery. windesk pongs but Nomad :4646 is closed and needs local client/maintenance restart. bigo-server is reachable, client health HTTP 200, 79.88% alloc disk. eliotts-mac-mini is reachable, client health HTTP 200, but alloc disk is 99.867% used with only 326MB free; t-0367 client GC reclaimed nothing, so urgent on-box safe cleanup is required. No leader blocks authoritative Ready/Eligible, Nomad-var delegation, and maintenance-agent reconciliation; restore quorum first, then verify all seven and deploy only confirmed gaps.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

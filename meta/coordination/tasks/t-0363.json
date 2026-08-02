@@ -1,0 +1,10 @@
+{
+  "id": "t-0363",
+  "type": "infra",
+  "scope": "oraclebox1 failed all 5 Tailscale probes and Nomad is unreachable; power on or reauthenticate, restore its Nomad agent, then assess promotion to the documented third-voter target",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

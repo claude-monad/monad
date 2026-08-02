@@ -77,9 +77,9 @@
     "value": "DONE-2026-08-01T19:42:53Z STILL LOST 1of2 voters {v1410-1,claudebox}; v1410-1 TS key expired 29d, owner-blocked GH #8; bigo-server cannot be promoted (Raft config change needs a leader)"
   },
   "health:death-star": {
-    "updated": 1785698258.7375724,
+    "updated": 1785704848.1421082,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T19:17:38Z"
+    "value": "DONE-2026-08-02T21:07:28Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -157,9 +157,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785698258.8148534,
+    "updated": 1785704847.8370793,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T19:17:38Z"
+    "value": "DONE-2026-08-02T21:07:27Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -212,9 +212,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785698258.7020743,
+    "updated": 1785704847.584421,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T19:17:38Z"
+    "value": "DONE-2026-08-02T21:07:27Z"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -237,9 +237,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785702528.576376,
+    "updated": 1785704848.4318755,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T20:28:48Z"
+    "value": "DONE-2026-08-02T21:07:28Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

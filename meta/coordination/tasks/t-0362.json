@@ -1,0 +1,10 @@
+{
+  "id": "t-0362",
+  "type": "infra",
+  "scope": "QUORUM BLOCKER: v1410-1 Tailscale node key is expired and the Nomad voter is absent; reauthenticate/power on, start Nomad, and rejoin the committed voter set so claudebox can elect a leader",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

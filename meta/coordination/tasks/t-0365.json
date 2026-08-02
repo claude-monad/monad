@@ -1,0 +1,10 @@
+{
+  "id": "t-0365",
+  "type": "infra",
+  "scope": "windesk answers Tailscale ping but its Nomad API on :4646 is unreachable; restart the local Nomad client/maintenance loop and verify ready plus eligible",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t-0364",
+  "type": "infra",
+  "scope": "death-star failed all 5 Tailscale probes and Nomad is unreachable; power on or restore Tailscale, start Nomad, and verify maintenance-agent",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

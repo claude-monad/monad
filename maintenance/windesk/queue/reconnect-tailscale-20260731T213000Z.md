@@ -1,5 +1,9 @@
 # windesk: reconnect Tailscale, then restart Nomad client (queued by claudebox health sweep 2026-07-31)
 
+> **UPDATE 2026-08-03T07:17Z:** authoritative `tailscale ping -c 5` succeeds (direct IPv6,
+> 275 ms), while TCP :4646 is closed and the Codex gateway on :8300 is unreachable. Tailscale
+> is healthy; start at step 2 and restore the local Nomad client/maintenance loop on-box.
+
 > **UPDATE 2026-08-03T05:55Z:** windesk has flapped offline again. It was reachable at
 > 05:15Z, but then failed **two independent `tailscale ping -c 5` passes (10/10 timeouts)**;
 > Tailscale reports it offline with last-seen 05:50Z and TCP :4646 is closed. Wake/power on

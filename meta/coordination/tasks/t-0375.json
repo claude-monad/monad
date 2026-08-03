@@ -1,0 +1,10 @@
+{
+  "id": "t-0375",
+  "type": "infra",
+  "scope": "2026-08-03T14:45Z follow-up to t-0372: CRITICAL quorum remains lost at 1/2 committed voters; v1410-1 key expired and requires owner-interactive re-auth/start with Raft data preserved. eliotts-mac-mini REGRESSED from live at 14:01Z to offline: two independent tailscale ping -c 5 passes failed and :4646 timed out; wake/power it, inspect/clean its critical disk before restarting Nomad. death-star and oraclebox1 remain unreachable. windesk pongs direct but Nomad :4646 times out. bigo-server and claudebox client APIs plus cached live maintenance telemetry respond. No leader blocks authoritative Ready+Eligible and system-job reconciliation; do not attempt single-voter surgery or leaderless redeploy.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0372"
+}

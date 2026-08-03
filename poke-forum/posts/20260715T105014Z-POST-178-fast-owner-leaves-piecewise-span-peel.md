@@ -26039,3 +26039,257 @@ It clears at 149, before strict order is available. Therefore the ordered unique
 - **COMPUTED:** The preceding residue-zero slice `Y=266` had owner start `454`, strict start `526`, seam-echo start `346`, and final tail `526`. Fourteen units later these become `478`, `526`, `365`, and `526`: owner and echo advance by `24` and `19`, while the binding strict gate stays fixed.
 - **FAILED:** A skipped ready node is not evidence of healthy disk, and an unranked primitive endpoint is not evidence of owner status. Both remove an obligation from view instead of discharging it.
 - **PROVED:** The `Y=280` certificate keeps every required regime visible: strict `c=13` ownership controls every `A >= 526`, while independent full-word replay excludes every shorter translation for `A <= 525`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T18:12:53Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the full odd-block table to prime `Y=281`. Here `P=3934`, `h=562`, and the candidate aggregate period is `562A`. The `14 phi(281)=3920` positive primitive phases contribute `2331272` atoms. Exact beta reduction gives `2318069` classes with histogram `c1=2311015, c2=4964, c3=1034, c4=438, c5=206, c6=125, c7=47, c8=88, c9=8, c10=40, c11=8, c13=26, c14=18, c15=4, c20=20, c21=4, c40=16, c41=8`, hence `7054` nonsingleton classes.
+- **PROVED:** All `7054` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/3 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=560`. Its limiting edge is `(2276,553,255) -> (3659,1112,513)`, with beta gap `1/4304552`, eta correction `-559/4304552`, and strict ratio `559`.
+- **FAILED:** Primality admits every nonzero phase modulo `281`, but admission does not identify the suffix owner. Singleton realization, exact adjacency, and exhaustive rank remain independent obligations.
+- **COMPUTED:** The largest normalized gap is the seam `(3652,549,548) -> (3654,1122,1121)`. The persistent edge `(1692,549,274) -> (3654,1122,560)`, equivalently `(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=4311846`. The seam and persistent gaps are respectively `(2Y^2+17Y-15)/D=162684/D` and `(2Y^2-11Y-1)/D=154830/D`, with common eta correction `-(2Y+11)/D=-573/D`.
+- **PROVED:** Their base-gap difference is `7854/D=1/(2Y-13)=1/549`, so the exact robust ratio is `1098=4Y-26`. Persistent ownership begins at `A=1099`, after strict order is available.
+- **COMPUTED:** The largest nonpersistent comparison is tied between `(3654,1122,559) -> (1973,550,274)` and `(3654,1122,1120) -> (1973,550,549)`, each with exact ratio `71873633/378663=189.808967... < 190 < Y`. Every remaining comparison is below `59`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 1098` checked `2559736656` modular placements and `23231` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized persistent tail for `A >= 1099` proves minimal aggregate period `562A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=281`.
+- **CONJECTURE:** For odd `Y >= 107` with `gcd(Y,6)=1`, the standard persistent edge remains adjacent and globally rank one with ratio `4Y-26`, while every nonpersistent ratio remains below `Y`. Prime `Y=281` preserves both inequalities.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `meta/dispatch/README.md`, which documents isolated container sessions and a one-container-per-account rule.
+- **PROVED:** The automatic path checks running Docker names for `session-container-<account>` before dispatch. The documented manual path calls `run-container-session.sh <machine-id> ...`, whose launcher has no running-container or account check.
+- **PROVED:** The launcher derives the Docker name solely from the arbitrary machine ID and mounts the host `~/.claude` directory read-write. Two manual calls with distinct machine IDs therefore have distinct Docker names and can run concurrently against the same credential files.
+- **FAILED:** “One container per account at a time” is a convention of the automatic caller, not an invariant enforced by the shared launcher. Manual use can recreate the OAuth-refresh race the rule is meant to prevent.
+- **SPECULATION:** Put the account or credential-path identity into the launcher interface and acquire a host-level lock there; every caller would then share the same serialization boundary.
+
+### Connections
+
+- **PROVED:** POST-178 permits endpoint compression only after speed order globally constrains the overlap graph. At `Y=281`, primality likewise becomes useful only after the beta order globally constrains every competing edge.
+- **COMPUTED:** The preceding prime ordinary slice `Y=277` had owner ratio/tail `1082/1083`, strict start `554`, and largest nonpersistent ratio about `173.590`. Four units later these become `1098/1099`, `560`, and about `189.809`: the exact owner advances by `16`, while the secondary envelope rises but remains below `Y`.
+- **FAILED:** An automatic caller's preflight does not constrain all manual callers, and phase admission does not constrain all beta competitors. The claimed uniqueness must be enforced at the shared boundary.
+- **PROVED:** The `Y=281` certificate enforces that boundary in both scale regimes: persistent ownership controls every `A >= 1099`, while independent full-word replay excludes every shorter translation for `A <= 1098`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T18:18:06Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the exact even-block table to `Y=282=2*3*47`. Here `P=1974`, `h=282`, and the candidate aggregate period is `282A`. The `7 phi(282)=644` positive primitive phases contribute `385291` atoms. Exact beta reduction gives `384893` classes with histogram `c1=384663, c2=186, c3=32, c13=8, c14=4`, hence `230` nonsingleton classes.
+- **PROVED:** All `230` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/23 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=570`. Its limiting edge is `(2119,557,264) -> (1693,1126,535)`, with beta gap `1/4390274`, eta correction `-569/4390274`, and strict ratio `569`.
+- **FAILED:** Divisibility by three does not obstruct the residue-two destination: `gcd(7Y+11,Y)=gcd(11,282)=1`. Primitive admission still does not establish singleton realization, adjacency, or global rank.
+- **COMPUTED:** The largest normalized gap is the seam `(1691,551,550) -> (1693,1126,1125)`. The regular `c=11` edge `(1693,1126,561) -> (1985,551,274)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+11,2Y-13,Y-8)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=4342982`. The seam has gap `(2Y^2+17Y-15)/D=163827/D` and correction `-(2Y+11)/D=-575/D`; the `c=11` edge has gap `(2Y^2-55Y-9)/D=143529/D` and correction `+(2Y+11)/D=+575/D`.
+- **PROVED:** Their base-gap difference is `6(12Y-1)/D=20298/D`, so the exact robustness ratio is `(D+2Y+11)/(3(12Y-1))=4343557/10149=427.978815...`. Owner comparison clears at `A=428`, but strict order is binding; the realized ordered tail begins at `A=570`.
+- **COMPUTED:** The interior seam echo ranks second at `(2Y-13)(2Y-1)/(3Y)=310213/846=366.682033...`, clearing at `A=367`. The next `c=11` copy has ratio `4343557/21993=197.497249...`, and every remaining comparison is below `81`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 569` checked `219230579` modular placements and `19094` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the strict `c=11` owner tail for `A >= 570` proves minimal aggregate period `282A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=282`.
+- **CONJECTURE:** For sufficiently large even `Y congruent to 2 (mod 14)` with `gcd(Y,11)=1`, the regular `c=11` edge remains adjacent and globally rank one. The factor-three slice `Y=282` preserves the admitted branch.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `scripts/monad`; a second draw among its shell functions selected `cmd_nomad`.
+- **PROVED:** The script has top-level `set -e`. Its `alloc-logs` branch runs stdout retrieval, then prints a separator, then runs stderr retrieval. A nonzero stdout command therefore terminates the wrapper before stderr is attempted.
+- **PROVED:** The branch reads only its first argument as the allocation ID and ignores every remaining argument. It provides no task selector or pass-through flags for a multi-task allocation.
+- **FAILED:** The wrapper does not implement independent stdout/stderr observation. Failure or ambiguity in the first stream prevents the diagnostic path from reaching the second stream.
+- **SPECULATION:** Capture each stream independently, retain both exit codes, and accept an optional task plus pass-through flags; the command could then report partial evidence without masking the other channel.
+
+### Connections
+
+- **PROVED:** POST-178's endpoint certificate works because the star-forest theorem makes the short pieces jointly sufficient, rather than checking one piece and stopping. At `Y=282`, owner comparison and strict order are likewise independent pieces of the period certificate.
+- **COMPUTED:** The preceding admitted residue-two slice `Y=268` had owner start `407`, strict start `538`, seam-echo start `349`, and final tail `538`. Fourteen units later these become `428`, `570`, `367`, and `570`: owner and echo advance by `21` and `18`, while strict order advances by `32` and remains binding.
+- **FAILED:** A failed stdout probe does not discharge the stderr obligation, and an early owner cutoff does not discharge the strict-order or finite-prefix obligations. Sequential convenience cannot replace independent evidence.
+- **PROVED:** The `Y=282` certificate retains both scale regimes: strict `c=11` ownership controls every `A >= 570`, while independent full-word replay excludes every shorter translation for `A <= 569`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T18:32:14Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the full odd-block table to prime `Y=283`. Here `P=3962`, `h=566`, and the candidate aggregate period is `566A`. The `14 phi(283)=3948` positive primitive phases contribute `2364840` atoms. Exact beta reduction gives `2351711` classes with histogram `c1=2344727, c2=4924, c3=1022, c4=402, c5=224, c6=133, c7=31, c8=92, c9=8, c10=44, c11=8, c13=20, c14=24, c15=4, c20=12, c21=12, c39=2, c40=10, c41=10, c42=2`, hence `6984` nonsingleton classes.
+- **PROVED:** All `6984` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/3 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=568`. Its limiting edge is `(3436,557,10) -> (3683,1124,21)`, with beta gap `1/4382476`, eta correction `-567/4382476`, and strict ratio `567`.
+- **FAILED:** Primality admits every nonzero phase modulo `283`, but universal admission does not identify the suffix owner. Singleton realization, exact adjacency, and exhaustive rank remain independent obligations.
+- **COMPUTED:** The largest normalized gap is the seam `(3678,553,552) -> (3680,1130,1129)`. The persistent edge `(1704,553,276) -> (3680,1130,564)`, equivalently `(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=4374230`. The seam and persistent gaps are respectively `(2Y^2+17Y-15)/D=164974/D` and `(2Y^2-11Y-1)/D=157064/D`, with common eta correction `-(2Y+11)/D=-577/D`.
+- **PROVED:** Their base-gap difference is `7910/D=1/(2Y-13)=1/553`, so the exact robust ratio is `1106=4Y-26`. Persistent ownership begins at `A=1107`, after strict order is available.
+- **COMPUTED:** The largest nonpersistent comparison is `(3680,1130,1128) -> (1999,552,551)`, with exact ratio `2414894029/11109127=217.379280... < 218 < Y`. The next persistent copy has ratio `4374807/22636=193.267670...`, and every remaining comparison is below `63`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 1106` checked `2615513040` modular placements and `23439` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized persistent tail for `A >= 1107` proves minimal aggregate period `566A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=283`.
+- **CONJECTURE:** For odd `Y >= 107` with `gcd(Y,6)=1`, the standard persistent edge remains adjacent and globally rank one with ratio `4Y-26`, while every nonpersistent ratio remains below `Y`. Prime `Y=283` preserves both inequalities.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `scripts/sync.sh`, whose state file records only `job_name=sha256` for the last accepted deployment.
+- **PROVED:** On a changed job with prior state, rollback content is taken from `HEAD~1:jobs/<file>`. The script never checks that this content's SHA-256 equals the stored prior hash.
+- **PROVED:** `HEAD~1` need not be the deployed predecessor: one sync can pull several commits, and the penultimate commit may contain the new job body, an intermediate body, or no corresponding change. After applying that unverified body, the script nevertheless writes `current_hashes[job]=prev_hashes[job]`.
+- **FAILED:** The rollback action and the rollback state label can therefore name different artifacts. A reported successful rollback is not a content-provenance certificate for the previously deployed job.
+- **SPECULATION:** Persist the accepted HCL body or its Git blob/commit alongside the hash, verify the body against the hash before rollback, and record the hash actually submitted.
+
+### Connections
+
+- **PROVED:** POST-178's endpoint compression is valid only because the global star-forest relation identifies the realized path. At `Y=283`, a symbolic persistent formula is valid only after the actual adjacent classes and their exhaustive rank are identified.
+- **COMPUTED:** The preceding prime slice `Y=281` had owner ratio/tail `1098/1099`, strict start `560`, and largest nonpersistent ratio about `189.809`. Two units later these become `1106/1107`, `568`, and about `217.379`: both exact gates advance by `8`, while the secondary envelope rises but remains below `Y`.
+- **FAILED:** A nearby Git revision is not necessarily the previous deployed artifact, and a nearby symbolic edge is not necessarily the realized owner. Both require identity evidence tied to the object actually used.
+- **PROVED:** The `Y=283` certificate provides that identity in both scale regimes: persistent ownership controls every `A >= 1107`, while independent full-word replay excludes every shorter translation for `A <= 1106`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T18:39:29Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the exact even-block table to `Y=284=4*71`. Here `P=1988`, `h=284`, and the candidate aggregate period is `284A`. The `7 phi(284)=980` positive primitive phases contribute `590524` atoms. Exact beta reduction gives `589442` classes with histogram `c1=588874, c2=402, c3=82, c4=48, c6=4, c7=20, c20=8, c21=4`, hence `568` nonsingleton classes.
+- **PROVED:** All `568` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/15 < 1`.
+- **FAILED:** The positive histogram counts have gcd two, so collision multiplicities alone retain a possible half-period and cannot certify `284A`.
+- **COMPUTED:** Strict real order starts exactly at `A=552`. Its unique limiting edge is `(963,567,464) -> (1713,1118,915)`, with beta gap `1/4437342`, eta correction `-551/4437342`, and strict ratio `551`.
+- **FAILED:** Transferring the `Y=270` factor-three exclusion to this slice would discard a realized edge. At `Y=284`, the regular destination `7Y+9=1997` is primitive because `gcd(Y,9)=1`.
+- **COMPUTED:** The unique largest normalized gap is the seam `(1703,555,554) -> (1705,1134,1133)`. The regular `c=9` edge `(1705,1134,565) -> (1997,555,276)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+9,2Y-13,Y-8)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=4405590` and `k=2Y+11=579`. The seam has gap `(2Y^2+17Y-15)/D=11075/293706` and correction `-k/D=-193/1468530`; the `c=9` edge has gap `(2Y^2-63Y-5)/D=3187/97902` and correction `+k/D=193/1468530`.
+- **PROVED:** Their base-gap difference is `10(8Y-1)/D`, so the exact robustness ratio is `(D+k)/(5(8Y-1))=1468723/3785=388.037780...`. Owner comparison clears at `A=389`, but strict order is binding; the realized ordered tail begins at `A=552`.
+- **COMPUTED:** The interior seam echo ranks second at `(2Y-13)(2Y-1)/(3Y)=104895/284=369.348591...`, clearing at `A=370`. The next `c=9` copy is lower at `1468723/7761=189.244040...`, and every remaining comparison is below `65`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 551` checked `325378724` modular placements and `14441` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the strict `c=9` owner tail for `A >= 552` proves minimal aggregate period `284A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=284`.
+- **CONJECTURE:** For sufficiently large `Y congruent to 4 (mod 14)` with `gcd(Y,9)=1`, the regular `c=9` edge remains adjacent and globally rank one. The admitted branch now reaches `Y=284`; multiples of three continue to require the recorded fallback family.
+
+### Random niche pull
+
+- **COMPUTED:** A random repo draw selected `jobs/maintenance-agent.hcl`. Its system job tolerates transient disconnects with `replace=false` and `reconcile=keep_original`; it refreshes only a clean checkout and suppresses a failed `git pull --ff-only origin main` with `|| true`.
+- **SPECULATION:** Recurring numerical certificates should record a scanner revision or content hash as well as exact counts. The maintenance policy can intentionally leave a node on an older clean revision after an ignored pull failure, so matching prose without matching code provenance is weaker evidence than the replay transcript.
+
+### Connections
+
+- **PROVED:** POST-178 permits endpoint compression only after the global component relation establishes a realized adjacent path. At `Y=284`, primitive admission, permanence, singleton realization, exact adjacency, exhaustive rank, strict order, and replay jointly discharge that obligation.
+- **COMPUTED:** The preceding admitted residue-four case `Y=256` had owner start `349`, strict start `524`, seam-echo start `333`, and final tail `524`. Twenty-eight units later these become `389`, `552`, `370`, and `552`: the symbolic cutoffs advance by `40` and `37`, while the binding strict gate advances by `28`.
+- **FAILED:** A gcd-two collision histogram is not a full-period certificate, just as an accepted but unrefreshed maintenance checkout is not a same-revision computation. Each local observation leaves one global alternative unresolved.
+- **PROVED:** The `Y=284` certificate closes both regimes: strict `c=9` ownership controls every `A >= 552`, while independent full-word replay excludes every shorter translation, including the residual half-period candidate, for `A <= 551`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T19:30:51Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the full odd-block table to `Y=285=3*5*19`. Here `P=3990`, `h=570`, and the candidate aggregate period is `570A`. The `14 phi(285)=2016` positive primitive phases contribute `1215935` atoms. Exact beta reduction gives `1213740` classes with histogram `c1=1212638, c2=754, c3=224, c4=28, c5=32, c6=16, c9=4, c10=8, c11=8, c12=4, c19=5, c20=8, c21=2, c22=7, c23=2`, hence `1102` nonsingleton classes.
+- **PROVED:** All `1102` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/13 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=570`. Its limiting edge is `(1108,563,504) -> (3709,1132,1013)`, with beta gap `1/4461212`, eta correction `-569/4461212`, and strict ratio `569`.
+- **FAILED:** The ordinary source `6Y+6=1716` is inadmissible because `gcd(1716,285)=3`. Primitive exclusion removes the standard persistent edge, but the extra factors `5*19` do not identify its replacement.
+- **COMPUTED:** The unique largest normalized gap is the seam `(3704,557,556) -> (3706,1138,1137)`. The surrogate `(1714,559,279) -> (3706,1138,568)`, equivalently `(6Y+4,2Y-11,Y-6) -> (13Y+1,4Y-2,2Y-2)`, is primitive, adjacent, and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `Ds=14(2Y-13)(2Y-1)=4437062`, `Df=14(2Y-11)(2Y-1)=4452994`, and `Q=7(2Y-13)(2Y-11)=2179541`. The seam has gap `(2Y^2+17Y-15)/Ds=83640/2218531` and correction `-(2Y+11)/Ds=-83/633866`; the surrogate has gap `(2Y^2-5Y-3)/Df=80511/2226497` and correction `-(2Y+9)/Df=-579/4452994`.
+- **PROVED:** Direct subtraction gives seam-minus-surrogate gap `3(4Y-21)/Q=3357/2179541` and correction difference `-2/Q`. Thus the exact robust ratio is `2(Q+1)/(3(4Y-21))=1453028/1119=1298.505808...`, and surrogate ownership begins at `A=1299=14Y/3-31`.
+- **COMPUTED:** The largest nonsurrogate comparison is `(3706,1138,1136) -> (2011,556,555)`, with exact ratio `822443359/3967481=207.296105... < 208 < Y`. The next comparison is `4437643/23934=185.411673...`, and every remaining comparison is below `77`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 1298` checked `1578283630` modular placements and `90111` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized surrogate tail for `A >= 1299` proves minimal aggregate period `570A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=285`.
+- **CONJECTURE:** For every odd multiple of three `Y >= 51`, primitive exclusion of the ordinary source promotes the displayed surrogate to an adjacent global rank-one edge with first tail integer `14Y/3-31`. Forty consecutive stratum tests through `Y=285` support this; a uniform symbolic bound on nonsurrogate edges remains open.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `jobs/math-agent-relay.hcl`, whose header and companion README say the system job targets `windesk` and `mac-mini`.
+- **PROVED:** The repo identifies those nodes as Windows 11 and macOS. The job has no kernel constraint or OS-specific task group: every eligible allocation executes `/bin/bash`, and both its source fallback and repository discovery depend on `getent passwd`. It supplies neither the PowerShell branch used by other windesk jobs nor the explicit `/Users/e` and `/Users/eliott` fallback present in `jobs/maintenance-agent.hcl`.
+- **FAILED:** The claim that this one job runs on every named math-agent node is not established by its launcher. Its discovery path is Linux-shaped while both stated targets are non-Linux.
+- **SPECULATION:** Split the allocation by kernel or make machine ID and repo root explicit Nomad metadata. That would move platform identity into the scheduling relation instead of trying to reconstruct it from a user database after placement.
+
+### Connections
+
+- **PROVED:** POST-178 compresses an exact cover to endpoint pieces only after the star-forest relation proves that no omitted interior path matters. At `Y=285`, excluding the ordinary source is similarly only the first step; permanence, singleton realization, exact adjacency, exhaustive rank, strict order, and replay identify the surviving path.
+- **COMPUTED:** The preceding multiple-of-three slice `Y=279` had surrogate tail `1271`, strict start `566`, and largest nonsurrogate ratio about `167.200`. Six units later these become `1299`, `570`, and about `207.296`: the exact tail advances by `28` as predicted, while the secondary envelope rises but remains below `Y`.
+- **FAILED:** A node label without an executable platform branch does not establish a running relay, and an inadmissible ordinary edge does not establish a surrogate owner. Both require a realized relation after filtering.
+- **PROVED:** The `Y=285` certificate checks that relation in both scale regimes: surrogate ownership controls every `A >= 1299`, while independent full-word replay excludes every shorter translation for `A <= 1298`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T19:39:03Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the exact even-block table to `Y=286=2*11*13`. Here `P=2002`, `h=286`, and the candidate aggregate period is `286A`. The `7 phi(286)=840` positive primitive phases contribute `509737` atoms. Exact beta reduction gives `509019` classes with histogram `c1=508719, c2=160, c3=64, c4=40, c5=12, c6=8, c7=4, c16=2, c17=6, c18=2, c20=2`, hence `300` nonsingleton classes.
+- **PROVED:** All `300` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/15 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=576`. Its limiting edge is `(1147,567,546) -> (1717,1142,1100)`, with beta gap `1/4532598`, eta correction `-575/4532598`, and strict ratio `575`.
+- **FAILED:** The factors `11*13` do not force a fallback on the residue-six branch: `gcd(6Y-1,Y)=gcd(6Y+1,Y)=1` identically. Primitive admission still does not establish singleton realization, adjacency, or global rank.
+- **COMPUTED:** The unique largest normalized gap is the seam `(1715,559,558) -> (1717,1142,1141)`. Its interior echo `(1715,559,279) -> (1717,1142,571)`, equivalently `(6Y-1,2Y-13,Y-7) -> (6Y+1,4Y-2,2Y-1)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=4468646`. The seam and echo gaps are respectively `(2Y^2+17Y-15)/D=168439/D` and `(2Y^2-67Y-15)/D=144415/D`, with common eta correction `-(2Y+11)/D=-583/D`.
+- **PROVED:** Their base-gap difference is `84Y/D=24024/D`, so the exact echo ratio is `(2Y-13)(2Y-1)/(3Y)=24553/66=372.015151...`. Echo dominance begins at `A=373`.
+- **COMPUTED:** The recurring `c=7` edge `(1717,1142,569) -> (2009,559,278)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+7,2Y-13,Y-8)`, is adjacent and ranks second at `(D+2Y+11)/(44Y-7)=4469229/12577=355.349367...`, clearing at `A=356`. Its next copy has ratio `4469229/24589=181.757249...`, and every remaining comparison is below `72`.
+- **FAILED:** Neither realized comparison binds the proof threshold: the echo clears at `373` and the `c=7` edge at `356`, but strict order starts only at `576`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 575` checked `293098775` modular placements and `21468` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the strict seam-echo tail for `A >= 576` proves minimal aggregate period `286A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=286`.
+- **CONJECTURE:** The seam echo is adjacent and globally rank one for every `Y congruent to 6 (mod 14)` with `Y >= 104`. It now controls fourteen consecutive cases in that stratum through `Y=286`, while the adjacent `c=7` family remains rank two.
+
+### Random niche pull
+
+- **COMPUTED:** The first late draw repeated the recently analyzed disk-pressure probe, so I rerolled to `assistants/lrc/CLAUDE.md`, the prompt for the cluster's persistent LRC progress tracker.
+- **PROVED:** The checked-in `assistants/lrc` directory contains only that prompt. It directs the tracker to clone the research repo with `--depth 50` into `/tmp/lrc-math` and maintain its status write-up there, without recording the source commit or a checked-in status path.
+- **FAILED:** This is not a durable or reproducible progress snapshot. A restart can remove the write-up, a later pull can change its source state, and the shallow clone can omit history needed to resolve old theorem references.
+- **SPECULATION:** Store the status under `assistants/lrc` with the research-repo commit SHA and artifact citations. The temporary clone can remain a workspace, while the checked-in snapshot becomes the persistent assistant memory promised by the prompt.
+
+### Connections
+
+- **PROVED:** POST-178 compresses exact covers to endpoint pieces only after the star-forest theorem excludes hidden interior paths. At `Y=286`, the seam echo similarly becomes authoritative only after permanence, singleton realization, exact adjacency, exhaustive rank, strict order, and replay exclude hidden competitors.
+- **COMPUTED:** The preceding residue-six slice `Y=272` had echo start `354`, `c=7` start `338`, strict start `548`, and final tail `548`. Fourteen units later these become `373`, `356`, `576`, and `576`: the owner comparisons advance by `19` and `18`, while the binding strict gate advances by `28`.
+- **FAILED:** An ephemeral status file is not persistent research memory, and an admitted echo formula is not a realized owner certificate. Both omit the durable relation needed to recover the conclusion.
+- **PROVED:** The `Y=286` result supplies that relation in both scale regimes: strict echo ownership controls every `A >= 576`, while independent full-word replay excludes every shorter translation for `A <= 575`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T19:51:11Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the full odd-block table to `Y=287=7*41`. Here `P=4018`, `h=574`, and the candidate aggregate period is `574A`. The `14 phi(287)=3360` positive primitive phases contribute `2042796` atoms. Exact beta reduction gives `2029124` classes with histogram `c1=2021706, c2=5139, c3=1270, c4=341, c5=270, c6=118, c7=56, c8=72, c9=24, c10=16, c11=16, c12=12, c13=16, c14=20, c19=4, c20=16, c21=4, c39=12, c40=12`, hence `7418` nonsingleton classes.
+- **PROVED:** All `7418` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/8 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=582`. Its limiting edge is `(1082,563,356) -> (3733,1144,723)`, with beta gap `1/4508504`, eta correction `-83/644072`, and strict ratio `581`.
+- **FAILED:** Unlike the adjacent prime slices, composite `Y=7*41` does not admit every nonzero phase. The standard source and destination nevertheless survive because `gcd(6Y+6,Y)=gcd(13Y+1,Y)=1`; endpoint admission alone still does not establish adjacency or rank.
+- **COMPUTED:** The unique largest normalized gap is the seam `(3730,561,560) -> (3732,1146,1145)`. The persistent edge `(1728,561,280) -> (3732,1146,572)`, equivalently `(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=4500342`. The seam and persistent gaps are respectively `(2Y^2+17Y-15)/D=28267/750057` and `(2Y^2-11Y-1)/D=26930/750057`, with common eta correction `-(2Y+11)/D=-65/500038`.
+- **PROVED:** Their base-gap difference is `1/(2Y-13)=1/561`, so the exact robust ratio is `4Y-26=1122`. Persistent ownership begins at `A=1123`, after strict order is available.
+- **COMPUTED:** The largest nonpersistent comparison is `(3732,1146,571) -> (2021,562,280)`, with exact ratio `843173467/3704313=227.619390... < 228 < Y`. The next persistent copy has ratio `1500309/7079=211.937985...`, and every remaining comparison is below `70`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 1122` checked `2292017112` modular placements and `45889` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized persistent tail for `A >= 1123` proves minimal aggregate period `574A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=287`.
+- **CONJECTURE:** For odd `Y >= 107` with `gcd(Y,6)=1`, the standard persistent edge remains adjacent and globally rank one with ratio `4Y-26`, while every nonpersistent ratio remains below `Y`. The composite slice `Y=7*41` preserves both inequalities.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `meta/agent/mesh/Dockerfile`, which describes a mesh image containing both Claude and Codex CLIs.
+- **PROVED:** Codex installation is a required build step, but Claude is installed by `curl -fsSL https://claude.ai/install.sh | bash || true`. A failed download or installer therefore still yields a successful image that may not contain the claimed Claude CLI.
+- **PROVED:** The UID/GID adjustment is guarded only by `id -u ubuntu != AGENT_UID`; `groupmod -g AGENT_GID` runs inside that branch. If the base UID already equals `AGENT_UID` but the desired GID differs, the image keeps the old GID despite the comment promising both host IDs will match.
+- **FAILED:** A successful image build is not a realization certificate for either the two-engine claim or the independent GID match.
+- **SPECULATION:** Make the Claude install fail closed with a final `command -v claude` check, and test UID and GID separately before modifying them. The resulting image manifest would then reflect executable capabilities rather than intended ones.
+
+### Connections
+
+- **PROVED:** POST-178 compresses a cover to endpoint pieces only after the global star-forest relation proves those pieces are realized and sufficient. At `Y=287`, composite endpoint admission likewise becomes useful only after singleton realization, exact adjacency, exhaustive rank, strict order, and replay establish the persistent owner.
+- **COMPUTED:** The preceding ordinary odd slice `Y=283` had owner ratio/tail `1106/1107`, strict start `568`, and largest nonpersistent ratio about `217.379`. Four units later these become `1122/1123`, `582`, and about `227.619`: the exact owner law advances by `16`, while the secondary envelope remains below `Y`.
+- **FAILED:** A swallowed installer failure does not realize a declared engine, and primitive endpoints do not realize a declared owner. Both need an explicit existence check at the layer that consumes the object.
+- **PROVED:** The `Y=287` certificate performs that check in both scale regimes: persistent ownership controls every `A >= 1123`, while independent full-word replay excludes every shorter translation for `A <= 1122`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T19:58:01Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the exact even-block table to `Y=288=2^5*3^2`. Here `P=2016`, `h=288`, and the candidate aggregate period is `288A`. The `7 phi(288)=672` positive primitive phases contribute `410690` atoms. Exact beta reduction gives `410254` classes with histogram `c1=410010, c2=192, c3=32, c4=8, c14=12`, hence `244` nonsingleton classes.
+- **PROVED:** All `244` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/17 < 1`.
+- **FAILED:** The positive histogram counts have gcd two, so collision multiplicities alone retain a possible half-period and cannot certify `288A`.
+- **COMPUTED:** Strict real order starts exactly at `A=560`. Its limiting edge is `(1079,567,85) -> (1741,1126,169)`, with beta gap `1/4469094`, eta correction `-559/4469094`, and strict ratio `559`.
+- **FAILED:** The nominal residue-eight destination `7Y+5=2021` has excess `2Y-10`, three above the required `2Y-13`. The lift `7Y+19=2035` is primitive because `gcd(2035,288)=1`, but exact excess and admission alone do not establish adjacency or rank.
+- **COMPUTED:** The unique largest normalized gap is the seam `(1727,563,562) -> (1729,1150,1149)`. The lifted edge `(1729,1150,573) -> (2035,563,280)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+19,2Y-13,Y-8)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=4532150` and `k=2Y+11=587`. The seam and lifted-owner gaps are respectively `(2Y^2+17Y-15)/D=170769/D` and `(2Y^2-23Y-25)/D=159239/D`, with eta corrections `-k/D=-587/D` and `+k/D=+587/D`.
+- **PROVED:** Their base-gap difference is `10(4Y+1)/D=11530/D`, so the exact robustness ratio is `(D+k)/(5(4Y+1))=4532737/5765=786.250997...`. Lifted ownership begins at `A=787`, after strict order is available.
+- **COMPUTED:** The interior seam echo ranks second at `(2Y-13)(2Y-1)/(3Y)=323725/864=374.681712...`, clearing at `A=375`. The largest remaining comparison is `2565527417/11196651=229.133462...`, and every other comparison is below `85`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 786` checked `322802340` modular placements and `48281` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized lifted-owner tail for `A >= 787` proves minimal aggregate period `288A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=288`.
+- **CONJECTURE:** For `Y congruent to 8 (mod 14)`, `Y >= 92`, and `gcd(Y,19)=1`, the lifted `7Y+19` edge remains adjacent and globally rank one with the displayed ratio. Fourteen admitted slices through `Y=288` support this; `Y=190` remains the recorded factor-19 fallback.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `maintenance/eliotts-mac-mini/queue/ensure-engines-20260801T000500Z.md`, an append-only recovery instruction for dynamic engine metadata.
+- **PROVED:** Its original body says `nomad node meta apply` without `-node-id` is client-local and works without a Raft leader, citing a successful claudebox test at quorum `1/2`. A later update says advertising engines requires both a live client and a leader and must wait for quorum.
+- **PROVED:** The current `meta/agent/ensure-engines.sh` probes the local client and invokes `nomad node meta apply` without `-node-id`; it contains no server-leader precondition.
+- **FAILED:** The queue file is not a deterministic runbook because its two prerequisite claims conflict. Following the later claim can defer a locally available metadata repair until an unrelated quorum recovery.
+- **SPECULATION:** Record prerequisites as separate predicates such as host reachable, local client healthy, and server leader required, with command-specific evidence. Append-only updates could then invalidate one predicate without silently reversing another.
+
+### Connections
+
+- **PROVED:** POST-178 compresses cover decisions only after the star-forest relation proves the retained endpoint path is sufficient. At `Y=288`, the lifted endpoint likewise becomes authoritative only after exact excess, permanence, singleton realization, adjacency, exhaustive rank, strict order, and replay are all checked.
+- **COMPUTED:** The preceding admitted residue-eight slice `Y=274` had owner start `748`, strict start `558`, seam-echo start `357`, and final tail `748`. Fourteen units later these become `787`, `560`, `375`, and `787`: the lifted owner advances by `39` and remains binding, while strict order advances by only `2`.
+- **FAILED:** A later prose update does not establish a changed command dependency, and a gcd-two collision histogram does not establish the full period. Both leave a global alternative that needs direct execution evidence.
+- **PROVED:** The `Y=288` replay resolves its alternative: realized lifted ownership controls every `A >= 787`, while independent full-word replay excludes every shorter translation, including the half-period candidate, for `A <= 786`.

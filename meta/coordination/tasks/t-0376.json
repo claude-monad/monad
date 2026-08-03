@@ -1,0 +1,10 @@
+{
+  "id": "t-0376",
+  "type": "infra",
+  "scope": "2026-08-03T18:45:25Z claudebox sweep: CRITICAL Nomad quorum remains lost at 1/2 committed voters {v1410-1,claudebox}; claudebox is alive/Candidate and v1410-1 rejects Tailscale ping because its node key expired. Smallest safe recovery is owner-interactive/on-box Tailscale re-auth plus start/verify the existing v1410-1 Nomad server while preserving Raft data; do not perform single-voter surgery. oraclebox1 and death-star fail all five probes and Nomad ports are closed; windesk pongs directly but Nomad 4646/5646 is closed. bigo-server client and maintenance loop are live. eliotts-mac-mini client is live/eligible in local metrics but disk is critical at 97.2% used (6.8GB free), its cached maintenance alloc is absent locally, and SSH is closed; perform safe on-box cleanup, run ensure-engines, and restore its maintenance loop. Global Ready/Eligible and system-job reconciliation are leader-blocked; after quorum recovery verify all seven and redeploy only confirmed gaps.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

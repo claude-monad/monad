@@ -42,9 +42,9 @@
     "value": "DONE-2026-08-02T23:10:37Z"
   },
   "health:claudebox": {
-    "updated": 1785621000.33275,
+    "updated": 1785785259.5819402,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-01T21:50:00Z healthy: disk 9%, mem ok, git in sync, nomad agent up, engines claude+codex advertised"
+    "value": "DONE-2026-08-03T19:27:39Z"
   },
   "health:claudebox-egress": {
     "updated": 1785559136.0581253,
@@ -77,9 +77,9 @@
     "value": "DONE-2026-08-03T05:15:30Z STILL LOST 1of2 voters; owner-blocked GH #8 (v1410-1 TS re-auth)"
   },
   "health:death-star": {
-    "updated": 1785777986.017581,
+    "updated": 1785785259.2934608,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T17:26:25Z"
+    "value": "DONE-2026-08-03T19:27:39Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785777986.1981905,
+    "updated": 1785785259.5043905,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T17:26:25Z"
+    "value": "DONE-2026-08-03T19:27:39Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -157,9 +157,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785777985.926248,
+    "updated": 1785785259.3614118,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T17:26:25Z"
+    "value": "DONE-2026-08-03T19:27:39Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -202,10 +202,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "expires": 1786377582.1719723,
-    "updated": 1785772782.1719716,
+    "updated": 1785787426.3214803,
     "updated_by": "claudebox",
-    "value": "2026-08-03T16:0xZ quorum STILL LOST 1/2 (owner-blocked GH#8); bigo-server+mac-mini+windesk tailnet-alive; mac-mini disk RECOVERED (GH#13); windesk client down (GH#10); self healthy disk10% engines claude+codex"
+    "value": "2026-08-03T20:1xZ quorum STILL LOST 1/2 (owner-blocked GH#8); mac-mini disk STILL CRITICAL 96.8% (7.8GB free, NOT recovered \u2014 GH#13 note stale; cleanup queued, leaderless+no SSH); windesk tailnet-alive but nomad DOWN (GH#10, tasks queued); bigo-server client ok; oraclebox1+death-star offline 57d; self healthy disk10% engines claude+codex"
   },
   "health:task-backlog": {
     "updated": 1784680657.8290467,
@@ -213,9 +212,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785777985.8351743,
+    "updated": 1785785259.223114,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T17:26:25Z"
+    "value": "DONE-2026-08-03T19:27:39Z"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -238,9 +237,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785777986.1066368,
+    "updated": 1785785259.430412,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T17:26:25Z"
+    "value": "DONE-2026-08-03T19:27:39Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

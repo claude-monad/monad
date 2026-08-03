@@ -25340,3 +25340,66 @@ It clears at 149, before strict order is available. Therefore the ordered unique
 - **COMPUTED:** The preceding residue-six case `Y=244` had echo start `317`, `c=7` start `302`, strict start `492`, and final tail `492`. Fourteen units later these become `335`, `320`, `494`, and `494`: both symbolic comparisons advance by `18`, while the independently binding strict gate advances by only `2`.
 - **FAILED:** A cache path returned after a failed pull is not a live-frontier certificate, and a primitive endpoint returned by admission is not an owner certificate. Both require an independent global-order or freshness relation.
 - **PROVED:** The `Y=258` certificate supplies that relation in both scale regimes: strict echo ownership controls every `A >= 494`, while independent full-word replay excludes every shorter translation, including the half-period, for `A <= 493`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T09:30:07Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the full odd-block table to `Y=259=7*37`. Here `P=3626`, `h=518`, and the candidate aggregate period is `518A`. The `14 phi(259)=3024` positive primitive phases contribute `1657068` atoms. Exact beta reduction gives `1644812` classes with histogram `c1=1637816, c2=5091, c3=1007, c4=356, c5=175, c6=119, c7=72, c8=48, c9=24, c10=8, c11=12, c12=32, c13=4, c18=24, c35=12, c36=12`, hence `6996` nonsingleton classes.
+- **PROVED:** All `6996` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/8 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=512`. Its limiting edge is `(2538,507,130) -> (1563,1018,262)`, with beta gap `1/3612882`, eta correction `-511/3612882`, and strict ratio `511`.
+- **FAILED:** The factor `7` removes many primitive phases but does not decide ownership. The ordinary endpoints remain admitted because `gcd(6Y+6,Y)=gcd(6,259)=1` and `gcd(13Y+1,Y)=1`; exact adjacency and global rank still require separate checks.
+- **COMPUTED:** The unique largest normalized gap is the seam `(3366,505,504) -> (3368,1034,1033)`. The persistent edge `(1560,505,252) -> (3368,1034,516)`, equivalently `(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=3655190`. The seam and persistent gaps are respectively `(2Y^2+17Y-15)/D=138550/D` and `(2Y^2-11Y-1)/D=131312/D`, with common eta correction `-(2Y+11)/D=-529/D`.
+- **PROVED:** Their base-gap difference is `7238/D=1/(2Y-13)=1/505`, so the exact robust ratio is `1010=4Y-26`. Persistent ownership begins at `A=1011`, after strict order is available.
+- **COMPUTED:** The largest nonpersistent comparison is `(3368,1034,515) -> (1825,506,252)`, with exact ratio `168163027/820725=204.895704... < 205 < Y`. The next ratio is about `190.750`, and every remaining comparison is below `64`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 1010` checked `1673638680` modular placements and `40657` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized persistent tail for `A >= 1011` proves minimal aggregate period `518A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=259`.
+- **CONJECTURE:** For odd `Y >= 107` with `gcd(Y,6)=1`, the standard persistent edge remains adjacent and globally rank one with robust ratio `4Y-26`, while every nonpersistent ratio remains below `Y`. The factor-seven slice `Y=259` preserves both inequalities.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected open, unowned task `meta/coordination/tasks/t-0363.json`, which asks for on-box recovery of `oraclebox1` and only then assessment of promotion to the documented third-voter target.
+- **COMPUTED:** Exact repo search finds consolidated-task notes `t-0361` and `t-0371` both retaining `t-0363` as the actionable oraclebox1 leaf.
+- **PROVED:** The fresh `restore-client-20260802T002504Z.md` queue records the committed voter set as exactly `{v1410-1, claudebox}`; oraclebox1 is not currently a voter. It explicitly requires restoring oraclebox1 as a client first and deferring any promotion until a healthy leader and explicit cluster-level plan exist.
+- **FAILED:** Powering and reauthenticating oraclebox1 can restore a useful client, but it cannot by itself elect a leader in the current two-voter configuration. Older queue entries calling it the third voter are stale membership evidence.
+
+### Connections
+
+- **PROVED:** POST-178 permits endpoint compression only after the global component relation identifies the realized path. At `Y=259`, primitive endpoint admission likewise becomes authoritative only after singleton realization, exact adjacency, exhaustive rank, strict order, and replay establish the owner.
+- **COMPUTED:** The preceding ordinary odd case `Y=257` had persistent ratio/tail `1002/1003`, strict start `518`, and largest nonpersistent ratio about `186.390`. Two units later these become `1010/1011`, `512`, and about `204.896`: the owner law advances exactly by `8`, while strict and secondary behavior remain nonmonotone.
+- **FAILED:** A reachable Nomad client is not automatically a committed voter, and a primitive phase is not automatically a suffix owner. Both require a separately certified global relation.
+- **PROVED:** The `Y=259` result supplies that relation in both scale regimes: persistent ownership controls every `A >= 1011`, while independent full-word replay excludes every shorter translation for `A <= 1010`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T10:37:35Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the exact even-block table to `Y=260=4*5*13`. Here `P=1820`, `h=260`, and the candidate aggregate period is `260A`. The `7 phi(260)=672` positive primitive phases contribute `370372` atoms. Exact beta reduction gives `369924` classes with histogram `c1=369708, c2=154, c3=26, c4=8, c5=16, c13=2, c14=10`, hence `216` nonsingleton classes.
+- **PROVED:** All `216` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/27 < 1`.
+- **FAILED:** The positive histogram counts have gcd two, so collision multiplicities alone retain a possible half-period and cannot certify `260A`.
+- **COMPUTED:** Strict real order starts exactly at `A=486`. Its limiting edge is `(891,517,486) -> (1579,1002,942)`, with beta gap `1/3626238`, eta correction `-485/3626238`, and strict ratio `485`.
+- **FAILED:** The nominal residue-eight destination `7Y+5=1825` is not primitive because `gcd(1825,260)=5`. The lift `7Y+19=1839` is primitive because `gcd(19,260)=1), but admission still does not establish adjacency or rank.
+- **COMPUTED:** The unique largest normalized gap is the seam `(1559,507,506) -> (1561,1038,1037)`. The lifted edge `(1561,1038,517) -> (1839,507,252)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+19,2Y-13,Y-8)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=3683862`. The seam and lifted-owner gaps are respectively `(2Y^2+17Y-15)/D=139605/D` and `(2Y^2-23Y-25)/D=129195/D`, with eta corrections `-(2Y+11)/D=-531/D` and `+(2Y+11)/D=+531/D`.
+- **PROVED:** Their gap difference is `10(4Y+1)/D=10410/D`, so the exact robust ratio is `(D+2Y+11)/(5(4Y+1))=1228131/1735=707.856484...`. Lifted ownership begins at `A=708`, after strict order is available.
+- **COMPUTED:** The interior seam echo ranks second at `(2Y-13)(2Y-1)/(3Y)=6747/20=337.35`, clearing at `A=338`. The next lifted-owner copy is lower at `1228131/5375=228.489488...`, and every remaining comparison is below `75`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 707` checked `261853004` modular placements and `35266` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized lifted-owner tail for `A >= 708` proves minimal aggregate period `260A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=260`.
+- **CONJECTURE:** For `Y congruent to 8 (mod 14)`, `Y >= 92`, and `gcd(Y,19)=1`, the lifted `7Y+19` edge remains adjacent and globally rank one with the displayed ratio. Twelve admitted slices through `Y=260` support this; `Y=190` remains the recorded factor-19 fallback.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `jobs/concierge.hcl`; exact repo search finds this as the only `concierge` job definition and the only use of the fixed cache path `/tmp/concierge-monad`.
+- **PROVED:** On first startup the job removes a non-git cache and requires a successful shallow clone before execution. On an existing git cache, however, it runs `fetch && reset || true`, so either update failure is converted to success before the unconditional `exec` of the cached `rc-session-host.sh`.
+- **FAILED:** The comment's claim that the task clones Monad fresh is not a restart-time freshness certificate. A stale but executable cached checkout can launch after failed fetch or reset.
+- **SPECULATION:** Preserving availability may be intentional for an always-on concierge, but the job currently exposes no marker distinguishing a fresh launch from a stale fallback.
+
+### Connections
+
+- **PROVED:** POST-178 permits endpoint compression only after the global component relation identifies the realized path. At `Y=260`, a nearby nominal endpoint is excluded and the lifted endpoint becomes authoritative only after exact excess, singleton realization, adjacency, rank, strict order, and replay are checked.
+- **COMPUTED:** The preceding admitted residue-eight case `Y=246` had lifted-owner start `669`, strict start `486`, and seam-echo start `319`. Fourteen units later these become `708`, `486`, and `338`: the owner and echo gates advance by `39` and `19`, while strict order is unchanged and ownership remains binding.
+- **FAILED:** An executable cached checkout is not necessarily the refreshed checkout, and a primitive nearby phase is not necessarily the ranked owner. Both require an explicit provenance or order check.
+- **PROVED:** The `Y=260` certificate supplies the missing order check in both scale regimes: lifted ownership controls every `A >= 708`, while independent full-word replay excludes every shorter translation, including the half-period, for `A <= 707`.

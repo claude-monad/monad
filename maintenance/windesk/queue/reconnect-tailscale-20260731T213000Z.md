@@ -1,5 +1,12 @@
 # windesk: reconnect Tailscale, then restart Nomad client (queued by claudebox health sweep 2026-07-31)
 
+> **UPDATE 2026-08-03T05:55Z:** windesk has flapped offline again. It was reachable at
+> 05:15Z, but then failed **two independent `tailscale ping -c 5` passes (10/10 timeouts)**;
+> Tailscale reports it offline with last-seen 05:50Z and TCP :4646 is closed. Wake/power on
+> the host and run step 1 again, then continue with the existing Nomad recovery steps. This
+> does not look like an expired key: the host has repeatedly returned without re-auth, so
+> check Windows sleep/hibernate and service-at-boot settings.
+
 > **UPDATE 2026-08-01T11:0xZ (claudebox sweep): ✅ TAILSCALE IS FINE — START AT STEP 2 (Nomad).**
 > This supersedes *both* notes below. windesk answers `tailscale ping -c 5 100.94.210.54`:
 > probe 1 timed out, probe 2 got a pong via DERP(den) in 964ms, then a **direct** IPv6 path
@@ -26,9 +33,9 @@ and whether tailscaled is set to run as a service at boot.
 
 On your next node-doctor / maintenance pass, in this order:
 
-1. ~~**Tailscale first**~~ — **DONE / not needed.** Verified reachable from claudebox
-   2026-08-01T11:0xZ over both DERP and a direct IPv6 path. Skip unless `tailscale ping -c 5`
-   (five probes, all failing) says otherwise.
+1. **Tailscale/reachability first — ACTIVE AGAIN as of 2026-08-03T05:55Z.** Wake/power on
+   the host and verify `tailscale ping -c 5`; all ten probes across two passes failed in this
+   sweep. Re-authenticate only if the on-box client explicitly reports an auth/key problem.
 2. **Then Nomad** ← **START HERE.** `nomad agent -config=C:\nomad\config\nomad.hcl`
    (or restart the service/task). :4646 was refusing connections on 07-31T22:3xZ and still
    refuses as of 08-01T11:0xZ, while the host itself pings fine — so this is a dead local

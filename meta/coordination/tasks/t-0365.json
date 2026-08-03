@@ -1,7 +1,7 @@
 {
   "id": "t-0365",
   "type": "infra",
-  "scope": "windesk answers Tailscale ping but its Nomad API on :4646 is unreachable; restart the local Nomad client/maintenance loop and verify ready plus eligible",
+  "scope": "windesk is flapping: it was reachable at 2026-08-03T05:15Z, then failed two independent tailscale ping -c 5 passes and :4646 was closed at 05:50Z; wake/power on and verify Tailscale, then restart the local Nomad client/maintenance loop and verify ready plus eligible",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

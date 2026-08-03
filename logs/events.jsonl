@@ -11324,3 +11324,5 @@
 {"ts":"2026-08-03T15:19:14Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-08-03T15:23:22Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"mac-mini-telemetry","status":"ok","detail":"eliotts-mac-mini back online after reboot (uptime 0.9h): disk free improved 4.75GB->8.01GB (96.7% used, GH #9 trend broken but still critical); Nomad client up, API answering; SSH refused"}
 {"ts":"2026-08-03T15:23:22Z","node":"claudebox","source":"maintenance-agent","type":"cluster-health","action":"mac-mini-repoint","status":"fixed","detail":"live-repointed eliotts-mac-mini Nomad client servers from dead 100.75.75.39:4647 to 100.87.219.108:4647 via client API (claim held); durable config fix remains queued (repoint-servers-durably)"}
+{"ts":"2026-08-03T15:24:21Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-08-03T15:56:29Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}

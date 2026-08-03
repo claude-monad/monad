@@ -17,3 +17,7 @@ On return, take the smallest safe recovery path:
 2. Start or restart the local Nomad server; do not bootstrap a new cluster or alter Raft peers.
 3. Confirm a leader is elected with both voters alive, then run `meta/agent/ensure-engines.sh`.
 4. Re-run the seven-node readiness and `maintenance-agent` allocation sweep.
+
+Update 2026-08-03T08:44:23Z: unchanged after a fresh authoritative probe: the Tailscale
+node key is still expired, `:4646` times out, and claudebox remains the sole alive server
+with no leader. This remains the top-priority, owner-interactive recovery; preserve Raft data.

@@ -24,3 +24,7 @@ On return, take the smallest safe recovery path:
 5. After v1410-1 restores quorum, verify oraclebox1 is `ready`, `eligible`, and has a live
    maintenance loop/allocation. Do not promote it to voter without a healthy leader and an
    explicit cluster-level plan.
+
+Update 2026-08-03T08:44:23Z: all five Tailscale probes and the 40-second Nomad API probe
+still time out. No safe in-band repair exists; retain the on-box power/Tailscale/Nomad
+recovery above, without changing Raft membership while the cluster is leaderless.

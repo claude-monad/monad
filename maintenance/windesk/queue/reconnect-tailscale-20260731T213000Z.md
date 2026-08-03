@@ -1,5 +1,16 @@
 # windesk: reconnect Tailscale, then restart Nomad client (queued by claudebox health sweep 2026-07-31)
 
+> **UPDATE 2026-08-03T13:22Z — best Tailscale reading yet; the problem is 100% Nomad.**
+> `tailscale status` shows windesk **`active; direct 192.168.51.17:41641`** (LAN-direct, not
+> DERP) and `tailscale ping` pongs in **1 ms**. Meanwhile a full port sweep from claudebox is
+> closed on **every** port: `:4646 :4647 :4648 :22 :5985`. No Nomad, no SSH, no WinRM.
+>
+> Please stop re-diagnosing Tailscale on this host — it has now been confirmed healthy on four
+> consecutive sweeps. **The only work item is: start the Nomad client service on windesk**
+> (step 2 below), which needs a local console/RDP session since :22 and :5985 are both shut.
+> While on-box, also set the service to start at boot and check Windows sleep/hibernate, and
+> point `Client.Servers` at `100.87.219.108:4647` (not the dead `100.75.75.39`).
+
 > **UPDATE 2026-08-03T07:17Z:** authoritative `tailscale ping -c 5` succeeds (direct IPv6,
 > 275 ms), while TCP :4646 is closed and the Codex gateway on :8300 is unreachable. Tailscale
 > is healthy; start at step 2 and restore the local Nomad client/maintenance loop on-box.

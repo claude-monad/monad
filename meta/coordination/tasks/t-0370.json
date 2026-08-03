@@ -1,0 +1,10 @@
+{
+  "id": "t-0370",
+  "type": "infra",
+  "scope": "bigo-server is BACK on the tailnet (2026-08-03) with a healthy Nomad client pointed at claudebox:4647, but no on-box agent drains its queue and it has no reachable shell (Tailscale SSH hangs; LAN sshd at 192.168.51.10 rejects our keys). Needs on-box action by the owner or a node-doctor cron install so it self-maintains. Same class as GH #10 (windesk).",
+  "repo": "monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

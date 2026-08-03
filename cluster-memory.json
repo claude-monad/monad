@@ -77,9 +77,9 @@
     "value": "DONE-2026-08-02T23:10:37Z STILL LOST 1of2 voters; claudebox sole alive voter Candidate; owner-blocked GH #8/#6"
   },
   "health:death-star": {
-    "updated": 1785714667.2986841,
+    "updated": 1785717129.5653503,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T23:51:07Z"
+    "value": "DONE-2026-08-03T00:32:09Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785714667.483614,
+    "updated": 1785717129.631412,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T23:51:07Z"
+    "value": "DONE-2026-08-03T00:32:09Z"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -157,9 +157,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785714667.2065265,
+    "updated": 1785717129.6947165,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T23:51:07Z"
+    "value": "DONE-2026-08-03T00:32:09Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -202,9 +202,9 @@
     "value": "2026-06-13T04:52:32Z roster-healthy quorum-2of2"
   },
   "health:sweep:claudebox": {
-    "updated": 1785712237.8973224,
+    "updated": 1785719529.714589,
     "updated_by": "claudebox",
-    "value": "2026-08-02T23:10:37Z quorum LOST 1/2; self healthy disk 9% engines claude,codex; mac-mini disk 99.86% 347MB GC-ineffective escalated GH #11"
+    "value": "2026-08-03T01:3xZ quorum LOST 1/2 (claudebox Candidate term1648); v1410-1 NOT on owner LAN (/24 sweep) so GH#8 truly owner-blocked; bigo-server BACK healthy client; windesk located LAN 192.168.51.17 (SMB only) GH#10; mac-mini client ok disk GH#11; self disk 9% engines claude,codex"
   },
   "health:task-backlog": {
     "updated": 1784680657.8290467,
@@ -212,9 +212,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785714667.119056,
+    "updated": 1785719529.759121,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T23:51:07Z"
+    "value": "DONE-2026-08-03T01:12:09Z-not-on-owner-LAN-owner-blocked"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -237,9 +237,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785714667.392794,
+    "updated": 1785717129.7775426,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T23:51:07Z"
+    "value": "DONE-2026-08-03T00:32:09Z"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

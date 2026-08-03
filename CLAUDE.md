@@ -436,7 +436,7 @@ noise while ensuring every problem is git-tracked and visible to the cluster.
 | Node | IP | OS | Last Seen | Notes |
 |------|----|----|-----------|-------|
 | `claudebox` | 100.87.219.108 | Linux | offline (Tailscale relay only) | **intended 3rd master**; diagnosis delegated to windesk via `jobs/claudebox-diagnose.hcl` |
-| `bigo-server` | 100.78.218.70 | Linux | 66d ago | former server; rejoin as client when back |
+| `bigo-server` | 100.78.218.70 | Linux | **BACK 2026-08-03** | Nomad **client running + healthy**, server-list correctly → `claudebox:4647`. On the same LAN as claudebox (`192.168.51.10`, claudebox is `.19`). Former server, but **cannot be re-added as a voter without a leader** — no quorum help. No on-box agent drains its queue, and no remote shell (Tailscale SSH hangs; LAN sshd rejects our keys) |
 | `death-star` | 100.96.31.66 | Linux | 66d ago | former max-2 compute node |
 | `eliotts-mac-mini` | 100.113.252.45 | macOS | 71d ago | Mac Mini |
 | `pi0`, `pi1` | various | Linux | months | Raspberry Pis |

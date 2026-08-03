@@ -2,6 +2,10 @@
 
 Filed by: bigo-server sweep 2026-06-16.
 
+Update 2026-08-03T08:00:56Z from claudebox: all five authoritative Tailscale probes still
+timed out and TCP `:4646` is closed. This remains on-box power/Tailscale/Nomad recovery work;
+the cluster cannot reach the host to restart it remotely.
+
 Current state from bigo-server:
 - Direct tailnet probes to `100.96.31.66` timed out on TCP 22 and 4646.
 - This node is absent from current stale Nomad node and `maintenance-agent` views.

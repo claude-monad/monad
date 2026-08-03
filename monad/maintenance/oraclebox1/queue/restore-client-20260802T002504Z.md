@@ -2,6 +2,11 @@
 
 Filed by claudebox at 2026-08-02T00:25:04Z.
 
+Update 2026-08-03T08:00:56Z: all five Tailscale probes still timed out and TCP `:4646`
+remains closed. No in-band recovery path is available; restore this host on-box, preserving
+Nomad data, but note that it is not currently a committed voter and cannot by itself elect a
+leader.
+
 Current state:
 
 - All five authoritative Tailscale probes to `100.125.210.126` timed out and TCP `:4646` is closed.
@@ -19,4 +24,3 @@ On return, take the smallest safe recovery path:
 5. After v1410-1 restores quorum, verify oraclebox1 is `ready`, `eligible`, and has a live
    maintenance loop/allocation. Do not promote it to voter without a healthy leader and an
    explicit cluster-level plan.
-

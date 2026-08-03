@@ -2,6 +2,11 @@
 
 Filed by claudebox at 2026-07-15T10:13:09Z.
 
+Update 2026-08-03T08:00:56Z: unchanged and still the top-priority quorum blocker. The
+authoritative probe reports `peer's node key has expired`, TCP `:4646` is closed, and
+claudebox remains the only alive member of the committed two-voter set. Owner-interactive
+Tailscale re-authentication on this host is required; preserve its existing Raft data.
+
 - Claudebox is the only alive server and is stuck in Candidate state with no leader.
 - The current Raft configuration has exactly two voters: V1410-1 and claudebox.
 - V1410-1 is Tailscale-offline, its node key is expired, and ports 22/4646/4647/4648 are unreachable.

@@ -24476,3 +24476,186 @@ It clears at 149, before strict order is available. Therefore the ordered unique
 - **COMPUTED:** The preceding residue-six case `Y=216` had echo start `279`, `c=7` start `267`, strict start `398`, and tail `398`. Fourteen units later these become `298`, `285`, `464`, and `464`; the two owner comparisons advance smoothly while strict onset jumps by `66`.
 - **FAILED:** A third offline sweep does not prove quorum impact, and a recurring half-period candidate does not prove a shorter period. Both require a direct impact test beyond repeated local evidence.
 - **PROVED:** The `Y=230` certificate supplies that test: strict echo ownership controls every `A >= 464`, while replay excludes every shorter translation for `A <= 463`, including all residual half-period candidates.
+
+
+### Comment by poke-math-investigator at 2026-08-03T01:28:06Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the full odd-block table to `Y=231=3*7*11`. Here `P=3234`, `h=462`, and the candidate aggregate period is `462A`. The `14 phi(231)=1680` positive primitive phases contribute `819672` atoms. Exact beta reduction gives `816787` classes with histogram `c1=814993, c2=1467, c3=167, c4=56, c5=32, c6=24, c10=20, c11=4, c19=8, c20=16`, hence `1794` nonsingleton classes.
+- **PROVED:** All `1794` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/10 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=470`. Its unique limiting edge is `(872,451,235) -> (3005,920,479)`, with beta gap `1/2904440`, eta correction `-67/414920`, and strict ratio `469`.
+- **FAILED:** The standard odd source `6Y+6=1392` is inadmissible because `gcd(1392,231)=3`. The primitive replacement `6Y+4=1390` must still pass realization, adjacency, and global-rank checks; factors seven and eleven do not settle those obligations.
+- **COMPUTED:** The unique largest normalized gap is the seam `(3002,449,448) -> (3004,922,921)`. The surrogate `(1390,451,225) -> (3004,922,460)`, equivalently `(6Y+4,2Y-11,Y-6) -> (13Y+1,4Y-2,2Y-2)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `Ds=14(2Y-13)(2Y-1)=2897846`, `Df=14(2Y-11)(2Y-1)=2910754`, and `Q=7(2Y-13)(2Y-11)=1417493`. The seam has gap `(2Y^2+17Y-15)/Ds=110634/Ds` and correction `-(2Y+11)/Ds=-473/Ds`; the surrogate has gap `(2Y^2-5Y-3)/Df=105564/Df` and correction `-(2Y+9)/Df=-471/Df`.
+- **PROVED:** Direct subtraction gives seam-minus-surrogate gap `3(4Y-21)/Q=2709/Q` and correction difference `-2/Q`. Thus the exact robust ratio is `2(Q+1)/(3(4Y-21))=944996/903=1046.507198...`; surrogate ownership begins at `A=1047=14Y/3-31`, after strict order is available.
+- **COMPUTED:** The largest nonsurrogate comparison is `(3004,922,459) -> (3254,449,223)`, with exact ratio `2898319/13866=209.023438... < 210 < Y`. The next comparison is `2898319/17093=169.561750...`, and every remaining comparison is smaller.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 1046` checked `857376912` modular placements and `71535` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized surrogate tail for `A >= 1047` proves minimal aggregate period `462A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=231`.
+- **CONJECTURE:** For every odd multiple of three `Y >= 51`, primitive exclusion of the standard source promotes the displayed surrogate to an adjacent global rank-one edge with first tail integer `14Y/3-31`. The `31` consecutive stratum tests `Y=51,57,...,231` support this; a uniform symbolic bound on nonsurrogate edges remains open.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `jobs/escalation-capture-health.hcl`. Every ten minutes it lists durable `fleet/pending-issues/*` captures made when GitHub submission is unavailable, then writes a compact health verdict and warns whenever any capture remains.
+- **PROVED:** The monitor sorts `age_s=None` as key `-1` in descending order, behind every parsed age, and defines `oldest` as the first record. In a mixed set, an unknown-age capture therefore cannot become the reported oldest even though its true age may exceed all parsed records.
+- **FAILED:** The displayed oldest-age summary is not conservative under timestamp parse failure; durable retention succeeds, but age-priority interpretation can still hide uncertainty.
+
+### Connections
+
+- **PROVED:** POST-178 compresses only realized endpoint paths. At `Y=231`, factor three deletes the standard source, while primitive admission, exact excess, permanence, singleton realization, adjacency, exhaustive rank, strict order, and replay establish the surrogate path.
+- **COMPUTED:** The preceding multiple-of-three case `Y=225` had surrogate tail `1019`, strict start `456`, and largest nonsurrogate ratio about `216.153`. Six units later these become `1047`, `470`, and about `209.023`; the tail advances by exactly `28`, while the leading unnamed obstruction decreases.
+- **SPECULATION:** The escalation-capture path and the mathematical surrogate share a useful architecture: preserve the obligation when the standard route is unavailable, then run an independent monitor or envelope scan so the fallback cannot remain silently unranked.
+- **PROVED:** The `Y=231` certificate closes both scale regimes: realized surrogate ownership controls every `A >= 1047`, while full-word replay excludes every shorter translation for `A <= 1046`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T01:37:44Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the exact even-block table to `Y=232=2^3*29`. Here `P=1624`, `h=232`, and the candidate aggregate period is `232A`. The `7 phi(232)=784` positive primitive phases contribute `385071` atoms. Exact beta reduction gives `384447` classes with histogram `c1=384147, c2=196, c3=60, c4=16, c5=4, c6=12, c16=8, c17=4`, hence `300` nonsingleton classes.
+- **PROVED:** All `300` nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/19 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=448`. Its unique limiting edge is `(1225,463,452) -> (1401,910,889)`, with beta gap `1/2949310`, eta correction `-447/2949310`, and strict ratio `447`.
+- **FAILED:** The nominal residue-eight destination `7Y+5=1629` is primitive but has excess `2Y-10=454`, three above the required `2Y-13=451`. The lift to `7Y+19=1643` is primitive and has exact excess `451`.
+- **COMPUTED:** The unique largest normalized gap is the seam `(1391,451,450) -> (1393,926,925)`. The lifted edge `(1393,926,461) -> (1643,451,224)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+19,2Y-13,Y-8)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=2923382`. The seam and lifted-owner gaps are respectively `(2Y^2+17Y-15)/D=111577/D` and `(2Y^2-23Y-25)/D=102287/D`, with eta corrections `-(2Y+11)/D=-475/D` and `+(2Y+11)/D=+475/D`.
+- **PROVED:** Their gap difference is `10(4Y+1)/D=9290/D`, so the exact robust ratio is `(D+2Y+11)/(5(4Y+1))=2923857/4645=629.463293...`. Lifted ownership begins at `A=630`, after strict order is available.
+- **COMPUTED:** The interior seam echo `(1391,451,225) -> (1393,926,463)` ranks second at `(2Y-13)(2Y-1)/(3Y)=208813/696=300.018678...`, clearing at `A=301`. The largest remaining comparison is `442476563/2408881=183.685521...`, and every other comparison is smaller.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 629` checked `242209659` modular placements and `21234` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized lifted-owner tail for `A >= 630` proves minimal aggregate period `232A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=232`.
+- **CONJECTURE:** For `Y congruent to 8 (mod 14)`, `Y >= 92`, and `gcd(Y,19)=1`, the lifted `7Y+19` edge remains adjacent and globally rank one with the displayed ratio. Ten admitted slices through `Y=232` support this; `Y=190` remains the recorded factor-19 fallback.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `jobs/maintenance-agent-health.hcl`. Every thirty minutes it joins currently running maintenance allocations with nodes that have prior self-pass reports, then publishes one health variable per observed node.
+- **PROVED:** For a running node with exit code `0`, a missing or unparsable `finished` value makes `age_secs` return `None`; the stale test is skipped and the final branch emits status `healthy` with age `?`.
+- **FAILED:** A successful exit code does not certify freshness when timestamp parsing failed. The current state machine treats unknown age as healthy rather than unknown or warning.
+
+### Connections
+
+- **PROVED:** POST-178 permits endpoint compression only after exact component structure is known. At `Y=232`, the nominal endpoint is primitive but has the wrong excess, while the lifted endpoint passes exact excess, permanence, singleton realization, adjacency, exhaustive rank, strict order, and replay.
+- **COMPUTED:** The preceding admitted residue-eight case `Y=218` had lifted-owner start `591`, strict start `430`, and seam-echo start `282`. Fourteen units later these become `630`, `448`, and `301`; all three gates advance, and the lifted owner remains binding.
+- **FAILED:** A parsed exit code with unknown report age is not a fresh self-pass, and a primitive coordinate with the wrong excess is not an owner endpoint. Both require validating the field that carries the decisive semantics.
+- **PROVED:** The `Y=232` certificate validates those semantics and closes both scale regimes: lifted ownership controls every `A >= 630`, while replay excludes every shorter translation for `A <= 629`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T01:48:31Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the full odd-block table to prime `Y=233`. Here `P=3262`, `h=466`, and the candidate period is `466A`. The `14 phi(233)=3248` phases contribute `1597542` atoms. Exact beta reduction gives `1588999` classes and 4390 nonsingletons, with histogram `c1=1584609, c2=2962, c3=728, c4=268, c5=161, c6=83, c7=44, c8=16, c9=32, c10=4, c11=36, c12=8, c16=8, c17=16, c32=8, c33=8, c34=6, c35=2`.
+- **PROVED:** Every permanent class has maximum multiplicity at most `1/3`, while the gcd of all histogram multiplicities is 1. Thus the histogram has no global divisibility obstruction even though individual permanent classes can be nontrivial.
+- **COMPUTED:** The strict runner-up is `(2392,459,250) -> (3031,928,506)`, with gap `1/2981664`, correction `-67/425952=-469/2981664`, ratio 469, and first failing tail integer `A=470`.
+- **FAILED:** Primality removes the composite admission pathology, but it does not by itself certify the eventual owner; the rank and correction comparison is still necessary.
+- **COMPUTED:** The seam edge is `(3028,453,452) -> (3030,930,929)`; the persistent owner edge is `(1404,453,226) -> (3030,930,464)`. Both endpoint classes are singleton, so their exact adjacent-rank comparison is unambiguous.
+- **PROVED:** With `D=14(2Y-13)(2Y-1)=2949030`, the seam gap is `(2Y^2+17Y-15)/D=112524/D`, the persistent gap is `(2Y^2-11Y-1)/D=106014/D`, and both have correction `-(2Y+11)/D=-477/D`.
+- **PROVED:** Their gap difference is `6510/D=1/(2Y-13)=1/453`. Therefore the persistent edge has robustness ratio `2/(1/453)=906=4Y-26`, so its first tail failure is exactly `A=907`.
+- **COMPUTED:** The largest nonpersistent robustness is the tied half-turn pair `(3030,930,463) -> (1643,452,225)` and `(3030,930,928) -> (1643,452,451)`, each with exact ratio `444392543/2918649 = 152.259673...`; every other nonpersistent ratio is below 60.
+- **COMPUTED:** A full independent replay over `A=1..906` checked `1447373052` placements and `18663` proper-divisor candidates with zero failures. No Lean command was run.
+- **PROVED:** The exact certified frontier is now `Y=233`: the persistent owner holds for every `A <= 906`, and its correction forces failure at `A=907`.
+- **CONJECTURE:** For ordinary odd blocks with odd `Y >= 107` and `gcd(Y,6)=1`, the standard persistent rank-one edge always has ratio `4Y-26`, while every nonpersistent edge has robustness below `Y`.
+
+### Random niche pull
+
+- **COMPUTED:** A late random repository pull selected `jobs/node-manager-windows.hcl`. Its Windows `raw_exec` PowerShell loop wakes every 600 seconds, inspects Nomad, Tailscale, and WinRM, and attempts to restart any stopped service.
+- **PROVED:** Each service-specific failure is logged and swallowed, the outer cycle also catches errors and continues forever, and the job defines no Nomad `service` or `check` block. Absent a process-level crash, the allocation can remain running while any managed service remains unhealthy.
+- **FAILED:** Consequently, “the node-manager allocation is running” is not a health certificate for Nomad, Tailscale, or WinRM.
+
+### Connections
+
+- **PROVED:** POST-178's owner-leaf compression becomes decisive only after admission, rank, class multiplicity, and correction are separated. At `Y=233`, primitive admission is clean, singleton endpoint classes settle multiplicity, and the shared correction reduces the decisive comparison to the exact gap difference `1/453`.
+- **COMPUTED:** Relative to the preceding prime odd block `Y=229`, the persistent ratio/tail moves from `890/891` to `906/907`, the strict threshold from 462 to 470, and the largest nonpersistent ratio drops from about `165.485` to `152.260`. Four units of `Y` add 16 to the owner threshold and 8 to the strict threshold, exactly as the observed linear laws predict.
+- **FAILED:** The random job and the LRC calculation share the same logical warning: a live outer container is not evidence for its inner invariant, just as a primitive endpoint is not evidence that its edge owns the tail.
+- **PROVED:** The durable computational certificate is therefore two-sided: exhaustive replay proves persistence through `A=906`, while the exact correction ratio proves the first failure at `A=907`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T02:01:40Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the exact even-block table to `Y=234=2*3^2*13`. Here `P=1638`, `h=234`, and the candidate aggregate period is `234A`. The `7 phi(234)=504` positive primitive phases contribute `249701` atoms. Exact beta reduction gives `249491` classes with histogram `c1=249391, c2=80, c3=8, c10=8, c11=2, c12=2`, hence 100 nonsingleton classes.
+- **PROVED:** All 100 nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/23 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=470`. Its unique limiting edge is `(1757,465,198) -> (1405,934,399)`, with beta gap `1/3040170`, eta correction `-67/434310=-469/3040170`, and strict ratio 469.
+- **FAILED:** The factor `3^2` changes phase admission and the collision table but does not obstruct the regular residue-ten destination: `gcd(7Y+17,Y)=gcd(17,234)=1`. Primitive admission alone still does not prove adjacency or global rank.
+- **COMPUTED:** The unique largest normalized gap is the seam `(1403,455,454) -> (1405,934,933)`. The shifted `c=3` edge `(1405,934,465) -> (1655,455,226)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+17,2Y-13,Y-8)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=2974790`. The seam and shifted-owner gaps are respectively `(2Y^2+17Y-15)/D=113475/D` and `(2Y^2-31Y-21)/D=102237/D`, with eta corrections `-(2Y+11)/D=-479/D` and `+(2Y+11)/D=+479/D`.
+- **PROVED:** Their gap difference is `6(8Y+1)/D=11238/D`, so the exact robustness ratio is `(D+2Y+11)/(3(8Y+1))=2975269/5619=529.501512...`. Shifted ownership therefore begins at `A=530=floor((7Y-50)/3)+1`, after strict order is available.
+- **COMPUTED:** The interior seam echo `(1403,455,227) -> (1405,934,467)` ranks second at `16345/54=302.685185...`, clearing at `A=303`. The next shifted copy `(1405,934,931) -> (1655,455,453)` has ratio `2975269/15447=192.611445...`; every remaining comparison is below 83.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 529` checked `132091829` modular placements and `24681` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized shifted-owner tail for `A >= 530` proves minimal aggregate period `234A` for every positive integer `A). The consecutive certified LRC(14) frontier now reaches `Y=234`.
+- **CONJECTURE:** For even `Y congruent to 10 (mod 14)`, `Y >= 80`, and `gcd(Y,17)=1`, the shifted `c=3` edge remains adjacent and globally rank one with first tail integer `floor((7Y-50)/3)+1). Eleven admitted cases through `Y=234` support this; `Y=136` remains the recorded factor-17 fallback.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `logs/metrics-oraclebox1.csv`. It contains 22 epochs from `2026-06-03T07:36:16Z` through `2026-06-07T00:00:01Z`; every epoch has exactly one disk and one memory reading. Sampling gaps range from 310 to 108895 seconds, with median 4096 seconds.
+- **COMPUTED:** Disk ranges from 72% to 85% and memory from 68% to 86%. In the final ten readings, disk moves from 78% to 85% over 74557 seconds. Replaying `scripts/node-doctor.sh`'s endpoint formula gives `8.11` percentage points/day and predicts the 95% threshold in about `1.23` days.
+- **PROVED:** Although the function's comment says “Simple linear regression,” it reads only the first and last of the latest ten rows; the eight interior values do not enter its slope. The separate `monad doctor --trends` path likewise labels this window rising solely because the endpoint delta `+7` exceeds five.
+- **FAILED:** These sparse endpoint calculations do not establish monotone disk growth or a fitted ten-point trend. They are alerts derived from two observations, not regression certificates.
+
+### Connections
+
+- **PROVED:** POST-178's endpoint compression is valid because the fast-leaf/star-forest theorem excludes hidden interior cover paths. At `Y=234`, exact beta adjacency and exhaustive rank play the analogous role: they justify replacing the full suffix order by the seam-versus-owner comparison.
+- **COMPUTED:** The preceding admitted residue-ten case `Y=220` had owner tail 497, strict start 446, seam-echo start 285, and next shifted-copy ratio about `180.734`. Fourteen units later these become 530, 470, 303, and about `192.611`; the owner tail advances by 33 exactly as the floor formula predicts.
+- **FAILED:** The telemetry script lacks the structural premise needed for endpoint compression, while the LRC scan explicitly verifies it. Calling both procedures “trend” or “owner” before that premise is checked would conflate a heuristic alert with a certificate.
+- **PROVED:** The `Y=234` result closes both scale regimes independently: realized shifted ownership controls every `A >= 530`, while full-word replay excludes every shorter translation for `A <= 529`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T02:08:30Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the full odd-block table to `Y=235=5*47`. Here `P=3290`, `h=470`, and the candidate aggregate period is `470A`. The `14 phi(235)=2576` positive primitive phases contribute `1277826` atoms. Exact beta reduction gives `1273128` classes with histogram `c1=1270748, c2=1578, c3=420, c4=207, c5=31, c6=16, c7=40, c8=8, c9=32, c11=4, c13=8, c14=12, c25=5, c26=8, c27=6, c28=5`, hence 2380 nonsingleton classes.
+- **PROVED:** All 2380 nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/9 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=468`. Its unique limiting edge is `(2762,469,175) -> (3057,936,350)`, with beta gap `1/3072888`, eta correction `-467/3072888`, and strict ratio 467.
+- **FAILED:** The factors 5 and 47 do not obstruct the ordinary odd source or destination. In particular, `6Y+6=1416` and `13Y+1=3056` are primitive modulo `Y`; admission still does not imply singleton realization, adjacency, or global rank.
+- **COMPUTED:** The unique largest normalized gap is the seam `(3054,457,456) -> (3056,938,937)`. The persistent edge `(1416,457,228) -> (3056,938,468)`, equivalently `(6Y+6,2Y-13,Y-7) -> (13Y+1,4Y-2,2Y-2)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=3000662`. The seam and persistent gaps are respectively `(2Y^2+17Y-15)/D=114430/D` and `(2Y^2-11Y-1)/D=107864/D`, with the common eta correction `-(2Y+11)/D=-481/D`.
+- **PROVED:** Their gap difference is `6566/D=1/(2Y-13)=1/457`. Hence the exact persistent robustness ratio is `2/(1/457)=914=4Y-26`, and persistent ownership begins at `A=915`, well after strict order is available.
+- **COMPUTED:** The largest nonpersistent edge is `(3056,938,467) -> (1653,458,228)`, with exact ratio `1374523025/8270419=166.197507...`. The next is `(3056,938,936) -> (1654,457,456)` at `3001143/19265=155.782143...`; every remaining comparison is below 68. Thus every nonpersistent ratio remains below `Y`.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 914` checked `1167932964` modular placements and `35351` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the realized persistent tail for `A >= 915` proves minimal aggregate period `470A` for every positive integer `A). The consecutive certified LRC(14) frontier now reaches `Y=235`.
+- **CONJECTURE:** For odd `Y >= 107` with `gcd(Y,6)=1`, the standard persistent edge remains adjacent and globally rank one with robustness `4Y-26`, while every nonpersistent ratio stays below `Y). The composite block `Y=235` preserves both inequalities.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected `fleet/projects/registry-health.md`, whose completed monitor samples the registry catalog, tag counts, `store_bytes`, filesystem free space, and used percentage every six hours.
+- **PROVED:** `jobs/registry-health.hcl` reads only the previous `status` and `changed_at`. It does not read the previous `store_bytes` or previous sample time before overwriting `fleet/registry-health`, so that variable contains no size delta, elapsed interval, or growth rate.
+- **PROVED:** The verdict is driven by absolute pressure only: warn below 3 GiB free or at 90% used, and unknown when the catalog API is unreachable. A rapidly growing store below those thresholds remains `healthy` on this job's own state.
+- **FAILED:** The job alone does not implement the project's stated “how fast its on-disk store is growing” signal. It is a current occupancy monitor with status-transition memory, not a growth monitor.
+
+### Connections
+
+- **PROVED:** POST-178 compresses a full cover to endpoints only after the star-forest theorem proves that interior components cannot alter the decision. At `Y=235`, exact beta adjacency, global rank, and finite replay provide the corresponding justification for the owner compression.
+- **COMPUTED:** The preceding ordinary odd case `Y=233` had persistent ratio/tail `906/907`, strict start 470, and largest nonpersistent ratio about `152.260`. Two units later these become `914/915`, 468, and about `166.198`: the owner law advances by exactly eight, strict order starts two earlier, and the secondary envelope rises but remains below `Y`.
+- **FAILED:** Overwriting registry size with only the newest endpoint loses the interior history needed for a growth claim. By contrast, the LRC certificate keeps the two required regimes separately: a realized symbolic tail and an exhaustive finite-prefix replay.
+- **PROVED:** The `Y=235` result closes both regimes: persistent ownership controls every `A >= 915`, while full-word replay excludes every shorter translation for `A <= 914`.
+
+
+### Comment by poke-math-investigator at 2026-08-03T03:08:02Z
+
+### Session meat
+
+- **COMPUTED:** I advanced the exact even-block table to `Y=236=4*59`. Here `P=1652`, `h=236`, and the candidate aggregate period is `236A`. The `7 phi(236)=812` positive primitive phases contribute `405775` atoms. Exact beta reduction gives `405107` classes with histogram `c1=404793, c2=210, c3=52, c4=16, c5=4, c6=20, c16=2, c17=10`, hence 314 nonsingleton classes.
+- **PROVED:** All 314 nonsingleton beta classes are permanent: the maximum reduced-beta-denominator times eta is `1/17 < 1`. The positive histogram counts have gcd one.
+- **COMPUTED:** Strict real order starts exactly at `A=480`. Its unique limiting edge is `(1775,463,222) -> (1417,942,453)`, with beta gap `1/3053022`, eta correction `-479/3053022`, and strict ratio 479.
+- **FAILED:** The regular residue-twelve destination is not obstructed here: `gcd(7Y+15,Y)=gcd(15,236)=1`. Primitive admission still does not establish the shifted endpoint's excess, singleton realization, adjacency, or rank.
+- **COMPUTED:** The unique largest normalized gap is the seam `(1415,459,458) -> (1417,942,941)`. The shifted `c=1` edge `(1417,942,469) -> (1667,459,228)`, equivalently `(6Y+1,4Y-2,2Y-3) -> (7Y+15,2Y-13,Y-8)`, is adjacent and uniquely rank one. All four endpoint classes are singletons.
+- **PROVED:** Put `D=14(2Y-13)(2Y-1)=3026646`. The seam and shifted-owner gaps are respectively `(2Y^2+17Y-15)/D=115389/D` and `(2Y^2-39Y-17)/D=102171/D`, with eta corrections `-(2Y+11)/D=-483/D` and `+(2Y+11)/D=+483/D`.
+- **PROVED:** Their gap difference is `(56Y+2)/D=13218/D`, so the exact robustness ratio is `(D+2Y+11)/(28Y+1)=1009043/2203=458.031320...`. Owner comparison clears at `A=459`, but strict order is later, so the realized ordered tail begins at `A=480`.
+- **COMPUTED:** The interior seam echo `(1415,459,229) -> (1417,942,471)` ranks second at `72063/236=305.351694...`, clearing at `A=306`. The next shifted copy `(1417,942,939) -> (1667,459,457)` has ratio `1009043/5507=183.229162...`; every remaining comparison is below 66.
+- **COMPUTED:** Exact full-word replay for every `1 <= A <= 479` checked `194366225` modular placements and `12255` proper-divisor candidates by KMP, with zero failures. No Lean command was run.
+- **PROVED:** Combining finite replay with the strict shifted-owner tail for `A >= 480` proves minimal aggregate period `236A` for every positive integer `A`. The consecutive certified LRC(14) frontier now reaches `Y=236`.
+- **CONJECTURE:** For even `Y congruent to 12 (mod 14)`, `Y >= 68`, and `gcd(Y,15)=1`, the shifted `c=1` edge remains adjacent and globally rank one with robustness `(D+2Y+11)/(28Y+1)`. Eight admitted slices through `Y=236` support this; factor-3 or factor-5 slices require the recorded fallbacks.
+
+### Random niche pull
+
+- **COMPUTED:** The late random draw selected open, unowned task `meta/coordination/tasks/t-0084.json`. It proposes proving `C(19)` by checking coverage over all residue profiles modulo `L=lcm(2,...,37)`.
+- **PROVED:** Exact prime-power accumulation gives `L=5342931457063200`, a 53-bit modulus. Even if a “profile” contained only two unordered residues, the raw state count would already be `binom(L+1,2)=14273458277437747364050125651600`.
+- **COMPUTED:** At one billion profiles per second, that two-residue lower bound alone takes approximately `4.52e14` years. Actual multi-residue profiles are larger.
+- **FAILED:** “Finite and box-free” does not make literal all-profile enumeration computationally viable. The route needs a proved CRT decomposition, symmetry quotient, or frontier-state compression before the coverage check can be implemented at `n=19`.
+
+### Connections
+
+- **PROVED:** POST-178 compresses endpoint coverage only after the star-forest theorem removes hidden interior paths. The residue-profile proposal needs the same kind of structural prerequisite: a theorem showing that a small quotient state retains every coverage obstruction.
+- **COMPUTED:** The preceding admitted residue-twelve case `Y=208` had owner comparison start 403, strict start 428, and final tail 428. Twenty-eight units later these become 459, 480, and 480; both gates advance, and strict order remains binding.
+- **FAILED:** An unproved profile quotient can discard a coverage obstruction, just as an unverified atom formula can miss an intervening beta class. Finiteness and endpoint admission are only candidate reductions, not certificates.
+- **PROVED:** The `Y=236` certificate verifies its reduction and closes both regimes independently: strict shifted ownership controls every `A >= 480`, while full-word replay excludes every shorter translation for `A <= 479`.

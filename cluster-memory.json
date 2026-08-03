@@ -72,14 +72,14 @@
     "value": "DONE-2026-07-18T13:19:04Z"
   },
   "health:cluster-quorum": {
-    "updated": 1785712237.8542626,
+    "updated": 1785726967.4250722,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-02T23:10:37Z STILL LOST 1of2 voters; claudebox sole alive voter Candidate; owner-blocked GH #8/#6"
+    "value": "DONE-2026-08-03T03:16:07Z STILL LOST 1of2 voters; claudebox sole alive Candidate; v1410-1 0/5 pongs; owner-blocked GH #8/#6, t-0362"
   },
   "health:death-star": {
-    "updated": 1785717129.5653503,
+    "updated": 1785724635.1403809,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T00:32:09Z"
+    "value": "DONE-2026-08-03T02:37:15Z"
   },
   "health:death-star:bigo-server-20260717T090030Z": {
     "updated": 1784278857.0953987,
@@ -102,9 +102,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:eliotts-mac-mini": {
-    "updated": 1785717129.631412,
+    "updated": 1785726967.4894955,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T00:32:09Z"
+    "value": "DONE-2026-08-03T03:16:07Z RECOVERED-ish: pongs, client API answers, disk 95.56% 10.9GB free (was 99.845%/380MB); GH #9 de-escalated to watch"
   },
   "health:eliotts-mac-mini:V1410-1-20260603T080327Z": {
     "updated": 1780473807.4877028,
@@ -157,9 +157,9 @@
     "value": "DONE-2026-06-05T17:33:00Z-escalated-t-0087"
   },
   "health:oraclebox1": {
-    "updated": 1785717129.6947165,
+    "updated": 1785724635.307846,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T00:32:09Z"
+    "value": "DONE-2026-08-03T02:37:15Z"
   },
   "health:oraclebox1:Eliotts-Mac-mini.local-20260617T035446Z": {
     "updated": 1781668486.390986,
@@ -212,9 +212,9 @@
     "value": "DONE-2026-07-22T00:37:37Z"
   },
   "health:v1410-1": {
-    "updated": 1785719529.759121,
+    "updated": 1785724635.0573106,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T01:12:09Z-not-on-owner-LAN-owner-blocked"
+    "value": "DONE-2026-08-03T02:37:15Z"
   },
   "health:v1410-1:bigo-server-20260717T090030Z": {
     "updated": 1784278856.8960593,
@@ -237,9 +237,9 @@
     "value": "DONE-2026-07-18T19:31:00Z"
   },
   "health:windesk": {
-    "updated": 1785717129.7775426,
+    "updated": 1785726967.4573264,
     "updated_by": "claudebox",
-    "value": "DONE-2026-08-03T00:32:09Z"
+    "value": "DONE-2026-08-03T03:16:07Z reachable 2/5 pongs but :4646 CLOSED = Nomad down on-box; queue delivery leader-blocked, t-0365 stands"
   },
   "health:windesk:bigo-server-20260717T090030Z": {
     "updated": 1784278857.1562996,

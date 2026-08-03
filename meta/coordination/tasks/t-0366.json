@@ -4,7 +4,9 @@
   "scope": "2026-08-02 claudebox sweep follow-up to t-0362..t-0365: CRITICAL Nomad quorum remains 1/2 committed voters {v1410-1,claudebox}; claudebox is alive/Candidate and v1410-1 rejects Tailscale ping because its node key expired (GH #8), so owner-interactive re-auth/start is the only safe quorum repair. death-star and oraclebox1 fail all 5 Tailscale probes; windesk pongs but Nomad :4646 times out (GH #10). bigo-server and eliotts-mac-mini answer Tailscale plus Nomad HTTP 200, but leader-dependent Ready/Eligible and maintenance-agent coverage remain unobservable. NEW/URGENT: mac-mini root disk is 99.86% used with only ~343 MB free; repeated Nomad client GC reclaimed nothing and remote SSH is unavailable (GH #11), so perform on-box cleanup immediately. No restart/redeploy attempted because no leader can schedule it and restarting healthy claudebox would not restore a majority.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "superseded",
   "owner": null,
-  "parent": null
+  "parent": null,
+  "superseded_by": "t-0372",
+  "note": "Duplicate quorum-sweep narrative; same owner-blocked state consolidated into t-0372. Actionable owner items remain t-0362 (v1410-1 re-auth), t-0363 (oraclebox1), t-0364 (death-star), t-0365 (windesk Nomad), t-0370 (bigo-server agent)."
 }

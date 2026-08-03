@@ -4,7 +4,9 @@
   "scope": "2026-08-02T18:36Z claudebox sweep follow-up to t-0359: CRITICAL Nomad quorum remains lost at 1/2 committed voters {v1410-1,claudebox}; claudebox is alive/Candidate and v1410-1 rejects Tailscale ping because its node key expired. Owner-interactive re-auth/start of v1410-1 while preserving Raft data is the only safe recovery; do not perform single-voter surgery. death-star and oraclebox1 fail all five Tailscale probes and :4646 is unavailable; oraclebox1 is not a committed voter. windesk pongs direct but Nomad :4646 times out, so use its existing on-box restart queue. bigo-server and eliotts-mac-mini Nomad APIs are live; bigo maintenance telemetry is live. Mac AllocDir is critical at 98.987% used / 2.484GB free; a claimed PUT /v1/client/gc returned 200 and reclaimed nothing, so perform identified on-box cleanup only. Claudebox disk is 9%, repo is synced but dirty work was preserved, local Nomad and both engines are healthy, and its maintenance loop invoked this sweep. No leader blocks authoritative Ready+Eligible and maintenance-agent reconciliation; after v1410-1 returns verify all seven and deploy only confirmed gaps.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "superseded",
   "owner": null,
-  "parent": "t-0359"
+  "parent": "t-0359",
+  "superseded_by": "t-0372",
+  "note": "Duplicate quorum-sweep narrative; same owner-blocked state consolidated into t-0372. Actionable owner items remain t-0362 (v1410-1 re-auth), t-0363 (oraclebox1), t-0364 (death-star), t-0365 (windesk Nomad), t-0370 (bigo-server agent)."
 }

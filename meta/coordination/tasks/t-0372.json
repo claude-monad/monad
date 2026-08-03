@@ -1,0 +1,10 @@
+{
+  "id": "t-0372",
+  "type": "infra",
+  "scope": "LIVE CONSOLIDATED cluster-health status (supersedes t-0358..t-0371 sweep narratives; updated 2026-08-03T03:0xZ by claudebox). CRITICAL: Nomad quorum remains lost at 1/2 committed voters {v1410-1, claudebox}. claudebox is alive but Candidate; every read/write returns 'No cluster leader'. ROOT CAUSE + ONLY FIX: v1410-1's Tailscale node key expired ~2026-07-02, needs owner-interactive re-auth then Nomad start preserving Raft data (t-0362, GH #8/#6). Do NOT attempt single-voter peers.json surgery. Peer state this pass: v1410-1, oraclebox1, death-star all 0/5 tailscale pongs = genuinely down (t-0363, t-0364). windesk pongs 2/5 but :4646 CLOSED = up on tailnet with Nomad down, on-box restart needed (t-0365). bigo-server healthy client, disk 79.9%/22.3GB free, but no on-box agent drains its queue (t-0370). CORRECTION to the pre-consolidation text: eliotts-mac-mini is NOT unreachable and its disk crisis has EASED - it pongs, its client API answers, and disk is 95.56% with 10.9GB free (was 99.845%/380MB in t-0371), so the GH #9 emergency has de-escalated to a watch item. Leader loss still blocks authoritative Ready/Eligible, Nomad-var queue delegation, and maintenance-agent reconciliation, so all peer fixes are git-backed escalations only. PROCESS NOTE: sweeps must UPDATE this task, not emit a new duplicate - the t-0358..t-0372 chain added 15 near-identical tasks to a 218-task open backlog and buried the 5 real items.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}

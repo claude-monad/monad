@@ -4,7 +4,9 @@
   "scope": "2026-08-02T04:59:04Z claudebox sweep follow-up to t-0358: CRITICAL Nomad quorum remains lost at 1/2 committed voters {v1410-1,claudebox}; claudebox is alive/Candidate and v1410-1 has an expired Tailscale key, so owner-interactive re-auth/start preserving Raft data is the only safe recovery. death-star and oraclebox1 fail all five Tailscale probes and :4646; windesk pongs but :4646/:5646 are down. eliotts-mac-mini Nomad and both engines are reachable but AllocDir regressed to 98.727% used / 3.121 GB free and its cached maintenance alloc returns No path to node; prior client GC reclaimed nothing, so perform only identified host-side safe cleanup and durable server-list repair. bigo-server Nomad, both engines, and live maintenance telemetry are healthy; claudebox disk 9%, Git 0/0 with existing work preserved, local Nomad and maintenance loop live, both engines advertised. No leader blocks authoritative Ready+Eligible and maintenance-agent reconciliation; after v1410-1 returns verify all seven and deploy only confirmed gaps. Do not perform single-voter Raft surgery.",
   "repo": "eliott-monad/monad",
   "payload": {},
-  "status": "open",
+  "status": "superseded",
   "owner": null,
-  "parent": "t-0358"
+  "parent": "t-0358",
+  "superseded_by": "t-0372",
+  "note": "Duplicate quorum-sweep narrative; same owner-blocked state consolidated into t-0372. Actionable owner items remain t-0362 (v1410-1 re-auth), t-0363 (oraclebox1), t-0364 (death-star), t-0365 (windesk Nomad), t-0370 (bigo-server agent)."
 }

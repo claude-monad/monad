@@ -1,7 +1,7 @@
 {
   "id": "t-0374",
   "type": "infra",
-  "scope": "eliotts-mac-mini disk remains CRITICAL and volatile: 97.692% used / 5.658GB free of 245GB at 2026-08-03T14:01Z (up from 4.75GB at 13:20Z but still unsafe). Five consecutive zero-reclaim client GC passes rule out reclaimable Nomad alloc dirs; cached maintenance allocation is absent locally, so this needs an on-box shell. Keep GH #9 critical. Task file: maintenance/eliotts-mac-mini/queue/disk-cleanup-20260801T081500Z.md",
+  "scope": "eliotts-mac-mini disk remains CRITICAL and volatile: 97.169% used / 6.939GB free of 245GB at 2026-08-03T17:24Z, down 1.185GB since 16:42Z. Five consecutive zero-reclaim client GC passes rule out reclaimable Nomad alloc dirs; cached maintenance allocation still returns 404 locally, so this needs an on-box shell. Keep GH #9 critical. Task file: maintenance/eliotts-mac-mini/queue/disk-cleanup-20260801T081500Z.md",
   "repo": "eliott-monad/monad",
   "payload": {},
   "status": "open",

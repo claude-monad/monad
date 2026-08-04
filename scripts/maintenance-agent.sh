@@ -212,7 +212,14 @@ EOF
   local out; out="$(engine_run "$pf" "${SELF_TIMEOUT:-600}" 2>&1)"; rc=$?
   nomad var put -force "$LAST" node="$NODE" engine="$ENGINE" exit_code="$rc" \
     finished="$(date -u +%Y-%m-%dT%H:%M:%SZ)" summary="$(printf '%s' "$out" | tail -40)" >/dev/null 2>&1 || true
-  event "maintenance" "self-pass" "$([ "$rc" = 0 ] && echo ok || echo fail)" "rc=$rc"
+  if [ "$rc" = 0 ]; then
+    event "maintenance" "self-pass" "ok" "rc=$rc"
+  else
+    # keep the error visible: without a Raft leader the nomad-var summary above is lost,
+    # so put the engine + output tail in the event itself
+    event "maintenance" "self-pass" "fail" \
+      "rc=$rc engine=$ENGINE err=$(printf '%s' "$out" | tail -5 | tr '\n\t' '  ' | head -c 300)"
+  fi
   rm -f "$pf"
 }
 

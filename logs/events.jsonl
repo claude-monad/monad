@@ -11372,3 +11372,20 @@
 {"ts":"2026-08-04T01:54:54Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
 {"ts":"2026-08-04T02:27:03Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
 {"ts":"2026-08-04T02:33:45Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"cluster-sweep","status":"degraded","detail":"quorum still 1/2 (v1410-1 TS key expired, owner-blocked GH#8); oraclebox1+death-star silent 57d (all 5 probes); windesk pings DERP 93ms but :4646 closed (queue tasks 07-17/07-31 pending); bigo-server client up disk 80%; mac-mini client up disk 97.1% (GH#9, queue task pending); self OK disk 10% engines claude+codex advertised repo synced; fix: self-pass fail events now record engine+err tail (takes effect on loop restart)"}
+{"ts":"2026-08-04T02:34:38Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"ok","detail":"rc=0"}
+{"ts":"2026-08-04T03:06:43Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-04T03:07:47Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-08-04T03:39:50Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-04T03:40:58Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-08-04T04:13:06Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-04T04:14:14Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-08-04T04:46:17Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-04T04:47:21Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-08-04T05:19:24Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-04T05:20:29Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-08-04T05:52:32Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-04T05:53:38Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-08-04T06:25:48Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-04T06:27:00Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"fail","detail":"rc=1"}
+{"ts":"2026-08-04T06:59:08Z","node":"claudebox","source":"maintenance-agent","type":"maintenance","action":"self-pass","status":"start","detail":""}
+{"ts":"2026-08-04T07:04:41Z","node":"claudebox","source":"maintenance-agent","type":"health","action":"cluster-sweep","status":"ok","detail":"self healthy (disk 10%, engines claude+codex advertised); bigo-server+mac-mini Nomad client APIs ok; windesk tailnet-down (5/5 probes failed, last seen ~3h, GH #10 + queue task standing); v1410-1/oraclebox1/death-star unchanged long-term down; quorum still 1/2 no leader, owner-blocked GH #8"}

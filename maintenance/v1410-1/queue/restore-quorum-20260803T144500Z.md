@@ -1,5 +1,10 @@
 # Restore v1410-1 and Nomad quorum
 
+> **Reconfirmed 2026-08-08T04:40Z:** claudebox remains the only visible server and reports
+> `Leader=false`; every leader-dependent node/job query returns `No cluster leader`.
+> `tailscale ping -c 5 100.75.75.39` reports an expired node key and `:4646` is unreachable.
+> Owner-interactive re-auth/start with the existing Raft data remains the only safe repair.
+
 > **Reconfirmed 2026-08-03T17:24Z:** claudebox is still the sole gossip member and is
 > `Candidate`; Raft still records exactly two voters, `{v1410-1, claudebox}`. All five
 > Tailscale probes to v1410-1 fail immediately because its node key is expired, and

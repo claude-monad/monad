@@ -1,0 +1,10 @@
+{
+  "id": "t-0379",
+  "type": "infra",
+  "scope": "2026-08-08T05:22:10Z claudebox revalidation of t-0378: CRITICAL Nomad quorum is still lost at 1/2 committed voters. claudebox is alive/candidate; v1410-1 rejects Tailscale access because its node key expired. Preserve existing Raft data; owner-interactive Tailscale re-auth plus Nomad start/verification on v1410-1 is the smallest safe recovery, with oraclebox1 power/Tailscale/Nomad restore as fallback. death-star and oraclebox1 failed all five Tailscale probes and :4646 is closed; windesk also failed all five probes and :4646 is closed. bigo-server is reachable, client-healthy, both engines advertised, live maintenance alloc present, disk 81.2%. eliotts-mac-mini is reachable/client-healthy with both engines advertised, but disk is 95.0% and its cached maintenance alloc is absent on the live client. No leader blocks authoritative node/job reconciliation, Nomad-var queue delegation, restart, or redeploy. Existing peer-local recovery queues remain in place; recheck Ready+Eligible and one maintenance allocation per roster node after quorum returns.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0378"
+}

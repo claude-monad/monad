@@ -1,5 +1,25 @@
 # Restore v1410-1 and Nomad quorum
 
+> **Reconfirmed 2026-08-08T23:40Z:** claudebox is still the sole alive server in the
+> two-voter Raft set. v1410-1's Tailscale node key remains expired and `:4646` is
+> closed. Preserve its Raft data; owner/on-box Tailscale re-authentication and Nomad
+> start remain the smallest safe quorum recovery.
+
+> **Reconfirmed 2026-08-08T22:59Z:** claudebox remains the sole alive server and the
+> committed voter set is still `{v1410-1, claudebox}` with no leader. v1410-1's
+> Tailscale node key is expired and `:4646` is closed. Owner/on-box re-authentication
+> and a Nomad start using the existing Raft data remain the smallest safe recovery.
+
+> **Reconfirmed 2026-08-08T17:22Z:** claudebox is still the sole alive server and the
+> committed voter set remains `{v1410-1, claudebox}` with no leader. v1410-1's Tailscale
+> node key is expired and `:4646` is closed. Owner/on-box re-authentication and restart
+> with the existing Raft data preserved remains the smallest safe recovery.
+
+> **Reconfirmed 2026-08-08T10:29Z:** claudebox is still the sole Nomad server and has no
+> leader. `tailscale ping -c 5 100.75.75.39` immediately reports an expired peer node key,
+> and `:4646` is unreachable. Preserve the existing Raft data and perform the owner/on-box
+> Tailscale re-authentication and Nomad start below; do not attempt single-voter recovery.
+
 > **Reconfirmed 2026-08-08T04:40Z:** claudebox remains the only visible server and reports
 > `Leader=false`; every leader-dependent node/job query returns `No cluster leader`.
 > `tailscale ping -c 5 100.75.75.39` reports an expired node key and `:4646` is unreachable.

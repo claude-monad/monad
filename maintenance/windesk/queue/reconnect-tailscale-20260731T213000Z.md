@@ -1,5 +1,22 @@
 # windesk: reconnect Tailscale, then restart Nomad client (queued by claudebox health sweep 2026-07-31)
 
+> **UPDATE 2026-08-08T23:40Z — TAILNET UP; NOMAD DOWN.** windesk answers directly in
+> 1 ms, but `:4646` remains closed. Tailscale needs no repair; restart the local Nomad
+> client/service, persist it at boot, and then run `ensure-engines.ps1`.
+
+> **UPDATE 2026-08-08T22:59Z — TAILNET UP; NOMAD DOWN.** `tailscale ping -c 5`
+> reaches windesk directly in 1 ms, while `:4646` remains closed. Do not re-authenticate
+> Tailscale; restart the local Nomad client/service and then run `ensure-engines.ps1`.
+
+> **UPDATE 2026-08-08T17:22Z — TAILNET RECOVERED; NOMAD STILL DOWN.** `tailscale ping -c 5`
+> reaches windesk directly in 1 ms, but `:4646` is closed. Do not re-authenticate
+> Tailscale; restart the local Nomad client/service and then run `ensure-engines.ps1`.
+
+> **UPDATE 2026-08-08T10:29Z — OFFLINE AGAIN.** All five authoritative Tailscale probes
+> timed out and `:4646` is unreachable. Wake/power the host, verify its Tailscale service,
+> then continue with the existing Nomad-client restart and service-at-boot checks below.
+> This still looks like sleep/service flapping rather than an expired key.
+
 > **UPDATE 2026-08-03T13:22Z — best Tailscale reading yet; the problem is 100% Nomad.**
 > `tailscale status` shows windesk **`active; direct 192.168.51.17:41641`** (LAN-direct, not
 > DERP) and `tailscale ping` pongs in **1 ms**. Meanwhile a full port sweep from claudebox is

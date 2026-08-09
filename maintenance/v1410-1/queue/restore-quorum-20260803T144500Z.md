@@ -1,5 +1,10 @@
 # Restore v1410-1 and Nomad quorum
 
+> **Reconfirmed 2026-08-09T00:58Z:** claudebox remains the sole alive Nomad server
+> and cannot elect a leader. `tailscale ping -c 5` reports v1410-1's node key is
+> expired; HTTP `:4646` and SSH `:22` are unreachable. Preserve Raft data and use
+> the owner/on-box re-authentication and Nomad start procedure below.
+
 > **Reconfirmed 2026-08-08T23:40Z:** claudebox is still the sole alive server in the
 > two-voter Raft set. v1410-1's Tailscale node key remains expired and `:4646` is
 > closed. Preserve its Raft data; owner/on-box Tailscale re-authentication and Nomad

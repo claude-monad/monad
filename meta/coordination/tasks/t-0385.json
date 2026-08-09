@@ -1,0 +1,10 @@
+{
+  "id": "t-0385",
+  "type": "infra",
+  "scope": "2026-08-09T00:58Z claudebox follow-up: CRITICAL Nomad quorum remains lost at 1/2 committed voters; claudebox is the sole alive server/Candidate and v1410-1 has an expired Tailscale key with ports 22/4646 unreachable. Preserve Raft data; owner/on-box Tailscale re-auth and Nomad start on v1410-1 is the only safe recovery. oraclebox1 and death-star fail all five probes and ports 22/4646. windesk pongs directly but Nomad 4646 is down. bigo-server and Mac clients answer and advertise Claude+Codex; bigo has live maintainer stats, Mac is 94.028% used and its cached maintainer is absent. Claudebox is 9.926% used, raw Nomad plus local maintainer are live, and both engines are advertised. Stale state lists four Ready+Eligible nodes and four running allocations, but no leader blocks authoritative roster/job reconciliation. Peer queues refreshed; recover quorum first, then verify all seven and deploy only confirmed missing maintenance loops.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": "t-0384"
+}

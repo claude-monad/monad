@@ -1,0 +1,10 @@
+{
+  "id": "t-0386",
+  "type": "infra",
+  "scope": "2026-08-09T05:33:59Z claudebox sweep: CRITICAL Nomad quorum remains lost at 1/2 committed voters {v1410-1,claudebox}; claudebox is alive/Candidate, while v1410-1 is unreachable because its Tailscale key expired. Preserve Raft data; owner/on-box Tailscale re-auth plus Nomad start on v1410-1 is the smallest safe recovery. oraclebox1 is also offline/unreachable and is not present in the cached committed voter set, so do not assume reviving it alone restores quorum. death-star fails all five probes. windesk pongs directly but Nomad/SSH/WinRM/gateway are down. bigo-server and mac-mini clients answer and advertise claude+codex; bigo maintenance telemetry is live, while mac-mini disk is 94.022% used and its cached maintenance alloc returns 404 locally. Claudebox disk/agent/engines/maintenance are live. Stale cache lists four nodes Ready+Eligible and four running allocs, but no leader blocks authoritative reconciliation or redeploy. Restore quorum first, then verify all seven and repair only confirmed gaps.",
+  "repo": "eliott-monad/monad",
+  "payload": {},
+  "status": "open",
+  "owner": null,
+  "parent": null
+}
